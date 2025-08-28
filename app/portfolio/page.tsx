@@ -7,7 +7,7 @@ import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
-import { Filter, Grid, List, Search } from "lucide-react"
+import { Filter, Grid, List, Search, ArrowUpRight, MapPin, Calendar } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import Image from "next/image"
 import { SectionHeader, FilterTabs } from "@/components/unified-design-system"
@@ -160,70 +160,95 @@ export default function PortfolioPage() {
 					<div
 						className={`${
 							viewMode === "grid"
-								? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-								: "space-y-6"
-						}`}
+								? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+								: "space-y-8"
+						} animate-in fade-in duration-1000`}
 					>
 						{filteredItems.map((item, index) => (
 							<Dialog key={item.id}>
 								<DialogTrigger asChild>
 									<Card
-										className={`group cursor-pointer overflow-hidden border-border/50 bg-card hover:shadow-2xl transition-all duration-700 hover:-translate-y-1 ${
-											item.featured ? 'ring-2 ring-accent/20' : ''
+										className={`group cursor-pointer overflow-hidden border-0 bg-card/50 backdrop-blur-sm hover:bg-card/80 hover:shadow-2xl hover:shadow-accent/10 transition-all duration-700 hover:-translate-y-2 ${
+											item.featured ? 'ring-2 ring-accent/30 shadow-lg shadow-accent/5' : ''
 										}`}
-										style={{ animationDelay: `${index * 200}ms` }}
+										style={{ 
+											animationDelay: `${index * 150}ms`,
+											transform: 'translateY(20px)',
+											animation: `slideUp 0.8s ease-out ${index * 150}ms forwards`
+										}}
 									>
 										{viewMode === "grid" ? (
-											<div className="aspect-[4/3] relative overflow-hidden">
+											<div className="aspect-[4/3] relative overflow-hidden bg-gradient-to-br from-background/10 to-background/30">
 												<Image
 													src={item.image || getAssetPath("/placeholder.svg")}
 													alt={item.title}
 													fill
-													className="object-cover group-hover:scale-110 transition-all duration-1000"
+													className="object-cover group-hover:scale-110 transition-all duration-1200 ease-out"
 													sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
 												/>
-												<div className="absolute inset-0 bg-gradient-to-tr from-black/80 via-black/0 to-black/20 opacity-0 group-hover:opacity-100 transition-all duration-500" />
-												<div className="absolute bottom-6 left-6 right-6 transform translate-y-6 group-hover:translate-y-0 transition-all duration-700 space-y-2">
+												<div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-60 group-hover:opacity-80 transition-all duration-700" />
+												<div className="absolute inset-0 bg-gradient-radial from-transparent via-transparent to-black/30 group-hover:to-black/50 transition-all duration-700" />
+												
+												{/* Floating badge */}
+												<div className="absolute top-4 left-4 transform -translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
 													<Badge
 														variant="secondary"
-														className="mb-3 backdrop-blur-md bg-white/20 text-white border-white/20 font-light tracking-wide shadow-lg transform scale-90 group-hover:scale-100 transition-transform duration-300"
+														className="backdrop-blur-md bg-white/20 text-white border-white/30 font-light tracking-wider shadow-lg hover:bg-white/30 transition-all duration-300"
 													>
 														{item.category}
 													</Badge>
-													<h3 className="font-heading font-light text-white text-xl mb-2 tracking-wide transform translate-x-4 group-hover:translate-x-0 transition-transform duration-500">
+												</div>
+
+												{/* Content overlay */}
+												<div className="absolute bottom-0 left-0 right-0 p-6 transform translate-y-4 group-hover:translate-y-0 transition-all duration-700 space-y-3">
+													<h3 className="font-heading font-light text-white text-xl mb-2 tracking-wide transform translate-x-4 group-hover:translate-x-0 transition-transform duration-500 delay-100">
 														{item.title}
 													</h3>
-													<p className="text-white/70 text-sm font-light tracking-wide transform translate-x-8 group-hover:translate-x-0 transition-transform duration-700">
-														{item.location} • {item.year}
-													</p>
+													<div className="flex items-center justify-between transform translate-x-6 group-hover:translate-x-0 transition-transform duration-700 delay-200">
+														<p className="text-white/80 text-sm font-light tracking-wide">
+															{item.location}
+														</p>
+														<p className="text-white/60 text-sm font-light">
+															{item.year}
+														</p>
+													</div>
+													<div className="w-0 group-hover:w-full h-px bg-gradient-to-r from-white/0 via-white/50 to-white/0 transition-all duration-1000 delay-300"></div>
+												</div>
+
+												{/* Hover indicator */}
+												<div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-all duration-500 delay-200">
+													<div className="w-8 h-8 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center">
+														<ArrowUpRight className="w-4 h-4 text-white" />
+													</div>
 												</div>
 											</div>
 										) : (
-											<div className="flex gap-6 p-6">
-												<div className="w-48 h-32 relative overflow-hidden flex-shrink-0">
+											<div className="flex gap-6 p-6 bg-gradient-to-r from-background/50 to-background/30 backdrop-blur-sm">
+												<div className="w-48 h-32 relative overflow-hidden flex-shrink-0 rounded-lg">
 													<Image
 														src={item.image || getAssetPath("/placeholder.svg")}
 														alt={item.title}
 														fill
-														className="object-cover group-hover:scale-105 transition-transform duration-300"
+														className="object-cover group-hover:scale-105 transition-transform duration-500"
 													/>
+													<div className="absolute inset-0 bg-gradient-to-r from-transparent to-black/20 group-hover:to-black/30 transition-all duration-500" />
 												</div>
-												<div className="flex-1 space-y-2">
-													<div className="flex items-center gap-2">
-														<Badge variant="secondary">{item.category}</Badge>
-														<span className="text-sm text-muted-foreground">{item.year}</span>
+												<div className="flex-1 space-y-3 py-2">
+													<div className="flex items-center gap-3">
+														<Badge variant="secondary" className="font-light tracking-wide">{item.category}</Badge>
+														<span className="text-sm text-muted-foreground font-light">{item.year}</span>
 													</div>
-													<h3 className="font-heading font-semibold text-xl text-foreground">{item.title}</h3>
-													<p className="text-muted-foreground">{item.location}</p>
-													<p className="text-foreground leading-relaxed line-clamp-2">{item.description}</p>
+													<h3 className="font-heading font-light text-2xl text-foreground tracking-wide">{item.title}</h3>
+													<p className="text-muted-foreground font-light">{item.location}</p>
+													<p className="text-foreground/80 leading-relaxed font-light line-clamp-2">{item.description}</p>
 												</div>
 											</div>
 										)}
 									</Card>
 								</DialogTrigger>
-								<DialogContent className="max-w-5xl animate-in fade-in zoom-in duration-500 border-border/50">
-									<div className="grid grid-cols-1 lg:grid-cols-2 gap-8 p-2">
-										<div className="aspect-[4/3] relative overflow-hidden">
+								<DialogContent className="max-w-6xl animate-in fade-in zoom-in duration-700 border-border/30 bg-background/95 backdrop-blur-xl">
+									<div className="grid grid-cols-1 lg:grid-cols-2 gap-8 p-4">
+										<div className="aspect-[4/3] relative overflow-hidden rounded-lg">
 											<Image
 												src={item.image || getAssetPath("/placeholder.svg")}
 												alt={item.title}
@@ -231,20 +256,29 @@ export default function PortfolioPage() {
 												className="object-cover"
 												sizes="(max-width: 1200px) 100vw, 50vw"
 											/>
+											<div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
 										</div>
 										<div className="space-y-6 py-4">
-											<div>
-												<Badge variant="secondary" className="mb-4 font-light tracking-wide">
+											<div className="space-y-4">
+												<Badge variant="secondary" className="font-light tracking-wider px-4 py-1">
 													{item.category}
 												</Badge>
-												<h2 className="font-heading font-light text-3xl text-foreground mb-2 tracking-wide">
+												<h2 className="font-heading font-light text-4xl text-foreground tracking-wide leading-tight">
 													{item.title}
 												</h2>
-												<p className="text-muted-foreground font-light tracking-wide">
-													{item.location} • {item.year}
-												</p>
+												<div className="flex items-center gap-4 text-muted-foreground font-light">
+													<span className="flex items-center gap-2">
+														<MapPin className="w-4 h-4" />
+														{item.location}
+													</span>
+													<span className="flex items-center gap-2">
+														<Calendar className="w-4 h-4" />
+														{item.year}
+													</span>
+												</div>
 											</div>
-											<p className="text-foreground leading-relaxed text-lg font-light">{item.description}</p>
+											<div className="w-full h-px bg-gradient-to-r from-border/0 via-border/50 to-border/0"></div>
+											<p className="text-foreground/90 leading-relaxed text-lg font-light tracking-wide">{item.description}</p>
 										</div>
 									</div>
 								</DialogContent>
