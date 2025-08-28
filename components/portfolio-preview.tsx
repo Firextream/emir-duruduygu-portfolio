@@ -1,9 +1,9 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { ArrowRight } from "lucide-react"
+import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react"
 import { getAssetPath } from "@/lib/image-utils"
 
 interface GalleryImage {
@@ -130,6 +130,37 @@ const fallbackImages = [
 export function PortfolioPreview() {
   const [galleryImages, setGalleryImages] = useState<GalleryImage[]>([])
   const [loading, setLoading] = useState(true)
+  const scrollContainerRef = useRef<HTMLDivElement>(null)
+  const [canScrollLeft, setCanScrollLeft] = useState(false)
+  const [canScrollRight, setCanScrollRight] = useState(true)
+
+  const checkScrollButtons = () => {
+    if (scrollContainerRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current
+      setCanScrollLeft(scrollLeft > 0)
+      setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 1)
+    }
+  }
+
+  const scrollLeft = () => {
+    if (scrollContainerRef.current) {
+      const scrollAmount = 320 // Width of one card + gap
+      scrollContainerRef.current.scrollBy({ 
+        left: -scrollAmount, 
+        behavior: 'smooth' 
+      })
+    }
+  }
+
+  const scrollRight = () => {
+    if (scrollContainerRef.current) {
+      const scrollAmount = 320 // Width of one card + gap
+      scrollContainerRef.current.scrollBy({ 
+        left: scrollAmount, 
+        behavior: 'smooth' 
+      })
+    }
+  }
 
   useEffect(() => {
     const fetchGalleryImages = async () => {
@@ -148,6 +179,15 @@ export function PortfolioPreview() {
     fetchGalleryImages()
   }, [])
 
+  useEffect(() => {
+    checkScrollButtons()
+    const container = scrollContainerRef.current
+    if (container) {
+      container.addEventListener('scroll', checkScrollButtons)
+      return () => container.removeEventListener('scroll', checkScrollButtons)
+    }
+  }, [loading])
+
   return (
     <section className="py-16 sm:py-24 lg:py-32 px-4 sm:px-6 bg-background">
       <div className="max-w-6xl mx-auto">
@@ -161,10 +201,36 @@ export function PortfolioPreview() {
           </p>
         </div>
 
-        {/* Side-scrolling gallery */}
+        {/* Side-scrolling gallery with navigation */}
         <div className="relative mb-12 sm:mb-16">
-          <div className="overflow-x-auto scrollbar-hide">
-            <div className="flex gap-3 sm:gap-4 pb-4" style={{ width: 'max-content' }}>
+          {/* Left scroll button */}
+          <Button
+            variant="outline"
+            size="icon"
+            className={`absolute left-4 top-1/2 transform -translate-y-1/2 z-10 rounded-full bg-background/80 backdrop-blur-sm border-border/50 hover:bg-background/90 transition-all duration-300 ${!canScrollLeft ? 'opacity-50 cursor-not-allowed' : 'hover:scale-110'}`}
+            onClick={scrollLeft}
+            disabled={!canScrollLeft}
+          >
+            <ChevronLeft className="h-4 w-4" />
+          </Button>
+
+          {/* Right scroll button */}
+          <Button
+            variant="outline"
+            size="icon"
+            className={`absolute right-4 top-1/2 transform -translate-y-1/2 z-10 rounded-full bg-background/80 backdrop-blur-sm border-border/50 hover:bg-background/90 transition-all duration-300 ${!canScrollRight ? 'opacity-50 cursor-not-allowed' : 'hover:scale-110'}`}
+            onClick={scrollRight}
+            disabled={!canScrollRight}
+          >
+            <ChevronRight className="h-4 w-4" />
+          </Button>
+
+          <div 
+            ref={scrollContainerRef}
+            className="overflow-x-auto scrollbar-hide scroll-smooth"
+            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+          >
+            <div className="flex gap-3 sm:gap-4 pb-4 px-16" style={{ width: 'max-content' }}>
               {loading ? (
                 // Loading skeleton
                 Array(12).fill(0).map((_, index) => (
@@ -201,11 +267,9 @@ export function PortfolioPreview() {
             </div>
           </div>
           
-          {/* Scroll hint */}
-          <div className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gradient-to-l from-background via-background/80 to-transparent w-32 h-full pointer-events-none" />
-          <div className="absolute right-4 top-1/2 transform -translate-y-1/2 text-muted-foreground text-sm font-light opacity-60">
-            Scroll →
-          </div>
+          {/* Gradient overlays for visual continuity */}
+          <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-background to-transparent pointer-events-none z-[5]" />
+          <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-background to-transparent pointer-events-none z-[5]" />
         </div>
 
         <div className="text-center">
