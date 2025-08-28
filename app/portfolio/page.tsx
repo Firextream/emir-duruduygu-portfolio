@@ -127,29 +127,37 @@ export default function PortfolioPage() {
 
 						<div className="flex space-golden items-center">
 							<div className="relative">
-								<Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+								<Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground/60" />
 								<Input
 									placeholder="Search projects..."
 									value={searchTerm}
 									onChange={(e) => setSearchTerm(e.target.value)}
-									className="pl-10 w-64 font-light"
+									className="pl-12 w-72 font-light tracking-wide bg-card/50 border-border/30 backdrop-blur-sm focus:bg-card/80 focus:border-accent/30 transition-all duration-300 rounded-full"
 								/>
 							</div>
 
-							<div className="flex space-golden-sm">
+							<div className="flex gap-1 bg-card/30 backdrop-blur-sm rounded-full p-1 border border-border/20">
 								<Button
-									variant={viewMode === "grid" ? "default" : "outline"}
+									variant={viewMode === "grid" ? "default" : "ghost"}
 									size="sm"
 									onClick={() => setViewMode("grid")}
-									className="transition-all duration-200"
+									className={`rounded-full transition-all duration-300 ${
+										viewMode === "grid" 
+											? "bg-accent/20 text-accent hover:bg-accent/30 shadow-lg shadow-accent/10" 
+											: "text-muted-foreground hover:text-foreground hover:bg-card/50"
+									}`}
 								>
 									<Grid className="h-4 w-4" />
 								</Button>
 								<Button
-									variant={viewMode === "list" ? "default" : "outline"}
+									variant={viewMode === "list" ? "default" : "ghost"}
 									size="sm"
 									onClick={() => setViewMode("list")}
-									className="transition-all duration-200"
+									className={`rounded-full transition-all duration-300 ${
+										viewMode === "list" 
+											? "bg-accent/20 text-accent hover:bg-accent/30 shadow-lg shadow-accent/10" 
+											: "text-muted-foreground hover:text-foreground hover:bg-card/50"
+									}`}
 								>
 									<List className="h-4 w-4" />
 								</Button>

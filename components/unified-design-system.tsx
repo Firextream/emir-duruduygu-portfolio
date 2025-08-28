@@ -16,22 +16,22 @@ export function FilterTabs({
   const getActiveClasses = () => {
     switch (activeColor) {
       case "green":
-        return "bg-green-600 text-white border-green-600 hover:bg-green-700 architectural-shadow"
+        return "bg-accent/20 text-accent border-accent/30 hover:bg-accent/30 backdrop-blur-sm shadow-lg shadow-accent/10"
       case "primary":
-        return "bg-primary text-primary-foreground border-primary architectural-shadow"
+        return "bg-primary/20 text-primary border-primary/30 hover:bg-primary/30 backdrop-blur-sm shadow-lg shadow-primary/10"
       case "accent":
-        return "bg-accent text-accent-foreground border-accent architectural-shadow"
+        return "bg-accent/20 text-accent border-accent/30 hover:bg-accent/30 backdrop-blur-sm shadow-lg shadow-accent/10"
       default:
-        return "bg-green-600 text-white border-green-600 hover:bg-green-700 architectural-shadow"
+        return "bg-accent/20 text-accent border-accent/30 hover:bg-accent/30 backdrop-blur-sm shadow-lg shadow-accent/10"
     }
   }
 
   const getInactiveClasses = () => {
-    return "bg-transparent text-muted-foreground border-border hover:bg-muted hover:text-foreground hover:architectural-shadow"
+    return "bg-card/50 text-muted-foreground border-border/30 hover:bg-card/80 hover:text-foreground hover:border-border/50 backdrop-blur-sm transition-all duration-300"
   }
 
   return (
-    <div className="flex flex-wrap gap-3 justify-start">
+    <div className="flex flex-wrap gap-2 justify-start">
       {categories.map((category) => (
         <Button
           key={category}
@@ -39,7 +39,7 @@ export function FilterTabs({
           size="sm"
           onClick={() => onCategoryChange(category)}
           className={`
-            px-6 py-2 font-medium text-sm transition-all duration-200 border
+            px-5 py-2 font-light text-sm tracking-wide transition-all duration-500 border-0 rounded-full
             ${selectedCategory === category 
               ? getActiveClasses() 
               : getInactiveClasses()
