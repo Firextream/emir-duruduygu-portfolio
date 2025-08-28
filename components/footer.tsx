@@ -55,7 +55,7 @@ export function Footer() {
 
           <div className="text-center">
             <p className="text-white/50 font-light text-sm tracking-wide">
-              © 2024 — Built with modernist principles
+              © 2025 — Built with modernist principles
             </p>
           </div>
         </div>
