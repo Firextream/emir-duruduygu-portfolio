@@ -160,30 +160,30 @@ export default function PortfolioPage() {
 					<div
 						className={`${
 							viewMode === "grid"
-								? "grid-experimental gap-space-fluid-lg"
-								: "space-golden"
+								? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+								: "space-y-6"
 						}`}
 					>
 						{filteredItems.map((item, index) => (
 							<Dialog key={item.id}>
 								<DialogTrigger asChild>
 									<Card
-										className={`group cursor-pointer overflow-hidden border-border/50 bg-card hover:shadow-2xl transition-all duration-700 hover:-translate-y-3 animate-on-scroll hover:border-border masonry-item magnetic-hover layer-content ${
-											item.featured ? 'featured breathe-slow' : ''
-										} ${index % 4 === 0 ? 'experimental drift-moderate' : ''} ${index % 6 === 0 ? 'offset-subtle' : ''} ${index % 8 === 0 ? 'float-gentle' : ''}`}
+										className={`group cursor-pointer overflow-hidden border-border/50 bg-card hover:shadow-2xl transition-all duration-700 hover:-translate-y-1 ${
+											item.featured ? 'ring-2 ring-accent/20' : ''
+										}`}
 										style={{ animationDelay: `${index * 200}ms` }}
 									>
 										{viewMode === "grid" ? (
-											<div className="aspect-[4/3] relative overflow-hidden layer-base">
+											<div className="aspect-[4/3] relative overflow-hidden">
 												<Image
 													src={item.image || getAssetPath("/placeholder.svg")}
 													alt={item.title}
 													fill
-													className="object-cover group-hover:scale-110 group-hover:rotate-1 transition-all duration-1000"
+													className="object-cover group-hover:scale-110 transition-all duration-1000"
 													sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
 												/>
-												<div className="absolute inset-0 bg-gradient-to-tr from-black/80 via-black/0 to-black/20 opacity-0 group-hover:opacity-100 transition-all duration-500 layer-overlay" />
-												<div className="absolute bottom-6 left-6 right-6 transform translate-y-6 group-hover:translate-y-0 transition-all duration-700 space-golden-sm layer-content">
+												<div className="absolute inset-0 bg-gradient-to-tr from-black/80 via-black/0 to-black/20 opacity-0 group-hover:opacity-100 transition-all duration-500" />
+												<div className="absolute bottom-6 left-6 right-6 transform translate-y-6 group-hover:translate-y-0 transition-all duration-700 space-y-2">
 													<Badge
 														variant="secondary"
 														className="mb-3 backdrop-blur-md bg-white/20 text-white border-white/20 font-light tracking-wide shadow-lg transform scale-90 group-hover:scale-100 transition-transform duration-300"
@@ -199,7 +199,7 @@ export default function PortfolioPage() {
 												</div>
 											</div>
 										) : (
-											<div className="flex space-golden p-6">
+											<div className="flex gap-6 p-6">
 												<div className="w-48 h-32 relative overflow-hidden flex-shrink-0">
 													<Image
 														src={item.image || getAssetPath("/placeholder.svg")}
@@ -208,8 +208,8 @@ export default function PortfolioPage() {
 														className="object-cover group-hover:scale-105 transition-transform duration-300"
 													/>
 												</div>
-												<div className="flex-1 space-golden-sm">
-													<div className="flex items-center space-golden-sm">
+												<div className="flex-1 space-y-2">
+													<div className="flex items-center gap-2">
 														<Badge variant="secondary">{item.category}</Badge>
 														<span className="text-sm text-muted-foreground">{item.year}</span>
 													</div>
