@@ -4,7 +4,6 @@ import { useState, useEffect } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { ArrowRight } from "lucide-react"
-import Image from "next/image"
 
 interface GalleryImage {
   id: string
@@ -107,12 +106,10 @@ export function PortfolioPreview() {
                     className="flex-shrink-0 w-80 h-60 group cursor-pointer relative overflow-hidden bg-card hover:architectural-shadow transition-all duration-500"
                     style={{ animationDelay: `${index * 50}ms` }}
                   >
-                    <Image
+                    <img
                       src={image.src || "/placeholder.svg"}
                       alt={image.alt || image.name}
-                      fill
-                      className="object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
-                      sizes="320px"
+                      className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
                     />
                     <div className="absolute inset-0 bg-gradient-to-tr from-black/0 via-black/0 to-black/10 group-hover:from-black/60 group-hover:via-black/20 group-hover:to-black/40 transition-all duration-700">
                       <div className="absolute bottom-0 left-0 right-0 p-6 text-white transform translate-y-full group-hover:translate-y-0 transition-all duration-700 ease-out">
