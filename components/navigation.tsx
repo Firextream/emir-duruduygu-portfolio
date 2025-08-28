@@ -110,7 +110,7 @@ export function Navigation() {
             ))}
           </div>
 
-          {/* Mobile Menu Button */}
+          {/* Mobile Menu Button - Three Dots */}
           <Button
             variant="ghost"
             size="sm"
@@ -120,22 +120,10 @@ export function Navigation() {
             aria-controls="mobile-menu"
             aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
           >
-            <div className="relative w-6 h-5" aria-hidden="true">
-              <span
-                className={`absolute top-0 left-0 w-6 h-0.5 bg-foreground transition-all duration-300 ease-out rounded-full ${
-                  isOpen ? "rotate-45 top-2" : ""
-                }`}
-              />
-              <span
-                className={`absolute top-2 left-0 w-6 h-0.5 bg-foreground transition-all duration-300 ease-out rounded-full ${
-                  isOpen ? "opacity-0 scale-0" : ""
-                }`}
-              />
-              <span
-                className={`absolute top-4 left-0 w-6 h-0.5 bg-foreground transition-all duration-300 ease-out rounded-full ${
-                  isOpen ? "-rotate-45 top-2" : ""
-                }`}
-              />
+            <div className="flex flex-col items-center justify-center gap-1" aria-hidden="true">
+              <div className={`w-1.5 h-1.5 bg-foreground rounded-full transition-all duration-300 ${isOpen ? 'scale-125 bg-accent' : ''}`} />
+              <div className={`w-1.5 h-1.5 bg-foreground rounded-full transition-all duration-300 ${isOpen ? 'scale-125 bg-accent' : ''}`} />
+              <div className={`w-1.5 h-1.5 bg-foreground rounded-full transition-all duration-300 ${isOpen ? 'scale-125 bg-accent' : ''}`} />
             </div>
           </Button>
         </div>

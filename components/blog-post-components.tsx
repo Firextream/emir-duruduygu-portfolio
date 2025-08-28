@@ -1,4 +1,6 @@
 import { cn } from "@/lib/utils"
+import { getAssetPath } from "@/lib/image-utils"
+import Image from "next/image"
 
 interface BlogPostContentProps {
   content?: string
@@ -70,17 +72,32 @@ interface BlogPostAuthorProps {
 }
 
 export function BlogPostAuthor({ author, date, authorTitle, className }: BlogPostAuthorProps) {
+  const authorImage = getAssetPath("/placeholder-user.jpg") // Default author image
+  
   return (
-    <div className={cn("flex items-center gap-3", className)}>
-      <div className="w-10 h-10 bg-muted rounded-full flex items-center justify-center">
-        <span className="text-sm font-medium">
-          {author ? author.charAt(0).toUpperCase() : "A"}
-        </span>
+    <div className={cn("flex items-center gap-4", className)}>
+      <div className="relative w-12 h-12 rounded-full overflow-hidden bg-muted flex-shrink-0 border border-border/20">
+        <Image
+          src={authorImage}
+          alt={author || "Author"}
+          fill
+          className="object-cover"
+          sizes="48px"
+        />
       </div>
-      <div>
+      <div className="flex-1">
         <p className="font-medium text-foreground">{author || "Anonymous"}</p>
         {authorTitle && (
           <p className="text-sm text-muted-foreground">{authorTitle}</p>
+        )}
+        {date && (
+          <p className="text-xs text-muted-foreground mt-1">
+            {new Date(date).toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "long", 
+              day: "numeric",
+            })}
+          </p>
         )}
       </div>
     </div>
