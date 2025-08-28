@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Image Test</title>
+    <style>
+        body { margin: 20px; font-family: Arial, sans-serif; }
+        .image-test { margin: 20px 0; }
+        .image-test img { max-width: 300px; height: auto; border: 1px solid #ccc; }
+        .status { color: green; }
+        .error { color: red; }
+    </style>
+</head>
+<body>
+    <h1>Image Loading Test</h1>
+    
+    <div class="image-test">
+        <h3>Image 1: brutalist-concrete-architecture-berlin-dramatic-li.png</h3>
+        <img src="./brutalist-concrete-architecture-berlin-dramatic-li.png" alt="Test Image 1" onload="showStatus(this, 'loaded')" onerror="showStatus(this, 'error')">
+        <div id="status1" class="status"></div>
+    </div>
+    
+    <div class="image-test">
+        <h3>Image 2: architectural-photography-light-shadow-modern-buil.png</h3>
+        <img src="./architectural-photography-light-shadow-modern-buil.png" alt="Test Image 2" onload="showStatus(this, 'loaded')" onerror="showStatus(this, 'error')">
+        <div id="status2" class="status"></div>
+    </div>
+    
+    <div class="image-test">
+        <h3>Image 3: minimalist-interior-design-copenhagen-clean-lines.png</h3>
+        <img src="./minimalist-interior-design-copenhagen-clean-lines.png" alt="Test Image 3" onload="showStatus(this, 'loaded')" onerror="showStatus(this, 'error')">
+        <div id="status3" class="status"></div>
+    </div>
+    
+    <div class="image-test">
+        <h3>Image 4: modern-glass-building-reflection.png</h3>
+        <img src="./modern-glass-building-reflection.png" alt="Test Image 4" onload="showStatus(this, 'loaded')" onerror="showStatus(this, 'error')">
+        <div id="status4" class="status"></div>
+    </div>
+    
+    <div class="image-test">
+        <h3>Placeholder: placeholder.svg</h3>
+        <img src="./placeholder.svg" alt="Placeholder" onload="showStatus(this, 'loaded')" onerror="showStatus(this, 'error')">
+        <div id="status5" class="status"></div>
+    </div>
+
+    <script>
+        function showStatus(img, status) {
+            const statusDiv = img.nextElementSibling;
+            if (status === 'loaded') {
+                statusDiv.innerHTML = '✅ Image loaded successfully';
+                statusDiv.className = 'status';
+            } else {
+                statusDiv.innerHTML = '❌ Image failed to load';
+                statusDiv.className = 'error';
+            }
+        }
+    </script>
+</body>
+</html>

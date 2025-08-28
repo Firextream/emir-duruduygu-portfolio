@@ -121,9 +121,9 @@ export function Navigation() {
             aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
           >
             <div className="flex flex-col items-center justify-center gap-1" aria-hidden="true">
-              <div className={`w-1.5 h-1.5 bg-foreground rounded-full transition-all duration-300 ${isOpen ? 'scale-125 bg-accent' : ''}`} />
-              <div className={`w-1.5 h-1.5 bg-foreground rounded-full transition-all duration-300 ${isOpen ? 'scale-125 bg-accent' : ''}`} />
-              <div className={`w-1.5 h-1.5 bg-foreground rounded-full transition-all duration-300 ${isOpen ? 'scale-125 bg-accent' : ''}`} />
+              <div className={`w-2 h-2 bg-black rounded-full transition-all duration-300 ${isOpen ? 'scale-125' : ''}`} />
+              <div className={`w-2 h-2 bg-black rounded-full transition-all duration-300 ${isOpen ? 'scale-125' : ''}`} />
+              <div className={`w-2 h-2 bg-black rounded-full transition-all duration-300 ${isOpen ? 'scale-125' : ''}`} />
             </div>
           </Button>
         </div>

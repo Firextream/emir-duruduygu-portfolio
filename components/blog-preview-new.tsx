@@ -92,12 +92,20 @@ export function BlogPreview() {
 						<Link href={`/blog/${post.slug}`}>
 							<div className="aspect-[4/3] relative overflow-hidden">
 								{post.image && post.image !== '/placeholder.svg' ? (
-									<Image
-										src={getAssetPath(post.image)}
-										alt={post.title}
-										fill
-										className="object-cover transition-transform duration-300 group-hover:scale-105"
-									/>
+									post.image.startsWith('http') ? (
+										<img
+											src={post.image}
+											alt={post.title}
+											className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+										/>
+									) : (
+										<Image
+											src={getAssetPath(post.image)}
+											alt={post.title}
+											fill
+											className="object-cover transition-transform duration-300 group-hover:scale-105"
+										/>
+									)
 								) : (
 									<div className="w-full h-full bg-gradient-to-br from-muted/50 to-muted flex items-center justify-center">
 										<div className="text-2xl text-muted-foreground/40">📄</div>

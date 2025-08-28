@@ -75,14 +75,22 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
         {post.image && (
           <div className="relative aspect-[16/9] mb-12 overflow-hidden rounded-lg bg-muted">
-            <Image
-              src={getAssetPath(post.image)}
-              alt={`Featured image for ${post.title}`}
-              fill
-              className="object-cover"
-              priority
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1000px"
-            />
+            {post.image.startsWith('http') ? (
+              <img
+                src={post.image}
+                alt={`Featured image for ${post.title}`}
+                className="w-full h-full object-cover"
+              />
+            ) : (
+              <Image
+                src={getAssetPath(post.image)}
+                alt={`Featured image for ${post.title}`}
+                fill
+                className="object-cover"
+                priority
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1000px"
+              />
+            )}
           </div>
         )}
 

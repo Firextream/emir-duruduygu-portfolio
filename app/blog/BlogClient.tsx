@@ -151,13 +151,21 @@ export default function BlogClient({ posts }: { posts: (Post | null)[] }) {
                     >
                       <Link href={`/blog/${post.slug}`} className="block h-full">
                         <div className="relative h-full group/slide cursor-pointer">
-                          <Image
-                            src={post.image ? getAssetPath(post.image) : getAssetPath("/placeholder.svg")}
-                            alt={post.title}
-                            fill
-                            className="object-cover group-hover/slide:scale-105 transition-transform duration-1000"
-                            priority={index === 0}
-                          />
+                          {post.image && post.image.startsWith('http') ? (
+                            <img
+                              src={post.image}
+                              alt={post.title}
+                              className="w-full h-full object-cover group-hover/slide:scale-105 transition-transform duration-1000"
+                            />
+                          ) : (
+                            <Image
+                              src={post.image ? getAssetPath(post.image) : getAssetPath("/placeholder.svg")}
+                              alt={post.title}
+                              fill
+                              className="object-cover group-hover/slide:scale-105 transition-transform duration-1000"
+                              priority={index === 0}
+                            />
+                          )}
                           <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/20" />
                           
                           {/* Content Overlay with improved positioning */}
@@ -319,12 +327,20 @@ export default function BlogClient({ posts }: { posts: (Post | null)[] }) {
                   }}
                 >
                   <div className="aspect-[4/3] relative overflow-hidden bg-muted/30">
-                    <Image
-                      src={post.image ? getAssetPath(post.image) : getAssetPath("/placeholder.svg")}
-                      alt={post.title}
-                      fill
-                      className="object-cover group-hover:scale-105 transition-transform duration-700"
-                    />
+                    {post.image && post.image.startsWith('http') ? (
+                      <img
+                        src={post.image}
+                        alt={post.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                      />
+                    ) : (
+                      <Image
+                        src={post.image ? getAssetPath(post.image) : getAssetPath("/placeholder.svg")}
+                        alt={post.title}
+                        fill
+                        className="object-cover group-hover:scale-105 transition-transform duration-700"
+                      />
+                    )}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-all duration-700" />
                     
                     {/* Minimalist floating badges */}
