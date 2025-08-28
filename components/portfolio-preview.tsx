@@ -23,7 +23,7 @@ const fallbackImages = [
     alt: "Geometric Shadows",
     name: "Geometric Shadows",
     date: "2024",
-    place: "Architecture",
+    place: "Berlin",
     category: "Architecture",
   },
   {
@@ -32,8 +32,8 @@ const fallbackImages = [
     alt: "Urban Monolith",
     name: "Urban Monolith", 
     date: "2024",
-    place: "Urban",
-    category: "Urban",
+    place: "London",
+    category: "Brutalist",
   },
   {
     id: "3",
@@ -41,7 +41,7 @@ const fallbackImages = [
     alt: "Light Studies",
     name: "Light Studies",
     date: "2024", 
-    place: "Interior",
+    place: "Copenhagen",
     category: "Interior",
   },
   {
@@ -50,7 +50,79 @@ const fallbackImages = [
     alt: "Pattern Language",
     name: "Pattern Language",
     date: "2024",
-    place: "Details", 
+    place: "Tokyo", 
+    category: "Details",
+  },
+  {
+    id: "5",
+    src: getAssetPath("/architectural-photography-light-shadow-modern-buil.png"),
+    alt: "Light & Shadow",
+    name: "Light & Shadow",
+    date: "2024",
+    place: "Barcelona",
+    category: "Modern",
+  },
+  {
+    id: "6",
+    src: getAssetPath("/brutalist-concrete-architecture-berlin-dramatic-li.png"),
+    alt: "Concrete Dreams",
+    name: "Concrete Dreams",
+    date: "2024",
+    place: "Berlin",
+    category: "Brutalist",
+  },
+  {
+    id: "7",
+    src: getAssetPath("/modern-glass-building-reflection.png"),
+    alt: "Glass Reflections",
+    name: "Glass Reflections",
+    date: "2024",
+    place: "New York",
+    category: "Modern",
+  },
+  {
+    id: "8",
+    src: getAssetPath("/architectural-shadows-los-angeles-modern-building-.png"),
+    alt: "Urban Shadows",
+    name: "Urban Shadows",
+    date: "2024",
+    place: "Los Angeles",
+    category: "Urban",
+  },
+  {
+    id: "9",
+    src: getAssetPath("/minimalist-modern-building-with-clean-lines-and-wh.png"),
+    alt: "Clean Lines",
+    name: "Clean Lines",
+    date: "2024",
+    place: "Zurich",
+    category: "Minimal",
+  },
+  {
+    id: "10",
+    src: getAssetPath("/industrial-architecture-manchester-converted-wareh.png"),
+    alt: "Industrial Heritage",
+    name: "Industrial Heritage",
+    date: "2024",
+    place: "Manchester",
+    category: "Industrial",
+  },
+  {
+    id: "11",
+    src: getAssetPath("/modern-geometric-building-tokyo-architecture.png"),
+    alt: "Geometric Forms",
+    name: "Geometric Forms",
+    date: "2024",
+    place: "Tokyo",
+    category: "Geometric",
+  },
+  {
+    id: "12",
+    src: getAssetPath("/concrete-stairs-with-dramatic-lighting.png"),
+    alt: "Dramatic Stairs",
+    name: "Dramatic Stairs",
+    date: "2024",
+    place: "Oslo",
     category: "Details",
   },
 ]
@@ -63,14 +135,12 @@ export function PortfolioPreview() {
     const fetchGalleryImages = async () => {
       try {
         // For static export, use fallback images
-        const repeated = Array(9).fill(fallbackImages).flat()
-        setGalleryImages(repeated.slice(0, 36))
+        setGalleryImages(fallbackImages)
         setLoading(false)
       } catch (error) {
         console.error("Error loading gallery images:", error)
-        // Use fallback images repeated to fill 36 slots
-        const repeated = Array(9).fill(fallbackImages).flat()
-        setGalleryImages(repeated.slice(0, 36))
+        // Use fallback images
+        setGalleryImages(fallbackImages)
         setLoading(false)
       }
     }
@@ -144,9 +214,9 @@ export function PortfolioPreview() {
             variant="ghost"
             className="group font-light tracking-wide uppercase text-sm hover:bg-transparent"
           >
-            <Link href="/portfolio">
+            <Link href="/gallery">
               <span className="border-b border-accent pb-1 group-hover:border-foreground transition-colors duration-300">
-                View Portfolio
+                View Gallery
               </span>
               <ArrowRight className="ml-3 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300" />
             </Link>
