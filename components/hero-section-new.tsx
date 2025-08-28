@@ -4,7 +4,6 @@ import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { ArrowDown } from "lucide-react"
 import Link from "next/link"
-import { getAssetPath } from "@/lib/image-utils"
 
 export function HeroSection() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
@@ -46,7 +45,7 @@ export function HeroSection() {
       <div className="absolute inset-0 z-0">
         <div className="w-full h-full">
           <img
-            src={getAssetPath("/coastal-harbor-scene.jpg")}
+            src="/coastal-harbor-scene.jpg"
             alt="Coastal Harbor Scene"
             className="w-full h-full object-cover"
             loading="eager"

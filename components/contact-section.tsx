@@ -30,14 +30,14 @@ export function ContactSection() {
   }
 
   return (
-    <section className="py-24 px-6">
+    <section className="py-16 sm:py-20 lg:py-24 px-4 sm:px-6">
       <div className="max-w-2xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl font-heading font-light tracking-tight mb-4">Get in Touch</h2>
-          <p className="text-muted-foreground font-light">hello@alexchen.com</p>
+        <div className="text-center mb-12 sm:mb-16">
+          <h2 className="text-2xl sm:text-3xl font-heading font-light tracking-tight mb-4">Get in Touch</h2>
+          <p className="text-muted-foreground font-light text-sm sm:text-base">hello@alexchen.com</p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-8">
+        <form onSubmit={handleSubmit} className="space-y-6 sm:space-y-8">
           <div className="space-y-6">
             <Input
               name="name"

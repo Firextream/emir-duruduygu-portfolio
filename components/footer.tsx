@@ -3,13 +3,13 @@ import { Mail, MapPin, Phone } from "lucide-react"
 
 export function Footer() {
   return (
-    <footer className="bg-black text-white py-24 px-6">
+    <footer className="bg-black text-white py-16 sm:py-20 lg:py-24 px-4 sm:px-6">
       <div className="max-w-6xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-16 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 sm:gap-12 lg:gap-16 mb-12 sm:mb-16">
           {/* Brand */}
           <div className="md:col-span-2">
-            <h3 className="font-heading font-extralight text-4xl mb-8 tracking-wide">Emir Duruduygu</h3>
-            <p className="text-white/70 font-light leading-relaxed text-lg max-w-lg">
+            <h3 className="font-heading font-extralight text-3xl sm:text-4xl mb-6 sm:mb-8 tracking-wide">Emir Duruduygu</h3>
+            <p className="text-white/70 font-light leading-relaxed text-base sm:text-lg max-w-lg">
               Architectural photographer exploring the intersection of space, light, and human experience through a
               modernist lens.
             </p>
@@ -17,8 +17,8 @@ export function Footer() {
 
           {/* Contact - Minimalist approach */}
           <div>
-            <h4 className="font-heading font-light text-xl mb-8 tracking-wide">Contact</h4>
-            <div className="space-y-6">
+            <h4 className="font-heading font-light text-lg sm:text-xl mb-6 sm:mb-8 tracking-wide">Contact</h4>
+            <div className="space-y-4 sm:space-y-6">
               <div className="group">
                 <div className="flex items-center gap-4 text-white/70 hover:text-white transition-colors duration-300">
                   <Mail className="h-4 w-4" />

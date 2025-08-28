@@ -91,11 +91,53 @@
     cursor: auto;
     overflow-x: hidden;
     font-feature-settings: "kern" 1, "liga" 1;
+    /* Mobile optimizations */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    text-size-adjust: 100%;
   }
   
   /* Added scroll behavior and selection styling */
   html {
     scroll-behavior: smooth;
+    /* Mobile-specific scroll improvements */
+    -webkit-overflow-scrolling: touch;
+    touch-action: manipulation;
+  }
+  
+  /* Mobile-friendly touch targets */
+  @media (max-width: 767px) {
+    /* Ensure minimum touch target size */
+    button, 
+    a, 
+    input, 
+    textarea, 
+    select {
+      min-height: 44px;
+      min-width: 44px;
+    }
+    
+    /* Improve text readability on mobile */
+    body {
+      font-size: 16px; /* Prevents zoom on iOS */
+      line-height: 1.5;
+    }
+    
+    /* Better spacing for mobile layouts */
+    .container {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+  }
+  
+  /* Tablet-specific optimizations */
+  @media (min-width: 768px) and (max-width: 1023px) {
+    body {
+      font-size: 17px;
+      line-height: 1.6;
+    }
   }
   
   ::selection {
@@ -662,6 +704,128 @@
 .rounded-xl,
 .rounded-2xl {
   border-radius: 0 !important;
+}
+
+/* Mobile and Tablet Optimization Utilities */
+@layer utilities {
+  /* Mobile-first responsive typography */
+  .text-responsive-sm { font-size: clamp(0.875rem, 2.5vw, 1rem); }
+  .text-responsive-base { font-size: clamp(1rem, 3vw, 1.125rem); }
+  .text-responsive-lg { font-size: clamp(1.125rem, 3.5vw, 1.25rem); }
+  .text-responsive-xl { font-size: clamp(1.25rem, 4vw, 1.5rem); }
+  .text-responsive-2xl { font-size: clamp(1.5rem, 5vw, 2rem); }
+  .text-responsive-3xl { font-size: clamp(1.875rem, 6vw, 2.5rem); }
+  .text-responsive-4xl { font-size: clamp(2rem, 7vw, 3rem); }
+  .text-responsive-5xl { font-size: clamp(2.5rem, 8vw, 4rem); }
+  
+  /* Mobile-optimized spacing */
+  .mobile-px { padding-left: 1rem; padding-right: 1rem; }
+  .mobile-py { padding-top: 1rem; padding-bottom: 1rem; }
+  .mobile-space-y > * + * { margin-top: 1rem; }
+  .mobile-gap { gap: 1rem; }
+  
+  /* Touch-friendly interactive elements */
+  .touch-target {
+    min-height: 44px;
+    min-width: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Mobile scroll improvements */
+  .mobile-scroll {
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+    overscroll-behavior: contain;
+  }
+  
+  /* Mobile-friendly grid layouts */
+  .mobile-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .tablet-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+  
+  /* Responsive container widths */
+  .container-mobile { max-width: 100%; padding: 0 1rem; }
+  .container-tablet { max-width: 768px; padding: 0 1.5rem; }
+  .container-desktop { max-width: 1200px; padding: 0 2rem; }
+  
+  /* Mobile-optimized animations */
+  @media (prefers-reduced-motion: no-preference) {
+    .animate-mobile-fade {
+      animation: mobileFade 0.4s ease-out;
+    }
+    
+    .animate-mobile-slide {
+      animation: mobileSlide 0.3s ease-out;
+    }
+  }
+  
+  @media (prefers-reduced-motion: reduce) {
+    .animate-mobile-fade,
+    .animate-mobile-slide {
+      animation: none;
+    }
+  }
+}
+
+/* Mobile-specific keyframes */
+@keyframes mobileFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes mobileSlide {
+  from { transform: translateY(1rem); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* Responsive breakpoint utilities */
+@media (max-width: 767px) {
+  .hide-mobile { display: none !important; }
+  .show-mobile { display: block !important; }
+  
+  /* Mobile-specific layout adjustments */
+  .mobile-stack {
+    flex-direction: column !important;
+    gap: 1rem !important;
+  }
+  
+  .mobile-full-width {
+    width: 100% !important;
+    max-width: none !important;
+  }
+  
+  .mobile-center {
+    text-align: center !important;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .hide-tablet { display: none !important; }
+  .show-tablet { display: block !important; }
+  
+  /* Tablet-specific layout adjustments */
+  .tablet-grid-2 {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  
+  .tablet-space {
+    gap: 1.5rem !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .hide-desktop { display: none !important; }
+  .show-desktop { display: block !important; }
 }
 
 /* Keep only essential rounded elements like buttons when needed */

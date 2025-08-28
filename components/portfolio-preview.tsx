@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { ArrowRight } from "lucide-react"
+import { getAssetPath } from "@/lib/image-utils"
 
 interface GalleryImage {
   id: string
@@ -18,7 +19,7 @@ interface GalleryImage {
 const fallbackImages = [
   {
     id: "1",
-    src: "/modernist-concrete-building-with-geometric-shadows.png",
+    src: getAssetPath("/modernist-concrete-building-with-geometric-shadows.png"),
     alt: "Geometric Shadows",
     name: "Geometric Shadows",
     date: "2024",
@@ -27,7 +28,7 @@ const fallbackImages = [
   },
   {
     id: "2",
-    src: "/brutalist-tower-with-dramatic-sky.png",
+    src: getAssetPath("/brutalist-tower-with-dramatic-sky.png"),
     alt: "Urban Monolith",
     name: "Urban Monolith", 
     date: "2024",
@@ -36,7 +37,7 @@ const fallbackImages = [
   },
   {
     id: "3",
-    src: "/minimalist-interior-with-natural-light.png",
+    src: getAssetPath("/minimalist-interior-with-natural-light.png"),
     alt: "Light Studies",
     name: "Light Studies",
     date: "2024", 
@@ -45,7 +46,7 @@ const fallbackImages = [
   },
   {
     id: "4",
-    src: "/abstract-architectural-detail-with-patterns.png",
+    src: getAssetPath("/abstract-architectural-detail-with-patterns.png"),
     alt: "Pattern Language",
     name: "Pattern Language",
     date: "2024",
@@ -78,36 +79,36 @@ export function PortfolioPreview() {
   }, [])
 
   return (
-    <section className="py-32 px-6 bg-background">
+    <section className="py-16 sm:py-24 lg:py-32 px-4 sm:px-6 bg-background">
       <div className="max-w-6xl mx-auto">
-        <div className="mb-20">
-          <h2 className="font-heading font-extralight text-5xl md:text-6xl mb-6 text-foreground tracking-tight">
+        <div className="mb-12 sm:mb-16 lg:mb-20">
+          <h2 className="font-heading font-extralight text-4xl sm:text-5xl md:text-6xl mb-4 sm:mb-6 text-foreground tracking-tight">
             Visual Stories
           </h2>
-          <div className="w-16 h-px bg-accent mb-8"></div>
-          <p className="text-muted-foreground text-lg font-light leading-relaxed max-w-xl">
+          <div className="w-16 h-px bg-accent mb-6 sm:mb-8"></div>
+          <p className="text-muted-foreground text-base sm:text-lg font-light leading-relaxed max-w-xl">
             Architectural photography exploring the relationship between form, light, and human experience
           </p>
         </div>
 
         {/* Side-scrolling gallery */}
-        <div className="relative mb-16">
+        <div className="relative mb-12 sm:mb-16">
           <div className="overflow-x-auto scrollbar-hide">
-            <div className="flex gap-4 pb-4" style={{ width: 'max-content' }}>
+            <div className="flex gap-3 sm:gap-4 pb-4" style={{ width: 'max-content' }}>
               {loading ? (
                 // Loading skeleton
                 Array(12).fill(0).map((_, index) => (
-                  <div key={index} className="flex-shrink-0 w-80 h-60 bg-muted animate-pulse rounded-none" />
+                  <div key={index} className="flex-shrink-0 w-64 sm:w-80 h-48 sm:h-60 bg-muted animate-pulse rounded-none" />
                 ))
               ) : (
                 galleryImages.map((image, index) => (
                   <div 
                     key={`${image.id}-${index}`} 
-                    className="flex-shrink-0 w-80 h-60 group cursor-pointer relative overflow-hidden bg-card hover:architectural-shadow transition-all duration-500"
+                    className="flex-shrink-0 w-64 sm:w-80 h-48 sm:h-60 group cursor-pointer relative overflow-hidden bg-card hover:architectural-shadow transition-all duration-500"
                     style={{ animationDelay: `${index * 50}ms` }}
                   >
                     <img
-                      src={image.src || "/placeholder.svg"}
+                      src={image.src || getAssetPath("/placeholder.svg")}
                       alt={image.alt || image.name}
                       className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
                     />

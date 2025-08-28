@@ -31,8 +31,8 @@ export function Navigation() {
         scrolled ? "bg-background/95 backdrop-blur-xl border-b border-border/50" : "bg-transparent"
       }`}
     >
-      <div className="max-w-6xl mx-auto px-6 lg:px-8">
-        <div className="flex justify-between items-center h-20">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-16 sm:h-20">
           <Link
             href="/"
             className="group relative font-heading font-light text-2xl tracking-wide text-foreground hover:text-accent transition-all duration-500 hover:tracking-wider"
@@ -66,7 +66,7 @@ export function Navigation() {
           <Button
             variant="ghost"
             size="sm"
-            className="md:hidden p-2 hover:bg-transparent"
+            className="md:hidden p-3 hover:bg-transparent min-h-[44px] min-w-[44px] flex items-center justify-center"
             onClick={() => setIsOpen(!isOpen)}
           >
             <div className="relative w-5 h-5">
@@ -88,13 +88,13 @@ export function Navigation() {
             isOpen ? "max-h-80 opacity-100" : "max-h-0 opacity-0"
           } overflow-hidden`}
         >
-          <div className="py-8 space-y-6">
+          <div className="py-6 sm:py-8 space-y-4 sm:space-y-6">
             {navItems.map((item, index) => (
               <Link
                 key={item.href}
                 href={item.href}
-                className={`block font-light text-lg tracking-wide transition-all duration-300 ${
-                  pathname === item.href ? "text-accent pl-4" : "text-muted-foreground hover:text-foreground hover:pl-2"
+                className={`flex items-center font-light text-lg tracking-wide transition-all duration-300 py-2 px-4 min-h-[44px] ${
+                  pathname === item.href ? "text-accent pl-6" : "text-muted-foreground hover:text-foreground hover:pl-6"
                 }`}
                 style={{
                   animationDelay: `${index * 100}ms`,

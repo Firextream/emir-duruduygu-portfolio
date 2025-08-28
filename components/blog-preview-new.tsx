@@ -43,16 +43,16 @@ export function BlogPreview() {
 
 	if (loading) {
 		return (
-			<section className="py-20 px-6 max-w-7xl mx-auto">
-				<div className="mb-16">
-					<h2 className="text-4xl md:text-5xl font-light text-foreground mb-4">
+			<section className="py-12 sm:py-16 lg:py-20 px-4 sm:px-6 max-w-7xl mx-auto">
+				<div className="mb-12 sm:mb-16">
+					<h2 className="text-3xl sm:text-4xl md:text-5xl font-light text-foreground mb-4">
 						Latest Thoughts
 					</h2>
-					<p className="text-muted-foreground text-lg max-w-2xl">
+					<p className="text-muted-foreground text-base sm:text-lg max-w-2xl">
 						Loading latest posts...
 					</p>
 				</div>
-				<div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+				<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
 					{[...Array(3)].map((_, i) => (
 						<div
 							key={i}
@@ -72,12 +72,12 @@ export function BlogPreview() {
 	}
 
 	return (
-		<section className="py-20 px-6 max-w-7xl mx-auto">
-			<div className="mb-16">
-				<h2 className="text-4xl md:text-5xl font-light text-foreground mb-4">
+		<section className="py-12 sm:py-16 lg:py-20 px-4 sm:px-6 max-w-7xl mx-auto">
+			<div className="mb-12 sm:mb-16">
+				<h2 className="text-3xl sm:text-4xl md:text-5xl font-light text-foreground mb-4">
 					Latest Thoughts
 				</h2>
-				<p className="text-muted-foreground text-lg max-w-2xl">
+				<p className="text-muted-foreground text-base sm:text-lg max-w-2xl">
 					Reflections on architecture, photography, and the spaces that shape human experience.
 				</p>
 			</div>
