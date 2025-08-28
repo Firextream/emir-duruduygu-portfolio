@@ -11,6 +11,7 @@ import { Filter, Grid, List, Search } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import Image from "next/image"
 import { SectionHeader, FilterTabs } from "@/components/unified-design-system"
+import { getAssetPath } from "@/lib/image-utils"
 
 const portfolioItems = [
 	{
@@ -19,7 +20,7 @@ const portfolioItems = [
 		category: "Architecture",
 		location: "Tokyo, Japan",
 		year: "2024",
-		image: "/modern-geometric-building-tokyo-architecture.png",
+		image: getAssetPath("/modern-geometric-building-tokyo-architecture.png"),
 		description:
 			"A study of geometric forms in contemporary Japanese architecture, exploring the interplay between traditional minimalism and modern urban design.",
 		featured: true,
@@ -30,7 +31,7 @@ const portfolioItems = [
 		category: "Photography",
 		location: "Berlin, Germany",
 		year: "2023",
-		image: "/brutalist-concrete-architecture-berlin-dramatic-li.png",
+		image: getAssetPath("/brutalist-concrete-architecture-berlin-dramatic-li.png"),
 		description: "Capturing the raw beauty of brutalist architecture through dramatic lighting and bold compositions.",
 		featured: false,
 	},
@@ -40,7 +41,7 @@ const portfolioItems = [
 		category: "Photography",
 		location: "Barcelona, Spain",
 		year: "2023",
-		image: "/architectural-photography-natural-light-barcelona-.png",
+		image: getAssetPath("/architectural-photography-natural-light-barcelona-.png"),
 		description: "An exploration of how natural light transforms architectural spaces throughout the day.",
 		featured: true,
 	},
@@ -50,7 +51,7 @@ const portfolioItems = [
 		category: "Interior",
 		location: "Copenhagen, Denmark",
 		year: "2024",
-		image: "/minimalist-interior-design-copenhagen-clean-lines.png",
+		image: getAssetPath("/minimalist-interior-design-copenhagen-clean-lines.png"),
 		description: "Documenting the essence of Scandinavian minimalism in contemporary interior spaces.",
 		featured: false,
 	},
@@ -60,7 +61,7 @@ const portfolioItems = [
 		category: "Architecture",
 		location: "Manchester, UK",
 		year: "2023",
-		image: "/industrial-architecture-manchester-converted-wareh.png",
+		image: getAssetPath("/industrial-architecture-manchester-converted-wareh.png"),
 		description: "The transformation of industrial heritage buildings into modern architectural marvels.",
 		featured: false,
 	},
@@ -70,7 +71,7 @@ const portfolioItems = [
 		category: "Photography",
 		location: "Los Angeles, USA",
 		year: "2024",
-		image: "/architectural-shadows-los-angeles-modern-building-.png",
+		image: getAssetPath("/architectural-shadows-los-angeles-modern-building-.png"),
 		description: "Exploring the dramatic interplay of shadows and geometric forms in contemporary architecture.",
 		featured: true,
 	},
@@ -175,7 +176,7 @@ export default function PortfolioPage() {
 										{viewMode === "grid" ? (
 											<div className="aspect-[4/3] relative overflow-hidden layer-base">
 												<Image
-													src={item.image || "/placeholder.svg"}
+													src={item.image || getAssetPath("/placeholder.svg")}
 													alt={item.title}
 													fill
 													className="object-cover group-hover:scale-110 group-hover:rotate-1 transition-all duration-1000"
@@ -201,7 +202,7 @@ export default function PortfolioPage() {
 											<div className="flex space-golden p-6">
 												<div className="w-48 h-32 relative overflow-hidden flex-shrink-0">
 													<Image
-														src={item.image || "/placeholder.svg"}
+														src={item.image || getAssetPath("/placeholder.svg")}
 														alt={item.title}
 														fill
 														className="object-cover group-hover:scale-105 transition-transform duration-300"
@@ -224,7 +225,7 @@ export default function PortfolioPage() {
 									<div className="grid grid-cols-1 lg:grid-cols-2 gap-8 p-2">
 										<div className="aspect-[4/3] relative overflow-hidden">
 											<Image
-												src={item.image || "/placeholder.svg"}
+												src={item.image || getAssetPath("/placeholder.svg")}
 												alt={item.title}
 												fill
 												className="object-cover"
