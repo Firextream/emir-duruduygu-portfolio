@@ -42,6 +42,9 @@ jobs:
         NOTION_BLOG_DATABASE_ID: ${{ secrets.NOTION_BLOG_DATABASE_ID }}
         NOTION_GALLERY_DATABASE_ID: ${{ secrets.NOTION_GALLERY_DATABASE_ID }}
 
+    - name: Add .nojekyll file
+      run: touch ./out/.nojekyll
+
     - name: Setup Pages
       uses: actions/configure-pages@v5
 
