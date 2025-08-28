@@ -39,6 +39,17 @@ const nextConfig = {
       },
     ],
   },
+  // Exclude API routes from static export
+  exportPathMap: async function () {
+    return {
+      '/': { page: '/' },
+      '/portfolio': { page: '/portfolio' },
+      '/blog': { page: '/blog' },
+      '/gallery': { page: '/gallery' },
+      '/contact': { page: '/contact' },
+      '/resume': { page: '/resume' },
+    }
+  },
 }
 
 export default nextConfig
