@@ -114,7 +114,7 @@ export function Navigation() {
           <Button
             variant="ghost"
             size="sm"
-            className="md:hidden p-3 hover:bg-accent/10 focus:bg-accent/10 active:bg-accent/20 min-h-[48px] min-w-[48px] flex items-center justify-center touch-manipulation rounded-lg transition-all duration-200"
+            className="md:hidden p-3 hover:bg-accent/10 focus:bg-accent/10 active:bg-accent/20 min-h-[52px] min-w-[52px] flex items-center justify-center touch-manipulation rounded-xl transition-all duration-200 border border-transparent hover:border-border/30"
             onClick={() => setIsOpen(!isOpen)}
             aria-expanded={isOpen}
             aria-controls="mobile-menu"
@@ -145,20 +145,20 @@ export function Navigation() {
           id="mobile-menu"
           className={`md:hidden transition-all duration-500 ease-out ${
             isOpen ? "max-h-96 opacity-100 visible" : "max-h-0 opacity-0 invisible"
-          } overflow-hidden bg-background/98 backdrop-blur-xl border-b border-border/50 shadow-lg`}
+          } overflow-hidden bg-background/98 backdrop-blur-xl border-b border-border/50 shadow-2xl rounded-b-2xl mx-4`}
           aria-hidden={!isOpen}
           role="menu"
           aria-labelledby="mobile-menu-button"
         >
-          <div className="py-4 sm:py-6 space-y-1">
+          <div className="py-6 space-y-2">
             {navItems.map((item, index) => (
               <Link
                 key={item.href}
                 href={item.href}
-                className={`group flex items-center font-light text-lg tracking-wide transition-all duration-300 py-4 px-6 min-h-[56px] rounded-xl mx-4 touch-manipulation focus:outline-none focus:ring-2 focus:ring-accent/50 ${
+                className={`group flex items-center font-light text-lg tracking-wide transition-all duration-300 py-4 px-6 min-h-[60px] rounded-2xl mx-4 touch-manipulation focus:outline-none focus:ring-2 focus:ring-accent/50 ${
                   pathname === item.href 
-                    ? "text-accent bg-accent/10 border border-accent/20 shadow-sm" 
-                    : "text-muted-foreground hover:text-foreground hover:bg-accent/10 active:bg-accent/20 focus:bg-accent/10"
+                    ? "text-accent bg-accent/10 border border-accent/30 shadow-sm scale-[1.02]" 
+                    : "text-muted-foreground hover:text-foreground hover:bg-accent/10 active:bg-accent/20 focus:bg-accent/10 hover:scale-[1.01]"
                 }`}
                 style={{
                   animationDelay: `${index * 100}ms`,
@@ -169,15 +169,15 @@ export function Navigation() {
                 role="menuitem"
                 tabIndex={isOpen ? 0 : -1}
               >
-                <span className="relative flex items-center gap-3">
+                <span className="relative flex items-center gap-4">
                   <span 
-                    className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                      pathname === item.href ? "bg-accent" : "bg-transparent group-hover:bg-accent/50"
+                    className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
+                      pathname === item.href ? "bg-accent shadow-md" : "bg-transparent group-hover:bg-accent/50"
                     }`} 
                   />
                   {item.label}
                   <span 
-                    className={`absolute -bottom-1 left-6 h-0.5 bg-accent transition-all duration-300 ${
+                    className={`absolute -bottom-1 left-7 h-0.5 bg-accent transition-all duration-300 ${
                       pathname === item.href ? "w-full" : "w-0 group-hover:w-full"
                     }`} 
                   />
