@@ -21,16 +21,12 @@ export default function ReadTimeManager() {
     setResults(null)
     
     try {
-      const response = await fetch('/api/update-read-times', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ updateAll: true })
+      // Static mode: This feature is not available in static export
+      setResults({
+        success: false,
+        error: 'This feature is not available in static export mode',
+        details: 'API routes are not supported in static export. Please use the development server for this functionality.'
       })
-      
-      const data = await response.json()
-      setResults(data)
     } catch (error) {
       setResults({
         success: false,
@@ -49,16 +45,12 @@ export default function ReadTimeManager() {
     setSingleResults(null)
     
     try {
-      const response = await fetch('/api/update-read-times', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ pageId: singlePageId.trim() })
+      // Static mode: This feature is not available in static export
+      setSingleResults({
+        success: false,
+        error: 'This feature is not available in static export mode',
+        details: 'API routes are not supported in static export. Please use the development server for this functionality.'
       })
-      
-      const data = await response.json()
-      setSingleResults(data)
     } catch (error) {
       setSingleResults({
         success: false,
@@ -77,9 +69,12 @@ export default function ReadTimeManager() {
     setSingleResults(null)
     
     try {
-      const response = await fetch(`/api/update-read-times?pageId=${encodeURIComponent(singlePageId.trim())}`)
-      const data = await response.json()
-      setSingleResults(data)
+      // Static mode: This feature is not available in static export
+      setSingleResults({
+        success: false,
+        error: 'This feature is not available in static export mode',
+        details: 'API routes are not supported in static export. Please use the development server for this functionality.'
+      })
     } catch (error) {
       setSingleResults({
         success: false,

@@ -61,20 +61,14 @@ export default function GalleryPage() {
   useEffect(() => {
     const fetchGalleryImages = async () => {
       try {
-        const response = await fetch("/api/gallery")
-        const data = await response.json()
-        
-        if (data.success && data.images?.length > 0) {
-          setGalleryImages(data.images)
-        } else {
-          setGalleryImages(fallbackImages)
-        }
+        // For static export, use fallback images
+        setGalleryImages(fallbackImages)
         setError(null)
+        setLoading(false)
       } catch (error) {
-        console.error("Error fetching gallery images:", error)
+        console.error("Error loading gallery images:", error)
         setError("Failed to load gallery images")
         setGalleryImages(fallbackImages)
-      } finally {
         setLoading(false)
       }
     }

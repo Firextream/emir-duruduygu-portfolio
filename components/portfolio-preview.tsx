@@ -62,24 +62,15 @@ export function PortfolioPreview() {
   useEffect(() => {
     const fetchGalleryImages = async () => {
       try {
-        const response = await fetch("/api/gallery?limit=36")
-        const data = await response.json()
-        
-        if (data.success && data.images?.length > 0) {
-          // Shuffle and take last 36 images
-          const shuffled = [...data.images].sort(() => Math.random() - 0.5)
-          setGalleryImages(shuffled.slice(0, 36))
-        } else {
-          // Use fallback images repeated to fill 36 slots
-          const repeated = Array(9).fill(fallbackImages).flat()
-          setGalleryImages(repeated.slice(0, 36))
-        }
+        // For static export, use fallback images
+        const repeated = Array(9).fill(fallbackImages).flat()
+        setGalleryImages(repeated.slice(0, 36))
+        setLoading(false)
       } catch (error) {
-        console.error("Error fetching gallery images:", error)
+        console.error("Error loading gallery images:", error)
         // Use fallback images repeated to fill 36 slots
         const repeated = Array(9).fill(fallbackImages).flat()
         setGalleryImages(repeated.slice(0, 36))
-      } finally {
         setLoading(false)
       }
     }

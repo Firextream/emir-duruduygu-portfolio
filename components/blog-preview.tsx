@@ -26,30 +26,14 @@ export function BlogPreview() {
 	useEffect(() => {
 		const fetchBlogs = async () => {
 			try {
-				const response = await fetch("/api/blogs?limit=3")
-				
-				if (!response.ok) {
-					throw new Error(`HTTP error! status: ${response.status}`)
-				}
-				
-				const data = await response.json()
-				
-				if (!data.success) {
-					throw new Error(data.error || "Failed to fetch blog posts")
-				}
-				
-				// Sort by date (newest first) and limit to 3
-				const sortedPosts = (data.posts || []).sort((a: BlogPost, b: BlogPost) => 
-					new Date(b.date).getTime() - new Date(a.date).getTime()
-				).slice(0, 3)
-				
-				setBlogPosts(sortedPosts)
+				// For static export, use empty array (no blog posts)
+				setBlogPosts([])
 				setError(null)
+				setLoading(false)
 			} catch (error) {
-				console.error("Error fetching blogs:", error)
+				console.error("Error loading blogs:", error)
 				setError(error instanceof Error ? error.message : "Failed to load blog posts")
 				setBlogPosts([])
-			} finally {
 				setLoading(false)
 			}
 		}
