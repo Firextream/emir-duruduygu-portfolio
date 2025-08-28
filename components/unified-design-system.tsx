@@ -31,7 +31,7 @@ export function FilterTabs({
   }
 
   return (
-    <div className="flex flex-wrap gap-6 justify-start">
+    <div className="flex flex-wrap gap-3 sm:gap-6 justify-start">
       {categories.map((category) => (
         <Button
           key={category}
@@ -39,7 +39,7 @@ export function FilterTabs({
           size="sm"
           onClick={() => onCategoryChange(category)}
           className={`
-            px-4 py-2 font-light text-sm tracking-wide transition-all duration-300 rounded-none
+            px-3 sm:px-4 py-2 font-light text-xs sm:text-sm tracking-wide transition-all duration-300 rounded-none whitespace-nowrap
             ${selectedCategory === category 
               ? getActiveClasses() 
               : getInactiveClasses()
