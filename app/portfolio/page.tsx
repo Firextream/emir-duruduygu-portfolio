@@ -127,25 +127,25 @@ export default function PortfolioPage() {
 
 						<div className="flex space-golden items-center">
 							<div className="relative">
-								<Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground/60" />
+								<Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground/40" />
 								<Input
 									placeholder="Search projects..."
 									value={searchTerm}
 									onChange={(e) => setSearchTerm(e.target.value)}
-									className="pl-12 w-72 font-light tracking-wide bg-card/50 border-border/30 backdrop-blur-sm focus:bg-card/80 focus:border-accent/30 transition-all duration-300 rounded-full"
+									className="pl-12 w-80 font-light tracking-wide bg-transparent border-0 border-b border-border/20 focus:border-accent/40 transition-all duration-300 rounded-none shadow-none focus:shadow-none"
 								/>
 							</div>
 
-							<div className="flex gap-1 bg-card/30 backdrop-blur-sm rounded-full p-1 border border-border/20">
+							<div className="flex gap-1">
 								<Button
 									variant={viewMode === "grid" ? "default" : "ghost"}
 									size="sm"
 									onClick={() => setViewMode("grid")}
-									className={`rounded-full transition-all duration-300 ${
+									className={`transition-all duration-300 ${
 										viewMode === "grid" 
-											? "bg-accent/20 text-accent hover:bg-accent/30 shadow-lg shadow-accent/10" 
-											: "text-muted-foreground hover:text-foreground hover:bg-card/50"
-									}`}
+											? "text-accent border-b-2 border-accent bg-transparent hover:bg-accent/5" 
+											: "text-muted-foreground hover:text-foreground bg-transparent"
+									} rounded-none border-0 shadow-none`}
 								>
 									<Grid className="h-4 w-4" />
 								</Button>
@@ -153,11 +153,11 @@ export default function PortfolioPage() {
 									variant={viewMode === "list" ? "default" : "ghost"}
 									size="sm"
 									onClick={() => setViewMode("list")}
-									className={`rounded-full transition-all duration-300 ${
+									className={`transition-all duration-300 ${
 										viewMode === "list" 
-											? "bg-accent/20 text-accent hover:bg-accent/30 shadow-lg shadow-accent/10" 
-											: "text-muted-foreground hover:text-foreground hover:bg-card/50"
-									}`}
+											? "text-accent border-b-2 border-accent bg-transparent hover:bg-accent/5" 
+											: "text-muted-foreground hover:text-foreground bg-transparent"
+									} rounded-none border-0 shadow-none`}
 								>
 									<List className="h-4 w-4" />
 								</Button>
@@ -168,59 +168,57 @@ export default function PortfolioPage() {
 					<div
 						className={`${
 							viewMode === "grid"
-								? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12"
-								: "space-y-12"
+								? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+								: "space-y-8"
 						} animate-in fade-in duration-1000`}
 					>
 						{filteredItems.map((item, index) => (
 							<Dialog key={item.id}>
 								<DialogTrigger asChild>
 									<Card
-										className={`group cursor-pointer overflow-hidden border-0 bg-transparent hover:bg-card/10 transition-all duration-700 hover:-translate-y-2 ${
-											item.featured ? 'opacity-100' : 'opacity-100'
-										}`}
+										className="group cursor-pointer overflow-hidden border-0 bg-transparent hover:bg-card/5 transition-all duration-500 hover:-translate-y-1"
 										style={{ 
-											animationDelay: `${index * 150}ms`,
+											animationDelay: `${index * 100}ms`,
 											transform: 'translateY(20px)',
-											animation: `slideUp 0.8s ease-out ${index * 150}ms forwards`
+											animation: `slideUp 0.6s ease-out ${index * 100}ms forwards`
 										}}
 									>
 										{viewMode === "grid" ? (
-											<div className="aspect-[4/3] relative overflow-hidden rounded-lg group">
-												<Image
-													src={item.image || getAssetPath("/placeholder.svg")}
-													alt={item.title}
-													fill
-													className="object-cover group-hover:scale-105 transition-all duration-700 ease-out"
-													sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-												/>
-												<div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-												
-												{/* Simple category badge */}
-												<div className="absolute top-4 left-4">
-													<span className="bg-white/90 backdrop-blur-sm text-black px-3 py-1 rounded-full text-sm font-medium">
-														{item.category}
-													</span>
-												</div>
-
-												{/* Clean content overlay */}
-												<div className="absolute bottom-0 left-0 right-0 p-6 text-white transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-													<h3 className="text-xl font-semibold mb-2 text-white">
-														{item.title}
-													</h3>
-													<div className="flex justify-between items-center text-sm text-white/80">
-														<span>{item.location}</span>
-														<span>{item.year}</span>
+											<div className="space-y-4">
+												<div className="aspect-[4/3] relative overflow-hidden rounded-lg">
+													<Image
+														src={item.image || getAssetPath("/placeholder.svg")}
+														alt={item.title}
+														fill
+														className="object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+														sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+													/>
+													<div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
+													
+													{/* Simple category badge */}
+													<div className="absolute top-3 left-3">
+														<span className="bg-white/90 backdrop-blur-sm text-black px-2 py-1 rounded text-xs font-medium">
+															{item.category}
+														</span>
 													</div>
 												</div>
 
-												{/* Simple hover indicator */}
-												<div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-													<ArrowUpRight className="w-5 h-5 text-white" />
+												{/* Content below image */}
+												<div className="space-y-2 pt-2">
+													<h3 className="text-lg font-semibold text-foreground group-hover:text-accent transition-colors duration-300">
+														{item.title}
+													</h3>
+													<div className="flex justify-between items-center text-sm text-muted-foreground">
+														<span>{item.location}</span>
+														<span>{item.year}</span>
+													</div>
+													<p className="text-muted-foreground text-sm leading-relaxed line-clamp-2">
+														{item.description}
+													</p>
 												</div>
 											</div>
 										) : (
-											<div className="flex gap-6 p-6">
+											<div className="flex gap-6 p-6 border-b border-border/10 last:border-b-0">
 												<div className="w-48 h-32 relative overflow-hidden flex-shrink-0 rounded-lg">
 													<Image
 														src={item.image || getAssetPath("/placeholder.svg")}
@@ -231,48 +229,107 @@ export default function PortfolioPage() {
 												</div>
 												<div className="flex-1 space-y-3">
 													<div className="flex items-center gap-3">
-														<span className="bg-muted text-muted-foreground px-3 py-1 rounded-full text-sm">{item.category}</span>
-														<span className="text-sm text-muted-foreground">{item.year}</span>
+														<span className="bg-muted text-muted-foreground px-2 py-1 rounded text-xs">{item.category}</span>
+														<span className="text-xs text-muted-foreground">{item.year}</span>
 													</div>
-													<h3 className="text-xl font-semibold text-foreground">{item.title}</h3>
+													<h3 className="text-xl font-semibold text-foreground group-hover:text-accent transition-colors duration-300">{item.title}</h3>
 													<p className="text-muted-foreground text-sm">{item.location}</p>
-													<p className="text-foreground/80 leading-relaxed">{item.description}</p>
+													<p className="text-foreground/80 leading-relaxed text-sm line-clamp-3">{item.description}</p>
 												</div>
 											</div>
 										)}
 									</Card>
 								</DialogTrigger>
-								<DialogContent className="max-w-5xl">
-									<div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-										<div className="aspect-[4/3] relative overflow-hidden rounded-lg">
+								<DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+									<div className="space-y-8">
+										{/* Header */}
+										<div className="space-y-4">
+											<div className="flex items-center gap-3">
+												<span className="bg-muted text-muted-foreground px-3 py-1 rounded text-sm">{item.category}</span>
+												<span className="text-sm text-muted-foreground">{item.year}</span>
+											</div>
+											<h1 className="text-4xl font-bold text-foreground leading-tight">{item.title}</h1>
+											<div className="flex items-center gap-4 text-muted-foreground">
+												<span className="flex items-center gap-2">
+													<MapPin className="w-4 h-4" />
+													{item.location}
+												</span>
+												<span className="flex items-center gap-2">
+													<Calendar className="w-4 h-4" />
+													{item.year}
+												</span>
+											</div>
+										</div>
+
+										{/* Main Image */}
+										<div className="relative aspect-[16/10] overflow-hidden rounded-lg">
 											<Image
 												src={item.image || getAssetPath("/placeholder.svg")}
 												alt={item.title}
 												fill
 												className="object-cover"
-												sizes="(max-width: 1200px) 100vw, 50vw"
+												sizes="(max-width: 1200px) 100vw, 80vw"
 											/>
 										</div>
-										<div className="space-y-6">
-											<div className="space-y-4">
-												<span className="bg-muted text-muted-foreground px-3 py-1 rounded-full text-sm">
-													{item.category}
-												</span>
-												<h2 className="text-3xl font-bold text-foreground">
-													{item.title}
-												</h2>
-												<div className="flex items-center gap-4 text-muted-foreground">
-													<span className="flex items-center gap-2">
-														<MapPin className="w-4 h-4" />
-														{item.location}
-													</span>
-													<span className="flex items-center gap-2">
-														<Calendar className="w-4 h-4" />
-														{item.year}
-													</span>
+
+										{/* Article Content */}
+										<div className="prose prose-lg max-w-none">
+											<div className="space-y-6">
+												<div className="text-lg text-foreground/90 leading-relaxed">
+													{item.description}
+												</div>
+												
+												<div className="space-y-4">
+													<h2 className="text-2xl font-semibold text-foreground">Project Overview</h2>
+													<p className="text-foreground/80 leading-relaxed">
+														This architectural project represents a thoughtful exploration of {item.category.toLowerCase()} design principles, 
+														showcasing how contemporary architecture can harmoniously blend functionality with aesthetic appeal. 
+														Located in {item.location}, this project exemplifies the cutting-edge design trends that defined {item.year}.
+													</p>
+												</div>
+
+												<div className="space-y-4">
+													<h2 className="text-2xl font-semibold text-foreground">Design Philosophy</h2>
+													<p className="text-foreground/80 leading-relaxed">
+														The design approach emphasizes clean lines, sustainable materials, and innovative spatial relationships. 
+														Every element has been carefully considered to create a cohesive architectural narrative that speaks to both 
+														the immediate context and broader urban fabric.
+													</p>
+												</div>
+
+												<div className="space-y-4">
+													<h2 className="text-2xl font-semibold text-foreground">Technical Details</h2>
+													<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+														<div className="space-y-2">
+															<h3 className="font-semibold text-foreground">Project Information</h3>
+															<div className="space-y-1 text-sm text-muted-foreground">
+																<div><span className="font-medium">Category:</span> {item.category}</div>
+																<div><span className="font-medium">Location:</span> {item.location}</div>
+																<div><span className="font-medium">Year:</span> {item.year}</div>
+																<div><span className="font-medium">Status:</span> Completed</div>
+															</div>
+														</div>
+														<div className="space-y-2">
+															<h3 className="font-semibold text-foreground">Key Features</h3>
+															<ul className="space-y-1 text-sm text-muted-foreground">
+																<li>• Sustainable design principles</li>
+																<li>• Natural light optimization</li>
+																<li>• Modern material palette</li>
+																<li>• Contextual integration</li>
+															</ul>
+														</div>
+													</div>
+												</div>
+
+												<div className="space-y-4">
+													<h2 className="text-2xl font-semibold text-foreground">Impact & Recognition</h2>
+													<p className="text-foreground/80 leading-relaxed">
+														This project has contributed to the ongoing dialogue about contemporary {item.category.toLowerCase()} design, 
+														demonstrating how thoughtful architecture can enhance both individual experience and community fabric. 
+														The project stands as a testament to the power of design to transform spaces and create lasting value.
+													</p>
 												</div>
 											</div>
-											<p className="text-foreground/80 leading-relaxed">{item.description}</p>
 										</div>
 									</div>
 								</DialogContent>
