@@ -98,41 +98,27 @@ const fallbackImages = [
     place: "Zurich",
     category: "Minimal",
   },
-  {
-    id: "10",
-    src: getAssetPath("/industrial-architecture-manchester-converted-wareh.png"),
-    alt: "Industrial Heritage",
-    name: "Industrial Heritage",
-    date: "2024",
-    place: "Manchester",
-    category: "Industrial",
-  },
-  {
-    id: "11",
-    src: getAssetPath("/modern-geometric-building-tokyo-architecture.png"),
-    alt: "Geometric Forms",
-    name: "Geometric Forms",
-    date: "2024",
-    place: "Tokyo",
-    category: "Geometric",
-  },
-  {
-    id: "12",
-    src: getAssetPath("/concrete-stairs-with-dramatic-lighting.png"),
-    alt: "Dramatic Stairs",
-    name: "Dramatic Stairs",
-    date: "2024",
-    place: "Oslo",
-    category: "Details",
-  },
 ]
 
 export function PortfolioPreview() {
-  const [galleryImages, setGalleryImages] = useState<GalleryImage[]>([])
+  const [images, setImages] = useState<GalleryImage[]>([])
   const [loading, setLoading] = useState(true)
-  const scrollContainerRef = useRef<HTMLDivElement>(null)
+  const [error, setError] = useState<string | null>(null)
   const [canScrollLeft, setCanScrollLeft] = useState(false)
-  const [canScrollRight, setCanScrollRight] = useState(true)
+  const [canScrollRight, setCanScrollRight] = useState(false)
+  const scrollContainerRef = useRef<HTMLDivElement>(null)
+
+  const scrollLeft = () => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollBy({ left: -400, behavior: 'smooth' })
+    }
+  }
+
+  const scrollRight = () => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollBy({ left: 400, behavior: 'smooth' })
+    }
+  }
 
   const checkScrollButtons = () => {
     if (scrollContainerRef.current) {
@@ -142,41 +128,21 @@ export function PortfolioPreview() {
     }
   }
 
-  const scrollLeft = () => {
-    if (scrollContainerRef.current) {
-      const scrollAmount = 340 // Width of one card + gap (w-64 = 256px + larger gap)
-      scrollContainerRef.current.scrollBy({ 
-        left: -scrollAmount, 
-        behavior: 'smooth' 
-      })
-    }
-  }
-
-  const scrollRight = () => {
-    if (scrollContainerRef.current) {
-      const scrollAmount = 340 // Width of one card + gap (w-64 = 256px + larger gap)
-      scrollContainerRef.current.scrollBy({ 
-        left: scrollAmount, 
-        behavior: 'smooth' 
-      })
-    }
-  }
-
   useEffect(() => {
-    const fetchGalleryImages = async () => {
+    const loadImages = async () => {
       try {
-        // For static export, use fallback images
-        setGalleryImages(fallbackImages)
-        setLoading(false)
+        setImages(fallbackImages)
+        setError(null)
       } catch (error) {
-        console.error("Error loading gallery images:", error)
-        // Use fallback images
-        setGalleryImages(fallbackImages)
+        console.error("Error loading images:", error)
+        setError(error instanceof Error ? error.message : "Failed to load images")
+        setImages(fallbackImages)
+      } finally {
         setLoading(false)
       }
     }
 
-    fetchGalleryImages()
+    loadImages()
   }, [])
 
   useEffect(() => {
@@ -189,85 +155,95 @@ export function PortfolioPreview() {
   }, [loading])
 
   return (
-    <section className="py-24 sm:py-32 lg:py-40 px-4 sm:px-6 bg-background">
-      <div className="max-w-8xl mx-auto">
-        <div className="mb-20 sm:mb-24 lg:mb-28">
-          <h2 className="font-heading font-extralight text-4xl sm:text-5xl md:text-6xl lg:text-7xl mb-4 sm:mb-6 text-foreground tracking-tight">
-            Visual Stories
-          </h2>
-          <p className="text-muted-foreground text-sm sm:text-base md:text-lg font-light leading-relaxed max-w-2xl opacity-80">
-            Architectural photography exploring the relationship between form, light, and human experience
-          </p>
+    <section className="py-32 px-6 max-w-7xl mx-auto relative">
+      <div className="mb-16">
+        <h2 className="text-4xl md:text-5xl font-light text-foreground mb-4">
+          Visual Stories
+        </h2>
+        <p className="text-muted-foreground text-lg max-w-2xl">
+          A curated collection of architectural moments captured through a modernist lens.
+        </p>
+      </div>
+
+      {loading ? (
+        <div className="flex gap-6 overflow-hidden">
+          {Array.from({ length: 4 }, (_, i) => (
+            <div key={i} className="w-96 h-64 bg-muted animate-pulse rounded-lg flex-shrink-0" />
+          ))}
         </div>
-
-        {/* Enhanced side-scrolling gallery */}
-        <div className="relative mb-20 sm:mb-24">
-          {/* Enhanced scroll buttons */}
-          <Button
-            variant="ghost"
-            size="icon"
-            className={`absolute left-3 top-1/2 transform -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-background/70 backdrop-blur-sm hover:bg-background/90 transition-all duration-200 ${!canScrollLeft ? 'opacity-0 pointer-events-none' : 'opacity-100'} border border-border/20`}
-            onClick={scrollLeft}
-            disabled={!canScrollLeft}
-          >
-            <ChevronLeft className="h-4 w-4" />
-          </Button>
-
-          <Button
-            variant="ghost"
-            size="icon"
-            className={`absolute right-3 top-1/2 transform -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-background/70 backdrop-blur-sm hover:bg-background/90 transition-all duration-200 ${!canScrollRight ? 'opacity-0 pointer-events-none' : 'opacity-100'} border border-border/20`}
-            onClick={scrollRight}
-            disabled={!canScrollRight}
-          >
-            <ChevronRight className="h-4 w-4" />
-          </Button>
-
+      ) : error ? (
+        <div className="text-center py-16">
+          <p className="text-muted-foreground mb-4">Unable to load gallery images</p>
+          <p className="text-sm text-muted-foreground/70">{error}</p>
+        </div>
+      ) : (
+        <div className="relative group">
           <div 
             ref={scrollContainerRef}
-            className="overflow-x-auto scrollbar-hide scroll-smooth"
-            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+            className="flex gap-8 overflow-x-auto scrollbar-hide pb-4"
+            style={{
+              scrollbarWidth: 'none',
+              msOverflowStyle: 'none',
+            }}
           >
-            <div className="flex gap-3 sm:gap-4 md:gap-5 pb-6 px-16" style={{ width: 'max-content' }}>
-              {loading ? (
-                // Enhanced loading skeleton
-                Array(8).fill(0).map((_, index) => (
-                  <div key={index} className="flex-shrink-0 w-64 sm:w-80 md:w-96 h-44 sm:h-56 md:h-64 bg-muted/50 animate-pulse rounded-sm" />
-                ))
-              ) : (
-                galleryImages.slice(0, 8).map((image, index) => (
-                  <div 
-                    key={`${image.id}-${index}`} 
-                    className="flex-shrink-0 w-64 sm:w-80 md:w-96 h-44 sm:h-56 md:h-64 group cursor-pointer relative overflow-hidden bg-card transition-all duration-300 hover:shadow-xl rounded-sm"
-                    style={{ animationDelay: `${index * 100}ms` }}
-                  >
-                    <img
-                      src={image.src || getAssetPath("/placeholder.svg")}
-                      alt={image.alt || image.name}
-                      className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
-                    />
-                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300">
-                      <div className="absolute bottom-0 left-0 right-0 p-5 text-white transform translate-y-full group-hover:translate-y-0 transition-all duration-300 ease-out">
-                        <h3 className="font-light text-base tracking-wide mb-1">
-                          {image.name}
-                        </h3>
-                        <p className="text-sm opacity-80">
-                          {image.place}
-                        </p>
+            {images.map((image, index) => (
+              <div
+                key={image.id}
+                className="flex-shrink-0 group/item relative overflow-hidden rounded-lg bg-card border border-border hover:border-accent/50 transition-all duration-500 hover:shadow-2xl hover:shadow-black/20 w-64 sm:w-80 md:w-96"
+                style={{
+                  animationDelay: `${index * 100}ms`,
+                }}
+              >
+                <div className="aspect-[4/3] relative overflow-hidden">
+                  <img
+                    src={image.src}
+                    alt={image.alt}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover/item:scale-110"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-black/20 group-hover/item:bg-black/40 transition-colors duration-500" />
+                  
+                  <div className="absolute inset-0 flex items-end p-6">
+                    <div className="text-white">
+                      <h3 className="text-xl font-light mb-2 leading-tight">{image.name}</h3>
+                      <div className="flex items-center text-sm text-white/80 gap-4">
+                        <span>{image.place}</span>
+                        <span>•</span>
+                        <span>{image.date}</span>
                       </div>
                     </div>
                   </div>
-                ))
-              )}
-            </div>
+                </div>
+              </div>
+            ))}
           </div>
-          
-          {/* Enhanced gradient overlays */}
-          <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-background to-transparent pointer-events-none z-[5]" />
-          <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-background to-transparent pointer-events-none z-[5]" />
-        </div>
 
-        <div className="text-center">
+          {canScrollLeft && (
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={scrollLeft}
+              className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white border-white/20 shadow-lg backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-all duration-300 z-10 w-10 h-10 rounded-full"
+            >
+              <ChevronLeft className="h-5 w-5 text-foreground" />
+            </Button>
+          )}
+
+          {canScrollRight && (
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={scrollRight}
+              className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white border-white/20 shadow-lg backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-all duration-300 z-10 w-10 h-10 rounded-full"
+            >
+              <ChevronRight className="h-5 w-5 text-foreground" />
+            </Button>
+          )}
+        </div>
+      )}
+
+      <div className="text-center mt-16">
+        <div className="inline-flex">
           <Button
             asChild
             variant="ghost"

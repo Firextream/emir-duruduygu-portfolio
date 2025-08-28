@@ -75,7 +75,7 @@ export function BlogPreview() {
 	}
 
 	return (
-		<section className="py-20 px-6 max-w-7xl mx-auto">
+		<section className="py-32 px-6 max-w-7xl mx-auto">
 			<div className="mb-16">
 				<h2 className="text-4xl md:text-5xl font-light text-foreground mb-4">
 					Latest Thoughts
