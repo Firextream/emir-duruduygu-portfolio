@@ -16,30 +16,30 @@ export function FilterTabs({
   const getActiveClasses = () => {
     switch (activeColor) {
       case "green":
-        return "bg-accent/20 text-accent border-accent/30 hover:bg-accent/30 backdrop-blur-sm shadow-lg shadow-accent/10"
+        return "bg-accent/10 text-accent border-0 border-b-2 border-accent hover:bg-accent/15 font-medium"
       case "primary":
-        return "bg-primary/20 text-primary border-primary/30 hover:bg-primary/30 backdrop-blur-sm shadow-lg shadow-primary/10"
+        return "bg-primary/10 text-primary border-0 border-b-2 border-primary hover:bg-primary/15 font-medium"
       case "accent":
-        return "bg-accent/20 text-accent border-accent/30 hover:bg-accent/30 backdrop-blur-sm shadow-lg shadow-accent/10"
+        return "bg-accent/10 text-accent border-0 border-b-2 border-accent hover:bg-accent/15 font-medium"
       default:
-        return "bg-accent/20 text-accent border-accent/30 hover:bg-accent/30 backdrop-blur-sm shadow-lg shadow-accent/10"
+        return "bg-accent/10 text-accent border-0 border-b-2 border-accent hover:bg-accent/15 font-medium"
     }
   }
 
   const getInactiveClasses = () => {
-    return "bg-card/50 text-muted-foreground border-border/30 hover:bg-card/80 hover:text-foreground hover:border-border/50 backdrop-blur-sm transition-all duration-300"
+    return "bg-transparent text-muted-foreground border-0 border-b-2 border-transparent hover:text-foreground hover:border-border/30 transition-all duration-300"
   }
 
   return (
-    <div className="flex flex-wrap gap-2 justify-start">
+    <div className="flex flex-wrap gap-6 justify-start">
       {categories.map((category) => (
         <Button
           key={category}
-          variant="outline"
+          variant="ghost"
           size="sm"
           onClick={() => onCategoryChange(category)}
           className={`
-            px-5 py-2 font-light text-sm tracking-wide transition-all duration-500 border-0 rounded-full
+            px-4 py-2 font-light text-sm tracking-wide transition-all duration-300 rounded-none
             ${selectedCategory === category 
               ? getActiveClasses() 
               : getInactiveClasses()

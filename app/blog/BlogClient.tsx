@@ -137,7 +137,7 @@ export default function BlogClient({ posts }: { posts: (Post | null)[] }) {
               </div>
               <div className="relative group">
                 {/* Main Carousel */}
-                <div className="relative w-full h-[50vh] md:h-[60vh] lg:h-[70vh] overflow-hidden rounded-none sm:rounded-2xl">
+                <div className="relative w-full h-[50vh] md:h-[60vh] lg:h-[70vh] overflow-hidden">
                   {featuredPosts.map((post, index) => (
                     <div
                       key={post.id}
@@ -164,10 +164,10 @@ export default function BlogClient({ posts }: { posts: (Post | null)[] }) {
                           <div className="absolute bottom-0 left-0 right-0 p-6 md:p-10 lg:p-16 text-white">
                             <div className="max-w-5xl mx-auto space-golden">
                               <div className="flex items-center space-golden-sm mb-golden">
-                                <Badge variant="secondary" className="bg-accent text-accent-foreground px-4 py-1.5 text-sm font-medium">
+                                <Badge variant="secondary" className="bg-white/10 text-white border-0 backdrop-blur-sm px-3 py-1 text-xs font-light tracking-wider">
                                   Featured
                                 </Badge>
-                                <Badge variant="outline" className="border-white/40 text-white px-4 py-1.5 text-sm">
+                                <Badge variant="outline" className="border-white/20 text-white/80 border-0 bg-white/5 backdrop-blur-sm px-3 py-1 text-xs font-light">
                                   {post.category || "Uncategorized"}
                                 </Badge>
                               </div>
@@ -274,9 +274,9 @@ export default function BlogClient({ posts }: { posts: (Post | null)[] }) {
             </div>
           )}
 
-          {/* Search and Filter - Modern Portfolio Style */}
+          {/* Search and Filter - Minimalist Style */}
           <div className="mb-golden-xl">
-            <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center space-golden mb-golden">
+            <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-8 mb-golden">
               <FilterTabs
                 categories={categories}
                 selectedCategory={selectedCategory}
@@ -284,16 +284,14 @@ export default function BlogClient({ posts }: { posts: (Post | null)[] }) {
                 activeColor="accent"
               />
 
-              <div className="flex space-golden items-center">
-                <div className="relative">
-                  <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground/60" />
-                  <Input
-                    placeholder="Search articles..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="pl-12 w-72 font-light tracking-wide bg-card/50 border-border/30 backdrop-blur-sm focus:bg-card/80 focus:border-accent/30 transition-all duration-300 rounded-full"
-                  />
-                </div>
+              <div className="relative">
+                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground/40" />
+                <Input
+                  placeholder="Search articles..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="pl-12 w-80 font-light tracking-wide bg-transparent border-0 border-b border-border/20 focus:border-accent/40 transition-all duration-300 rounded-none shadow-none focus:shadow-none"
+                />
               </div>
             </div>
           </div>
@@ -308,83 +306,72 @@ export default function BlogClient({ posts }: { posts: (Post | null)[] }) {
             </p>
           </div>
 
-          {/* Blog Grid with modern framing */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 animate-in fade-in duration-1000">
+          {/* Blog Grid with minimalist design */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 animate-in fade-in duration-1000">
             {filteredPosts.map((post, index) => (
               <Link key={post.id} href={`/blog/${post.slug}`}>
                 <Card
-                  className={`group cursor-pointer overflow-hidden border-0 bg-gradient-to-br from-card/60 to-card/40 backdrop-blur-md hover:from-card/80 hover:to-card/60 shadow-lg hover:shadow-2xl hover:shadow-accent/20 transition-all duration-700 hover:-translate-y-3 rounded-2xl h-full ring-1 ring-border/20`}
+                  className={`group cursor-pointer overflow-hidden border-0 bg-transparent hover:bg-card/20 transition-all duration-700 hover:-translate-y-1 h-full shadow-none hover:shadow-lg hover:shadow-black/5`}
                   style={{ 
                     animationDelay: `${index * 150}ms`,
                     transform: 'translateY(20px)',
                     animation: `slideUp 0.8s ease-out ${index * 150}ms forwards`
                   }}
                 >
-                  <div className="aspect-[4/3] relative overflow-hidden bg-gradient-to-br from-background/5 to-background/15 rounded-2xl">
+                  <div className="aspect-[4/3] relative overflow-hidden bg-muted/30">
                     <Image
                       src={post.image ? getAssetPath(post.image) : getAssetPath("/placeholder.svg")}
                       alt={post.title}
                       fill
-                      className="object-cover group-hover:scale-110 transition-transform duration-700 rounded-2xl"
+                      className="object-cover group-hover:scale-105 transition-transform duration-700"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-50 group-hover:opacity-70 transition-all duration-700 rounded-2xl" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-all duration-700" />
                     
-                    {/* Modern floating frame */}
-                    <div className="absolute inset-2 border border-white/10 group-hover:border-white/20 transition-all duration-700 rounded-xl pointer-events-none" />
-                    
-                    {/* Modern floating badges */}
-                    <div className="absolute top-6 left-6 transform -translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
-                      <Badge variant="secondary" className="backdrop-blur-xl bg-white/15 text-white border border-white/20 font-light tracking-wider shadow-2xl hover:bg-white/25 transition-all duration-300 rounded-full px-4 py-1">
+                    {/* Minimalist floating badges */}
+                    <div className="absolute bottom-4 left-4">
+                      <Badge variant="secondary" className="bg-white/90 text-black border-0 font-light text-xs px-3 py-1">
                         {post.category || "Uncategorized"}
                       </Badge>
                     </div>
                     {post.featured && (
-                      <div className="absolute top-6 right-6 transform -translate-y-2 group-hover:translate-y-0 transition-transform duration-500 delay-100">
-                        <Badge variant="default" className="backdrop-blur-xl bg-accent/20 text-accent border border-accent/30 font-light tracking-wider shadow-2xl hover:bg-accent/30 transition-all duration-300 rounded-full px-4 py-1">
-                          Featured
-                        </Badge>
+                      <div className="absolute top-4 right-4">
+                        <div className="w-2 h-2 bg-accent rounded-full"></div>
                       </div>
                     )}
                   </div>
 
-                  <div className="p-8 flex flex-col flex-1 bg-gradient-to-br from-card/70 to-card/50 backdrop-blur-md rounded-b-2xl">
-                    <CardHeader className="p-0 mb-6">
-                      <div className="relative">
-                        {/* Modern title frame */}
-                        <div className="absolute -left-4 top-1 w-1 h-8 bg-gradient-to-b from-accent/60 to-accent/20 rounded-full" />
-                        <CardTitle className="font-heading font-light text-xl text-foreground group-hover:text-accent transition-colors line-clamp-2 leading-tight tracking-wide pl-2">
-                          {post.title}
-                        </CardTitle>
-                      </div>
-                      <CardDescription className="text-muted-foreground line-clamp-3 text-base leading-relaxed mt-4 font-light bg-card/30 p-4 rounded-lg border border-border/20">
+                  <div className="p-6 flex flex-col flex-1 bg-transparent">
+                    <CardHeader className="p-0 mb-4">
+                      <CardTitle className="font-heading font-light text-xl text-foreground group-hover:text-accent transition-colors line-clamp-2 leading-tight tracking-wide mb-3">
+                        {post.title}
+                      </CardTitle>
+                      <CardDescription className="text-muted-foreground/80 line-clamp-2 text-sm leading-relaxed font-light">
                         {post.excerpt || "No excerpt available."}
                       </CardDescription>
                     </CardHeader>
                     
                     <CardContent className="p-0 mt-auto">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-4 text-sm text-muted-foreground font-light">
-                          <div className="flex items-center gap-2 bg-muted/30 px-3 py-1 rounded-full border border-border/30">
-                            <Calendar className="h-4 w-4" />
+                      <div className="flex items-center justify-between pt-4 border-t border-border/10">
+                        <div className="flex items-center gap-4 text-muted-foreground/60 text-xs">
+                          <div className="flex items-center gap-1">
+                            <Calendar className="h-3 w-3" />
                             <time dateTime={post.date || undefined}>
                               {post.date
                                 ? new Date(post.date).toLocaleDateString("en-US", {
-                                    year: "numeric",
                                     month: "short",
                                     day: "numeric",
                                   })
                                 : "No date"}
                             </time>
                           </div>
-                          <div className="flex items-center gap-2 bg-muted/30 px-3 py-1 rounded-full border border-border/30">
-                            <Clock className="h-4 w-4" />
+                          <div className="flex items-center gap-1">
+                            <Clock className="h-3 w-3" />
                             <span>{post.readTime || "N/A"}</span>
                           </div>
                         </div>
                         
-                        <div className="flex items-center text-accent text-sm font-light opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-accent/10 px-3 py-1 rounded-full border border-accent/20">
-                          <span className="mr-2">Read</span>
-                          <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                        <div className="flex items-center text-accent text-xs font-light opacity-60 group-hover:opacity-100 transition-opacity duration-300">
+                          <ArrowRight className="h-3 w-3 group-hover:translate-x-1 transition-transform" />
                         </div>
                       </div>
                     </CardContent>
