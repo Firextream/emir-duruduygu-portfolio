@@ -144,7 +144,7 @@ export function PortfolioPreview() {
 
   const scrollLeft = () => {
     if (scrollContainerRef.current) {
-      const scrollAmount = 320 // Width of one card + gap
+      const scrollAmount = 280 // Width of one card + gap (w-56 = 224px + gap)
       scrollContainerRef.current.scrollBy({ 
         left: -scrollAmount, 
         behavior: 'smooth' 
@@ -154,7 +154,7 @@ export function PortfolioPreview() {
 
   const scrollRight = () => {
     if (scrollContainerRef.current) {
-      const scrollAmount = 320 // Width of one card + gap
+      const scrollAmount = 280 // Width of one card + gap (w-56 = 224px + gap)
       scrollContainerRef.current.scrollBy({ 
         left: scrollAmount, 
         behavior: 'smooth' 
@@ -189,40 +189,38 @@ export function PortfolioPreview() {
   }, [loading])
 
   return (
-    <section className="py-16 sm:py-24 lg:py-32 px-4 sm:px-6 bg-background">
-      <div className="max-w-6xl mx-auto">
-        <div className="mb-12 sm:mb-16 lg:mb-20">
-          <h2 className="font-heading font-extralight text-4xl sm:text-5xl md:text-6xl mb-4 sm:mb-6 text-foreground tracking-tight">
+    <section className="py-20 sm:py-28 lg:py-36 px-4 sm:px-6 bg-background">
+      <div className="max-w-7xl mx-auto">
+        <div className="mb-16 sm:mb-20 lg:mb-24">
+          <h2 className="font-heading font-extralight text-3xl sm:text-4xl md:text-5xl mb-3 sm:mb-4 text-foreground tracking-tight">
             Visual Stories
           </h2>
-          <div className="w-16 h-px bg-accent mb-6 sm:mb-8"></div>
-          <p className="text-muted-foreground text-base sm:text-lg font-light leading-relaxed max-w-xl">
+          <p className="text-muted-foreground text-sm sm:text-base font-light leading-relaxed max-w-lg opacity-80">
             Architectural photography exploring the relationship between form, light, and human experience
           </p>
         </div>
 
-        {/* Side-scrolling gallery with navigation */}
-        <div className="relative mb-12 sm:mb-16">
-          {/* Left scroll button */}
+        {/* Minimalist side-scrolling gallery */}
+        <div className="relative mb-16 sm:mb-20">
+          {/* Simplified scroll buttons */}
           <Button
-            variant="outline"
+            variant="ghost"
             size="icon"
-            className={`absolute left-4 top-1/2 transform -translate-y-1/2 z-10 rounded-full bg-background/80 backdrop-blur-sm border-border/50 hover:bg-background/90 transition-all duration-300 ${!canScrollLeft ? 'opacity-50 cursor-not-allowed' : 'hover:scale-110'}`}
+            className={`absolute left-2 top-1/2 transform -translate-y-1/2 z-10 w-8 h-8 rounded-full bg-background/60 backdrop-blur-sm hover:bg-background/80 transition-all duration-200 ${!canScrollLeft ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
             onClick={scrollLeft}
             disabled={!canScrollLeft}
           >
-            <ChevronLeft className="h-4 w-4" />
+            <ChevronLeft className="h-3 w-3" />
           </Button>
 
-          {/* Right scroll button */}
           <Button
-            variant="outline"
+            variant="ghost"
             size="icon"
-            className={`absolute right-4 top-1/2 transform -translate-y-1/2 z-10 rounded-full bg-background/80 backdrop-blur-sm border-border/50 hover:bg-background/90 transition-all duration-300 ${!canScrollRight ? 'opacity-50 cursor-not-allowed' : 'hover:scale-110'}`}
+            className={`absolute right-2 top-1/2 transform -translate-y-1/2 z-10 w-8 h-8 rounded-full bg-background/60 backdrop-blur-sm hover:bg-background/80 transition-all duration-200 ${!canScrollRight ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
             onClick={scrollRight}
             disabled={!canScrollRight}
           >
-            <ChevronRight className="h-4 w-4" />
+            <ChevronRight className="h-3 w-3" />
           </Button>
 
           <div 
@@ -230,34 +228,31 @@ export function PortfolioPreview() {
             className="overflow-x-auto scrollbar-hide scroll-smooth"
             style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
           >
-            <div className="flex gap-3 sm:gap-4 pb-4 px-16" style={{ width: 'max-content' }}>
+            <div className="flex gap-2 sm:gap-3 pb-4 px-12" style={{ width: 'max-content' }}>
               {loading ? (
-                // Loading skeleton
-                Array(12).fill(0).map((_, index) => (
-                  <div key={index} className="flex-shrink-0 w-64 sm:w-80 h-48 sm:h-60 bg-muted animate-pulse rounded-none" />
+                // Clean loading skeleton
+                Array(8).fill(0).map((_, index) => (
+                  <div key={index} className="flex-shrink-0 w-56 sm:w-72 h-40 sm:h-48 bg-muted/50 animate-pulse" />
                 ))
               ) : (
-                galleryImages.map((image, index) => (
+                galleryImages.slice(0, 8).map((image, index) => (
                   <div 
                     key={`${image.id}-${index}`} 
-                    className="flex-shrink-0 w-64 sm:w-80 h-48 sm:h-60 group cursor-pointer relative overflow-hidden bg-card hover:architectural-shadow transition-all duration-500"
-                    style={{ animationDelay: `${index * 50}ms` }}
+                    className="flex-shrink-0 w-56 sm:w-72 h-40 sm:h-48 group cursor-pointer relative overflow-hidden bg-card transition-all duration-300 hover:shadow-lg"
+                    style={{ animationDelay: `${index * 100}ms` }}
                   >
                     <img
                       src={image.src || getAssetPath("/placeholder.svg")}
                       alt={image.alt || image.name}
-                      className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
+                      className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-tr from-black/0 via-black/0 to-black/10 group-hover:from-black/60 group-hover:via-black/20 group-hover:to-black/40 transition-all duration-700">
-                      <div className="absolute bottom-0 left-0 right-0 p-6 text-white transform translate-y-full group-hover:translate-y-0 transition-all duration-700 ease-out">
-                        <div className="text-xs font-light tracking-widest uppercase mb-2 opacity-80 transform translate-x-4 group-hover:translate-x-0 transition-transform duration-500 delay-100">
-                          {image.category || image.place}
-                        </div>
-                        <h3 className="font-heading font-light text-xl tracking-wide transform translate-x-8 group-hover:translate-x-0 transition-transform duration-700 delay-200">
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300">
+                      <div className="absolute bottom-0 left-0 right-0 p-4 text-white transform translate-y-full group-hover:translate-y-0 transition-all duration-300 ease-out">
+                        <h3 className="font-light text-sm tracking-wide mb-1">
                           {image.name}
                         </h3>
-                        <p className="text-xs opacity-70 mt-1 transform translate-x-12 group-hover:translate-x-0 transition-transform duration-700 delay-300">
-                          {image.place} • {image.date}
+                        <p className="text-xs opacity-80">
+                          {image.place}
                         </p>
                       </div>
                     </div>
@@ -267,22 +262,22 @@ export function PortfolioPreview() {
             </div>
           </div>
           
-          {/* Gradient overlays for visual continuity */}
-          <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-background to-transparent pointer-events-none z-[5]" />
-          <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-background to-transparent pointer-events-none z-[5]" />
+          {/* Subtle gradient overlays */}
+          <div className="absolute left-0 top-0 bottom-0 w-12 bg-gradient-to-r from-background to-transparent pointer-events-none z-[5]" />
+          <div className="absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-background to-transparent pointer-events-none z-[5]" />
         </div>
 
         <div className="text-center">
           <Button
             asChild
             variant="ghost"
-            className="group font-light tracking-wide uppercase text-sm hover:bg-transparent"
+            className="group font-light tracking-wider text-xs uppercase hover:bg-transparent p-0"
           >
-            <Link href="/gallery">
-              <span className="border-b border-accent pb-1 group-hover:border-foreground transition-colors duration-300">
+            <Link href="/gallery" className="inline-flex items-center">
+              <span className="border-b border-muted-foreground/30 pb-1 group-hover:border-foreground transition-colors duration-300">
                 View Gallery
               </span>
-              <ArrowRight className="ml-3 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300" />
+              <ArrowRight className="ml-2 h-3 w-3 group-hover:translate-x-1 transition-transform duration-300" />
             </Link>
           </Button>
         </div>
