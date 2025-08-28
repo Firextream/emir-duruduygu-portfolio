@@ -4,8 +4,6 @@ const nextConfig = {
   trailingSlash: true,
   skipTrailingSlashRedirect: true,
   distDir: 'out',
-  basePath: '/emir-duruduygu-portfolio',
-  assetPrefix: '/emir-duruduygu-portfolio',
   eslint: {
     ignoreDuringBuilds: true,
   },

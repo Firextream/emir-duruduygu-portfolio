@@ -36,5 +36,6 @@ jobs:
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./out
+        destination_dir: .
         force_orphan: true
-        cname: false
+        enable_jekyll: false
