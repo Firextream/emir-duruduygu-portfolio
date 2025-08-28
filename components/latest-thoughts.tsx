@@ -7,6 +7,7 @@ import { ArrowRight } from "lucide-react"
 import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { getAssetPath } from "@/lib/image-utils"
+import { getAllPosts } from "@/lib/notion"
 
 interface BlogPost {
   id: string
@@ -28,8 +29,9 @@ export function LatestThoughts() {
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        // For static export, use empty array (no blog posts)
-        setBlogPosts([])
+        const posts = await getAllPosts()
+        // Get the first 3 posts for the homepage
+        setBlogPosts(posts.slice(0, 3))
         setError(null)
         setLoading(false)
       } catch (error) {
@@ -73,7 +75,7 @@ export function LatestThoughts() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {Array.from({ length: 6 }).map((_, i) => (
+            {Array.from({ length: 3 }).map((_, i) => (
               <div key={i} className="animate-pulse">
                 <div className="aspect-[4/3] bg-muted rounded-lg mb-6" />
                 <div className="space-y-3">

@@ -5,6 +5,7 @@ import Image from "next/image"
 import { ArrowRight, Calendar, Clock } from "lucide-react"
 import { useEffect, useState } from "react"
 import { getAssetPath } from "@/lib/image-utils"
+import { getAllPosts } from "@/lib/notion"
 
 interface BlogPost {
 	id: string
@@ -27,8 +28,9 @@ export function BlogPreview() {
 	useEffect(() => {
 		const fetchBlogs = async () => {
 			try {
-				// For static export, use empty array (no blog posts)
-				setBlogPosts([])
+				const posts = await getAllPosts()
+				// Get the first 3 posts for the homepage
+				setBlogPosts(posts.slice(0, 3))
 				setError(null)
 				setLoading(false)
 			} catch (error) {
