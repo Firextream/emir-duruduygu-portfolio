@@ -1,0 +1,707 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+:root {
+  /* Updated color tokens to match modernist architectural design brief */
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.205 0 0);
+  --card: oklch(0.97 0 0);
+  --card-foreground: oklch(0.205 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.205 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.556 0 0);
+  --secondary-foreground: oklch(1 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.646 0.222 264.376);
+  --accent-foreground: oklch(1 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(1 0 0);
+  --border: oklch(0.95 0 0);
+  --input: oklch(0.985 0 0);
+  --ring: oklch(0.646 0.111 264.376);
+  --chart-1: oklch(0.205 0 0);
+  --chart-2: oklch(0.646 0.222 264.376);
+  --chart-3: oklch(0.556 0 0);
+  --chart-4: oklch(0.97 0 0);
+  --chart-5: oklch(1 0 0);
+  --radius: 0rem;
+  --sidebar: oklch(1 0 0);
+  --sidebar-foreground: oklch(0.205 0 0);
+  --sidebar-primary: oklch(0.646 0.222 264.376);
+  --sidebar-primary-foreground: oklch(1 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.646 0.111 264.376);
+}
+
+.dark {
+  /* Updated dark mode tokens for architectural aesthetic */
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.145 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.985 0 0);
+  --primary-foreground: oklch(0.145 0 0);
+  --secondary: oklch(0.439 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.646 0.222 264.376);
+  --accent-foreground: oklch(1 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(1 0 0);
+  --border: oklch(0.269 0 0);
+  --input: oklch(0.269 0 0);
+  --ring: oklch(0.646 0.111 264.376);
+  --chart-1: oklch(0.985 0 0);
+  --chart-2: oklch(0.646 0.222 264.376);
+  --chart-3: oklch(0.708 0 0);
+  --chart-4: oklch(0.269 0 0);
+  --chart-5: oklch(0.145 0 0);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.646 0.222 264.376);
+  --sidebar-primary-foreground: oklch(1 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(0.269 0 0);
+  --sidebar-ring: oklch(0.646 0.111 264.376);
+}
+
+@layer base {
+  * {
+    border-color: hsl(var(--border));
+    outline-color: hsl(var(--ring) / 0.5);
+  }
+  
+  body {
+    background: hsl(var(--background));
+    color: hsl(var(--foreground));
+    font-family: var(--font-body), system-ui, sans-serif;
+    /* Added custom font variables for Work Sans and Open Sans */
+    --font-heading: "Work Sans", system-ui, sans-serif;
+    --font-body: "Open Sans", system-ui, sans-serif;
+    /* Restored normal cursor visibility and improved scroll behavior */
+    cursor: auto;
+    overflow-x: hidden;
+    font-feature-settings: "kern" 1, "liga" 1;
+  }
+  
+  /* Added scroll behavior and selection styling */
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  ::selection {
+    background: oklch(0.646 0.222 264.376 / 0.15);
+    color: oklch(0.205 0 0);
+  }
+  
+  /* Added custom typography classes for architectural aesthetic */
+  .font-heading {
+    font-family: var(--font-heading);
+    font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+  }
+  .font-body {
+    font-family: var(--font-body);
+  }
+
+  /* Enhanced focus states for accessibility */
+  button:focus-visible,
+  a:focus-visible,
+  input:focus-visible,
+  textarea:focus-visible {
+    outline: 2px solid oklch(0.646 0.222 264.376);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+}
+
+/* Enhanced minimalist animations and micro-interactions */
+@layer utilities {
+  .animate-fade-in {
+    animation: fadeIn 0.8s ease-out forwards;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 1s ease-out forwards;
+  }
+
+  .animate-scale-in {
+    animation: scaleIn 0.6s ease-out forwards;
+  }
+
+  .animate-text-reveal {
+    animation: textReveal 1.2s ease-out forwards;
+  }
+
+  .animate-line-draw {
+    animation: lineDraw 1.5s ease-out forwards;
+  }
+
+  /* Enhanced positioning utilities for modernist layouts */
+  .position-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .position-center-x {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .position-center-y {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  /* Golden ratio spacing for better visual hierarchy */
+  .space-golden-sm { gap: 0.618rem; }
+  .space-golden { gap: 1.618rem; }
+  .space-golden-lg { gap: 2.618rem; }
+  .space-golden-xl { gap: 4.236rem; }
+
+  .mt-golden-sm { margin-top: 0.618rem; }
+  .mt-golden { margin-top: 1.618rem; }
+  .mt-golden-lg { margin-top: 2.618rem; }
+  .mt-golden-xl { margin-top: 4.236rem; }
+
+  .mb-golden-sm { margin-bottom: 0.618rem; }
+  .mb-golden { margin-bottom: 1.618rem; }
+  .mb-golden-lg { margin-bottom: 2.618rem; }
+  .mb-golden-xl { margin-bottom: 4.236rem; }
+
+  /* Architectural grid positioning */
+  .grid-modernist {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 1.5rem;
+    align-items: start;
+  }
+
+  .grid-asymmetric {
+    display: grid;
+    grid-template-columns: 1fr 1.618fr 1fr;
+    gap: 2rem;
+    align-items: center;
+  }
+
+  .grid-bauhaus {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 1rem;
+    aspect-ratio: 1;
+  }
+
+  /* Viewport-based positioning */
+  .h-quarter { height: 25vh; }
+  .h-third { height: 33.333vh; }
+  .h-half { height: 50vh; }
+  .h-two-thirds { height: 66.666vh; }
+  .h-three-quarters { height: 75vh; }
+
+  .w-quarter { width: 25vw; }
+  .w-third { width: 33.333vw; }
+  .w-half { width: 50vw; }
+  .w-two-thirds { width: 66.666vw; }
+  .w-three-quarters { width: 75vw; }
+
+  /* Precise positioning for experimental layouts */
+  .offset-slight { transform: translate(0.125rem, 0.125rem); }
+  .offset-subtle { transform: translate(0.25rem, 0.25rem); }
+  .offset-moderate { transform: translate(0.5rem, 0.5rem); }
+  .offset-strong { transform: translate(1rem, 1rem); }
+
+  .offset-x-slight { transform: translateX(0.125rem); }
+  .offset-x-subtle { transform: translateX(0.25rem); }
+  .offset-x-moderate { transform: translateX(0.5rem); }
+  .offset-x-strong { transform: translateX(1rem); }
+
+  .offset-y-slight { transform: translateY(0.125rem); }
+  .offset-y-subtle { transform: translateY(0.25rem); }
+  .offset-y-moderate { transform: translateY(0.5rem); }
+  .offset-y-strong { transform: translateY(1rem); }
+
+  /* Dynamic spacing based on container */
+  .space-fluid-sm { gap: clamp(0.5rem, 2vw, 1rem); }
+  .space-fluid { gap: clamp(1rem, 4vw, 2rem); }
+  .space-fluid-lg { gap: clamp(1.5rem, 6vw, 3rem); }
+  .space-fluid-xl { gap: clamp(2rem, 8vw, 4rem); }
+
+  /* Gap utilities with golden ratio and fluid spacing */
+  .gap-space-golden-sm { gap: 0.618rem; }
+  .gap-space-golden { gap: 1.618rem; }
+  .gap-space-golden-lg { gap: 2.618rem; }
+  .gap-space-golden-xl { gap: 4.236rem; }
+  
+  .gap-space-fluid-sm { gap: clamp(0.5rem, 2vw, 1rem); }
+  .gap-space-fluid { gap: clamp(1rem, 4vw, 2rem); }
+  .gap-space-fluid-lg { gap: clamp(1.5rem, 6vw, 3rem); }
+  .gap-space-fluid-xl { gap: clamp(2rem, 8vw, 4rem); }
+
+  /* Architectural alignment patterns */
+  .align-bauhaus {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .align-swiss {
+    display: flex;
+    align-items: baseline;
+    justify-content: flex-start;
+    gap: 1rem;
+  }
+
+  .align-minimal {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  /* Experimental positioning for creative layouts */
+  .float-top-left {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    z-index: 10;
+  }
+
+  .float-top-right {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    z-index: 10;
+  }
+
+  .float-bottom-left {
+    position: absolute;
+    bottom: 1rem;
+    left: 1rem;
+    z-index: 10;
+  }
+
+  .float-bottom-right {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    z-index: 10;
+  }
+
+  /* Responsive positioning helpers */
+  @media (min-width: 640px) {
+    .sm\:position-center {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .sm\:grid-asymmetric {
+      display: grid;
+      grid-template-columns: 1fr 1.618fr 1fr;
+      gap: 2rem;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .md\:position-center {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .md\:grid-modernist {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 2rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .lg\:position-center {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .lg\:grid-asymmetric {
+      display: grid;
+      grid-template-columns: 1fr 2fr 1fr;
+      gap: 3rem;
+    }
+  }
+
+  /* Intersection-based animations for experimental positioning */
+  .animate-on-scroll {
+    opacity: 0;
+    transform: translateY(2rem);
+    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .animate-on-scroll.in-view {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .stagger-1 { transition-delay: 0.1s; }
+  .stagger-2 { transition-delay: 0.2s; }
+  .stagger-3 { transition-delay: 0.3s; }
+  .stagger-4 { transition-delay: 0.4s; }
+  .stagger-5 { transition-delay: 0.5s; }
+
+  /* Advanced experimental positioning for creative layouts */
+  .drift-slight {
+    animation: drift-slight 8s ease-in-out infinite;
+  }
+
+  .drift-moderate {
+    animation: drift-moderate 12s ease-in-out infinite;
+  }
+
+  .rotate-subtle {
+    animation: rotate-subtle 20s linear infinite;
+  }
+
+  .float-gentle {
+    animation: float-gentle 6s ease-in-out infinite;
+  }
+
+  .parallax-slow {
+    transform: translateZ(0);
+    will-change: transform;
+  }
+
+  .parallax-medium {
+    transform: translateZ(0);
+    will-change: transform;
+  }
+
+  .parallax-fast {
+    transform: translateZ(0);
+    will-change: transform;
+  }
+
+  /* Asymmetric grid positioning for dynamic layouts */
+  .grid-experimental {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr 1fr 0.9fr;
+    gap: clamp(1rem, 3vw, 2.5rem);
+    align-items: start;
+  }
+
+  .grid-scattered {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: clamp(1rem, 4vw, 3rem);
+    align-items: start;
+  }
+
+  .grid-scattered > *:nth-child(3n) {
+    transform: translateY(1rem);
+  }
+
+  .grid-scattered > *:nth-child(5n) {
+    transform: translateY(-0.5rem) translateX(0.5rem);
+  }
+
+  .grid-scattered > *:nth-child(7n) {
+    transform: translateX(-0.5rem);
+  }
+
+  /* Magnetic hover effects for interactive positioning */
+  .magnetic-hover {
+    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    cursor: pointer;
+  }
+
+  .magnetic-hover:hover {
+    transform: translate(0.25rem, -0.25rem);
+  }
+
+  /* Depth layering for visual hierarchy */
+  .layer-base { z-index: 1; }
+  .layer-content { z-index: 2; }
+  .layer-interactive { z-index: 3; }
+  .layer-overlay { z-index: 4; }
+  .layer-modal { z-index: 50; }
+  .layer-tooltip { z-index: 60; }
+
+  /* Breathing animation for organic feel */
+  .breathe {
+    animation: breathe 4s ease-in-out infinite;
+  }
+
+  .breathe-slow {
+    animation: breathe 8s ease-in-out infinite;
+  }
+}
+
+/* Enhanced Masonry Grid with better positioning */
+.masonry-grid {
+  column-count: 1;
+  column-gap: 1rem;
+  line-height: 0;
+  position: relative;
+}
+
+@media (min-width: 640px) {
+  .masonry-grid {
+    column-count: 2;
+    column-gap: 1.618rem; /* Golden ratio spacing */
+  }
+}
+
+@media (min-width: 768px) {
+  .masonry-grid {
+    column-count: 3;
+    column-gap: 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .masonry-grid {
+    column-count: 4;
+    column-gap: 2.618rem; /* Golden ratio spacing */
+  }
+}
+
+.masonry-item {
+  break-inside: avoid;
+  margin-bottom: 1.618rem; /* Golden ratio spacing */
+  border-radius: 0;
+  overflow: hidden;
+  background: hsl(var(--card));
+  border: 1px solid hsl(var(--border));
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  position: relative;
+}
+
+.masonry-item:hover {
+  transform: translateY(-0.25rem) scale(1.02);
+  box-shadow: 
+    0 20px 40px -12px rgba(0, 0, 0, 0.1), 
+    0 8px 16px -4px rgba(0, 0, 0, 0.08);
+  z-index: 5;
+}
+
+/* Enhanced positioning for featured items */
+.masonry-item.featured {
+  grid-column: span 2;
+  transform: translateY(-0.5rem);
+  border: 2px solid hsl(var(--accent));
+}
+
+.masonry-item.offset {
+  transform: translateX(1rem);
+}
+
+.masonry-item.experimental {
+  transform: rotate(0.5deg);
+  transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.masonry-item.experimental:hover {
+  transform: rotate(0deg) translateY(-0.5rem) scale(1.05);
+}
+
+@media (min-width: 768px) {
+  .masonry-item {
+    margin-bottom: 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .masonry-item {
+    margin-bottom: 2.618rem; /* Golden ratio spacing */
+  }
+}
+
+/* Featured carousel progress animation */
+@keyframes progress {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+/* Enhanced experimental animations */
+@keyframes drift-slight {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(0.25rem, -0.125rem); }
+  50% { transform: translate(-0.125rem, 0.25rem); }
+  75% { transform: translate(0.125rem, 0.125rem); }
+}
+
+@keyframes drift-moderate {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  25% { transform: translate(0.5rem, -0.25rem) rotate(0.5deg); }
+  50% { transform: translate(-0.25rem, 0.5rem) rotate(-0.25deg); }
+  75% { transform: translate(0.25rem, 0.25rem) rotate(0.25deg); }
+}
+
+@keyframes rotate-subtle {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes float-gentle {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes breathe {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+}
+
+/* Parallax positioning utilities */
+.parallax-container {
+  height: 100vh;
+  overflow-x: hidden;
+  overflow-y: auto;
+  perspective: 1px;
+}
+
+.parallax-element {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.parallax-back {
+  transform: translateZ(-1px) scale(2);
+}
+
+.parallax-mid {
+  transform: translateZ(-0.5px) scale(1.5);
+}
+
+.parallax-front {
+  transform: translateZ(0);
+}
+
+/* Base animation keyframes */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { 
+    opacity: 0;
+    transform: translateY(2rem);
+  }
+  to { 
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from { 
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to { 
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes textReveal {
+  from {
+    opacity: 0;
+    transform: translateY(1rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes lineDraw {
+  from {
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+  }
+  to {
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Architectural/Rectangular Design System Override */
+.architectural-rectangular {
+  --radius: 0rem;
+}
+
+/* Override default rounded classes for rectangular design */
+.rounded-lg,
+.rounded-md,
+.rounded-xl,
+.rounded-2xl {
+  border-radius: 0 !important;
+}
+
+/* Keep only essential rounded elements like buttons when needed */
+.preserve-rounded {
+  border-radius: var(--radius) !important;
+}
+
+/* Sharp, architectural shadow for rectangular elements */
+.architectural-shadow {
+  box-shadow: 8px 8px 0px rgba(0, 0, 0, 0.1);
+}
+
+.architectural-shadow-dark {
+  box-shadow: 8px 8px 0px rgba(0, 0, 0, 0.3);
+}
+
+/* Hard geometric borders */
+.architectural-border {
+  border: 1px solid hsl(var(--border));
+}
+
+.architectural-border-thick {
+  border: 2px solid hsl(var(--border));
+}
+
+/* Subtle border variations */
+.border-subtle {
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.border-light {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* Scrollbar utilities */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;  /* Safari and Chrome */
+}
