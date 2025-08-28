@@ -3,8 +3,6 @@ const nextConfig = {
   output: 'export',
   trailingSlash: true,
   skipTrailingSlashRedirect: true,
-  basePath: '/emir-duruduygu-portfolio',
-  assetPrefix: '/emir-duruduygu-portfolio/',
   eslint: {
     ignoreDuringBuilds: true,
   },
