@@ -4,6 +4,7 @@ import Link from "next/link"
 import Image from "next/image"
 import { ArrowRight, Calendar, Clock } from "lucide-react"
 import { useEffect, useState } from "react"
+import { getAssetPath } from "@/lib/image-utils"
 
 interface BlogPost {
 	id: string
@@ -92,7 +93,7 @@ export function BlogPreview() {
 							<div className="aspect-[4/3] relative overflow-hidden">
 								{post.image && post.image !== '/placeholder.svg' ? (
 									<Image
-										src={post.image}
+										src={getAssetPath(post.image)}
 										alt={post.title}
 										fill
 										className="object-cover transition-transform duration-300 group-hover:scale-105"

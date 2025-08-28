@@ -7,6 +7,7 @@ import { ArrowLeft } from "lucide-react"
 import { ScrollReveal } from "@/components/scroll-reveal-enhanced"
 import { getPostBySlug, getAllPosts } from "@/lib/notion"
 import { formatDate } from "@/lib/date-utils"
+import { getAssetPath } from "@/lib/image-utils"
 import { 
   BlogPostMeta, 
   BlogPostAuthor, 
@@ -75,7 +76,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         {post.image && (
           <div className="relative aspect-[16/9] mb-12 overflow-hidden rounded-lg bg-muted">
             <Image
-              src={post.image}
+              src={getAssetPath(post.image)}
               alt={`Featured image for ${post.title}`}
               fill
               className="object-cover"

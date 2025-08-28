@@ -6,6 +6,7 @@ import { motion } from "framer-motion"
 import { ArrowRight } from "lucide-react"
 import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
+import { getAssetPath } from "@/lib/image-utils"
 
 interface BlogPost {
   id: string
@@ -154,7 +155,7 @@ export function LatestThoughts() {
                 <div className="aspect-[4/3] mb-6 overflow-hidden rounded-lg bg-muted">
                   {post.image ? (
                     <Image
-                      src={post.image}
+                      src={getAssetPath(post.image)}
                       alt={post.title}
                       width={400}
                       height={300}
