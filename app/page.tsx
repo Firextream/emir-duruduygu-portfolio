@@ -23,7 +23,9 @@ export default function HomePage() {
           </section>
           <PortfolioPreview />
           <ResumePreview />
-          <ContactSection />
+          <section id="contact">
+            <ContactSection />
+          </section>
         </main>
         <Footer />
       </SmoothScroll>

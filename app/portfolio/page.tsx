@@ -242,16 +242,16 @@ export default function PortfolioPage() {
 										)}
 									</Card>
 								</DialogTrigger>
-								<DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto w-[95vw] sm:w-[90vw]">
+								<DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto w-[95vw] sm:w-[90vw] bg-white border-0">
 									<div className="space-y-6 sm:space-y-8 p-4 sm:p-6">
 										{/* Header */}
 										<div className="space-y-3 sm:space-y-4">
 											<div className="flex flex-wrap items-center gap-2 sm:gap-3">
-												<span className="bg-muted text-muted-foreground px-3 py-1 rounded text-sm">{item.category}</span>
-												<span className="text-sm text-muted-foreground">{item.year}</span>
+												<span className="bg-gray-100 text-gray-700 px-3 py-1 rounded text-sm">{item.category}</span>
+												<span className="text-sm text-gray-600">{item.year}</span>
 											</div>
-											<h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground leading-tight">{item.title}</h1>
-											<div className="flex flex-wrap items-center gap-3 sm:gap-4 text-muted-foreground text-sm">
+											<h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 leading-tight">{item.title}</h1>
+											<div className="flex flex-wrap items-center gap-3 sm:gap-4 text-gray-600 text-sm">
 												<span className="flex items-center gap-2">
 													<MapPin className="w-4 h-4" />
 													{item.location}
@@ -277,13 +277,13 @@ export default function PortfolioPage() {
 										{/* Article Content */}
 										<div className="prose prose-sm sm:prose-base lg:prose-lg max-w-none">
 											<div className="space-y-4 sm:space-y-6">
-												<div className="text-base sm:text-lg text-foreground/90 leading-relaxed">
+												<div className="text-base sm:text-lg text-gray-800 leading-relaxed">
 													{item.description}
 												</div>
 												
 												<div className="space-y-3 sm:space-y-4">
-													<h2 className="text-xl sm:text-2xl font-semibold text-foreground">Project Overview</h2>
-													<p className="text-sm sm:text-base text-foreground/80 leading-relaxed">
+													<h2 className="text-xl sm:text-2xl font-semibold text-gray-900">Project Overview</h2>
+													<p className="text-sm sm:text-base text-gray-700 leading-relaxed">
 														This architectural project represents a thoughtful exploration of {item.category.toLowerCase()} design principles, 
 														showcasing how contemporary architecture can harmoniously blend functionality with aesthetic appeal. 
 														Located in {item.location}, this project exemplifies the cutting-edge design trends that defined {item.year}.
@@ -291,8 +291,8 @@ export default function PortfolioPage() {
 												</div>
 
 												<div className="space-y-3 sm:space-y-4">
-													<h2 className="text-xl sm:text-2xl font-semibold text-foreground">Design Philosophy</h2>
-													<p className="text-sm sm:text-base text-foreground/80 leading-relaxed">
+													<h2 className="text-xl sm:text-2xl font-semibold text-gray-900">Design Philosophy</h2>
+													<p className="text-sm sm:text-base text-gray-700 leading-relaxed">
 														The design approach emphasizes clean lines, sustainable materials, and innovative spatial relationships. 
 														Every element has been carefully considered to create a cohesive architectural narrative that speaks to both 
 														the immediate context and broader urban fabric.
@@ -300,11 +300,11 @@ export default function PortfolioPage() {
 												</div>
 
 												<div className="space-y-3 sm:space-y-4">
-													<h2 className="text-xl sm:text-2xl font-semibold text-foreground">Technical Details</h2>
+													<h2 className="text-xl sm:text-2xl font-semibold text-gray-900">Technical Details</h2>
 													<div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
 														<div className="space-y-2">
-															<h3 className="font-semibold text-foreground text-base sm:text-lg">Project Information</h3>
-															<div className="space-y-1 text-xs sm:text-sm text-muted-foreground">
+															<h3 className="font-semibold text-gray-900 text-base sm:text-lg">Project Information</h3>
+															<div className="space-y-1 text-xs sm:text-sm text-gray-600">
 																<div><span className="font-medium">Category:</span> {item.category}</div>
 																<div><span className="font-medium">Location:</span> {item.location}</div>
 																<div><span className="font-medium">Year:</span> {item.year}</div>
@@ -312,8 +312,8 @@ export default function PortfolioPage() {
 															</div>
 														</div>
 														<div className="space-y-2">
-															<h3 className="font-semibold text-foreground text-base sm:text-lg">Key Features</h3>
-															<ul className="space-y-1 text-xs sm:text-sm text-muted-foreground">
+															<h3 className="font-semibold text-gray-900 text-base sm:text-lg">Key Features</h3>
+															<ul className="space-y-1 text-xs sm:text-sm text-gray-600">
 																<li>• Sustainable design principles</li>
 																<li>• Natural light optimization</li>
 																<li>• Modern material palette</li>
@@ -324,8 +324,8 @@ export default function PortfolioPage() {
 												</div>
 
 												<div className="space-y-3 sm:space-y-4">
-													<h2 className="text-xl sm:text-2xl font-semibold text-foreground">Impact & Recognition</h2>
-													<p className="text-sm sm:text-base text-foreground/80 leading-relaxed">
+													<h2 className="text-xl sm:text-2xl font-semibold text-gray-900">Impact & Recognition</h2>
+													<p className="text-sm sm:text-base text-gray-700 leading-relaxed">
 														This project has contributed to the ongoing dialogue about contemporary {item.category.toLowerCase()} design, 
 														demonstrating how thoughtful architecture can enhance both individual experience and community fabric. 
 														The project stands as a testament to the power of design to transform spaces and create lasting value.

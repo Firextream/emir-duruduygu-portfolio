@@ -166,6 +166,7 @@ export async function generateStaticParams() {
   try {
     // For static export, use a simpler approach with mock slugs to avoid build hanging
     const mockSlugs = [
+      "future-sustainable-architecture",
       "light-shadow-architecture",
       "minimalist-design-principles", 
       "urban-planning-trends-2024"

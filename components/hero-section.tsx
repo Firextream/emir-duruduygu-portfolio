@@ -79,14 +79,18 @@ export function HeroSection() {
                 View Portfolio
               </Button>
             </Link>
-            <Link href="/contact">
-              <Button
-                size="lg"
-                className="bg-white/10 text-white hover:bg-white hover:text-black border border-white/20 backdrop-blur-sm transition-all duration-300 font-light tracking-wider px-6 sm:px-8 py-4 sm:py-6 text-sm sm:text-base hover:architectural-shadow w-full sm:w-auto min-h-[48px]"
-              >
-                Get In Touch
-              </Button>
-            </Link>
+            <Button
+              size="lg"
+              onClick={() => {
+                document.getElementById('contact')?.scrollIntoView({ 
+                  behavior: 'smooth',
+                  block: 'start'
+                })
+              }}
+              className="bg-white/10 text-white hover:bg-white hover:text-black border border-white/20 backdrop-blur-sm transition-all duration-300 font-light tracking-wider px-6 sm:px-8 py-4 sm:py-6 text-sm sm:text-base hover:architectural-shadow w-full sm:w-auto min-h-[48px]"
+            >
+              Get In Touch
+            </Button>
           </div>
         </div>
       </div>

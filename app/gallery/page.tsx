@@ -154,7 +154,17 @@ export default function GalleryPage() {
   const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null)
   const [selectedCategory, setSelectedCategory] = useState<string>("All Photos")
 
-  const categories = ["All Photos", "Street", "Portrait", "Landscape", "Architecture"]
+  // Extract unique categories from images
+  const categories = ["All Photos", ...Array.from(new Set(
+    fallbackImages
+      .map(img => img.category)
+      .filter((category): category is string => Boolean(category))
+  ))]
+
+  // Filter images based on selected category
+  const filteredImages = selectedCategory === "All Photos" 
+    ? galleryImages 
+    : galleryImages.filter(img => img.category === selectedCategory)
 
   useEffect(() => {
     const fetchGalleryImages = async () => {
@@ -179,13 +189,13 @@ export default function GalleryPage() {
 
   const goToPrevious = () => {
     if (selectedImageIndex !== null) {
-      setSelectedImageIndex(selectedImageIndex === 0 ? galleryImages.length - 1 : selectedImageIndex - 1)
+      setSelectedImageIndex(selectedImageIndex === 0 ? filteredImages.length - 1 : selectedImageIndex - 1)
     }
   }
 
   const goToNext = () => {
     if (selectedImageIndex !== null) {
-      setSelectedImageIndex(selectedImageIndex === galleryImages.length - 1 ? 0 : selectedImageIndex + 1)
+      setSelectedImageIndex(selectedImageIndex === filteredImages.length - 1 ? 0 : selectedImageIndex + 1)
     }
   }
 
@@ -250,7 +260,7 @@ export default function GalleryPage() {
             </div>
           ) : (
             <div className="masonry-grid">
-              {galleryImages.map((image, index) => (
+              {filteredImages.map((image, index) => (
                 <div
                   key={image.id}
                   className="masonry-item group cursor-pointer"
@@ -297,22 +307,22 @@ export default function GalleryPage() {
             <div className="flex flex-col lg:flex-row items-center justify-center gap-6 max-h-full w-full">
               <div className="flex-1 flex items-center justify-center">
                 <img
-                  src={galleryImages[selectedImageIndex].src}
-                  alt={galleryImages[selectedImageIndex].alt}
+                  src={filteredImages[selectedImageIndex].src}
+                  alt={filteredImages[selectedImageIndex].alt}
                   className="max-w-full max-h-[70vh] lg:max-h-[75vh] object-contain"
                 />
               </div>
 
               <div className="lg:w-80 bg-white/10 backdrop-blur-sm p-6 text-white">
-                <h3 className="text-xl font-bold mb-4">{galleryImages[selectedImageIndex].name}</h3>
+                <h3 className="text-xl font-bold mb-4">{filteredImages[selectedImageIndex].name}</h3>
                 <div className="space-y-3">
                   <div>
                     <span className="text-sm text-gray-300">Date:</span>
-                    <p className="font-medium">{galleryImages[selectedImageIndex].date}</p>
+                    <p className="font-medium">{filteredImages[selectedImageIndex].date}</p>
                   </div>
                   <div>
                     <span className="text-sm text-gray-300">Location:</span>
-                    <p className="font-medium">{galleryImages[selectedImageIndex].place}</p>
+                    <p className="font-medium">{filteredImages[selectedImageIndex].place}</p>
                   </div>
                   <div>
                     <span className="text-sm text-gray-300">Description:</span>
@@ -337,7 +347,7 @@ export default function GalleryPage() {
             </Button>
 
             <div className="flex gap-2">
-              {galleryImages.map((_, index) => (
+              {filteredImages.map((_, index) => (
                 <button
                   key={index}
                   className={`w-2 h-2 rounded-full transition-all ${
