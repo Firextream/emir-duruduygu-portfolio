@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { Button } from "@/components/ui/button"
+import { X, Menu } from "lucide-react"
 
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false)
@@ -73,7 +74,6 @@ export function Navigation() {
   return (
     <>
       <nav
-        ref={mobileMenuRef}
         className={`fixed top-0 w-full z-50 transition-all duration-500 ease-out ${
           scrolled ? "bg-background/95 backdrop-blur-xl border-b border-border/50" : "bg-transparent"
         }`}
@@ -82,12 +82,10 @@ export function Navigation() {
         <div className="flex justify-between items-center h-16 sm:h-20">
           <Link
             href="/"
-            className="group relative font-heading font-light text-xl sm:text-2xl tracking-wide text-foreground hover:text-accent transition-all duration-500 hover:tracking-wider touch-manipulation"
+            className="group relative font-heading font-light text-lg sm:text-2xl tracking-wide text-foreground hover:text-accent transition-all duration-500 hover:tracking-wider touch-manipulation"
           >
             <span className="relative z-10">Emir Duruduygu</span>
             <span className="absolute -bottom-1 left-0 w-0 h-px bg-accent transition-all duration-500 group-hover:w-full"></span>
-            <span className="absolute -top-1 -left-1 w-0 h-0 border-l border-t border-accent/20 transition-all duration-500 group-hover:w-3 group-hover:h-3"></span>
-            <span className="absolute -bottom-1 -right-1 w-0 h-0 border-r border-b border-accent/20 transition-all duration-500 group-hover:w-3 group-hover:h-3"></span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -110,81 +108,113 @@ export function Navigation() {
             ))}
           </div>
 
-          {/* Mobile Menu Button - Three Dots */}
+          {/* Mobile Menu Button - Hamburger/X Icon */}
           <Button
             variant="ghost"
             size="sm"
-            className="md:hidden p-3 hover:bg-accent/10 focus:bg-accent/10 active:bg-accent/20 min-h-[52px] min-w-[52px] flex items-center justify-center touch-manipulation rounded-xl transition-all duration-200 border border-transparent hover:border-border/30"
+            className="md:hidden p-2 hover:bg-accent/10 focus:bg-accent/10 active:bg-accent/20 min-h-[44px] min-w-[44px] flex items-center justify-center touch-manipulation rounded-lg transition-all duration-200"
             onClick={() => setIsOpen(!isOpen)}
             aria-expanded={isOpen}
             aria-controls="mobile-menu"
             aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
           >
-            <div className="flex flex-col items-center justify-center gap-1" aria-hidden="true">
-              <div className={`w-2 h-2 bg-black rounded-full transition-all duration-300 ${isOpen ? 'scale-125' : ''}`} />
-              <div className={`w-2 h-2 bg-black rounded-full transition-all duration-300 ${isOpen ? 'scale-125' : ''}`} />
-              <div className={`w-2 h-2 bg-black rounded-full transition-all duration-300 ${isOpen ? 'scale-125' : ''}`} />
-            </div>
+            {isOpen ? (
+              <X className="w-6 h-6 text-foreground transition-transform duration-300" />
+            ) : (
+              <Menu className="w-6 h-6 text-foreground transition-transform duration-300" />
+            )}
           </Button>
         </div>
+      </div>
+      </nav>
 
-        {/* Mobile Menu */}
-        <div
-          id="mobile-menu"
-          className={`md:hidden transition-all duration-500 ease-out ${
-            isOpen ? "max-h-96 opacity-100 visible" : "max-h-0 opacity-0 invisible"
-          } overflow-hidden bg-background/98 backdrop-blur-xl border-b border-border/50 shadow-2xl rounded-b-2xl mx-4`}
-          aria-hidden={!isOpen}
-          role="menu"
-          aria-labelledby="mobile-menu-button"
+      {/* Mobile Menu - Full Screen Overlay */}
+      <div
+        ref={mobileMenuRef}
+        id="mobile-menu"
+        className={`fixed inset-0 z-40 md:hidden transition-all duration-300 ease-out ${
+          isOpen ? "opacity-100 visible" : "opacity-0 invisible pointer-events-none"
+        }`}
+        aria-hidden={!isOpen}
+        role="menu"
+        aria-labelledby="mobile-menu-button"
+      >
+        {/* Backdrop */}
+        <div 
+          className={`absolute inset-0 bg-black/60 backdrop-blur-md transition-opacity duration-300 ${
+            isOpen ? "opacity-100" : "opacity-0"
+          }`}
+          onClick={() => setIsOpen(false)}
+        />
+        
+        {/* Menu Panel */}
+        <div 
+          className={`absolute top-0 right-0 w-full max-w-sm h-full bg-background/98 backdrop-blur-xl shadow-2xl transition-transform duration-300 ease-out ${
+            isOpen ? "translate-x-0" : "translate-x-full"
+          }`}
         >
-          <div className="py-6 space-y-2">
+          {/* Close button */}
+          <div className="flex justify-end p-4">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setIsOpen(false)}
+              className="p-2 hover:bg-accent/10 rounded-lg"
+            >
+              <X className="w-6 h-6 text-foreground" />
+            </Button>
+          </div>
+          
+          {/* Menu Items */}
+          <div className="px-6 py-8 space-y-2">
             {navItems.map((item, index) => (
               <Link
                 key={item.href}
                 href={item.href}
-                className={`group flex items-center font-light text-lg tracking-wide transition-all duration-300 py-4 px-6 min-h-[60px] rounded-2xl mx-4 touch-manipulation focus:outline-none focus:ring-2 focus:ring-accent/50 ${
+                className={`group flex items-center font-light text-xl tracking-wide transition-all duration-300 py-5 px-4 rounded-xl touch-manipulation focus:outline-none focus:ring-2 focus:ring-accent/50 ${
                   pathname === item.href 
-                    ? "text-accent bg-accent/10 border border-accent/30 shadow-sm scale-[1.02]" 
-                    : "text-muted-foreground hover:text-foreground hover:bg-accent/10 active:bg-accent/20 focus:bg-accent/10 hover:scale-[1.01]"
+                    ? "text-accent bg-accent/10" 
+                    : "text-foreground hover:text-accent hover:bg-accent/5 active:bg-accent/10"
                 }`}
                 style={{
-                  animationDelay: `${index * 100}ms`,
-                  transform: isOpen ? "translateY(0)" : "translateY(-10px)",
+                  transitionDelay: isOpen ? `${index * 50}ms` : "0ms",
+                  transform: isOpen ? "translateX(0)" : "translateX(20px)",
                   opacity: isOpen ? 1 : 0,
                 }}
                 onClick={() => setIsOpen(false)}
                 role="menuitem"
                 tabIndex={isOpen ? 0 : -1}
               >
-                <span className="relative flex items-center gap-4">
+                <span className="relative flex items-center gap-4 w-full">
                   <span 
-                    className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
-                      pathname === item.href ? "bg-accent shadow-md" : "bg-transparent group-hover:bg-accent/50"
+                    className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                      pathname === item.href ? "bg-accent" : "bg-muted-foreground/30 group-hover:bg-accent/50"
                     }`} 
                   />
-                  {item.label}
+                  <span className="flex-1">{item.label}</span>
                   <span 
-                    className={`absolute -bottom-1 left-7 h-0.5 bg-accent transition-all duration-300 ${
-                      pathname === item.href ? "w-full" : "w-0 group-hover:w-full"
+                    className={`h-px bg-accent transition-all duration-300 ${
+                      pathname === item.href ? "w-8" : "w-0 group-hover:w-8"
                     }`} 
                   />
                 </span>
               </Link>
             ))}
           </div>
+          
+          {/* Footer in mobile menu */}
+          <div className="absolute bottom-8 left-0 right-0 px-6">
+            <div className="border-t border-border/20 pt-6">
+              <p className="text-sm text-muted-foreground/60 text-center">
+                Architectural Photography
+              </p>
+              <p className="text-xs text-muted-foreground/40 text-center mt-2">
+                © 2025 Emir Duruduygu
+              </p>
+            </div>
+          </div>
         </div>
       </div>
-      </nav>
-
-      {/* Mobile Menu Backdrop */}
-      {isOpen && (
-        <div
-          className="fixed inset-0 bg-black/30 backdrop-blur-sm z-40 md:hidden transition-all duration-300 animate-in fade-in-0"
-          onClick={() => setIsOpen(false)}
-          aria-hidden="true"
-        />
-      )}
     </>
   )
 }

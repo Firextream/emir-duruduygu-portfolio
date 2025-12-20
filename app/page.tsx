@@ -2,6 +2,7 @@
 
 import { Navigation } from "@/components/navigation"
 import { HeroSection } from "@/components/hero-section"
+import { AboutSection } from "@/components/about-section"
 import { BlogPreview } from "@/components/blog-preview"
 import { PortfolioPreview } from "@/components/portfolio-preview"
 import { ResumePreview } from "@/components/resume-preview"
@@ -18,6 +19,7 @@ export default function HomePage() {
         <Navigation />
         <main className="relative z-10">
           <HeroSection />
+          <AboutSection />
           <section id="thoughts">
             <BlogPreview />
           </section>
