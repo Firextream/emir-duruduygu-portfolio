@@ -173,19 +173,27 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
 
 export async function generateStaticParams() {
   try {
-    // For static export, use a simpler approach with mock slugs to avoid build hanging
-    const mockSlugs = [
-      "future-sustainable-architecture",
-      "light-shadow-architecture",
-      "minimalist-design-principles", 
-      "urban-planning-trends-2024"
-    ]
+    // Get all posts from Notion (or mock data) to generate all possible slugs
+    const posts = await getAllPosts()
     
-    return mockSlugs.map((slug) => ({
-      slug: slug,
-    }))
+    // Extract slugs from all posts
+    const slugs = posts
+      .filter((post): post is NonNullable<typeof post> => post !== null && post.slug !== undefined)
+      .map((post) => ({
+        slug: post.slug,
+      }))
+    
+    console.log("Generated static params for slugs:", slugs.map(s => s.slug))
+    
+    return slugs
   } catch (error) {
     console.error("Error generating static params for blog posts:", error)
-    return []
+    // Fallback to mock slugs if there's an error
+    return [
+      { slug: "future-sustainable-architecture" },
+      { slug: "light-shadow-architecture" },
+      { slug: "minimalist-design-principles" },
+      { slug: "urban-planning-trends-2024" }
+    ]
   }
 }

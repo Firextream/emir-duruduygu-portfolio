@@ -1,9 +1,7 @@
 "use client"
 
-import { useState, useEffect, useRef } from "react"
 import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react"
+import { ArrowRight } from "lucide-react"
 import { getAssetPath } from "@/lib/image-utils"
 
 interface GalleryImage {
@@ -16,10 +14,14 @@ interface GalleryImage {
   category?: string
 }
 
-const fallbackImages = [
+interface PortfolioPreviewProps {
+  images?: GalleryImage[]
+}
+
+const fallbackImages: GalleryImage[] = [
   {
     id: "1",
-    src: getAssetPath("/modernist-concrete-building-with-geometric-shadows.png"),
+    src: "/modernist-concrete-building-with-geometric-shadows.png",
     alt: "Geometric Shadows",
     name: "Geometric Shadows",
     date: "2024",
@@ -28,7 +30,7 @@ const fallbackImages = [
   },
   {
     id: "2",
-    src: getAssetPath("/brutalist-tower-with-dramatic-sky.png"),
+    src: "/brutalist-tower-with-dramatic-sky.png",
     alt: "Urban Monolith",
     name: "Urban Monolith", 
     date: "2024",
@@ -37,7 +39,7 @@ const fallbackImages = [
   },
   {
     id: "3",
-    src: getAssetPath("/minimalist-interior-with-natural-light.png"),
+    src: "/minimalist-interior-with-natural-light.png",
     alt: "Light Studies",
     name: "Light Studies",
     date: "2024", 
@@ -46,7 +48,7 @@ const fallbackImages = [
   },
   {
     id: "4",
-    src: getAssetPath("/abstract-architectural-detail-with-patterns.png"),
+    src: "/abstract-architectural-detail-with-patterns.png",
     alt: "Pattern Language",
     name: "Pattern Language",
     date: "2024",
@@ -55,7 +57,7 @@ const fallbackImages = [
   },
   {
     id: "5",
-    src: getAssetPath("/architectural-photography-light-shadow-modern-buil.png"),
+    src: "/architectural-photography-light-shadow-modern-buil.png",
     alt: "Light & Shadow",
     name: "Light & Shadow",
     date: "2024",
@@ -64,198 +66,82 @@ const fallbackImages = [
   },
   {
     id: "6",
-    src: getAssetPath("/brutalist-concrete-architecture-berlin-dramatic-li.png"),
+    src: "/brutalist-concrete-architecture-berlin-dramatic-li.png",
     alt: "Concrete Dreams",
     name: "Concrete Dreams",
     date: "2024",
     place: "Berlin",
     category: "Brutalist",
   },
-  {
-    id: "7",
-    src: getAssetPath("/modern-glass-building-reflection.png"),
-    alt: "Glass Reflections",
-    name: "Glass Reflections",
-    date: "2024",
-    place: "New York",
-    category: "Modern",
-  },
-  {
-    id: "8",
-    src: getAssetPath("/architectural-shadows-los-angeles-modern-building-.png"),
-    alt: "Urban Shadows",
-    name: "Urban Shadows",
-    date: "2024",
-    place: "Los Angeles",
-    category: "Urban",
-  },
-  {
-    id: "9",
-    src: getAssetPath("/minimalist-modern-building-with-clean-lines-and-wh.png"),
-    alt: "Clean Lines",
-    name: "Clean Lines",
-    date: "2024",
-    place: "Zurich",
-    category: "Minimal",
-  },
 ]
 
-export function PortfolioPreview() {
-  const [images, setImages] = useState<GalleryImage[]>([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
-  const [canScrollLeft, setCanScrollLeft] = useState(false)
-  const [canScrollRight, setCanScrollRight] = useState(false)
-  const scrollContainerRef = useRef<HTMLDivElement>(null)
-
-  const scrollLeft = () => {
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollBy({ left: -400, behavior: 'smooth' })
-    }
-  }
-
-  const scrollRight = () => {
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollBy({ left: 400, behavior: 'smooth' })
-    }
-  }
-
-  const checkScrollButtons = () => {
-    if (scrollContainerRef.current) {
-      const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current
-      setCanScrollLeft(scrollLeft > 0)
-      setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 1)
-    }
-  }
-
-  useEffect(() => {
-    const loadImages = async () => {
-      try {
-        setImages(fallbackImages)
-        setError(null)
-      } catch (error) {
-        console.error("Error loading images:", error)
-        setError(error instanceof Error ? error.message : "Failed to load images")
-        setImages(fallbackImages)
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    loadImages()
-  }, [])
-
-  useEffect(() => {
-    checkScrollButtons()
-    const container = scrollContainerRef.current
-    if (container) {
-      container.addEventListener('scroll', checkScrollButtons)
-      return () => container.removeEventListener('scroll', checkScrollButtons)
-    }
-  }, [loading])
+export function PortfolioPreview({ images }: PortfolioPreviewProps) {
+  // Use provided images or fallback, limit to 6
+  const displayImages = (images && images.length > 0 ? images : fallbackImages)
+    .slice(0, 6)
+    .map(img => ({
+      ...img,
+      src: img.src?.startsWith('http') ? img.src : getAssetPath(img.src || '/placeholder.svg')
+    }))
 
   return (
-    <section className="py-32 px-6 max-w-7xl mx-auto relative">
-      <div className="mb-16">
-        <h2 className="text-4xl md:text-5xl font-light text-foreground mb-4">
-          Visual Stories
-        </h2>
-        <p className="text-muted-foreground text-lg max-w-2xl">
-          A curated collection of architectural moments captured through a modernist lens.
-        </p>
-      </div>
-
-      {loading ? (
-        <div className="flex gap-6 overflow-hidden">
-          {Array.from({ length: 4 }, (_, i) => (
-            <div key={i} className="w-96 h-64 bg-muted animate-pulse rounded-lg flex-shrink-0" />
-          ))}
-        </div>
-      ) : error ? (
-        <div className="text-center py-16">
-          <p className="text-muted-foreground mb-4">Unable to load gallery images</p>
-          <p className="text-sm text-muted-foreground/70">{error}</p>
-        </div>
-      ) : (
-        <div className="relative group">
-          <div 
-            ref={scrollContainerRef}
-            className="flex gap-8 overflow-x-auto scrollbar-hide pb-4"
-            style={{
-              scrollbarWidth: 'none',
-              msOverflowStyle: 'none',
-            }}
+    <section className="py-24 md:py-32" id="work">
+      <div className="max-w-7xl mx-auto px-6">
+        {/* Section Header - Minimal */}
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-12 md:mb-16">
+          <div>
+            <span className="text-[10px] font-light tracking-[0.3em] text-muted-foreground uppercase block mb-4">
+              Selected Work
+            </span>
+            <h2 className="text-4xl md:text-5xl font-extralight text-foreground">
+              Portfolio
+            </h2>
+          </div>
+          <Link 
+            href="/gallery"
+            className="group inline-flex items-center gap-3 text-sm tracking-widest uppercase text-foreground hover:text-muted-foreground transition-colors mt-6 md:mt-0"
           >
-            {images.map((image, index) => (
-              <div
-                key={image.id}
-                className="flex-shrink-0 group/item relative overflow-hidden rounded-lg bg-card border border-border hover:border-accent/50 transition-all duration-500 hover:shadow-2xl hover:shadow-black/20 w-64 sm:w-80 md:w-96"
-                style={{
-                  animationDelay: `${index * 100}ms`,
-                }}
-              >
-                <div className="aspect-[4/3] relative overflow-hidden">
-                  <img
-                    src={image.src}
-                    alt={image.alt}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover/item:scale-110"
-                    loading="lazy"
-                  />
-                  <div className="absolute inset-0 bg-black/20 group-hover/item:bg-black/40 transition-colors duration-500" />
-                  
-                  <div className="absolute inset-0 flex items-end p-6">
-                    <div className="text-white">
-                      <h3 className="text-xl font-light mb-2 leading-tight">{image.name}</h3>
-                      <div className="flex items-center text-sm text-white/80 gap-4">
-                        <span>{image.place}</span>
-                        <span>•</span>
-                        <span>{image.date}</span>
-                      </div>
-                    </div>
+            <span>View All</span>
+            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+          </Link>
+        </div>
+
+        {/* Masonry-style Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {displayImages.map((image, index) => (
+            <Link
+              key={image.id}
+              href="/gallery"
+              className={`group relative overflow-hidden bg-muted cursor-pointer ${
+                index === 0 ? 'md:col-span-2 md:row-span-2' : ''
+              }`}
+            >
+              <div className={`${index === 0 ? 'aspect-square md:aspect-[4/3]' : 'aspect-[4/3]'} relative`}>
+                <img
+                  src={image.src}
+                  alt={image.alt}
+                  className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105 grayscale group-hover:grayscale-0"
+                  loading="lazy"
+                />
+                
+                {/* Minimal Overlay */}
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-500" />
+                
+                {/* Content on Hover */}
+                <div className="absolute inset-0 flex items-end p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                  <div className="text-white">
+                    <h3 className="text-lg font-light mb-1">{image.name}</h3>
+                    <p className="text-xs tracking-widest uppercase text-white/70">
+                      {image.place} — {image.date}
+                    </p>
                   </div>
                 </div>
+
+                {/* Corner Accent */}
+                <div className="absolute top-0 right-0 w-8 h-8 border-t border-r border-white/0 group-hover:border-white/50 transition-all duration-500" />
               </div>
-            ))}
-          </div>
-
-          {canScrollLeft && (
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={scrollLeft}
-              className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white border-white/20 shadow-lg backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-all duration-300 z-10 w-10 h-10 rounded-full"
-            >
-              <ChevronLeft className="h-5 w-5 text-foreground" />
-            </Button>
-          )}
-
-          {canScrollRight && (
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={scrollRight}
-              className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white border-white/20 shadow-lg backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-all duration-300 z-10 w-10 h-10 rounded-full"
-            >
-              <ChevronRight className="h-5 w-5 text-foreground" />
-            </Button>
-          )}
-        </div>
-      )}
-
-      <div className="text-center mt-16">
-        <div className="inline-flex">
-          <Button
-            asChild
-            variant="ghost"
-            className="group font-light tracking-wider text-sm uppercase hover:bg-transparent p-0"
-          >
-            <Link href="/gallery" className="inline-flex items-center">
-              <span className="border-b border-muted-foreground/30 pb-1 group-hover:border-foreground transition-colors duration-300">
-                View Gallery
-              </span>
-              <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300" />
             </Link>
-          </Button>
+          ))}
         </div>
       </div>
     </section>

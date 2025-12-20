@@ -5,6 +5,7 @@ import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
+import { ArrowRight } from "lucide-react"
 
 export function ContactSection() {
   const [formData, setFormData] = useState({
@@ -30,54 +31,91 @@ export function ContactSection() {
   }
 
   return (
-    <section className="py-32 px-6 max-w-7xl mx-auto">
-      <div className="max-w-2xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-light text-foreground mb-4">Get in Touch</h2>
-          <p className="text-muted-foreground text-lg">hello@alexchen.com</p>
+    <section className="py-24 md:py-32 px-6 bg-muted/30">
+      <div className="max-w-7xl mx-auto">
+        <div className="grid lg:grid-cols-2 gap-16 lg:gap-24">
+          
+          {/* Left Column - Info */}
+          <div>
+            <span className="text-[10px] font-light tracking-[0.3em] text-muted-foreground uppercase block mb-6">
+              Contact
+            </span>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-extralight text-foreground leading-tight mb-8">
+              Let's work<br />together
+            </h2>
+            <p className="text-muted-foreground font-light leading-relaxed mb-12 max-w-md">
+              Available for select architectural photography projects worldwide. 
+              Let's discuss how we can capture your vision.
+            </p>
+            
+            {/* Contact Info */}
+            <div className="space-y-4">
+              <div>
+                <span className="text-xs tracking-widest uppercase text-muted-foreground block mb-1">Email</span>
+                <a href="mailto:hello@emirduruduygu.com" className="text-foreground hover:text-muted-foreground transition-colors">
+                  hello@emirduruduygu.com
+                </a>
+              </div>
+              <div>
+                <span className="text-xs tracking-widest uppercase text-muted-foreground block mb-1">Location</span>
+                <span className="text-foreground">Istanbul, Turkey</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Column - Form */}
+          <div>
+            <form onSubmit={handleSubmit} className="space-y-8">
+              <div className="space-y-6">
+                <div>
+                  <label className="text-xs tracking-widest uppercase text-muted-foreground block mb-3">Name</label>
+                  <Input
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    required
+                    className="border-0 border-b border-border/50 rounded-none bg-transparent px-0 py-3 text-base focus-visible:ring-0 focus-visible:border-foreground transition-colors h-auto"
+                  />
+                </div>
+                <div>
+                  <label className="text-xs tracking-widest uppercase text-muted-foreground block mb-3">Email</label>
+                  <Input
+                    name="email"
+                    type="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                    className="border-0 border-b border-border/50 rounded-none bg-transparent px-0 py-3 text-base focus-visible:ring-0 focus-visible:border-foreground transition-colors h-auto"
+                  />
+                </div>
+                <div>
+                  <label className="text-xs tracking-widest uppercase text-muted-foreground block mb-3">Message</label>
+                  <Textarea
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    required
+                    rows={4}
+                    className="border-0 border-b border-border/50 rounded-none bg-transparent px-0 py-3 text-base focus-visible:ring-0 focus-visible:border-foreground transition-colors resize-none"
+                  />
+                </div>
+              </div>
+
+              <Button
+                type="submit"
+                disabled={isSubmitting}
+                className="group bg-foreground text-background hover:bg-foreground/90 px-8 py-6 font-light tracking-widest text-xs uppercase transition-all duration-300"
+              >
+                {isSubmitting ? "Sending..." : (
+                  <>
+                    Send Message
+                    <ArrowRight className="w-4 h-4 ml-3 group-hover:translate-x-1 transition-transform" />
+                  </>
+                )}
+              </Button>
+            </form>
+          </div>
         </div>
-
-        <form onSubmit={handleSubmit} className="space-y-6 sm:space-y-8">
-          <div className="space-y-6">
-            <Input
-              name="name"
-              placeholder="Name"
-              value={formData.name}
-              onChange={handleChange}
-              required
-              className="border-0 border-b border-border rounded-none bg-transparent px-0 py-4 text-base focus-visible:ring-0 focus-visible:border-foreground transition-colors"
-            />
-            <Input
-              name="email"
-              type="email"
-              placeholder="Email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-              className="border-0 border-b border-border rounded-none bg-transparent px-0 py-4 text-base focus-visible:ring-0 focus-visible:border-foreground transition-colors"
-            />
-            <Textarea
-              name="message"
-              placeholder="Message"
-              value={formData.message}
-              onChange={handleChange}
-              required
-              rows={4}
-              className="border-0 border-b border-border rounded-none bg-transparent px-0 py-4 text-base focus-visible:ring-0 focus-visible:border-foreground transition-colors resize-none"
-            />
-          </div>
-
-          <div className="text-center">
-            <Button
-              type="submit"
-              disabled={isSubmitting}
-              variant="outline"
-              className="px-8 py-3 font-light tracking-wide transition-all duration-300 hover:bg-foreground hover:text-background bg-transparent"
-            >
-              {isSubmitting ? "Sending..." : "Send"}
-            </Button>
-          </div>
-        </form>
       </div>
     </section>
   )

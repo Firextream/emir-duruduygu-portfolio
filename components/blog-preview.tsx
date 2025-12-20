@@ -2,165 +2,130 @@
 
 import Link from "next/link"
 import Image from "next/image"
-import { ArrowRight, Calendar, Clock } from "lucide-react"
-import { useEffect, useState } from "react"
+import { ArrowRight } from "lucide-react"
 import { getAssetPath } from "@/lib/image-utils"
-import { getAllPosts } from "@/lib/notion"
 
 interface BlogPost {
 	id: string
 	title: string
-	excerpt: string
-	date: string
-	readTime: string
+	excerpt?: string
+	date?: string | null
+	readTime?: string
 	slug: string
-	category: string
-	image?: string
+	category?: string
+	image?: string | null
 	content?: string
 	featured?: boolean
 }
 
-export function BlogPreview() {
-	const [blogPosts, setBlogPosts] = useState<BlogPost[]>([])
-	const [loading, setLoading] = useState(true)
-	const [error, setError] = useState<string | null>(null)
+interface BlogPreviewProps {
+	posts: BlogPost[]
+}
 
-	useEffect(() => {
-		const fetchBlogs = async () => {
-			try {
-				const posts = await getAllPosts()
-				// Get the first 3 posts for the homepage
-				setBlogPosts(posts.slice(0, 3))
-				setError(null)
-				setLoading(false)
-			} catch (error) {
-				console.error("Error loading blogs:", error)
-				setError(error instanceof Error ? error.message : "Failed to load blog posts")
-				setBlogPosts([])
-				setLoading(false)
-			}
-		}
+export function BlogPreview({ posts }: BlogPreviewProps) {
+	const blogPosts = posts || []
 
-		fetchBlogs()
-	}, [])
-
-	if (loading) {
+	if (blogPosts.length === 0) {
 		return (
-			<section className="py-20 px-6 max-w-7xl mx-auto">
+			<section className="py-24 md:py-32 px-6 max-w-7xl mx-auto">
 				<div className="mb-16">
-					<h2 className="text-4xl md:text-5xl font-light text-foreground mb-4">
-						Latest Thoughts
+					<span className="text-[10px] font-light tracking-[0.3em] text-muted-foreground uppercase block mb-4">
+						Journal
+					</span>
+					<h2 className="text-4xl md:text-5xl font-extralight text-foreground">
+						Thoughts
 					</h2>
-					<p className="text-muted-foreground text-lg max-w-2xl">
-						Loading latest posts...
-					</p>
 				</div>
-				<div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-					{[...Array(3)].map((_, i) => (
-						<div
-							key={i}
-							className="bg-card border-light overflow-hidden animate-pulse"
-						>
-							<div className="bg-muted h-64 w-full"></div>
-							<div className="p-6">
-								<div className="bg-muted h-4 mb-2"></div>
-								<div className="bg-muted h-4 w-3/4 mb-4"></div>
-								<div className="bg-muted h-3 w-1/2"></div>
-							</div>
-						</div>
-					))}
-				</div>
+				<p className="text-muted-foreground">No posts available yet.</p>
 			</section>
 		)
 	}
 
 	return (
-		<section className="py-32 px-6 max-w-7xl mx-auto">
-			<div className="mb-16">
-				<h2 className="text-4xl md:text-5xl font-light text-foreground mb-4">
-					Latest Thoughts
-				</h2>
-				<p className="text-muted-foreground text-lg max-w-2xl">
-					Reflections on architecture, photography, and the spaces that shape human experience.
-				</p>
+		<section className="py-24 md:py-32 px-6 max-w-7xl mx-auto">
+			{/* Section Header - Minimal */}
+			<div className="flex flex-col md:flex-row md:items-end md:justify-between mb-12 md:mb-16">
+				<div>
+					<span className="text-[10px] font-light tracking-[0.3em] text-muted-foreground uppercase block mb-4">
+						Journal
+					</span>
+					<h2 className="text-4xl md:text-5xl font-extralight text-foreground">
+						Thoughts
+					</h2>
+				</div>
+				<Link 
+					href="/blog"
+					className="group inline-flex items-center gap-3 text-sm tracking-widest uppercase text-foreground hover:text-muted-foreground transition-colors mt-6 md:mt-0"
+				>
+					<span>All Articles</span>
+					<ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+				</Link>
 			</div>
 
-			<div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+			{/* Blog Posts Grid */}
+			<div className="grid grid-cols-1 md:grid-cols-3 gap-8">
 				{blogPosts.map((post, index) => (
-					<article
-						key={post.id}
-						className="group bg-card border-light overflow-hidden hover:architectural-shadow transition-all duration-300"
-					>
-						<Link href={`/blog/${post.slug}`}>
-							<div className="aspect-[4/3] relative overflow-hidden">
+					<article key={post.id} className="group">
+						<Link href={`/blog/${post.slug}`} className="block">
+							{/* Image */}
+							<div className="aspect-[4/3] relative overflow-hidden bg-muted mb-6">
 								{post.image && post.image !== '/placeholder.svg' ? (
 									post.image.startsWith('http') ? (
 										<img
 											src={post.image}
 											alt={post.title}
-											className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+											className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"
 										/>
 									) : (
 										<Image
 											src={getAssetPath(post.image)}
 											alt={post.title}
 											fill
-											className="object-cover transition-transform duration-300 group-hover:scale-105"
+											className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"
 										/>
 									)
 								) : (
-									<div className="w-full h-full bg-gradient-to-br from-muted/50 to-muted flex items-center justify-center">
-										<div className="text-2xl text-muted-foreground/40">📄</div>
+									<div className="w-full h-full bg-muted flex items-center justify-center">
+										<span className="text-muted-foreground/30 text-xs tracking-widest uppercase">
+											{post.category || "Article"}
+										</span>
 									</div>
 								)}
+								{/* Corner Accent */}
+								<div className="absolute top-0 right-0 w-8 h-8 border-t border-r border-white/0 group-hover:border-white/50 transition-all duration-500" />
 							</div>
 
-							<div className="p-6">
-								<div className="flex items-center gap-2 mb-3">
-									<time className="text-sm text-muted-foreground uppercase tracking-wider">
-										{new Date(post.date).toLocaleDateString("en-US", {
-											month: "short",
-											day: "numeric",
-										})}
-									</time>
-									<span className="text-muted-foreground">•</span>
-									<span className="text-sm text-primary uppercase tracking-wider font-medium">
-										{post.category}
-									</span>
+							{/* Content */}
+							<div>
+								{/* Meta */}
+								<div className="flex items-center gap-3 mb-3 text-xs tracking-widest uppercase text-muted-foreground">
+									{post.date && (
+										<time>
+											{new Date(post.date).toLocaleDateString("en-US", {
+												month: "short",
+												year: "numeric",
+											})}
+										</time>
+									)}
+									{post.date && post.category && <span>—</span>}
+									{post.category && <span>{post.category}</span>}
 								</div>
 
-								<h3 className="text-xl font-normal text-foreground mb-3 group-hover:text-primary transition-colors duration-300 line-clamp-2">
+								{/* Title */}
+								<h3 className="text-xl font-light text-foreground mb-3 group-hover:text-muted-foreground transition-colors line-clamp-2">
 									{post.title}
 								</h3>
 
-								<p className="text-muted-foreground mb-4 line-clamp-3 text-sm leading-relaxed">
-									{post.excerpt}
-								</p>
-
-								<div className="flex items-center justify-between">
-									<div className="flex items-center gap-1 text-xs text-muted-foreground">
-										<Clock className="w-3 h-3" />
-										<span>{post.readTime}</span>
-									</div>
-									<div className="flex items-center text-primary text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-										READ MORE
-										<ArrowRight className="h-3 w-3 ml-2 group-hover:translate-x-1 transition-transform" />
-									</div>
-								</div>
+								{/* Excerpt */}
+								{post.excerpt && (
+									<p className="text-sm text-muted-foreground/70 line-clamp-2 leading-relaxed">
+										{post.excerpt}
+									</p>
+								)}
 							</div>
 						</Link>
 					</article>
 				))}
-			</div>
-
-			<div className="text-center">
-				<Link
-					href="/blog"
-					className="inline-flex items-center gap-2 text-foreground hover:text-primary transition-colors font-medium uppercase tracking-wider text-sm border-b border-transparent hover:border-primary pb-1"
-				>
-					ALL ARTICLES
-					<ArrowRight className="w-4 h-4" />
-				</Link>
 			</div>
 		</section>
 	)
