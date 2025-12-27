@@ -148,7 +148,7 @@ export function GalleryGrid({ images, categories }: GalleryGridProps) {
 
       {/* Lightbox */}
       {selectedImage && (
-        <div className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center">
+        <div className="fixed inset-0 z-50 bg-black flex flex-col">
           {/* Close Button */}
           <button
             onClick={closeLightbox}
@@ -161,33 +161,40 @@ export function GalleryGrid({ images, categories }: GalleryGridProps) {
           {/* Navigation Buttons */}
           <button
             onClick={goToPrevious}
-            className="absolute left-6 z-50 w-12 h-12 flex items-center justify-center text-white/70 hover:text-white transition-colors"
+            className="absolute left-1/2 -translate-x-1/2 md:left-6 md:translate-x-0 md:top-1/2 md:-translate-y-1/2 bottom-32 md:bottom-auto z-50 w-12 h-12 flex items-center justify-center text-white/70 hover:text-white transition-colors"
             aria-label="Previous image"
           >
             <ChevronLeft size={32} />
           </button>
           <button
             onClick={goToNext}
-            className="absolute right-6 z-50 w-12 h-12 flex items-center justify-center text-white/70 hover:text-white transition-colors"
+            className="absolute left-1/2 translate-x-4 md:right-6 md:left-auto md:translate-x-0 md:top-1/2 md:-translate-y-1/2 bottom-32 md:bottom-auto z-50 w-12 h-12 flex items-center justify-center text-white/70 hover:text-white transition-colors"
             aria-label="Next image"
           >
             <ChevronRight size={32} />
           </button>
 
-          {/* Image */}
-          <div className="relative w-full h-full max-w-6xl max-h-[85vh] mx-auto p-4">
-            <Image
-              src={selectedImage.src}
-              alt={selectedImage.alt || selectedImage.title || selectedImage.name || "Gallery image"}
-              fill
-              className="object-contain"
-              sizes="100vw"
-              priority
-            />
+          {/* Counter */}
+          <div className="absolute top-6 left-6 font-mono text-sm text-white/60">
+            {selectedImageIndex !== null && `${selectedImageIndex + 1} / ${filteredImages.length}`}
           </div>
 
-          {/* Image Info */}
-          <div className="absolute bottom-8 left-0 right-0 text-center">
+          {/* Image Container - takes remaining space */}
+          <div className="flex-1 flex items-center justify-center p-4 pt-16 pb-28">
+            <div className="relative w-full h-full max-w-6xl">
+              <Image
+                src={selectedImage.src}
+                alt={selectedImage.alt || selectedImage.title || selectedImage.name || "Gallery image"}
+                fill
+                className="object-contain"
+                sizes="100vw"
+                priority
+              />
+            </div>
+          </div>
+
+          {/* Image Info - fixed at bottom with background */}
+          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black via-black/80 to-transparent pt-12 pb-6 text-center">
             <p className="text-white font-serif text-xl mb-2">
               {selectedImage.title || selectedImage.name}
             </p>
@@ -195,11 +202,6 @@ export function GalleryGrid({ images, categories }: GalleryGridProps) {
               {selectedImage.category && <span>{selectedImage.category}</span>}
               {selectedImage.place && <span>• {selectedImage.place}</span>}
             </div>
-          </div>
-          
-          {/* Counter */}
-          <div className="absolute top-6 left-6 font-mono text-sm text-white/60">
-            {selectedImageIndex !== null && `${selectedImageIndex + 1} / ${filteredImages.length}`}
           </div>
         </div>
       )}
