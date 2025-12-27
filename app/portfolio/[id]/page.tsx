@@ -6,6 +6,10 @@ import { getPortfolioItems } from "@/lib/notion"
 import { Navigation } from "@/components/navigation"
 import { ArrowLeft, ArrowRight, MapPin, Calendar, ArrowUpRight } from "lucide-react"
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 interface PortfolioItem {
   id: string
   name?: string
@@ -35,13 +39,6 @@ export async function generateMetadata({
     title: `${title} | Portfolio`,
     description: project.description || `${title} - Photography project`,
   }
-}
-
-export async function generateStaticParams() {
-  const items = await getPortfolioItems()
-  return items.map((item: PortfolioItem) => ({
-    id: item.id,
-  }))
 }
 
 export default async function PortfolioDetailPage({ 
