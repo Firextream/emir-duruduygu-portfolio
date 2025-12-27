@@ -1,14 +1,7 @@
 /** @type {import('next').NextConfig} */
-const isProd = process.env.NODE_ENV === 'production'
-
 const nextConfig = {
-  output: 'export',
-  trailingSlash: true,
-  skipTrailingSlashRedirect: true,
-  ...(isProd && {
-    basePath: '/emir-duruduygu-portfolio',
-    assetPrefix: '/emir-duruduygu-portfolio/',
-  }),
+  // Remove 'output: export' for Vercel - it uses its own server
+  // trailingSlash and basePath not needed for Vercel deployment
   eslint: {
     ignoreDuringBuilds: true,
   },
