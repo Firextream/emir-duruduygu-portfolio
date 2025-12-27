@@ -1,18 +1,23 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { Work_Sans, Open_Sans } from "next/font/google"
+import { Inter, Playfair_Display, JetBrains_Mono } from "next/font/google"
 import "./globals.css"
 
-const workSans = Work_Sans({
+const inter = Inter({
   subsets: ["latin"],
-  display: "swap",
-  variable: "--font-heading",
+  variable: "--font-inter",
 })
 
-const openSans = Open_Sans({
+const playfair = Playfair_Display({
   subsets: ["latin"],
-  display: "swap",
-  variable: "--font-body",
+  variable: "--font-playfair",
+  weight: ["400", "500", "600", "700"],
+})
+
+const jetbrains = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-jetbrains",
+  weight: ["400"],
 })
 
 export const metadata: Metadata = {
@@ -77,9 +82,9 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`${workSans.variable} ${openSans.variable} antialiased`}>
+    <html lang="en" className={`${inter.variable} ${playfair.variable} ${jetbrains.variable}`}>
       <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
         <meta name="format-detection" content="telephone=no, date=no, email=no, address=no" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -88,9 +93,9 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-        <meta name="theme-color" content="#000000" />
+        <meta name="theme-color" content="#fafafa" />
       </head>
-      <body className="font-body architectural-rectangular">{children}</body>
+      <body className="font-sans antialiased min-h-screen flex flex-col">{children}</body>
     </html>
   )
 }

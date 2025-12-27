@@ -1,115 +1,141 @@
 "use client"
 
-import { useEffect, useState } from "react"
-import { Button } from "@/components/ui/button"
-import { ArrowDown } from "lucide-react"
+import Image from "next/image"
 import Link from "next/link"
-import { getAssetPath } from "@/lib/image-utils"
+import { ArrowDown } from "lucide-react"
+import { useEffect, useState } from "react"
+
+const categories = [
+  "Architecture",
+  "Urban",
+  "Minimalist",
+  "Light & Shadow",
+  "Abstract",
+  "Documentary",
+  "Street",
+  "Landscape",
+]
 
 export function HeroSection() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
   const [isLoaded, setIsLoaded] = useState(false)
-  const [scrollY, setScrollY] = useState(0)
-
+  
   useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({
-        x: (e.clientX / window.innerWidth) * 100,
-        y: (e.clientY / window.innerHeight) * 100,
-      })
-    }
-
-    const handleScroll = () => {
-      setScrollY(window.scrollY)
-    }
-
-    window.addEventListener("mousemove", handleMouseMove)
-    window.addEventListener("scroll", handleScroll)
     setIsLoaded(true)
-
-    return () => {
-      window.removeEventListener("mousemove", handleMouseMove)
-      window.removeEventListener("scroll", handleScroll)
-    }
   }, [])
 
-  const scrollToContent = () => {
-    window.scrollTo({
-      top: window.innerHeight,
-      behavior: "smooth",
-    })
-  }
-
   return (
-    <section className="relative h-screen flex items-center justify-center overflow-hidden layer-base">
-      
-      <div className="absolute inset-0 z-0">
-        <div className="w-full h-full">
-          <img
-            src={getAssetPath("/coastal-harbor-scene.jpg")}
-            alt="Coastal Harbor Scene"
-            className="w-full h-full object-cover"
-            loading="eager"
-            fetchPriority="high"
-          />
-        </div>
-      </div>
-
-      <div className="relative z-10 text-white max-w-4xl mx-auto px-4 sm:px-6 flex items-center justify-start h-full">
-        <div className="max-w-2xl">
-          <div className="mb-2 text-xs font-light tracking-[0.2em] text-white/80 uppercase ml-0 sm:ml-16">
-            Architectural Photography
-          </div>
-
-          <h1 className="font-heading font-extralight text-3xl sm:text-4xl md:text-6xl mb-4 sm:mb-6 tracking-tighter leading-none">
-            Emir Duruduygu
-          </h1>
-
-          <p className="text-lg sm:text-xl md:text-2xl mb-8 sm:mb-16 text-white/70 font-light tracking-wide leading-relaxed px-2 sm:px-0">
-            Capturing the essence of modernist architecture through minimalist composition and dramatic light
-          </p>
-
-          <div className="flex flex-col sm:flex-row gap-4 sm:gap-8">
-            <Link href="/portfolio">
-              <Button
-                size="lg"
-                variant="outline"
-                className="border border-white/20 text-white hover:bg-white hover:text-black bg-transparent backdrop-blur-sm transition-all duration-300 font-light tracking-wider px-6 sm:px-8 py-4 sm:py-6 text-sm sm:text-base hover:architectural-shadow w-full sm:w-auto min-h-[48px]"
-              >
-                View Portfolio
-              </Button>
-            </Link>
-            <Button
-              size="lg"
-              onClick={() => {
-                document.getElementById('contact')?.scrollIntoView({ 
-                  behavior: 'smooth',
-                  block: 'start'
-                })
-              }}
-              className="bg-white/10 text-white hover:bg-white hover:text-black border border-white/20 backdrop-blur-sm transition-all duration-300 font-light tracking-wider px-6 sm:px-8 py-4 sm:py-6 text-sm sm:text-base hover:architectural-shadow w-full sm:w-auto min-h-[48px]"
+    <section className="relative min-h-screen flex flex-col">
+      {/* Main Content */}
+      <div className="flex-1 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-0 pt-24 lg:pt-0">
+        {/* Left Column - Typography */}
+        <div className="flex flex-col justify-center px-6 lg:px-12 py-12 lg:py-24">
+          <div className="max-w-xl space-y-8">
+            {/* Subtitle */}
+            <div 
+              className={`transition-all duration-700 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
             >
-              Get In Touch
-            </Button>
+              <p className="font-mono text-sm tracking-wider text-muted-foreground uppercase">
+                Visual Storyteller & Photographer
+              </p>
+            </div>
+            
+            {/* Main Title */}
+            <h1 className="space-y-2">
+              <span 
+                className={`block font-serif text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-medium tracking-tight text-foreground transition-all duration-700 delay-100 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+              >
+                Capturing
+              </span>
+              <span 
+                className={`block font-serif text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-medium tracking-tight text-foreground transition-all duration-700 delay-200 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+              >
+                Light & <span className="text-accent">Shadow</span>
+              </span>
+            </h1>
+            
+            {/* Description */}
+            <p 
+              className={`text-lg md:text-xl text-muted-foreground max-w-md leading-relaxed transition-all duration-700 delay-300 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+            >
+              Architecture and street photography exploring the interplay of structure, light, and human experience.
+            </p>
+            
+            {/* CTA Buttons */}
+            <div 
+              className={`flex items-center gap-6 pt-4 transition-all duration-700 delay-400 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+            >
+              <Link 
+                href="/portfolio"
+                className="group inline-flex items-center gap-3 text-foreground font-medium"
+              >
+                <span className="relative">
+                  View Portfolio
+                  <span className="absolute -bottom-1 left-0 w-0 h-px bg-accent group-hover:w-full transition-all duration-300" />
+                </span>
+                <span className="w-8 h-px bg-foreground group-hover:w-12 transition-all duration-300" />
+              </Link>
+              
+              <Link 
+                href="/contact"
+                className="text-muted-foreground hover:text-foreground transition-colors"
+              >
+                Get in touch
+              </Link>
+            </div>
+          </div>
+        </div>
+        
+        {/* Right Column - Featured Image */}
+        <div 
+          className={`relative h-[50vh] lg:h-auto transition-all duration-1000 delay-200 ${isLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}
+        >
+          <Image
+            src="/coastal-harbor-scene.jpg"
+            alt="Featured architectural photograph"
+            fill
+            priority
+            className="object-cover"
+            sizes="(max-width: 1024px) 100vw, 50vw"
+          />
+          
+          {/* Top Gradient Overlay for Navigation Visibility */}
+          <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-black/50 to-transparent pointer-events-none" />
+          
+          {/* Image Overlay Info */}
+          <div className="absolute bottom-6 left-6 right-6 flex items-end justify-between text-white/80">
+            <div>
+              <p className="font-mono text-xs tracking-wider uppercase">Featured Work</p>
+              <p className="font-serif text-lg mt-1">Coastal Serenity</p>
+            </div>
+            <span className="font-mono text-sm">2024</span>
           </div>
         </div>
       </div>
-
-      <button
-        onClick={scrollToContent}
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white hover:text-accent transition-colors duration-300 animate-bounce touch-target"
-        aria-label="Scroll to content"
-      >
-        <ArrowDown className="h-6 w-6" />
-      </button>
-
+      
+      {/* Marquee Categories Bar */}
+      <div className="border-y border-border overflow-hidden py-4 bg-secondary/30">
+        <div className="animate-marquee flex gap-12 whitespace-nowrap">
+          {[...categories, ...categories].map((category, index) => (
+            <span 
+              key={index} 
+              className="font-mono text-sm tracking-wider text-muted-foreground uppercase flex items-center gap-3"
+            >
+              <span className="w-1.5 h-1.5 bg-accent rounded-full" />
+              {category}
+            </span>
+          ))}
+        </div>
+      </div>
+      
+      {/* Scroll Indicator */}
       <div 
-        className="absolute inset-0 pointer-events-none opacity-10 transition-opacity duration-1000"
-        style={{
-          background: `radial-gradient(circle at ${mousePosition.x}% ${mousePosition.y}%, rgba(255,255,255,0.1) 0%, transparent 50%)`,
-          transform: `translateY(${scrollY * 0.3}px)`,
-        }}
-      />
+        className={`absolute bottom-24 left-6 lg:left-12 flex flex-col items-center gap-2 transition-all duration-700 delay-500 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
+      >
+        <span className="font-mono text-xs tracking-wider text-muted-foreground uppercase rotate-90 origin-center mb-8">
+          Scroll
+        </span>
+        <ArrowDown size={16} className="text-muted-foreground animate-bounce" />
+      </div>
     </section>
   )
 }

@@ -91,10 +91,10 @@ export function PortfolioPreview({ images }: PortfolioPreviewProps) {
         <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-12 md:mb-16">
           <div>
             <span className="text-[10px] font-light tracking-[0.3em] text-muted-foreground uppercase block mb-4">
-              Selected Work
+              Visual Archive
             </span>
             <h2 className="text-4xl md:text-5xl font-extralight text-foreground">
-              Portfolio
+              Gallery
             </h2>
           </div>
           <Link 
@@ -107,20 +107,18 @@ export function PortfolioPreview({ images }: PortfolioPreviewProps) {
         </div>
 
         {/* Masonry-style Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {displayImages.map((image, index) => (
+        <div className="columns-2 md:columns-3 gap-4 space-y-4">
+          {displayImages.map((image) => (
             <Link
               key={image.id}
               href="/gallery"
-              className={`group relative overflow-hidden bg-muted cursor-pointer ${
-                index === 0 ? 'md:col-span-2 md:row-span-2' : ''
-              }`}
+              className="group block relative overflow-hidden bg-muted cursor-pointer break-inside-avoid"
             >
-              <div className={`${index === 0 ? 'aspect-square md:aspect-[4/3]' : 'aspect-[4/3]'} relative`}>
+              <div className="relative">
                 <img
                   src={image.src}
                   alt={image.alt}
-                  className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105 grayscale group-hover:grayscale-0"
+                  className="w-full h-auto object-cover transition-all duration-700 group-hover:scale-105 grayscale group-hover:grayscale-0"
                   loading="lazy"
                 />
                 

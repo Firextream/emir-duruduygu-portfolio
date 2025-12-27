@@ -77,7 +77,9 @@ export function LatestThoughts() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {Array.from({ length: 3 }).map((_, i) => (
               <div key={i} className="animate-pulse">
-                <div className="aspect-[4/3] bg-muted rounded-lg mb-6" />
+                <div className="aspect-[4/3] bg-muted rounded-lg mb-6 overflow-hidden">
+                  <div className="w-full h-full bg-gradient-to-br from-accent/10 to-muted" />
+                </div>
                 <div className="space-y-3">
                   <div className="flex items-center space-x-4">
                     <div className="h-4 bg-muted rounded w-16" />
@@ -154,7 +156,7 @@ export function LatestThoughts() {
             >
               <Link href={`/blog/${post.slug}`} className="block">
                 {/* Image */}
-                <div className="aspect-[4/3] mb-6 overflow-hidden rounded-lg bg-muted">
+                <div className="aspect-[4/3] mb-6 overflow-hidden rounded-lg bg-muted relative">
                   {post.image ? (
                     post.image.startsWith('http') ? (
                       <img
@@ -172,11 +174,21 @@ export function LatestThoughts() {
                       />
                     )
                   ) : (
-                    <div className="w-full h-full bg-gradient-to-br from-muted-foreground/10 to-muted-foreground/5 flex items-center justify-center">
-                      <span className="text-muted-foreground/40 text-sm uppercase tracking-wider">
-                        {post.category}
-                      </span>
-                    </div>
+                    <>
+                      {/* Default placeholder image */}
+                      <Image
+                        src="/coastal-harbor-scene.jpg"
+                        alt={post.title}
+                        fill
+                        className="object-cover opacity-60 transition-transform duration-700 group-hover:scale-105"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                      <div className="absolute bottom-4 left-4 right-4">
+                        <span className="text-white/90 text-xs font-mono uppercase tracking-wider">
+                          {post.category}
+                        </span>
+                      </div>
+                    </>
                   )}
                 </div>
 

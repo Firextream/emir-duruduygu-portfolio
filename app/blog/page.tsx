@@ -1,7 +1,81 @@
-import { getAllPosts } from "@/lib/notion";
-import BlogClient from "./BlogClient";
+import type { Metadata } from "next"
+import { getAllPosts } from "@/lib/notion"
+import { Navigation } from "@/components/navigation"
+import { Footer } from "@/components/footer"
+import { BlogList } from "@/components/blog/blog-list"
+import { PostCard } from "@/components/post-card"
+
+export const metadata: Metadata = {
+  title: "Blog",
+  description: "Thoughts on photography, process, gear, and the spaces between frames.",
+}
+
+export const revalidate = 3600
 
 export default async function BlogPage() {
-  const posts = await getAllPosts();
-  return <BlogClient posts={posts} />;
+  const posts = await getAllPosts()
+  
+  // Filter out null posts and transform to expected format
+  const validPosts = posts
+    .filter((post): post is NonNullable<typeof post> => post !== null)
+    .map(post => ({
+      id: post.id,
+      title: post.title,
+      slug: post.slug,
+      excerpt: post.excerpt || "",
+      date: post.date || null,
+      category: post.category || "Uncategorized",
+      image: post.image || null,
+      readTime: post.readTime || "5 min read",
+      featured: post.featured || false,
+      tags: post.category ? [post.category] : [],
+      cover: post.image || undefined
+    }))
+
+  // Get featured post
+  const featuredPost = validPosts.find(p => p.featured)
+  
+  // Get unique categories
+  const categories = [...new Set(validPosts.map(p => p.category).filter(Boolean))]
+  
+  // Exclude featured post from regular list
+  const regularPosts = featuredPost 
+    ? validPosts.filter((p) => p.id !== featuredPost.id)
+    : validPosts
+
+  return (
+    <div className="min-h-screen flex flex-col">
+      <Navigation />
+      <main className="flex-1 pt-24 lg:pt-32 pb-16 lg:pb-24">
+        <div className="max-w-7xl mx-auto px-6 lg:px-12">
+          {/* Page Header */}
+          <div className="mb-16 lg:mb-24">
+            <span className="font-mono text-sm tracking-wider text-accent uppercase block mb-4">
+              Journal
+            </span>
+            <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl text-foreground mb-6">
+              Thoughts & Stories
+            </h1>
+            <p className="text-muted-foreground text-lg max-w-2xl">
+              Explorations in photography, creative process, and the narratives behind each frame.
+            </p>
+          </div>
+
+          {/* Featured Post */}
+          {featuredPost && (
+            <div className="mb-16 lg:mb-24 pb-16 lg:pb-24 border-b border-border">
+              <span className="font-mono text-xs tracking-wider text-muted-foreground uppercase mb-6 block">
+                Featured
+              </span>
+              <PostCard post={featuredPost} variant="featured" />
+            </div>
+          )}
+
+          {/* Posts List with Filters */}
+          <BlogList posts={regularPosts} categories={categories} />
+        </div>
+      </main>
+      <Footer />
+    </div>
+  )
 }

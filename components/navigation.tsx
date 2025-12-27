@@ -1,216 +1,196 @@
 "use client"
 
-import { useState, useEffect, useRef } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { Button } from "@/components/ui/button"
-import { X, Menu } from "lucide-react"
+import { useState, useEffect } from "react"
+import { cn } from "@/lib/utils"
+
+const navLinks = [
+  { href: "/portfolio", label: "Portfolio", num: "01" },
+  { href: "/gallery", label: "Gallery", num: "02" },
+  { href: "/blog", label: "Blog", num: "03" },
+  { href: "/resume", label: "Resume", num: "04" },
+  { href: "/contact", label: "Contact", num: "05" },
+]
 
 export function Navigation() {
-  const [isOpen, setIsOpen] = useState(false)
-  const [scrolled, setScrolled] = useState(false)
   const pathname = usePathname()
-  const mobileMenuRef = useRef<HTMLDivElement>(null)
+  const [isScrolled, setIsScrolled] = useState(false)
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  
+  // Check if we're on homepage with hero image
+  const isHomePage = pathname === "/"
+  const useWhiteText = isHomePage && !isScrolled
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 20)
+      setIsScrolled(window.scrollY > 20)
     }
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
-  // Close mobile menu when clicking outside
+  // Lock body scroll when mobile menu is open
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (mobileMenuRef.current && !mobileMenuRef.current.contains(event.target as Node)) {
-        setIsOpen(false)
-      }
-    }
-
-    if (isOpen) {
-      document.addEventListener("mousedown", handleClickOutside)
-      // Prevent body scroll when menu is open
+    if (isMobileMenuOpen) {
       document.body.style.overflow = "hidden"
     } else {
       document.body.style.overflow = "unset"
     }
-
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside)
       document.body.style.overflow = "unset"
     }
-  }, [isOpen])
-
-  // Close menu on escape key and manage focus
-  useEffect(() => {
-    const handleEscapeKey = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        setIsOpen(false)
-      }
-    }
-
-    if (isOpen) {
-      document.addEventListener("keydown", handleEscapeKey)
-      // Focus the first menu item when opened
-      const firstMenuItem = mobileMenuRef.current?.querySelector('[role="menuitem"]') as HTMLElement
-      if (firstMenuItem) {
-        setTimeout(() => firstMenuItem.focus(), 100)
-      }
-    }
-
-    return () => {
-      document.removeEventListener("keydown", handleEscapeKey)
-    }
-  }, [isOpen])
-
-  const navItems = [
-    { href: "/blog", label: "Blog" },
-    { href: "/portfolio", label: "Portfolio" },
-    { href: "/gallery", label: "Gallery" },
-    { href: "/resume", label: "Resume" },
-  ]
+  }, [isMobileMenuOpen])
 
   return (
     <>
-      <nav
-        className={`fixed top-0 w-full z-50 transition-all duration-500 ease-out ${
-          scrolled ? "bg-background/95 backdrop-blur-xl border-b border-border/50" : "bg-transparent"
-        }`}
+      <header
+        className={cn(
+          "fixed top-0 left-0 right-0 z-50 transition-all duration-500",
+          isScrolled 
+            ? "bg-background/95 backdrop-blur-md border-b border-border" 
+            : "bg-transparent",
+        )}
       >
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16 sm:h-20">
-          <Link
-            href="/"
-            className="group relative font-heading font-light text-lg sm:text-2xl tracking-wide text-foreground hover:text-accent transition-all duration-500 hover:tracking-wider touch-manipulation"
-          >
-            <span className="relative z-10">Emir Duruduygu</span>
-            <span className="absolute -bottom-1 left-0 w-0 h-px bg-accent transition-all duration-500 group-hover:w-full"></span>
-          </Link>
-
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-12">
-            {navItems.map((item, index) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={`relative font-light text-sm tracking-wide uppercase transition-all duration-300 hover:tracking-widest group ${
-                  pathname === item.href ? "text-accent" : "text-muted-foreground hover:text-foreground"
-                }`}
-                style={{ animationDelay: `${index * 100}ms` }}
-              >
-                {item.label}
-                {pathname === item.href && (
-                  <span className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-4 h-px bg-accent animate-line-draw" />
-                )}
-                <span className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-0 h-px bg-foreground/30 transition-all duration-300 group-hover:w-4" />
-              </Link>
-            ))}
-          </div>
-
-          {/* Mobile Menu Button - Hamburger/X Icon */}
-          <Button
-            variant="ghost"
-            size="sm"
-            className="md:hidden p-2 hover:bg-accent/10 focus:bg-accent/10 active:bg-accent/20 min-h-[44px] min-w-[44px] flex items-center justify-center touch-manipulation rounded-lg transition-all duration-200"
-            onClick={() => setIsOpen(!isOpen)}
-            aria-expanded={isOpen}
-            aria-controls="mobile-menu"
-            aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
-          >
-            {isOpen ? (
-              <X className="w-6 h-6 text-foreground transition-transform duration-300" />
-            ) : (
-              <Menu className="w-6 h-6 text-foreground transition-transform duration-300" />
-            )}
-          </Button>
-        </div>
-      </div>
-      </nav>
-
-      {/* Mobile Menu - Full Screen Overlay */}
-      <div
-        ref={mobileMenuRef}
-        id="mobile-menu"
-        className={`fixed inset-0 z-40 md:hidden transition-all duration-300 ease-out ${
-          isOpen ? "opacity-100 visible" : "opacity-0 invisible pointer-events-none"
-        }`}
-        aria-hidden={!isOpen}
-        role="menu"
-        aria-labelledby="mobile-menu-button"
-      >
-        {/* Backdrop */}
-        <div 
-          className={`absolute inset-0 bg-black/60 backdrop-blur-md transition-opacity duration-300 ${
-            isOpen ? "opacity-100" : "opacity-0"
-          }`}
-          onClick={() => setIsOpen(false)}
-        />
-        
-        {/* Menu Panel */}
-        <div 
-          className={`absolute top-0 right-0 w-full max-w-sm h-full bg-background/98 backdrop-blur-xl shadow-2xl transition-transform duration-300 ease-out ${
-            isOpen ? "translate-x-0" : "translate-x-full"
-          }`}
-        >
-          {/* Close button */}
-          <div className="flex justify-end p-4">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => setIsOpen(false)}
-              className="p-2 hover:bg-accent/10 rounded-lg"
+        <nav className="max-w-7xl mx-auto px-6 lg:px-12">
+          <div className="flex items-center justify-between h-16 lg:h-20">
+            {/* Logo */}
+            <Link
+              href="/"
+              className="font-serif text-xl lg:text-2xl font-medium tracking-tight text-foreground hover:text-accent transition-colors duration-300"
             >
-              <X className="w-6 h-6 text-foreground" />
-            </Button>
+              Emir Duruduygu
+            </Link>
+
+            {/* Desktop Navigation - Editorial Style */}
+            <div className="hidden md:flex items-center gap-10">
+              {navLinks.map((link) => {
+                const isActive = pathname === link.href || pathname.startsWith(link.href + "/")
+                return (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className="group relative"
+                  >
+                    <span className={cn(
+                      "text-[10px] font-mono tracking-wider absolute -top-3 left-0 transition-colors duration-300",
+                      isActive 
+                        ? "text-accent" 
+                        : useWhiteText 
+                          ? "text-white/60 group-hover:text-accent" 
+                          : "text-muted-foreground group-hover:text-accent"
+                    )}>
+                      {link.num}
+                    </span>
+                    <span className={cn(
+                      "text-sm tracking-wide transition-colors duration-300",
+                      isActive 
+                        ? useWhiteText ? "text-white font-medium" : "text-foreground font-medium"
+                        : useWhiteText 
+                          ? "text-white/80 group-hover:text-white" 
+                          : "text-muted-foreground group-hover:text-foreground",
+                    )}>
+                      {link.label}
+                    </span>
+                    <span className={cn(
+                      "absolute -bottom-1 left-0 h-px transition-all duration-300",
+                      useWhiteText ? "bg-white" : "bg-accent",
+                      isActive ? "w-full" : "w-0 group-hover:w-full"
+                    )} />
+                  </Link>
+                )
+              })}
+            </div>
+
+            {/* Mobile Menu Button - Animated Hamburger */}
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="md:hidden relative w-8 h-8 flex items-center justify-center"
+              aria-label="Toggle menu"
+            >
+              <div className="relative w-6 h-4">
+                <span 
+                  className={cn(
+                    "absolute left-0 w-full h-px transition-all duration-300",
+                    useWhiteText && !isMobileMenuOpen ? "bg-white" : "bg-foreground",
+                    isMobileMenuOpen ? "top-1/2 rotate-45" : "top-0"
+                  )}
+                />
+                <span 
+                  className={cn(
+                    "absolute left-0 top-1/2 w-full h-px transition-all duration-300",
+                    useWhiteText && !isMobileMenuOpen ? "bg-white" : "bg-foreground",
+                    isMobileMenuOpen ? "opacity-0" : "opacity-100"
+                  )}
+                />
+                <span 
+                  className={cn(
+                    "absolute left-0 w-full h-px transition-all duration-300",
+                    useWhiteText && !isMobileMenuOpen ? "bg-white" : "bg-foreground",
+                    isMobileMenuOpen ? "top-1/2 -rotate-45" : "bottom-0"
+                  )}
+                />
+              </div>
+            </button>
           </div>
+        </nav>
+      </header>
+
+      {/* Fullscreen Mobile Navigation */}
+      <div
+        className={cn(
+          "fixed inset-0 z-40 bg-background transition-all duration-500 md:hidden",
+          isMobileMenuOpen 
+            ? "opacity-100 pointer-events-auto" 
+            : "opacity-0 pointer-events-none"
+        )}
+      >
+        <div className="flex flex-col justify-center items-start h-full px-8 py-24">
+          <nav className="flex flex-col gap-6">
+            {navLinks.map((link, index) => {
+              const isActive = pathname === link.href || pathname.startsWith(link.href + "/")
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={cn(
+                    "group flex items-baseline gap-4 transition-all duration-300",
+                    isMobileMenuOpen ? "translate-x-0 opacity-100" : "translate-x-8 opacity-0"
+                  )}
+                  style={{ transitionDelay: isMobileMenuOpen ? `${index * 100}ms` : '0ms' }}
+                >
+                  <span className={cn(
+                    "font-mono text-sm tracking-wider transition-colors duration-300",
+                    isActive ? "text-accent" : "text-muted-foreground group-hover:text-accent"
+                  )}>
+                    {link.num}
+                  </span>
+                  <span className={cn(
+                    "font-serif text-4xl md:text-5xl tracking-tight transition-colors duration-300",
+                    isActive ? "text-foreground" : "text-muted-foreground group-hover:text-foreground"
+                  )}>
+                    {link.label}
+                  </span>
+                </Link>
+              )
+            })}
+          </nav>
           
-          {/* Menu Items */}
-          <div className="px-6 py-8 space-y-2">
-            {navItems.map((item, index) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={`group flex items-center font-light text-xl tracking-wide transition-all duration-300 py-5 px-4 rounded-xl touch-manipulation focus:outline-none focus:ring-2 focus:ring-accent/50 ${
-                  pathname === item.href 
-                    ? "text-accent bg-accent/10" 
-                    : "text-foreground hover:text-accent hover:bg-accent/5 active:bg-accent/10"
-                }`}
-                style={{
-                  transitionDelay: isOpen ? `${index * 50}ms` : "0ms",
-                  transform: isOpen ? "translateX(0)" : "translateX(20px)",
-                  opacity: isOpen ? 1 : 0,
-                }}
-                onClick={() => setIsOpen(false)}
-                role="menuitem"
-                tabIndex={isOpen ? 0 : -1}
+          {/* Mobile menu footer */}
+          <div className="absolute bottom-12 left-8 right-8">
+            <div className="flex flex-col gap-2 text-sm text-muted-foreground">
+              <a 
+                href="mailto:hello@emirduruduygu.com" 
+                className="hover:text-foreground transition-colors"
               >
-                <span className="relative flex items-center gap-4 w-full">
-                  <span 
-                    className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                      pathname === item.href ? "bg-accent" : "bg-muted-foreground/30 group-hover:bg-accent/50"
-                    }`} 
-                  />
-                  <span className="flex-1">{item.label}</span>
-                  <span 
-                    className={`h-px bg-accent transition-all duration-300 ${
-                      pathname === item.href ? "w-8" : "w-0 group-hover:w-8"
-                    }`} 
-                  />
-                </span>
-              </Link>
-            ))}
-          </div>
-          
-          {/* Footer in mobile menu */}
-          <div className="absolute bottom-8 left-0 right-0 px-6">
-            <div className="border-t border-border/20 pt-6">
-              <p className="text-sm text-muted-foreground/60 text-center">
-                Architectural Photography
-              </p>
-              <p className="text-xs text-muted-foreground/40 text-center mt-2">
-                © 2025 Emir Duruduygu
-              </p>
+                hello@emirduruduygu.com
+              </a>
+              <div className="flex gap-4 mt-4">
+                <a href="#" className="hover:text-foreground transition-colors">Twitter</a>
+                <a href="#" className="hover:text-foreground transition-colors">Instagram</a>
+                <a href="#" className="hover:text-foreground transition-colors">LinkedIn</a>
+              </div>
             </div>
           </div>
         </div>

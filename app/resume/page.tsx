@@ -1,7 +1,12 @@
+import type { Metadata } from "next"
 import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
-import { Button } from "@/components/ui/button"
-import { Download } from "lucide-react"
+import { Download, ArrowRight } from "lucide-react"
+
+export const metadata: Metadata = {
+  title: "Resume",
+  description: "Professional experience and background of Emir Duruduygu.",
+}
 
 const experience = [
   {
@@ -48,59 +53,92 @@ const skills = [
 
 export default function ResumePage() {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen flex flex-col">
       <Navigation />
-      <main className="pt-32 pb-24">
-        <div className="max-w-3xl mx-auto px-6">
-          <div className="mb-16 text-center">
-            <h1 className="font-heading font-light text-5xl mb-4 tracking-tight">Emir Duruduygu</h1>
-            <p className="text-muted-foreground mb-8 font-light">Architectural Photographer</p>
-            <Button variant="outline" className="font-light tracking-wide bg-transparent">
-              <Download className="w-4 h-4 mr-2" />
-              Download CV
-            </Button>
+      <main className="flex-1 pt-24 lg:pt-32 pb-16 lg:pb-24">
+        <div className="max-w-4xl mx-auto px-6 lg:px-12">
+          {/* Header */}
+          <div className="mb-16 lg:mb-24">
+            <span className="font-mono text-sm tracking-wider text-accent uppercase block mb-4">
+              Resume
+            </span>
+            <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl text-foreground mb-6">
+              Emir Duruduygu
+            </h1>
+            <p className="text-muted-foreground text-lg mb-8">
+              Architectural Photographer & Visual Storyteller
+            </p>
+            <button className="group inline-flex items-center gap-3 text-foreground font-medium">
+              <Download className="w-5 h-5" />
+              <span className="relative">
+                Download CV
+                <span className="absolute -bottom-1 left-0 w-full h-px bg-accent" />
+              </span>
+            </button>
           </div>
 
-          <div className="space-y-16">
+          <div className="space-y-20 lg:space-y-28">
+            {/* Experience */}
             <section>
-              <h2 className="font-heading font-light text-2xl mb-8 tracking-wide">Experience</h2>
-              <div className="space-y-8">
+              <div className="flex items-center gap-4 mb-10">
+                <h2 className="font-serif text-2xl md:text-3xl text-foreground">Experience</h2>
+                <span className="flex-1 h-px bg-border" />
+              </div>
+              <div className="space-y-10">
                 {experience.map((job, index) => (
                   <div
                     key={index}
-                    className="border-l border-border pl-6 hover:border-foreground transition-colors duration-300"
+                    className="group grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-8"
                   >
-                    <div className="flex justify-between items-start mb-2">
-                      <h3 className="font-medium">{job.title}</h3>
-                      <span className="text-sm text-muted-foreground font-light">{job.period}</span>
+                    <div className="md:col-span-1">
+                      <span className="font-mono text-sm text-muted-foreground">{job.period}</span>
                     </div>
-                    <p className="text-muted-foreground mb-2 font-light">{job.company}</p>
-                    <p className="text-sm leading-relaxed font-light">{job.description}</p>
+                    <div className="md:col-span-3 border-l-2 border-border group-hover:border-accent pl-6 transition-colors duration-300">
+                      <h3 className="font-serif text-xl text-foreground mb-1">{job.title}</h3>
+                      <p className="text-accent font-medium mb-3">{job.company}</p>
+                      <p className="text-muted-foreground leading-relaxed">{job.description}</p>
+                    </div>
                   </div>
                 ))}
               </div>
             </section>
 
+            {/* Education */}
             <section>
-              <h2 className="font-heading font-light text-2xl mb-8 tracking-wide">Education</h2>
-              <div className="space-y-4">
+              <div className="flex items-center gap-4 mb-10">
+                <h2 className="font-serif text-2xl md:text-3xl text-foreground">Education</h2>
+                <span className="flex-1 h-px bg-border" />
+              </div>
+              <div className="space-y-6">
                 {education.map((edu, index) => (
-                  <div key={index} className="flex justify-between items-center py-2">
-                    <div>
-                      <h3 className="font-medium">{edu.degree}</h3>
-                      <p className="text-muted-foreground font-light">{edu.school}</p>
+                  <div 
+                    key={index} 
+                    className="grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-8 py-4 border-b border-border last:border-0"
+                  >
+                    <div className="md:col-span-1">
+                      <span className="font-mono text-sm text-muted-foreground">{edu.year}</span>
                     </div>
-                    <span className="text-sm text-muted-foreground font-light">{edu.year}</span>
+                    <div className="md:col-span-3">
+                      <h3 className="font-serif text-lg text-foreground">{edu.degree}</h3>
+                      <p className="text-muted-foreground">{edu.school}</p>
+                    </div>
                   </div>
                 ))}
               </div>
             </section>
 
+            {/* Skills */}
             <section>
-              <h2 className="font-heading font-light text-2xl mb-8 tracking-wide">Skills</h2>
-              <div className="grid grid-cols-2 gap-2 text-sm">
+              <div className="flex items-center gap-4 mb-10">
+                <h2 className="font-serif text-2xl md:text-3xl text-foreground">Skills</h2>
+                <span className="flex-1 h-px bg-border" />
+              </div>
+              <div className="flex flex-wrap gap-3">
                 {skills.map((skill, index) => (
-                  <span key={index} className="font-light">
+                  <span 
+                    key={index} 
+                    className="font-mono text-sm px-4 py-2 border border-border hover:border-accent hover:text-accent transition-colors"
+                  >
                     {skill}
                   </span>
                 ))}
