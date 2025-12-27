@@ -16,29 +16,108 @@ export function BlogPostContent({ content, className }: BlogPostContentProps) {
     )
   }
 
-  // Split content into paragraphs and render with proper styling
-  const paragraphs = content.split('\n\n').filter(p => p.trim().length > 0)
+  // Parse content into structured elements
+  const parseContent = (text: string) => {
+    // Normalize line breaks
+    const normalizedText = text.replace(/\r\n/g, '\n')
+    
+    // Split by double newlines for paragraphs, or single newlines
+    const blocks = normalizedText.split(/\n\n+/).filter(block => block.trim().length > 0)
+    
+    return blocks.map((block, index) => {
+      const trimmedBlock = block.trim()
+      
+      // Check for headers (lines ending with :)
+      if (trimmedBlock.match(/^[A-Z][^.!?]*:$/)) {
+        return { type: 'heading', content: trimmedBlock.replace(/:$/, ''), key: index }
+      }
+      
+      // Check for bullet points
+      if (trimmedBlock.includes('•') || trimmedBlock.includes('- ')) {
+        const items = trimmedBlock
+          .split(/[•\-]/)
+          .map(item => item.trim())
+          .filter(item => item.length > 0)
+        return { type: 'list', items, key: index }
+      }
+      
+      // Check for sub-sections (text followed by content on same block)
+      const colonMatch = trimmedBlock.match(/^([A-Z][^:]+):\s*(.+)$/s)
+      if (colonMatch && colonMatch[2].length > 50) {
+        return { 
+          type: 'section', 
+          heading: colonMatch[1], 
+          content: colonMatch[2],
+          key: index 
+        }
+      }
+      
+      // Regular paragraph
+      return { type: 'paragraph', content: trimmedBlock, key: index }
+    })
+  }
+
+  const elements = parseContent(content)
 
   return (
-    <div className={cn(
-      "blog-content prose prose-neutral dark:prose-invert max-w-none",
-      "[&>h1]:text-3xl [&>h1]:font-light [&>h1]:mt-16 [&>h1]:mb-8 [&>h1]:text-foreground",
-      "[&>h2]:text-2xl [&>h2]:font-light [&>h2]:mt-12 [&>h2]:mb-6 [&>h2]:text-foreground",
-      "[&>h3]:text-xl [&>h3]:font-medium [&>h3]:mt-8 [&>h3]:mb-4 [&>h3]:text-foreground",
-      "[&>p]:text-muted-foreground [&>p]:leading-relaxed [&>p]:mb-6",
-      "[&>p:first-of-type]:text-lg [&>p:first-of-type]:text-foreground",
-      "[&>ul]:text-muted-foreground [&>ol]:text-muted-foreground",
-      "[&>blockquote]:border-l-accent [&>blockquote]:text-foreground",
-      "[&>code]:bg-muted [&>code]:text-foreground [&>code]:px-1 [&>code]:py-0.5 [&>code]:rounded",
-      "[&>pre]:bg-muted [&>pre]:p-4 [&>pre]:rounded-lg [&>pre]:overflow-x-auto",
+    <article className={cn(
+      "blog-content max-w-none space-y-6",
       className
     )}>
-      {paragraphs.map((paragraph, index) => (
-        <p key={index} className="mb-6 text-muted-foreground leading-relaxed">
-          {paragraph.trim()}
-        </p>
-      ))}
-    </div>
+      {elements.map((element) => {
+        switch (element.type) {
+          case 'heading':
+            return (
+              <h2 key={element.key} className="text-2xl font-serif text-foreground mt-12 mb-4 first:mt-0">
+                {element.content}
+              </h2>
+            )
+          
+          case 'section':
+            return (
+              <div key={element.key} className="space-y-4">
+                <h3 className="text-xl font-serif text-foreground mt-8">
+                  {element.heading}
+                </h3>
+                <p className="text-muted-foreground leading-relaxed text-lg">
+                  {element.content}
+                </p>
+              </div>
+            )
+          
+          case 'list':
+            return (
+              <ul key={element.key} className="space-y-2 my-6 ml-4">
+                {element.items?.map((item, i) => (
+                  <li key={i} className="text-muted-foreground leading-relaxed flex gap-3">
+                    <span className="text-accent mt-1.5">•</span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            )
+          
+          case 'paragraph':
+          default:
+            // Check if it's a short line (potential subheading or emphasis)
+            const isShort = element.content && element.content.length < 100 && !element.content.includes('.')
+            
+            if (isShort) {
+              return (
+                <p key={element.key} className="text-foreground font-medium leading-relaxed text-lg mt-8">
+                  {element.content}
+                </p>
+              )
+            }
+            
+            return (
+              <p key={element.key} className="text-muted-foreground leading-relaxed text-lg">
+                {element.content}
+              </p>
+            )
+        }
+      })}
+    </article>
   )
 }
 
