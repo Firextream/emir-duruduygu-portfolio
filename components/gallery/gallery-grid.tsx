@@ -9,10 +9,8 @@ interface GalleryImage {
   id: string
   src: string
   alt: string
-  aspectRatio?: string
   name?: string
   title?: string
-  date?: string
   place?: string
   category?: string
   featured?: boolean
@@ -196,7 +194,6 @@ export function GalleryGrid({ images, categories }: GalleryGridProps) {
             <div className="flex items-center justify-center gap-4 text-white/60 font-mono text-sm">
               {selectedImage.category && <span>{selectedImage.category}</span>}
               {selectedImage.place && <span>• {selectedImage.place}</span>}
-              {selectedImage.date && <span>• {selectedImage.date}</span>}
             </div>
           </div>
           

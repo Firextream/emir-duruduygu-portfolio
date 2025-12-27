@@ -6,10 +6,8 @@ interface GalleryImage {
   id: string
   src: string
   alt: string
-  aspectRatio?: string
   name?: string
   title?: string
-  date?: string
   place?: string
   category?: string
   featured?: boolean
