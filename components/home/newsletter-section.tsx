@@ -13,9 +13,8 @@ export function NewsletterSection() {
     setStatus("loading")
 
     try {
-      // Formspree ile email toplama - https://formspree.io adresinden ücretsiz form ID alın
-      // YOUR_FORM_ID yerine kendi ID'nizi yazın
-      const res = await fetch("https://formspree.io/f/YOUR_FORM_ID", {
+      // Formspree ile email toplama
+      const res = await fetch("https://formspree.io/f/maqyjnqd", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -44,10 +43,10 @@ export function NewsletterSection() {
               Newsletter
             </span>
             <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl text-foreground leading-tight">
-              Stay in the loop with behind-the-scenes stories and new work
+              Join the journey — stories, updates, and new work
             </h2>
             <p className="text-muted-foreground text-lg max-w-md">
-              Occasional thoughts on photography, creative process, and the spaces in between.
+              Occasional thoughts on photography, creative process, and the spaces in between. Based in Istanbul, exploring everywhere.
             </p>
           </div>
           
