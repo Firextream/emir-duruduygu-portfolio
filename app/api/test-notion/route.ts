@@ -9,7 +9,9 @@ export async function GET() {
   const galleryDb = process.env.NOTION_GALLERY_DATABASE_ID
   const portfolioDb = process.env.NOTION_PORTFOLIO_DATABASE_ID
 
-  const result: Record<string, unknown> = {
+  const apiTests: Record<string, unknown> = {}
+
+  const result = {
     envCheck: {
       hasToken: !!notionToken,
       tokenPreview: notionToken ? notionToken.substring(0, 10) + '...' : 'MISSING',
@@ -17,7 +19,7 @@ export async function GET() {
       hasGalleryDb: !!galleryDb,
       hasPortfolioDb: !!portfolioDb,
     },
-    apiTests: {} as Record<string, unknown>
+    apiTests
   }
 
   // Test actual Notion API calls
@@ -28,10 +30,10 @@ export async function GET() {
     if (postsDb) {
       try {
         const resp = await notion.databases.query({ database_id: postsDb, page_size: 1 })
-        (result.apiTests as Record<string, unknown>).posts = { success: true, count: resp.results.length }
+        apiTests.posts = { success: true, count: resp.results.length }
       } catch (e: unknown) {
         const err = e as Error & { code?: string }
-        (result.apiTests as Record<string, unknown>).posts = { success: false, error: err.message, code: err.code }
+        apiTests.posts = { success: false, error: err.message, code: err.code }
       }
     }
 
@@ -39,10 +41,10 @@ export async function GET() {
     if (galleryDb) {
       try {
         const resp = await notion.databases.query({ database_id: galleryDb, page_size: 1 })
-        (result.apiTests as Record<string, unknown>).gallery = { success: true, count: resp.results.length }
+        apiTests.gallery = { success: true, count: resp.results.length }
       } catch (e: unknown) {
         const err = e as Error & { code?: string }
-        (result.apiTests as Record<string, unknown>).gallery = { success: false, error: err.message, code: err.code }
+        apiTests.gallery = { success: false, error: err.message, code: err.code }
       }
     }
 
@@ -50,10 +52,10 @@ export async function GET() {
     if (portfolioDb) {
       try {
         const resp = await notion.databases.query({ database_id: portfolioDb, page_size: 1 })
-        (result.apiTests as Record<string, unknown>).portfolio = { success: true, count: resp.results.length }
+        apiTests.portfolio = { success: true, count: resp.results.length }
       } catch (e: unknown) {
         const err = e as Error & { code?: string }
-        (result.apiTests as Record<string, unknown>).portfolio = { success: false, error: err.message, code: err.code }
+        apiTests.portfolio = { success: false, error: err.message, code: err.code }
       }
     }
   }
