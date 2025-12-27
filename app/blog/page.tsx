@@ -10,7 +10,9 @@ export const metadata: Metadata = {
   description: "Thoughts on photography, process, gear, and the spaces between frames.",
 }
 
-export const revalidate = 3600
+// Force dynamic rendering to ensure env vars are available at runtime
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
 
 export default async function BlogPage() {
   const posts = await getAllPosts()

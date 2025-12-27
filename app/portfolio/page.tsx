@@ -10,7 +10,9 @@ export const metadata: Metadata = {
   description: "A curated collection of architectural, street, and travel photography projects.",
 }
 
-export const revalidate = 3600
+// Force dynamic rendering to ensure env vars are available at runtime
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
 
 export default async function PortfolioPage() {
   const items = await getPortfolioItems()

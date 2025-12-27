@@ -7,8 +7,9 @@ import { NewsletterSection } from "@/components/home/newsletter-section"
 import { Footer } from "@/components/footer"
 import { getAllPosts, getGalleryImages } from "@/lib/notion"
 
-// Enable ISR with 1 hour revalidation
-export const revalidate = 3600
+// Force dynamic rendering to ensure env vars are available at runtime
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
 
 export default async function HomePage() {
   // Fetch posts and gallery images on the server side

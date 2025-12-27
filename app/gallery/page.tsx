@@ -9,7 +9,9 @@ export const metadata: Metadata = {
   description: "A curated collection of architectural and street photography.",
 }
 
-export const revalidate = 3600
+// Force dynamic rendering to ensure env vars are available at runtime
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
 
 export default async function GalleryPage() {
   const images = await getGalleryImages()
