@@ -10,46 +10,47 @@ export const metadata: Metadata = {
 
 const experience = [
   {
-    title: "Senior Architectural Photographer",
-    company: "Studio Modernist",
-    period: "2022 - Present",
-    description: "Lead photographer specializing in contemporary architecture and urban design documentation.",
-  },
-  {
-    title: "Photography Director",
-    company: "Urban Lens Collective",
-    period: "2020 - 2022",
-    description: "Directed photography projects for architectural publications and design magazines.",
-  },
-  {
-    title: "Freelance Photographer",
-    company: "Independent",
-    period: "2018 - 2020",
-    description: "Architectural photography services across North America and Europe.",
+    title: "Electronic Team Member",
+    company: "ITU ROV Team",
+    period: "Oct 2024 - Present",
+    description: "Actively contributing to the electronics sub-team for the design of remotely operated underwater vehicles.",
   },
 ]
 
 const education = [
   {
-    degree: "MFA Photography",
-    school: "Rhode Island School of Design",
-    year: "2018",
-  },
-  {
-    degree: "Bachelor of Architecture",
-    school: "UC Berkeley",
-    year: "2016",
+    degree: "B.Sc. in Electrical & Electronics Engineering",
+    school: "Istanbul Technical University",
+    year: "Present",
+    details: "Relevant Coursework: Circuit Analysis, Digital Logic Design, C++ Programming.",
   },
 ]
 
-const skills = [
-  "Architectural Photography",
-  "Digital Post-Processing",
-  "Lighting Design",
-  "3D Visualization",
-  "Adobe Creative Suite",
-  "Project Management",
-]
+const skills = {
+  technical: [
+    "C++",
+    "MATLAB",
+    "Python",
+  ],
+  ai: [
+    "Generative AI",
+    "Prompt Engineering",
+  ],
+  creative: [
+    "Adobe Photoshop",
+    "Adobe Premiere Pro",
+  ],
+  core: [
+    "Project Management",
+    "Problem Solving",
+  ],
+}
+
+const creativeInterests = {
+  title: "Amateur Photography",
+  period: "Aug 2025 - Present",
+  description: "Exploring street and architectural photography, capturing everyday moments and urban landscapes.",
+}
 
 export default function ResumePage() {
   return (
@@ -66,7 +67,7 @@ export default function ResumePage() {
               Emir Duruduygu
             </h1>
             <p className="text-muted-foreground text-lg mb-8">
-              Architectural Photographer & Visual Storyteller
+              Electrical & Electronics Engineering Student · Istanbul, Turkey
             </p>
             <button className="group inline-flex items-center gap-3 text-foreground font-medium">
               <Download className="w-5 h-5" />
@@ -78,6 +79,33 @@ export default function ResumePage() {
           </div>
 
           <div className="space-y-20 lg:space-y-28">
+            {/* Education */}
+            <section>
+              <div className="flex items-center gap-4 mb-10">
+                <h2 className="font-serif text-2xl md:text-3xl text-foreground">Education</h2>
+                <span className="flex-1 h-px bg-border" />
+              </div>
+              <div className="space-y-6">
+                {education.map((edu, index) => (
+                  <div 
+                    key={index} 
+                    className="grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-8 py-4 border-b border-border last:border-0"
+                  >
+                    <div className="md:col-span-1">
+                      <span className="font-mono text-sm text-muted-foreground">{edu.year}</span>
+                    </div>
+                    <div className="md:col-span-3">
+                      <h3 className="font-serif text-lg text-foreground">{edu.degree}</h3>
+                      <p className="text-accent font-medium">{edu.school}</p>
+                      {edu.details && (
+                        <p className="text-muted-foreground text-sm mt-2">{edu.details}</p>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
+
             {/* Experience */}
             <section>
               <div className="flex items-center gap-4 mb-10">
@@ -103,27 +131,20 @@ export default function ResumePage() {
               </div>
             </section>
 
-            {/* Education */}
+            {/* Creative Interests */}
             <section>
               <div className="flex items-center gap-4 mb-10">
-                <h2 className="font-serif text-2xl md:text-3xl text-foreground">Education</h2>
+                <h2 className="font-serif text-2xl md:text-3xl text-foreground">Creative Interests</h2>
                 <span className="flex-1 h-px bg-border" />
               </div>
-              <div className="space-y-6">
-                {education.map((edu, index) => (
-                  <div 
-                    key={index} 
-                    className="grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-8 py-4 border-b border-border last:border-0"
-                  >
-                    <div className="md:col-span-1">
-                      <span className="font-mono text-sm text-muted-foreground">{edu.year}</span>
-                    </div>
-                    <div className="md:col-span-3">
-                      <h3 className="font-serif text-lg text-foreground">{edu.degree}</h3>
-                      <p className="text-muted-foreground">{edu.school}</p>
-                    </div>
-                  </div>
-                ))}
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-8">
+                <div className="md:col-span-1">
+                  <span className="font-mono text-sm text-muted-foreground">{creativeInterests.period}</span>
+                </div>
+                <div className="md:col-span-3 border-l-2 border-accent pl-6">
+                  <h3 className="font-serif text-xl text-foreground mb-2">{creativeInterests.title}</h3>
+                  <p className="text-muted-foreground leading-relaxed">{creativeInterests.description}</p>
+                </div>
               </div>
             </section>
 
@@ -133,15 +154,63 @@ export default function ResumePage() {
                 <h2 className="font-serif text-2xl md:text-3xl text-foreground">Skills</h2>
                 <span className="flex-1 h-px bg-border" />
               </div>
-              <div className="flex flex-wrap gap-3">
-                {skills.map((skill, index) => (
-                  <span 
-                    key={index} 
-                    className="font-mono text-sm px-4 py-2 border border-border hover:border-accent hover:text-accent transition-colors"
-                  >
-                    {skill}
-                  </span>
-                ))}
+              <div className="space-y-8">
+                {/* Technical & Engineering */}
+                <div>
+                  <h3 className="font-mono text-xs tracking-wider text-muted-foreground uppercase mb-4">Technical & Engineering</h3>
+                  <div className="flex flex-wrap gap-3">
+                    {skills.technical.map((skill, index) => (
+                      <span 
+                        key={index} 
+                        className="font-mono text-sm px-4 py-2 border border-border hover:border-accent hover:text-accent transition-colors"
+                      >
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                {/* AI & Innovation */}
+                <div>
+                  <h3 className="font-mono text-xs tracking-wider text-muted-foreground uppercase mb-4">AI & Innovation</h3>
+                  <div className="flex flex-wrap gap-3">
+                    {skills.ai.map((skill, index) => (
+                      <span 
+                        key={index} 
+                        className="font-mono text-sm px-4 py-2 border border-border hover:border-accent hover:text-accent transition-colors"
+                      >
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                {/* Creative & Software */}
+                <div>
+                  <h3 className="font-mono text-xs tracking-wider text-muted-foreground uppercase mb-4">Creative & Software</h3>
+                  <div className="flex flex-wrap gap-3">
+                    {skills.creative.map((skill, index) => (
+                      <span 
+                        key={index} 
+                        className="font-mono text-sm px-4 py-2 border border-border hover:border-accent hover:text-accent transition-colors"
+                      >
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                {/* Core Skills */}
+                <div>
+                  <h3 className="font-mono text-xs tracking-wider text-muted-foreground uppercase mb-4">Core Skills</h3>
+                  <div className="flex flex-wrap gap-3">
+                    {skills.core.map((skill, index) => (
+                      <span 
+                        key={index} 
+                        className="font-mono text-sm px-4 py-2 border border-border hover:border-accent hover:text-accent transition-colors"
+                      >
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                </div>
               </div>
             </section>
           </div>

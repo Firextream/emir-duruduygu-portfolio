@@ -35,7 +35,7 @@ export default async function GalleryPage() {
               Gallery
             </h1>
             <p className="text-muted-foreground text-lg max-w-2xl">
-              A curated collection of architectural moments, urban landscapes, and visual stories.
+              A collection of photos from all around — moments, places, and things that caught my eye.
             </p>
           </div>
 

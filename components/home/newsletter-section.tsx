@@ -12,11 +12,26 @@ export function NewsletterSection() {
     e.preventDefault()
     setStatus("loading")
 
-    // Simulate API call - replace with actual newsletter integration
-    await new Promise((resolve) => setTimeout(resolve, 1000))
+    try {
+      // Formspree ile email toplama - https://formspree.io adresinden ücretsiz form ID alın
+      // YOUR_FORM_ID yerine kendi ID'nizi yazın
+      const res = await fetch("https://formspree.io/f/YOUR_FORM_ID", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      })
 
-    setStatus("success")
-    setEmail("")
+      if (res.ok) {
+        setStatus("success")
+        setEmail("")
+      } else {
+        setStatus("error")
+      }
+    } catch {
+      setStatus("error")
+    }
   }
 
   return (

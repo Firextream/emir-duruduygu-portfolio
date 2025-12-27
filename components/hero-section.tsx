@@ -14,6 +14,8 @@ const categories = [
   "Documentary",
   "Street",
   "Landscape",
+  "Electronics",
+  "Drawing",
 ]
 
 export function HeroSection() {

@@ -17,7 +17,7 @@ export function ManifestoSection() {
           
           {/* Quote */}
           <blockquote className="font-serif text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-medium text-foreground leading-relaxed text-balance">
-            Photography is not about cameras, lenses, or megapixels. It's about seeing the world with intention—finding stories in structure, emotion in emptiness, and beauty in the overlooked.
+            Just capturing things that catch my eye.
           </blockquote>
           
           {/* Author */}

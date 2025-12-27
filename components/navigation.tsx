@@ -18,9 +18,11 @@ export function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   
-  // Check if we're on homepage with hero image
+  // Check if we're on pages with dark hero backgrounds
   const isHomePage = pathname === "/"
-  const useWhiteText = isHomePage && !isScrolled
+  const isPortfolioPage = pathname === "/portfolio" || pathname.startsWith("/portfolio/")
+  const hasDarkHero = isHomePage || isPortfolioPage
+  const useWhiteText = hasDarkHero && !isScrolled
 
   useEffect(() => {
     const handleScroll = () => {
@@ -54,10 +56,15 @@ export function Navigation() {
       >
         <nav className="max-w-7xl mx-auto px-6 lg:px-12">
           <div className="flex items-center justify-between h-16 lg:h-20">
-            {/* Logo */}
+            {/* Logo - white only on portfolio pages (dark bg), dark on homepage (light bg on left) */}
             <Link
               href="/"
-              className="font-serif text-xl lg:text-2xl font-medium tracking-tight text-foreground hover:text-accent transition-colors duration-300"
+              className={cn(
+                "font-serif text-xl lg:text-2xl font-medium tracking-tight transition-colors duration-300",
+                isPortfolioPage && !isScrolled
+                  ? "text-white hover:text-white/80" 
+                  : "text-foreground hover:text-accent"
+              )}
             >
               Emir Duruduygu
             </Link>
@@ -181,15 +188,14 @@ export function Navigation() {
           <div className="absolute bottom-12 left-8 right-8">
             <div className="flex flex-col gap-2 text-sm text-muted-foreground">
               <a 
-                href="mailto:hello@emirduruduygu.com" 
+                href="mailto:edmesaj@outlook.com" 
                 className="hover:text-foreground transition-colors"
               >
-                hello@emirduruduygu.com
+                edmesaj@outlook.com
               </a>
               <div className="flex gap-4 mt-4">
-                <a href="#" className="hover:text-foreground transition-colors">Twitter</a>
-                <a href="#" className="hover:text-foreground transition-colors">Instagram</a>
-                <a href="#" className="hover:text-foreground transition-colors">LinkedIn</a>
+                <a href="https://www.instagram.com/emir_duruduygu/" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">Instagram</a>
+                <a href="https://www.linkedin.com/in/emir-duruduygu-90800a27a/" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">LinkedIn</a>
               </div>
             </div>
           </div>

@@ -52,12 +52,12 @@ export default async function PortfolioPage() {
               </h1>
             </div>
             <div className="col-span-12 lg:col-span-4 flex flex-col justify-end">
-              <p className="text-background/60 text-lg leading-relaxed">
-                A curated collection exploring architecture, urban landscapes, and the poetic spaces in between.
+              <p className="text-background/80 text-lg leading-relaxed">
+                A curated collection exploring architecture, electronics, and photography.
               </p>
-              <div className="flex items-center gap-3 mt-8 text-background/40">
+              <div className="flex items-center gap-3 mt-8 text-background/70">
                 <span className="font-mono text-xs tracking-wider">{projects.length} Projects</span>
-                <span className="w-px h-4 bg-background/20" />
+                <span className="w-px h-4 bg-background/40" />
                 <span className="font-mono text-xs tracking-wider">{categories.length} Categories</span>
               </div>
             </div>
@@ -65,7 +65,7 @@ export default async function PortfolioPage() {
         </div>
         
         {/* Scroll Indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-background/40">
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-background/60">
           <ArrowDown size={20} className="animate-bounce" />
         </div>
       </section>
@@ -76,6 +76,36 @@ export default async function PortfolioPage() {
           <PortfolioGrid projects={projects} categories={categories} />
         </div>
       </main>
+
+      {/* Coming Soon Section - TEMPORARY: Remove this section when portfolio is filled */}
+      <section className="py-24 lg:py-32 bg-muted/30">
+        <div className="max-w-4xl mx-auto px-6 lg:px-12 text-center">
+          <div className="inline-flex items-center gap-3 text-muted-foreground mb-8">
+            <span className="w-8 h-px bg-muted-foreground/30" />
+            <span className="font-mono text-xs tracking-[0.3em] uppercase">Coming Soon</span>
+            <span className="w-8 h-px bg-muted-foreground/30" />
+          </div>
+          
+          <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-light text-foreground/80 leading-tight mb-6">
+            More projects <span className="italic">coming soon</span>
+          </h2>
+          
+          <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto mb-4">
+            This space will be filled with architecture, electronics, and photography projects over time.
+            Each new creation will find its place here.
+          </p>
+          
+          <p className="text-sm text-muted-foreground/60 leading-relaxed max-w-xl mx-auto mb-8">
+            Note: Any projects shown above are placeholders for demonstration purposes only.
+          </p>
+          
+          <div className="flex items-center justify-center gap-2 text-muted-foreground/60">
+            <div className="w-2 h-2 rounded-full bg-accent/60 animate-pulse" />
+            <span className="font-mono text-xs tracking-wider">Building the portfolio...</span>
+          </div>
+        </div>
+      </section>
+      {/* END Coming Soon Section */}
       
       <Footer />
     </div>

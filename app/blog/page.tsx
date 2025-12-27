@@ -57,7 +57,7 @@ export default async function BlogPage() {
               Thoughts & Stories
             </h1>
             <p className="text-muted-foreground text-lg max-w-2xl">
-              Explorations in photography, creative process, and the narratives behind each frame.
+              New discoveries, projects, photography, and thoughts on various topics along the way.
             </p>
           </div>
 

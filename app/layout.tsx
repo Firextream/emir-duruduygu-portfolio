@@ -1,6 +1,7 @@
 import type React from "react"
 import type { Metadata } from "next"
 import { Inter, Playfair_Display, JetBrains_Mono } from "next/font/google"
+import { SocialButtons } from "@/components/social-buttons"
 import "./globals.css"
 
 const inter = Inter({
@@ -95,7 +96,10 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <meta name="theme-color" content="#fafafa" />
       </head>
-      <body className="font-sans antialiased min-h-screen flex flex-col">{children}</body>
+      <body className="font-sans antialiased min-h-screen flex flex-col">
+        {children}
+        <SocialButtons />
+      </body>
     </html>
   )
 }

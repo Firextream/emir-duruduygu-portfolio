@@ -89,15 +89,7 @@ export function Footer() {
             <div className="flex items-center gap-6">
               <div className="flex items-center gap-4 text-sm">
                 <a 
-                  href="https://twitter.com" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  Tw
-                </a>
-                <a 
-                  href="https://instagram.com" 
+                  href="https://www.instagram.com/emir_duruduygu/" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="text-muted-foreground hover:text-foreground transition-colors"
@@ -105,7 +97,7 @@ export function Footer() {
                   Ig
                 </a>
                 <a 
-                  href="https://linkedin.com" 
+                  href="https://www.linkedin.com/in/emir-duruduygu-90800a27a/" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="text-muted-foreground hover:text-foreground transition-colors"

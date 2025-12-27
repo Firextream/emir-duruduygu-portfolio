@@ -46,13 +46,10 @@ export default function ContactPage() {
                 <div>
                   <p className="font-mono text-xs tracking-wider text-muted-foreground uppercase mb-2">Social</p>
                   <div className="flex gap-6">
-                    <a href="https://twitter.com" className="text-foreground hover:text-accent transition-colors">
-                      Twitter
-                    </a>
-                    <a href="https://instagram.com" className="text-foreground hover:text-accent transition-colors">
+                    <a href="https://www.instagram.com/emir_duruduygu/" target="_blank" rel="noopener noreferrer" className="text-foreground hover:text-accent transition-colors">
                       Instagram
                     </a>
-                    <a href="https://linkedin.com" className="text-foreground hover:text-accent transition-colors">
+                    <a href="https://www.linkedin.com/in/emir-duruduygu-90800a27a/" target="_blank" rel="noopener noreferrer" className="text-foreground hover:text-accent transition-colors">
                       LinkedIn
                     </a>
                   </div>
