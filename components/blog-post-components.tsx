@@ -16,106 +16,55 @@ export function BlogPostContent({ content, className }: BlogPostContentProps) {
     )
   }
 
-  // Parse content into structured elements
-  const parseContent = (text: string) => {
-    // Normalize line breaks
-    const normalizedText = text.replace(/\r\n/g, '\n')
-    
-    // Split by double newlines for paragraphs, or single newlines
-    const blocks = normalizedText.split(/\n\n+/).filter(block => block.trim().length > 0)
-    
-    return blocks.map((block, index) => {
-      const trimmedBlock = block.trim()
-      
-      // Check for headers (lines ending with :)
-      if (trimmedBlock.match(/^[A-Z][^.!?]*:$/)) {
-        return { type: 'heading', content: trimmedBlock.replace(/:$/, ''), key: index }
-      }
-      
-      // Check for bullet points
-      if (trimmedBlock.includes('•') || trimmedBlock.includes('- ')) {
-        const items = trimmedBlock
-          .split(/[•\-]/)
-          .map(item => item.trim())
-          .filter(item => item.length > 0)
-        return { type: 'list', items, key: index }
-      }
-      
-      // Check for sub-sections (text followed by content on same block)
-      const colonMatch = trimmedBlock.match(/^([A-Z][^:]+):\s*(.+)$/s)
-      if (colonMatch && colonMatch[2].length > 50) {
-        return { 
-          type: 'section', 
-          heading: colonMatch[1], 
-          content: colonMatch[2],
-          key: index 
-        }
-      }
-      
-      // Regular paragraph
-      return { type: 'paragraph', content: trimmedBlock, key: index }
-    })
-  }
-
-  const elements = parseContent(content)
+  // Simple paragraph splitting - treat double newlines as paragraph breaks
+  // Single newlines within text are treated as soft breaks (same paragraph)
+  const normalizedText = content.replace(/\r\n/g, '\n')
+  
+  // Split only on double+ newlines to create paragraphs
+  const paragraphs = normalizedText
+    .split(/\n{2,}/)
+    .map(p => p.trim())
+    .filter(p => p.length > 0)
 
   return (
     <article className={cn(
-      "blog-content max-w-none space-y-6",
+      "blog-content max-w-none",
       className
     )}>
-      {elements.map((element) => {
-        switch (element.type) {
-          case 'heading':
-            return (
-              <h2 key={element.key} className="text-2xl font-serif text-foreground mt-12 mb-4 first:mt-0">
-                {element.content}
-              </h2>
-            )
+      {paragraphs.map((paragraph, index) => {
+        // Check if this paragraph contains bullet points
+        if (paragraph.includes('•')) {
+          const parts = paragraph.split('•').filter(p => p.trim())
+          // If first part doesn't start with bullet, it's intro text
+          const hasIntro = !paragraph.trim().startsWith('•')
           
-          case 'section':
-            return (
-              <div key={element.key} className="space-y-4">
-                <h3 className="text-xl font-serif text-foreground mt-8">
-                  {element.heading}
-                </h3>
-                <p className="text-muted-foreground leading-relaxed text-lg">
-                  {element.content}
+          return (
+            <div key={index} className="my-6">
+              {hasIntro && parts[0] && (
+                <p className="text-muted-foreground leading-relaxed text-lg mb-4">
+                  {parts[0].trim()}
                 </p>
-              </div>
-            )
-          
-          case 'list':
-            return (
-              <ul key={element.key} className="space-y-2 my-6 ml-4">
-                {element.items?.map((item, i) => (
+              )}
+              <ul className="space-y-2 ml-4">
+                {parts.slice(hasIntro ? 1 : 0).map((item, i) => (
                   <li key={i} className="text-muted-foreground leading-relaxed flex gap-3">
-                    <span className="text-accent mt-1.5">•</span>
-                    <span>{item}</span>
+                    <span className="text-accent flex-shrink-0">•</span>
+                    <span>{item.trim()}</span>
                   </li>
                 ))}
               </ul>
-            )
-          
-          case 'paragraph':
-          default:
-            // Check if it's a short line (potential subheading or emphasis)
-            const isShort = element.content && element.content.length < 100 && !element.content.includes('.')
-            
-            if (isShort) {
-              return (
-                <p key={element.key} className="text-foreground font-medium leading-relaxed text-lg mt-8">
-                  {element.content}
-                </p>
-              )
-            }
-            
-            return (
-              <p key={element.key} className="text-muted-foreground leading-relaxed text-lg">
-                {element.content}
-              </p>
-            )
+            </div>
+          )
         }
+        
+        // Regular paragraph - replace single newlines with spaces for flow
+        const cleanedParagraph = paragraph.replace(/\n/g, ' ').replace(/\s+/g, ' ')
+        
+        return (
+          <p key={index} className="text-muted-foreground leading-relaxed text-lg mb-6">
+            {cleanedParagraph}
+          </p>
+        )
       })}
     </article>
   )
