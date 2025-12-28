@@ -28,9 +28,9 @@ export function HeroSection() {
   return (
     <section className="relative min-h-screen flex flex-col">
       {/* Main Content */}
-      <div className="flex-1 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-0 pt-24 lg:pt-0">
+      <div className="flex-1 grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-0 pt-20 lg:pt-0">
         {/* Left Column - Typography */}
-        <div className="flex flex-col justify-center px-6 lg:px-12 py-12 lg:py-24">
+        <div className="flex flex-col justify-center px-5 sm:px-6 lg:px-12 py-8 lg:py-24">
           <div className="max-w-xl space-y-8">
             {/* Subtitle */}
             <div 
@@ -42,14 +42,14 @@ export function HeroSection() {
             </div>
             
             {/* Main Title */}
-            <h1 className="space-y-2">
+            <h1 className="space-y-1 sm:space-y-2">
               <span 
-                className={`block font-serif text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-medium tracking-tight text-foreground transition-all duration-700 delay-100 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+                className={`block font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-medium tracking-tight text-foreground transition-all duration-700 delay-100 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
               >
                 Capturing
               </span>
               <span 
-                className={`block font-serif text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-medium tracking-tight text-foreground transition-all duration-700 delay-200 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+                className={`block font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-medium tracking-tight text-foreground transition-all duration-700 delay-200 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
               >
                 Light & <span className="text-accent">Shadow</span>
               </span>
@@ -57,7 +57,7 @@ export function HeroSection() {
             
             {/* Description */}
             <p 
-              className={`text-lg md:text-xl text-muted-foreground max-w-md leading-relaxed transition-all duration-700 delay-300 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+              className={`text-base sm:text-lg md:text-xl text-muted-foreground max-w-md leading-relaxed transition-all duration-700 delay-300 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
             >
               Architecture and street photography exploring the interplay of structure, light, and human experience.
             </p>

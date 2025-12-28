@@ -9,17 +9,17 @@ export function Footer() {
   return (
     <footer className="border-t border-border bg-background">
       {/* Large CTA Section */}
-      <div className="max-w-7xl mx-auto px-6 lg:px-12 py-16 lg:py-24">
-        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8">
-          <div className="space-y-4">
-            <p className="text-sm font-mono tracking-wider text-muted-foreground uppercase">
+      <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-12 py-12 sm:py-16 lg:py-24">
+        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 sm:gap-8">
+          <div className="space-y-3 sm:space-y-4">
+            <p className="text-xs sm:text-sm font-mono tracking-wider text-muted-foreground uppercase">
               Ready to collaborate?
             </p>
             <Link 
               href="/contact"
-              className="group inline-flex items-baseline gap-4"
+              className="group inline-flex items-baseline gap-2 sm:gap-4"
             >
-              <span className="font-serif text-4xl md:text-5xl lg:text-6xl text-foreground group-hover:text-accent transition-colors duration-300">
+              <span className="font-serif text-2xl sm:text-4xl md:text-5xl lg:text-6xl text-foreground group-hover:text-accent transition-colors duration-300">
                 Let's create something together
               </span>
               <ArrowUpRight 
@@ -39,8 +39,8 @@ export function Footer() {
       
       {/* Bottom Section */}
       <div className="border-t border-border">
-        <div className="max-w-7xl mx-auto px-6 lg:px-12 py-8">
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-8">
+        <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-12 py-6 sm:py-8">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 sm:gap-8">
             {/* Left: Logo & Copyright */}
             <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-8">
               <Link href="/" className="font-serif text-xl font-medium text-foreground">
@@ -52,7 +52,7 @@ export function Footer() {
             </div>
             
             {/* Center: Navigation */}
-            <nav className="flex flex-wrap gap-6 text-sm">
+            <nav className="flex flex-wrap gap-4 sm:gap-6 text-sm">
               <Link 
                 href="/portfolio" 
                 className="text-muted-foreground hover:text-foreground transition-colors link-underline"

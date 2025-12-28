@@ -48,25 +48,25 @@ export default async function BlogPage() {
   return (
     <div className="min-h-screen flex flex-col">
       <Navigation />
-      <main className="flex-1 pt-24 lg:pt-32 pb-16 lg:pb-24">
-        <div className="max-w-7xl mx-auto px-6 lg:px-12">
+      <main className="flex-1 pt-20 sm:pt-24 lg:pt-32 pb-12 sm:pb-16 lg:pb-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
           {/* Page Header */}
-          <div className="mb-16 lg:mb-24">
-            <span className="font-mono text-sm tracking-wider text-accent uppercase block mb-4">
+          <div className="mb-10 sm:mb-16 lg:mb-24">
+            <span className="font-mono text-xs sm:text-sm tracking-wider text-accent uppercase block mb-3 sm:mb-4">
               Journal
             </span>
-            <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl text-foreground mb-6">
+            <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-foreground mb-4 sm:mb-6">
               Thoughts & Stories
             </h1>
-            <p className="text-muted-foreground text-lg max-w-2xl">
+            <p className="text-muted-foreground text-base sm:text-lg max-w-2xl">
               New discoveries, projects, photography, and thoughts on various topics along the way.
             </p>
           </div>
 
           {/* Featured Post */}
           {featuredPost && (
-            <div className="mb-16 lg:mb-24 pb-16 lg:pb-24 border-b border-border">
-              <span className="font-mono text-xs tracking-wider text-muted-foreground uppercase mb-6 block">
+            <div className="mb-10 sm:mb-16 lg:mb-24 pb-10 sm:pb-16 lg:pb-24 border-b border-border">
+              <span className="font-mono text-xs tracking-wider text-muted-foreground uppercase mb-4 sm:mb-6 block">
                 Featured
               </span>
               <PostCard post={featuredPost} variant="featured" />

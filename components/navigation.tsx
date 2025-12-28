@@ -152,8 +152,8 @@ export function Navigation() {
             : "opacity-0 pointer-events-none"
         )}
       >
-        <div className="flex flex-col justify-center items-start h-full px-8 py-24">
-          <nav className="flex flex-col gap-6">
+        <div className="flex flex-col justify-center items-start h-full px-6 py-20">
+          <nav className="flex flex-col gap-4">
             {navLinks.map((link, index) => {
               const isActive = pathname === link.href || pathname.startsWith(link.href + "/")
               return (
@@ -174,7 +174,7 @@ export function Navigation() {
                     {link.num}
                   </span>
                   <span className={cn(
-                    "font-serif text-4xl md:text-5xl tracking-tight transition-colors duration-300",
+                    "font-serif text-3xl sm:text-4xl tracking-tight transition-colors duration-300",
                     isActive ? "text-foreground" : "text-muted-foreground group-hover:text-foreground"
                   )}>
                     {link.label}
@@ -185,8 +185,8 @@ export function Navigation() {
           </nav>
           
           {/* Mobile menu footer */}
-          <div className="absolute bottom-12 left-8 right-8">
-            <div className="flex flex-col gap-2 text-sm text-muted-foreground">
+          <div className="absolute bottom-8 left-6 right-6">
+            <div className="flex flex-col gap-3 text-sm text-muted-foreground">
               <a 
                 href="mailto:edmesaj@outlook.com" 
                 className="hover:text-foreground transition-colors"

@@ -69,11 +69,11 @@ export function GalleryGrid({ images, categories }: GalleryGridProps) {
   return (
     <div>
       {/* Category Filters */}
-      <div className="flex flex-wrap gap-6 mb-12 pb-8 border-b border-border">
+      <div className="flex flex-wrap gap-3 sm:gap-6 mb-8 sm:mb-12 pb-6 sm:pb-8 border-b border-border overflow-x-auto">
         <button 
           onClick={() => setActiveCategory(null)}
           className={cn(
-            "font-mono text-sm tracking-wider uppercase transition-colors",
+            "font-mono text-xs sm:text-sm tracking-wider uppercase transition-colors whitespace-nowrap py-1",
             activeCategory === null 
               ? "text-foreground" 
               : "text-muted-foreground hover:text-foreground"
@@ -86,7 +86,7 @@ export function GalleryGrid({ images, categories }: GalleryGridProps) {
             key={category}
             onClick={() => setActiveCategory(category)}
             className={cn(
-              "font-mono text-sm tracking-wider uppercase transition-colors",
+              "font-mono text-xs sm:text-sm tracking-wider uppercase transition-colors whitespace-nowrap py-1",
               activeCategory === category 
                 ? "text-foreground" 
                 : "text-muted-foreground hover:text-foreground"

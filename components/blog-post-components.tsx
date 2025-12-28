@@ -39,15 +39,15 @@ export function BlogPostContent({ content, className }: BlogPostContentProps) {
           const hasIntro = !paragraph.trim().startsWith('•')
           
           return (
-            <div key={index} className="my-6">
+            <div key={index} className="my-4 sm:my-6">
               {hasIntro && parts[0] && (
-                <p className="text-muted-foreground leading-relaxed text-lg mb-4">
+                <p className="text-muted-foreground leading-relaxed text-base sm:text-lg mb-3 sm:mb-4">
                   {parts[0].trim()}
                 </p>
               )}
-              <ul className="space-y-2 ml-4">
+              <ul className="space-y-2 ml-2 sm:ml-4">
                 {parts.slice(hasIntro ? 1 : 0).map((item, i) => (
-                  <li key={i} className="text-muted-foreground leading-relaxed flex gap-3">
+                  <li key={i} className="text-muted-foreground leading-relaxed text-sm sm:text-base flex gap-2 sm:gap-3">
                     <span className="text-accent flex-shrink-0">•</span>
                     <span>{item.trim()}</span>
                   </li>
@@ -61,7 +61,7 @@ export function BlogPostContent({ content, className }: BlogPostContentProps) {
         const cleanedParagraph = paragraph.replace(/\n/g, ' ').replace(/\s+/g, ' ')
         
         return (
-          <p key={index} className="text-muted-foreground leading-relaxed text-lg mb-6">
+          <p key={index} className="text-muted-foreground leading-relaxed text-base sm:text-lg mb-4 sm:mb-6">
             {cleanedParagraph}
           </p>
         )

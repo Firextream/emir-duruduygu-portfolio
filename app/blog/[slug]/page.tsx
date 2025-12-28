@@ -47,12 +47,12 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
   return (
     <main className="min-h-screen bg-background">
-      <div className="container mx-auto px-4 py-8 max-w-4xl">
+      <div className="container mx-auto px-4 sm:px-6 py-6 sm:py-8 max-w-4xl">
         <Suspense fallback={<div className="h-6 w-24 animate-pulse bg-muted rounded" />}>
           <ScrollReveal>
             <Link
               href="/blog"
-              className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors mb-8 group"
+              className="inline-flex items-center gap-2 text-sm sm:text-base text-muted-foreground hover:text-foreground transition-colors mb-6 sm:mb-8 group"
               aria-label="Return to blog listing"
             >
               <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
@@ -62,15 +62,15 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         </Suspense>
 
         <ScrollReveal delay={0.1}>
-          <header className="mb-8">
-            <BlogPostMeta post={post} className="mb-4" />
+          <header className="mb-6 sm:mb-8">
+            <BlogPostMeta post={post} className="mb-3 sm:mb-4" />
             
-            <h1 className="text-4xl md:text-5xl font-light text-balance mb-6 leading-tight">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light text-balance mb-4 sm:mb-6 leading-tight">
               {post.title}
             </h1>
 
             {post.excerpt && (
-              <p className="text-xl text-muted-foreground text-pretty leading-relaxed">
+              <p className="text-base sm:text-lg md:text-xl text-muted-foreground text-pretty leading-relaxed">
                 {post.excerpt}
               </p>
             )}
