@@ -46,10 +46,10 @@ export const metadata: Metadata = {
     siteName: "Emir Duruduygu Portfolio",
     images: [
       {
-        url: "/modernist-architectural-building-with-clean-geomet.png",
+        url: "/coastal-harbor-scene.jpg",
         width: 1200,
         height: 630,
-        alt: "Emir Duruduygu - Architectural Photography Portfolio",
+        alt: "Emir Duruduygu - Coastal Harbor Scene",
       },
     ],
     locale: "en_US",
@@ -59,7 +59,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Emir Duruduygu - Photography & Creative Portfolio",
     description: "Amateur photographer and curious explorer. Capturing moments, places, and things that catch my eye.",
-    images: ["/modernist-architectural-building-with-clean-geomet.png"],
+    images: ["/coastal-harbor-scene.jpg"],
   },
   robots: {
     index: true,
