@@ -59,7 +59,7 @@ export function HeroSection() {
             <p 
               className={`text-base sm:text-lg md:text-xl text-muted-foreground max-w-md leading-relaxed transition-all duration-700 delay-300 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
             >
-              Architecture and street photography exploring the interplay of structure, light, and human experience.
+              Amateur photographer and curious explorer. Capturing architecture, street moments, and anything that sparks inspiration—structure, light, and the unexpected.
             </p>
             
             {/* CTA Buttons */}
