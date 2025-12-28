@@ -23,10 +23,10 @@ const jetbrains = JetBrains_Mono({
 })
 
 export const metadata: Metadata = {
-  title: "Emir Duruduygu - Architectural Photography & Design Portfolio",
+  title: "Emir Duruduygu - Photography & Creative Portfolio",
   description:
-    "Award-winning architectural photographer and designer specializing in modernist aesthetics. Explore stunning photography, insightful blog posts, and professional work.",
-  keywords: ["architectural photography", "modernist design", "portfolio", "photography", "architecture", "minimalist"],
+    "Amateur photographer and curious explorer. Architecture, street photography, and everything that catches my eye along the way.",
+  keywords: ["photography", "architecture", "street photography", "portfolio", "creative", "exploration"],
   authors: [{ name: "Emir Duruduygu" }],
   creator: "Emir Duruduygu",
   publisher: "Emir Duruduygu Portfolio",
@@ -35,14 +35,14 @@ export const metadata: Metadata = {
     address: false,
     telephone: false,
   },
-  metadataBase: new URL("https://alexchen-portfolio.vercel.app"),
+  metadataBase: new URL("https://emirduruduygu.vercel.app"),
   alternates: {
     canonical: "/",
   },
   openGraph: {
-    title: "Emir Duruduygu - Architectural Photography & Design",
-    description: "Award-winning architectural photographer specializing in modernist aesthetics and minimalist design.",
-    url: "https://alexchen-portfolio.vercel.app",
+    title: "Emir Duruduygu - Photography & Creative Portfolio",
+    description: "Amateur photographer and curious explorer. Capturing moments, places, and things that catch my eye.",
+    url: "https://emirduruduygu.vercel.app",
     siteName: "Emir Duruduygu Portfolio",
     images: [
       {
@@ -57,8 +57,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Emir Duruduygu - Architectural Photography",
-    description: "Award-winning architectural photographer specializing in modernist aesthetics.",
+    title: "Emir Duruduygu - Photography & Creative Portfolio",
+    description: "Amateur photographer and curious explorer. Capturing moments, places, and things that catch my eye.",
     images: ["/modernist-architectural-building-with-clean-geomet.png"],
   },
   robots: {
