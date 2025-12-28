@@ -1,6 +1,7 @@
 import type React from "react"
 import type { Metadata } from "next"
 import { Inter, Playfair_Display, JetBrains_Mono } from "next/font/google"
+import { SpeedInsights } from "@vercel/speed-insights/next"
 import { SocialButtons } from "@/components/social-buttons"
 import "./globals.css"
 
@@ -99,6 +100,7 @@ export default function RootLayout({
       <body className="font-sans antialiased min-h-screen flex flex-col">
         {children}
         <SocialButtons />
+        <SpeedInsights />
       </body>
     </html>
   )
