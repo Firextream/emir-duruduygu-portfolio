@@ -69,13 +69,17 @@ export default function ResumePage() {
             <p className="text-muted-foreground text-lg mb-8">
               Electrical & Electronics Engineering Student · Istanbul, Turkey
             </p>
-            <button className="group inline-flex items-center gap-3 text-foreground font-medium">
+            <a 
+              href="/Emir_Duruduygu_CV.pdf" 
+              download
+              className="group inline-flex items-center gap-3 text-foreground font-medium hover:text-accent transition-colors"
+            >
               <Download className="w-5 h-5" />
               <span className="relative">
                 Download CV
                 <span className="absolute -bottom-1 left-0 w-full h-px bg-accent" />
               </span>
-            </button>
+            </a>
           </div>
 
           <div className="space-y-20 lg:space-y-28">

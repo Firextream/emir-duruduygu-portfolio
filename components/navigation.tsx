@@ -4,6 +4,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useState, useEffect } from "react"
 import { cn } from "@/lib/utils"
+import { ThemeToggle } from "@/components/theme-toggle"
 
 const navLinks = [
   { href: "/portfolio", label: "Portfolio", num: "01" },
@@ -70,7 +71,7 @@ export function Navigation() {
             </Link>
 
             {/* Desktop Navigation - Editorial Style */}
-            <div className="hidden md:flex items-center gap-10">
+            <div className="hidden md:flex items-center gap-8">
               {navLinks.map((link) => {
                 const isActive = pathname === link.href || pathname.startsWith(link.href + "/")
                 return (
@@ -107,6 +108,13 @@ export function Navigation() {
                   </Link>
                 )
               })}
+              
+              {/* Theme Toggle */}
+              <div className="ml-2">
+                <ThemeToggle variant="minimal" className={cn(
+                  useWhiteText ? "text-white hover:bg-white/10" : ""
+                )} />
+              </div>
             </div>
 
             {/* Mobile Menu Button - Animated Hamburger */}

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef, TouchEvent } from "react"
 import Image from "next/image"
 import { X, ChevronLeft, ChevronRight, ArrowUpRight } from "lucide-react"
 import { cn } from "@/lib/utils"
@@ -24,6 +24,8 @@ interface GalleryGridProps {
 export function GalleryGrid({ images, categories }: GalleryGridProps) {
   const [activeCategory, setActiveCategory] = useState<string | null>(null)
   const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null)
+  const [touchStart, setTouchStart] = useState<number | null>(null)
+  const [touchEnd, setTouchEnd] = useState<number | null>(null)
 
   const filteredImages = activeCategory 
     ? images.filter((img) => img.category === activeCategory) 
@@ -41,6 +43,31 @@ export function GalleryGrid({ images, categories }: GalleryGridProps) {
   const goToNext = () => {
     if (selectedImageIndex !== null) {
       setSelectedImageIndex(selectedImageIndex === filteredImages.length - 1 ? 0 : selectedImageIndex + 1)
+    }
+  }
+
+  // Swipe gesture handling
+  const minSwipeDistance = 50
+
+  const onTouchStart = (e: TouchEvent) => {
+    setTouchEnd(null)
+    setTouchStart(e.targetTouches[0].clientX)
+  }
+
+  const onTouchMove = (e: TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX)
+  }
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return
+    const distance = touchStart - touchEnd
+    const isLeftSwipe = distance > minSwipeDistance
+    const isRightSwipe = distance < -minSwipeDistance
+    
+    if (isLeftSwipe) {
+      goToNext()
+    } else if (isRightSwipe) {
+      goToPrevious()
     }
   }
 
@@ -148,7 +175,12 @@ export function GalleryGrid({ images, categories }: GalleryGridProps) {
 
       {/* Lightbox */}
       {selectedImage && (
-        <div className="fixed inset-0 z-50 bg-black flex flex-col">
+        <div 
+          className="fixed inset-0 z-50 bg-black flex flex-col"
+          onTouchStart={onTouchStart}
+          onTouchMove={onTouchMove}
+          onTouchEnd={onTouchEnd}
+        >
           {/* Close Button - Mobile Optimized */}
           <button
             onClick={closeLightbox}
@@ -158,21 +190,26 @@ export function GalleryGrid({ images, categories }: GalleryGridProps) {
             <X size={28} className="md:w-7 md:h-7" />
           </button>
 
-          {/* Navigation Buttons - Mobile Optimized */}
+          {/* Navigation Buttons - Hidden on mobile (use swipe instead) */}
           <button
             onClick={goToPrevious}
-            className="absolute left-4 top-1/2 -translate-y-1/2 md:left-6 z-50 w-14 h-14 md:w-16 md:h-16 flex items-center justify-center text-white bg-black/40 hover:bg-black/60 backdrop-blur-sm rounded-full transition-all active:scale-95"
+            className="absolute left-4 top-1/2 -translate-y-1/2 md:left-6 z-50 w-12 h-12 md:w-16 md:h-16 hidden sm:flex items-center justify-center text-white bg-black/40 hover:bg-black/60 backdrop-blur-sm rounded-full transition-all active:scale-95"
             aria-label="Previous image"
           >
             <ChevronLeft size={32} className="md:w-10 md:h-10" />
           </button>
           <button
             onClick={goToNext}
-            className="absolute right-4 top-1/2 -translate-y-1/2 md:right-6 z-50 w-14 h-14 md:w-16 md:h-16 flex items-center justify-center text-white bg-black/40 hover:bg-black/60 backdrop-blur-sm rounded-full transition-all active:scale-95"
+            className="absolute right-4 top-1/2 -translate-y-1/2 md:right-6 z-50 w-12 h-12 md:w-16 md:h-16 hidden sm:flex items-center justify-center text-white bg-black/40 hover:bg-black/60 backdrop-blur-sm rounded-full transition-all active:scale-95"
             aria-label="Next image"
           >
             <ChevronRight size={32} className="md:w-10 md:h-10" />
           </button>
+
+          {/* Swipe hint for mobile */}
+          <div className="absolute bottom-36 left-1/2 -translate-x-1/2 sm:hidden text-white/40 text-xs font-mono">
+            Swipe to navigate
+          </div>
 
           {/* Counter */}
           <div className="absolute top-6 left-6 font-mono text-sm text-white/60">

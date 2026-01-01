@@ -3,23 +3,31 @@ import type { Metadata } from "next"
 import { Inter, Playfair_Display, JetBrains_Mono } from "next/font/google"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import { SocialButtons } from "@/components/social-buttons"
+import { BackToTop } from "@/components/back-to-top"
+import { ThemeProvider } from "@/components/theme-provider"
 import "./globals.css"
 
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
+  display: "swap",
+  preload: true,
 })
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
   variable: "--font-playfair",
   weight: ["400", "500", "600", "700"],
+  display: "swap",
+  preload: true,
 })
 
 const jetbrains = JetBrains_Mono({
   subsets: ["latin"],
   variable: "--font-jetbrains",
   weight: ["400"],
+  display: "swap",
+  preload: true,
 })
 
 export const metadata: Metadata = {
@@ -98,8 +106,16 @@ export default function RootLayout({
         <meta name="theme-color" content="#fafafa" />
       </head>
       <body className="font-sans antialiased min-h-screen flex flex-col">
-        {children}
-        <SocialButtons />
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="light"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
+          <SocialButtons />
+          <BackToTop />
+        </ThemeProvider>
         <SpeedInsights />
       </body>
     </html>

@@ -13,6 +13,9 @@ import {
   BlogPostAuthor, 
   BlogPostContent 
 } from "@/components/blog-post-components"
+import { ReadingProgress } from "@/components/reading-progress"
+import { RelatedPosts } from "@/components/blog/related-posts"
+import { Navigation } from "@/components/navigation"
 
 // Force dynamic rendering
 export const dynamic = 'force-dynamic'
@@ -39,14 +42,33 @@ interface Post {
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const { slug } = await params
-  const post = await getPostBySlug(slug)
+  const [post, allPosts] = await Promise.all([
+    getPostBySlug(slug),
+    getAllPosts()
+  ])
 
   if (!post) {
     notFound()
   }
 
+  // Get related posts from the same category
+  const relatedPosts = allPosts
+    .filter(p => p && p.id !== post.id && (p.category === post.category || !post.category))
+    .slice(0, 3)
+    .map(p => ({
+      id: p.id,
+      slug: p.slug,
+      title: p.title,
+      excerpt: p.excerpt,
+      image: p.image,
+      category: p.category
+    }))
+
   return (
-    <main className="min-h-screen bg-background">
+    <>
+      <Navigation />
+      <ReadingProgress />
+      <main className="min-h-screen bg-background pt-20">
       <div className="container mx-auto px-4 sm:px-6 py-6 sm:py-8 max-w-4xl">
         <Suspense fallback={<div className="h-6 w-24 animate-pulse bg-muted rounded" />}>
           <ScrollReveal>
@@ -127,8 +149,16 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             </div>
           </footer>
         </ScrollReveal>
+
+        {/* Related Posts */}
+        {relatedPosts.length > 0 && (
+          <ScrollReveal delay={0.5}>
+            <RelatedPosts posts={relatedPosts} currentPostId={post.id} />
+          </ScrollReveal>
+        )}
       </div>
     </main>
+    </>
   )
 }
 
