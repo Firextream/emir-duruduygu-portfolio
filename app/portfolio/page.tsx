@@ -78,6 +78,31 @@ export default async function PortfolioPage() {
           <PortfolioGrid projects={projects} categories={categories} />
         </div>
       </main>
+
+      {/* Coming Soon Section */}
+      <section className="py-24 lg:py-32 bg-muted/30">
+        <div className="max-w-4xl mx-auto px-6 lg:px-12 text-center">
+          <div className="inline-flex items-center gap-3 text-muted-foreground mb-8">
+            <span className="w-8 h-px bg-muted-foreground/30" />
+            <span className="font-mono text-xs tracking-[0.3em] uppercase">Coming Soon</span>
+            <span className="w-8 h-px bg-muted-foreground/30" />
+          </div>
+          
+          <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-light text-foreground/80 leading-tight mb-6">
+            More projects <span className="italic">coming soon</span>
+          </h2>
+          
+          <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto mb-8">
+            This space will be filled with architecture, electronics, and photography projects over time.
+            Each new creation will find its place here.
+          </p>
+          
+          <div className="flex items-center justify-center gap-2 text-muted-foreground/60">
+            <div className="w-2 h-2 rounded-full bg-accent/60 animate-pulse" />
+            <span className="font-mono text-xs tracking-wider">Building the portfolio...</span>
+          </div>
+        </div>
+      </section>
       
       <Footer />
     </div>
