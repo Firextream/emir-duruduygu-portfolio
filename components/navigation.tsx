@@ -127,23 +127,32 @@ export function Navigation() {
                 <span 
                   className={cn(
                     "absolute left-0 w-full h-0.5 rounded-full transition-all duration-300",
-                    useWhiteText && !isMobileMenuOpen ? "bg-white" : "bg-foreground",
+                    isMobileMenuOpen ? "bg-foreground" : isScrolled ? "bg-foreground" : "bg-foreground",
                     isMobileMenuOpen ? "top-1/2 -translate-y-1/2 rotate-45" : "top-0"
                   )}
+                  style={{ 
+                    boxShadow: !isScrolled && !isMobileMenuOpen ? '0 0 4px rgba(0,0,0,0.5)' : 'none'
+                  }}
                 />
                 <span 
                   className={cn(
                     "absolute left-0 top-1/2 -translate-y-1/2 w-full h-0.5 rounded-full transition-all duration-300",
-                    useWhiteText && !isMobileMenuOpen ? "bg-white" : "bg-foreground",
+                    isMobileMenuOpen ? "bg-foreground" : isScrolled ? "bg-foreground" : "bg-foreground",
                     isMobileMenuOpen ? "opacity-0 scale-0" : "opacity-100 scale-100"
                   )}
+                  style={{ 
+                    boxShadow: !isScrolled && !isMobileMenuOpen ? '0 0 4px rgba(0,0,0,0.5)' : 'none'
+                  }}
                 />
                 <span 
                   className={cn(
                     "absolute left-0 w-full h-0.5 rounded-full transition-all duration-300",
-                    useWhiteText && !isMobileMenuOpen ? "bg-white" : "bg-foreground",
+                    isMobileMenuOpen ? "bg-foreground" : isScrolled ? "bg-foreground" : "bg-foreground",
                     isMobileMenuOpen ? "top-1/2 -translate-y-1/2 -rotate-45" : "bottom-0"
                   )}
+                  style={{ 
+                    boxShadow: !isScrolled && !isMobileMenuOpen ? '0 0 4px rgba(0,0,0,0.5)' : 'none'
+                  }}
                 />
               </div>
             </button>
