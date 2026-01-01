@@ -149,29 +149,29 @@ export function GalleryGrid({ images, categories }: GalleryGridProps) {
       {/* Lightbox */}
       {selectedImage && (
         <div className="fixed inset-0 z-50 bg-black flex flex-col">
-          {/* Close Button */}
+          {/* Close Button - Mobile Optimized */}
           <button
             onClick={closeLightbox}
-            className="absolute top-6 right-6 z-50 w-12 h-12 flex items-center justify-center text-white/70 hover:text-white transition-colors"
+            className="absolute top-4 right-4 md:top-6 md:right-6 z-50 w-14 h-14 md:w-12 md:h-12 flex items-center justify-center text-white bg-black/40 hover:bg-black/60 backdrop-blur-sm rounded-full transition-all active:scale-95"
             aria-label="Close lightbox"
           >
-            <X size={28} />
+            <X size={28} className="md:w-7 md:h-7" />
           </button>
 
-          {/* Navigation Buttons */}
+          {/* Navigation Buttons - Mobile Optimized */}
           <button
             onClick={goToPrevious}
-            className="absolute left-1/2 -translate-x-1/2 md:left-6 md:translate-x-0 md:top-1/2 md:-translate-y-1/2 bottom-32 md:bottom-auto z-50 w-12 h-12 flex items-center justify-center text-white/70 hover:text-white transition-colors"
+            className="absolute left-4 top-1/2 -translate-y-1/2 md:left-6 z-50 w-14 h-14 md:w-16 md:h-16 flex items-center justify-center text-white bg-black/40 hover:bg-black/60 backdrop-blur-sm rounded-full transition-all active:scale-95"
             aria-label="Previous image"
           >
-            <ChevronLeft size={32} />
+            <ChevronLeft size={32} className="md:w-10 md:h-10" />
           </button>
           <button
             onClick={goToNext}
-            className="absolute left-1/2 translate-x-4 md:right-6 md:left-auto md:translate-x-0 md:top-1/2 md:-translate-y-1/2 bottom-32 md:bottom-auto z-50 w-12 h-12 flex items-center justify-center text-white/70 hover:text-white transition-colors"
+            className="absolute right-4 top-1/2 -translate-y-1/2 md:right-6 z-50 w-14 h-14 md:w-16 md:h-16 flex items-center justify-center text-white bg-black/40 hover:bg-black/60 backdrop-blur-sm rounded-full transition-all active:scale-95"
             aria-label="Next image"
           >
-            <ChevronRight size={32} />
+            <ChevronRight size={32} className="md:w-10 md:h-10" />
           </button>
 
           {/* Counter */}

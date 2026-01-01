@@ -68,6 +68,8 @@ export function PostListItem({ post, index = 0 }: PostListItemProps) {
                 fill
                 className="object-cover transition-transform duration-500 group-hover:scale-105"
                 sizes="120px"
+                priority={index < 3}
+                loading={index < 3 ? undefined : "lazy"}
               />
             </div>
           </div>

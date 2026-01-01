@@ -38,9 +38,9 @@ export function SelectedProjectsSection({ projects }: SelectedProjectsSectionPro
           </Link>
         </div>
 
-        {/* Compact 4x2 Grid */}
-        <div className="grid grid-cols-4 gap-1">
-          {displayProjects.map((project) => (
+        {/* Responsive Grid - 2 cols mobile, 4 cols desktop */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-1">
+          {displayProjects.map((project, index) => (
             <Link key={project.id} href="/gallery" className="group block">
               <div className="relative aspect-square overflow-hidden bg-secondary/50">
                 <Image 
@@ -48,7 +48,9 @@ export function SelectedProjectsSection({ projects }: SelectedProjectsSectionPro
                   alt={project.title} 
                   fill 
                   className="object-cover transition-all duration-500 group-hover:scale-105" 
-                  sizes="25vw" 
+                  sizes="(max-width: 768px) 50vw, 25vw"
+                  priority={index < 4}
+                  loading={index < 4 ? undefined : "lazy"}
                 />
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-300" />
                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">

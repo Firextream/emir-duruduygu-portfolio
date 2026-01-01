@@ -103,23 +103,23 @@ export function BlogPostAuthor({ author, date, authorTitle, className }: BlogPos
   const authorImage = getAssetPath("/placeholder-user.jpg") // Default author image
   
   return (
-    <div className={cn("flex items-center gap-4", className)}>
-      <div className="relative w-12 h-12 rounded-full overflow-hidden bg-muted flex-shrink-0 border border-border/20">
+    <div className={cn("flex items-center gap-4 py-6 px-6 bg-muted/30 rounded-lg border border-border/50", className)}>
+      <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-full overflow-hidden bg-background flex-shrink-0 border-2 border-accent/20 shadow-lg">
         <Image
           src={authorImage}
           alt={author || "Author"}
           fill
           className="object-cover"
-          sizes="48px"
+          sizes="80px"
         />
       </div>
       <div className="flex-1">
-        <p className="font-medium text-foreground">{author || "Anonymous"}</p>
+        <p className="font-serif text-lg sm:text-xl font-medium text-foreground mb-1">{author || "Anonymous"}</p>
         {authorTitle && (
-          <p className="text-sm text-muted-foreground">{authorTitle}</p>
+          <p className="text-sm sm:text-base text-muted-foreground mb-1">{authorTitle}</p>
         )}
         {date && (
-          <p className="text-xs text-muted-foreground mt-1">
+          <p className="text-xs sm:text-sm text-muted-foreground font-mono">
             {new Date(date).toLocaleDateString("en-US", {
               year: "numeric",
               month: "long", 

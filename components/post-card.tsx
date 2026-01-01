@@ -40,6 +40,7 @@ export function PostCard({ post, variant = "default" }: PostCardProps) {
                 fill
                 className="object-cover transition-all duration-700 group-hover:scale-105"
                 sizes="(max-width: 768px) 100vw, 50vw"
+                priority
               />
             )}
             <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/10 transition-colors duration-500" />
