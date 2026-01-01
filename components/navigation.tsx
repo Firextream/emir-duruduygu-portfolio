@@ -120,29 +120,29 @@ export function Navigation() {
             {/* Mobile Menu Button - Animated Hamburger */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="md:hidden relative w-8 h-8 flex items-center justify-center"
+              className="md:hidden relative w-10 h-10 flex items-center justify-center"
               aria-label="Toggle menu"
             >
-              <div className="relative w-6 h-4">
+              <div className="relative w-6 h-5">
                 <span 
                   className={cn(
-                    "absolute left-0 w-full h-px transition-all duration-300",
+                    "absolute left-0 w-full h-0.5 rounded-full transition-all duration-300",
                     useWhiteText && !isMobileMenuOpen ? "bg-white" : "bg-foreground",
-                    isMobileMenuOpen ? "top-1/2 rotate-45" : "top-0"
+                    isMobileMenuOpen ? "top-1/2 -translate-y-1/2 rotate-45" : "top-0"
                   )}
                 />
                 <span 
                   className={cn(
-                    "absolute left-0 top-1/2 w-full h-px transition-all duration-300",
+                    "absolute left-0 top-1/2 -translate-y-1/2 w-full h-0.5 rounded-full transition-all duration-300",
                     useWhiteText && !isMobileMenuOpen ? "bg-white" : "bg-foreground",
-                    isMobileMenuOpen ? "opacity-0" : "opacity-100"
+                    isMobileMenuOpen ? "opacity-0 scale-0" : "opacity-100 scale-100"
                   )}
                 />
                 <span 
                   className={cn(
-                    "absolute left-0 w-full h-px transition-all duration-300",
+                    "absolute left-0 w-full h-0.5 rounded-full transition-all duration-300",
                     useWhiteText && !isMobileMenuOpen ? "bg-white" : "bg-foreground",
-                    isMobileMenuOpen ? "top-1/2 -rotate-45" : "bottom-0"
+                    isMobileMenuOpen ? "top-1/2 -translate-y-1/2 -rotate-45" : "bottom-0"
                   )}
                 />
               </div>
