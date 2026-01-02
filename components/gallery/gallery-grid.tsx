@@ -284,31 +284,18 @@ export function GalleryGrid({ images, categories }: GalleryGridProps) {
           </button>
 
           {/* Swipe hint for mobile */}
-          <div className="absolute bottom-36 left-1/2 -translate-x-1/2 sm:hidden text-white/40 text-xs font-mono">
+          <div className="absolute bottom-32 left-1/2 -translate-x-1/2 sm:hidden text-white/40 text-xs font-mono">
             Swipe to navigate
           </div>
 
-          {/* Keyboard hints for desktop */}
-          <div className="absolute bottom-36 left-1/2 -translate-x-1/2 hidden lg:flex items-center gap-4 text-white/40 text-xs font-mono">
-            <span className="flex items-center gap-1">
-              <kbd className="px-1.5 py-0.5 bg-white/10 rounded">←</kbd>
-              <kbd className="px-1.5 py-0.5 bg-white/10 rounded">→</kbd>
-              navigate
-            </span>
-            <span className="flex items-center gap-1">
-              <kbd className="px-1.5 py-0.5 bg-white/10 rounded">ESC</kbd>
-              close
-            </span>
-          </div>
-
-          {/* Counter */}
-          <div className="absolute top-6 left-6 font-mono text-sm text-white/60">
+          {/* Counter - moved to top left */}
+          <div className="absolute top-6 left-6 font-mono text-xs text-white/60 bg-black/30 backdrop-blur-sm px-2 py-1 rounded">
             {selectedImageIndex !== null && `${selectedImageIndex + 1} / ${filteredImages.length}`}
           </div>
 
           {/* Image Container - takes remaining space */}
-          <div className="flex-1 flex items-center justify-center p-4 pt-16 pb-32 overflow-hidden">
-            <div className="relative w-full h-full max-w-6xl flex items-center justify-center">
+          <div className="flex-1 flex items-center justify-center p-4 pt-16 pb-28 overflow-hidden">
+            <div className="relative w-full h-full max-w-7xl flex items-center justify-center">
               {/* Loading indicator */}
               {lightboxLoading && (
                 <div className="absolute inset-0 flex items-center justify-center">
@@ -322,7 +309,7 @@ export function GalleryGrid({ images, categories }: GalleryGridProps) {
                   src={selectedImage.src}
                   alt={selectedImage.alt || selectedImage.title || selectedImage.name || "Gallery image"}
                   className={cn(
-                    "max-w-full max-h-[calc(100vh-200px)] w-auto h-auto object-contain transition-opacity duration-300",
+                    "max-w-full max-h-[calc(100vh-280px)] w-auto h-auto object-contain transition-opacity duration-300",
                     lightboxLoading ? "opacity-0" : "opacity-100"
                   )}
                   onLoad={() => setLightboxLoading(false)}
@@ -344,48 +331,35 @@ export function GalleryGrid({ images, categories }: GalleryGridProps) {
             </div>
           </div>
 
-          {/* Image Info - fixed at bottom with background */}
-          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black via-black/80 to-transparent pt-12 pb-6 text-center">
-            <p className="text-white font-serif text-xl mb-2">
-              {selectedImage.title || selectedImage.name}
-            </p>
-            <div className="flex items-center justify-center gap-4 text-white/60 font-mono text-sm mb-3">
-              {selectedImage.category && <span>{selectedImage.category}</span>}
-              {selectedImage.place && <span>• {selectedImage.place}</span>}
-            </div>
-            
-            {/* EXIF Data */}
-            {selectedImage.exif && (
-              <div className="flex items-center justify-center flex-wrap gap-3 sm:gap-4 text-white/50 font-mono text-xs">
-                {selectedImage.exif.camera && (
-                  <span className="flex items-center gap-1">
-                    <Camera className="w-3 h-3" />
-                    {selectedImage.exif.camera}
-                  </span>
-                )}
-                {selectedImage.exif.focalLength && (
-                  <span>{selectedImage.exif.focalLength}</span>
-                )}
-                {selectedImage.exif.aperture && (
-                  <span className="flex items-center gap-1">
-                    <Aperture className="w-3 h-3" />
-                    {selectedImage.exif.aperture}
-                  </span>
-                )}
-                {selectedImage.exif.shutterSpeed && (
-                  <span className="flex items-center gap-1">
-                    <Timer className="w-3 h-3" />
-                    {selectedImage.exif.shutterSpeed}
-                  </span>
-                )}
-                {selectedImage.exif.iso && (
-                  <span className="flex items-center gap-1">
-                    <Sun className="w-3 h-3" />
-                    ISO {selectedImage.exif.iso}
-                  </span>
-                )}
+          {/* Image Info - fixed at bottom with darker solid background */}
+          <div className="absolute bottom-0 left-0 right-0 bg-black/90 backdrop-blur-sm py-4 px-6">
+            <div className="max-w-7xl mx-auto">
+              <div className="flex items-end justify-between gap-4">
+                {/* Title and Location */}
+                <div className="text-left flex-1">
+                  <p className="text-white font-serif text-lg sm:text-xl mb-1">
+                    {selectedImage.title || selectedImage.name}
+                  </p>
+                  <div className="flex items-center gap-2 text-white/60 text-sm mb-1">
+                    {selectedImage.category && <span>{selectedImage.category}</span>}
+                    {selectedImage.place && <span>• {selectedImage.place}</span>}
+                  </div>
+                  
+                  {/* EXIF Data - single line with icons removed */}
+                  {selectedImage.exif && (
+                    <div className="text-white/50 font-mono text-xs">
+                      {[
+                        selectedImage.exif.camera,
+                        selectedImage.exif.focalLength,
+                        selectedImage.exif.aperture,
+                        selectedImage.exif.shutterSpeed,
+                        selectedImage.exif.iso && `ISO ${selectedImage.exif.iso}`
+                      ].filter(Boolean).join(' ')}
+                    </div>
+                  )}
+                </div>
               </div>
-            )}
+            </div>
           </div>
         </div>
       )}
