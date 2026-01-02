@@ -294,11 +294,11 @@ export function GalleryGrid({ images, categories }: GalleryGridProps) {
           </div>
 
           {/* Image Container - takes remaining space */}
-          <div className="flex-1 flex items-center justify-center p-4 pt-16 pb-28 overflow-hidden">
-            <div className="relative w-full h-full max-w-7xl flex items-center justify-center">
+          <div className="flex-1 flex items-center justify-center px-4 py-16 overflow-hidden" style={{ paddingBottom: '120px' }}>
+            <div className="relative flex items-center justify-center" style={{ maxWidth: '90vw', maxHeight: 'calc(100vh - 180px)' }}>
               {/* Loading indicator */}
               {lightboxLoading && (
-                <div className="absolute inset-0 flex items-center justify-center">
+                <div className="absolute inset-0 flex items-center justify-center z-10">
                   <Loader2 className="w-8 h-8 text-white/60 animate-spin" />
                 </div>
               )}
@@ -308,8 +308,9 @@ export function GalleryGrid({ images, categories }: GalleryGridProps) {
                 <img
                   src={selectedImage.src}
                   alt={selectedImage.alt || selectedImage.title || selectedImage.name || "Gallery image"}
+                  style={{ maxWidth: '90vw', maxHeight: 'calc(100vh - 180px)', width: 'auto', height: 'auto' }}
                   className={cn(
-                    "max-w-full max-h-[calc(100vh-280px)] w-auto h-auto object-contain transition-opacity duration-300",
+                    "object-contain transition-opacity duration-300",
                     lightboxLoading ? "opacity-0" : "opacity-100"
                   )}
                   onLoad={() => setLightboxLoading(false)}
@@ -323,7 +324,7 @@ export function GalleryGrid({ images, categories }: GalleryGridProps) {
                     "object-contain transition-opacity duration-300",
                     lightboxLoading ? "opacity-0" : "opacity-100"
                   )}
-                  sizes="100vw"
+                  sizes="90vw"
                   priority
                   onLoad={() => setLightboxLoading(false)}
                 />
@@ -332,7 +333,7 @@ export function GalleryGrid({ images, categories }: GalleryGridProps) {
           </div>
 
           {/* Image Info - fixed at bottom with darker solid background */}
-          <div className="absolute bottom-0 left-0 right-0 bg-black/90 backdrop-blur-sm py-4 px-6">
+          <div className="absolute bottom-0 left-0 right-0 bg-black py-3 px-6">
             <div className="max-w-7xl mx-auto">
               <div className="flex items-end justify-between gap-4">
                 {/* Title and Location */}
