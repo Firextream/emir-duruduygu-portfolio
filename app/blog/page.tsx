@@ -5,6 +5,7 @@ import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
 import { BlogList } from "@/components/blog/blog-list"
 import { PostCard } from "@/components/post-card"
+import { NewsletterSignup } from "@/components/newsletter-signup"
 import { Archive, Rss } from "lucide-react"
 
 export const metadata: Metadata = {
@@ -98,6 +99,11 @@ export default async function BlogPage() {
 
           {/* Posts List with Filters */}
           <BlogList posts={regularPosts} categories={categories} />
+          
+          {/* Newsletter Signup */}
+          <div className="mt-16 sm:mt-24 lg:mt-32 pt-12 sm:pt-16 border-t border-border">
+            <NewsletterSignup variant="inline" />
+          </div>
         </div>
       </main>
       <Footer />

@@ -1,7 +1,8 @@
 "use client"
 
 import Link from "next/link"
-import { ArrowUpRight, ArrowUp, Github, Music } from "lucide-react"
+import { ArrowUpRight, ArrowUp } from "lucide-react"
+import { SpotifyNowPlaying } from "@/components/spotify-now-playing"
 
 export function Footer() {
   const currentYear = new Date().getFullYear()
@@ -84,6 +85,9 @@ export function Footer() {
                 Contact
               </Link>
             </nav>
+            
+            {/* Spotify Now Playing */}
+            <SpotifyNowPlaying variant="minimal" />
             
             {/* Right: Social & Back to Top */}
             <div className="flex items-center gap-6">

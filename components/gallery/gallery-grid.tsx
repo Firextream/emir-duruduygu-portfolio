@@ -2,8 +2,17 @@
 
 import { useState, useEffect, useRef, TouchEvent } from "react"
 import Image from "next/image"
-import { X, ChevronLeft, ChevronRight, ArrowUpRight } from "lucide-react"
+import { X, ChevronLeft, ChevronRight, ArrowUpRight, Loader2, Camera, Aperture, Timer, Sun } from "lucide-react"
 import { cn } from "@/lib/utils"
+
+interface ExifData {
+  camera?: string | null
+  lens?: string | null
+  aperture?: string | null
+  shutterSpeed?: string | null
+  iso?: string | null
+  focalLength?: string | null
+}
 
 interface GalleryImage {
   id: string
@@ -14,6 +23,7 @@ interface GalleryImage {
   place?: string
   category?: string
   featured?: boolean
+  exif?: ExifData | null
 }
 
 interface GalleryGridProps {
@@ -21,30 +31,128 @@ interface GalleryGridProps {
   categories: string[]
 }
 
+// Optimized image component with loading state
+function GalleryImageCard({ 
+  image, 
+  onClick 
+}: { 
+  image: GalleryImage
+  onClick: () => void 
+}) {
+  const [isLoaded, setIsLoaded] = useState(false)
+  
+  return (
+    <button
+      onClick={onClick}
+      className="group relative w-full overflow-hidden bg-secondary cursor-pointer break-inside-avoid mb-4 block"
+    >
+      <div className="relative">
+        {/* Loading skeleton */}
+        {!isLoaded && (
+          <div className="absolute inset-0 bg-secondary animate-pulse" />
+        )}
+        
+        {/* Use regular img for external URLs (Notion) to avoid timeout */}
+        {image.src.startsWith('http') ? (
+          <img
+            src={image.src}
+            alt={image.alt || image.title || image.name || "Gallery image"}
+            className={cn(
+              "w-full h-auto object-cover transition-all duration-700 group-hover:scale-105",
+              isLoaded ? "opacity-100" : "opacity-0"
+            )}
+            loading="lazy"
+            onLoad={() => setIsLoaded(true)}
+          />
+        ) : (
+          <Image
+            src={image.src}
+            alt={image.alt || image.title || image.name || "Gallery image"}
+            width={800}
+            height={600}
+            className={cn(
+              "w-full h-auto object-cover transition-all duration-700 group-hover:scale-105",
+              isLoaded ? "opacity-100" : "opacity-0"
+            )}
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            onLoad={() => setIsLoaded(true)}
+          />
+        )}
+        
+        {/* Hover Overlay */}
+        <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/30 transition-colors duration-500" />
+        
+        {/* Hover Content */}
+        <div className="absolute inset-0 flex items-end p-4 lg:p-6">
+          <div className="flex items-end justify-between w-full opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500">
+            <div className="text-white">
+              {image.category && (
+                <p className="font-mono text-[10px] tracking-wider uppercase mb-1">
+                  {image.category}
+                </p>
+              )}
+              <h3 className="font-serif text-lg lg:text-xl">
+                {image.title || image.name}
+              </h3>
+            </div>
+            <ArrowUpRight className="w-5 h-5 text-white" />
+          </div>
+        </div>
+      </div>
+    </button>
+  )
+}
+
 export function GalleryGrid({ images, categories }: GalleryGridProps) {
   const [activeCategory, setActiveCategory] = useState<string | null>(null)
   const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null)
   const [touchStart, setTouchStart] = useState<number | null>(null)
   const [touchEnd, setTouchEnd] = useState<number | null>(null)
+  const [lightboxLoading, setLightboxLoading] = useState(false)
 
   const filteredImages = activeCategory 
     ? images.filter((img) => img.category === activeCategory) 
     : images
 
-  const openLightbox = (index: number) => setSelectedImageIndex(index)
-  const closeLightbox = () => setSelectedImageIndex(null)
+  const openLightbox = (index: number) => {
+    setLightboxLoading(true)
+    setSelectedImageIndex(index)
+  }
+  const closeLightbox = () => {
+    setSelectedImageIndex(null)
+    setLightboxLoading(false)
+  }
 
   const goToPrevious = () => {
     if (selectedImageIndex !== null) {
+      setLightboxLoading(true)
       setSelectedImageIndex(selectedImageIndex === 0 ? filteredImages.length - 1 : selectedImageIndex - 1)
     }
   }
 
   const goToNext = () => {
     if (selectedImageIndex !== null) {
+      setLightboxLoading(true)
       setSelectedImageIndex(selectedImageIndex === filteredImages.length - 1 ? 0 : selectedImageIndex + 1)
     }
   }
+
+  // Preload adjacent images
+  useEffect(() => {
+    if (selectedImageIndex === null) return
+    
+    const preloadImage = (src: string) => {
+      const img = new window.Image()
+      img.src = src
+    }
+    
+    // Preload next and previous images
+    const prevIndex = selectedImageIndex === 0 ? filteredImages.length - 1 : selectedImageIndex - 1
+    const nextIndex = selectedImageIndex === filteredImages.length - 1 ? 0 : selectedImageIndex + 1
+    
+    if (filteredImages[prevIndex]) preloadImage(filteredImages[prevIndex].src)
+    if (filteredImages[nextIndex]) preloadImage(filteredImages[nextIndex].src)
+  }, [selectedImageIndex, filteredImages])
 
   // Swipe gesture handling
   const minSwipeDistance = 50
@@ -127,42 +235,11 @@ export function GalleryGrid({ images, categories }: GalleryGridProps) {
       {/* Images Grid - Masonry Style */}
       <div className="columns-1 md:columns-2 lg:columns-3 gap-4 space-y-4">
         {filteredImages.map((image, index) => (
-          <button
-            key={image.id}
-            onClick={() => openLightbox(index)}
-            className="group relative w-full overflow-hidden bg-secondary cursor-pointer break-inside-avoid mb-4 block"
-          >
-            <div className="relative">
-              <Image
-                src={image.src}
-                alt={image.alt || image.title || image.name || "Gallery image"}
-                width={800}
-                height={600}
-                className="w-full h-auto object-cover transition-all duration-700 group-hover:scale-105"
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              />
-              
-              {/* Hover Overlay */}
-              <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/30 transition-colors duration-500" />
-              
-              {/* Hover Content */}
-              <div className="absolute inset-0 flex items-end p-4 lg:p-6">
-                <div className="flex items-end justify-between w-full opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500">
-                  <div className="text-white">
-                    {image.category && (
-                      <p className="font-mono text-[10px] tracking-wider uppercase mb-1">
-                        {image.category}
-                      </p>
-                    )}
-                    <h3 className="font-serif text-lg lg:text-xl">
-                      {image.title || image.name}
-                    </h3>
-                  </div>
-                  <ArrowUpRight className="w-5 h-5 text-white" />
-                </div>
-              </div>
-            </div>
-          </button>
+          <GalleryImageCard 
+            key={image.id} 
+            image={image} 
+            onClick={() => openLightbox(index)} 
+          />
         ))}
       </div>
 
@@ -231,15 +308,39 @@ export function GalleryGrid({ images, categories }: GalleryGridProps) {
 
           {/* Image Container - takes remaining space */}
           <div className="flex-1 flex items-center justify-center p-4 pt-16 pb-28">
-            <div className="relative w-full h-full max-w-6xl">
-              <Image
-                src={selectedImage.src}
-                alt={selectedImage.alt || selectedImage.title || selectedImage.name || "Gallery image"}
-                fill
-                className="object-contain"
-                sizes="100vw"
-                priority
-              />
+            <div className="relative w-full h-full max-w-6xl flex items-center justify-center">
+              {/* Loading indicator */}
+              {lightboxLoading && (
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <Loader2 className="w-8 h-8 text-white/60 animate-spin" />
+                </div>
+              )}
+              
+              {/* Use regular img for external URLs (Notion) */}
+              {selectedImage.src.startsWith('http') ? (
+                <img
+                  src={selectedImage.src}
+                  alt={selectedImage.alt || selectedImage.title || selectedImage.name || "Gallery image"}
+                  className={cn(
+                    "max-w-full max-h-full object-contain transition-opacity duration-300",
+                    lightboxLoading ? "opacity-0" : "opacity-100"
+                  )}
+                  onLoad={() => setLightboxLoading(false)}
+                />
+              ) : (
+                <Image
+                  src={selectedImage.src}
+                  alt={selectedImage.alt || selectedImage.title || selectedImage.name || "Gallery image"}
+                  fill
+                  className={cn(
+                    "object-contain transition-opacity duration-300",
+                    lightboxLoading ? "opacity-0" : "opacity-100"
+                  )}
+                  sizes="100vw"
+                  priority
+                  onLoad={() => setLightboxLoading(false)}
+                />
+              )}
             </div>
           </div>
 
@@ -248,10 +349,43 @@ export function GalleryGrid({ images, categories }: GalleryGridProps) {
             <p className="text-white font-serif text-xl mb-2">
               {selectedImage.title || selectedImage.name}
             </p>
-            <div className="flex items-center justify-center gap-4 text-white/60 font-mono text-sm">
+            <div className="flex items-center justify-center gap-4 text-white/60 font-mono text-sm mb-3">
               {selectedImage.category && <span>{selectedImage.category}</span>}
               {selectedImage.place && <span>• {selectedImage.place}</span>}
             </div>
+            
+            {/* EXIF Data */}
+            {selectedImage.exif && (
+              <div className="flex items-center justify-center flex-wrap gap-3 sm:gap-4 text-white/50 font-mono text-xs">
+                {selectedImage.exif.camera && (
+                  <span className="flex items-center gap-1">
+                    <Camera className="w-3 h-3" />
+                    {selectedImage.exif.camera}
+                  </span>
+                )}
+                {selectedImage.exif.focalLength && (
+                  <span>{selectedImage.exif.focalLength}</span>
+                )}
+                {selectedImage.exif.aperture && (
+                  <span className="flex items-center gap-1">
+                    <Aperture className="w-3 h-3" />
+                    {selectedImage.exif.aperture}
+                  </span>
+                )}
+                {selectedImage.exif.shutterSpeed && (
+                  <span className="flex items-center gap-1">
+                    <Timer className="w-3 h-3" />
+                    {selectedImage.exif.shutterSpeed}
+                  </span>
+                )}
+                {selectedImage.exif.iso && (
+                  <span className="flex items-center gap-1">
+                    <Sun className="w-3 h-3" />
+                    ISO {selectedImage.exif.iso}
+                  </span>
+                )}
+              </div>
+            )}
           </div>
         </div>
       )}
