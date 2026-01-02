@@ -34,10 +34,12 @@ interface GalleryGridProps {
 // Optimized image component with loading state
 function GalleryImageCard({ 
   image, 
-  onClick 
+  onClick,
+  priority = false
 }: { 
   image: GalleryImage
-  onClick: () => void 
+  onClick: () => void
+  priority?: boolean 
 }) {
   const [isLoaded, setIsLoaded] = useState(false)
   
@@ -58,10 +60,12 @@ function GalleryImageCard({
             src={image.src}
             alt={image.alt || image.title || image.name || "Gallery image"}
             className={cn(
-              "w-full h-auto object-cover transition-all duration-700 group-hover:scale-105",
+              "w-full h-auto object-cover transition-all duration-500 group-hover:scale-105",
               isLoaded ? "opacity-100" : "opacity-0"
             )}
-            loading="lazy"
+            loading={priority ? "eager" : "lazy"}
+            decoding="async"
+            fetchPriority={priority ? "high" : "auto"}
             onLoad={() => setIsLoaded(true)}
           />
         ) : (
@@ -71,10 +75,11 @@ function GalleryImageCard({
             width={800}
             height={600}
             className={cn(
-              "w-full h-auto object-cover transition-all duration-700 group-hover:scale-105",
+              "w-full h-auto object-cover transition-all duration-500 group-hover:scale-105",
               isLoaded ? "opacity-100" : "opacity-0"
             )}
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            priority={priority}
             onLoad={() => setIsLoaded(true)}
           />
         )}
@@ -238,7 +243,8 @@ export function GalleryGrid({ images, categories }: GalleryGridProps) {
           <GalleryImageCard 
             key={image.id} 
             image={image} 
-            onClick={() => openLightbox(index)} 
+            onClick={() => openLightbox(index)}
+            priority={index < 6}
           />
         ))}
       </div>
@@ -291,13 +297,13 @@ export function GalleryGrid({ images, categories }: GalleryGridProps) {
             <ChevronRight size={28} strokeWidth={1} />
           </button>
 
-          {/* Image Container */}
+          {/* Image Container - with proper spacing for bottom info */}
           <div 
-            className="absolute inset-0 flex items-center justify-center px-4 sm:px-16"
+            className="absolute inset-0 flex items-center justify-center px-4 sm:px-20 pt-16 pb-32"
             onClick={closeLightbox}
           >
             <div 
-              className="relative w-full h-full flex items-center justify-center"
+              className="relative flex items-center justify-center w-full h-full"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Loading */}
@@ -312,7 +318,7 @@ export function GalleryGrid({ images, categories }: GalleryGridProps) {
                   src={selectedImage.src}
                   alt={selectedImage.alt || selectedImage.title || selectedImage.name || "Gallery image"}
                   className={cn(
-                    "max-w-full max-h-[calc(100vh-160px)] w-auto h-auto object-contain transition-opacity duration-500",
+                    "max-w-full max-h-full w-auto h-auto object-contain transition-opacity duration-300",
                     lightboxLoading ? "opacity-0" : "opacity-100"
                   )}
                   onLoad={() => setLightboxLoading(false)}
@@ -323,7 +329,7 @@ export function GalleryGrid({ images, categories }: GalleryGridProps) {
                   alt={selectedImage.alt || selectedImage.title || selectedImage.name || "Gallery image"}
                   fill
                   className={cn(
-                    "object-contain transition-opacity duration-500",
+                    "object-contain transition-opacity duration-300",
                     lightboxLoading ? "opacity-0" : "opacity-100"
                   )}
                   sizes="100vw"
@@ -334,36 +340,28 @@ export function GalleryGrid({ images, categories }: GalleryGridProps) {
             </div>
           </div>
 
-          {/* Bottom Info - Clean & Centered */}
-          <div className="absolute bottom-0 left-0 right-0 z-50 pb-5 pt-8 bg-gradient-to-t from-black/80 via-black/40 to-transparent">
-            <div className="text-center px-4">
+          {/* Bottom Info - Solid background */}
+          <div className="absolute bottom-0 left-0 right-0 z-50 bg-black py-4 px-4">
+            <div className="text-center">
               {/* Title */}
-              <h3 className="font-serif text-base sm:text-lg text-white/90 mb-1">
+              <h3 className="font-serif text-sm sm:text-base text-white/90 mb-1">
                 {selectedImage.title || selectedImage.name}
               </h3>
               
               {/* Category & Location */}
-              <p className="font-mono text-[10px] sm:text-[11px] tracking-wider text-white/40 uppercase mb-2">
+              <p className="font-mono text-[10px] tracking-wider text-white/40 uppercase">
                 {[selectedImage.category, selectedImage.place].filter(Boolean).join(' · ')}
+                {selectedImage.exif && (
+                  <span className="hidden sm:inline">
+                    {' · '}{[selectedImage.exif.camera, selectedImage.exif.focalLength, selectedImage.exif.aperture, selectedImage.exif.shutterSpeed, selectedImage.exif.iso && `ISO ${selectedImage.exif.iso}`].filter(Boolean).join(' · ')}
+                  </span>
+                )}
               </p>
-              
-              {/* EXIF - Compact */}
-              {selectedImage.exif && (
-                <p className="font-mono text-[10px] text-white/30 tracking-wide">
-                  {[
-                    selectedImage.exif.camera,
-                    selectedImage.exif.focalLength,
-                    selectedImage.exif.aperture && `ƒ/${selectedImage.exif.aperture.replace('f/', '')}`,
-                    selectedImage.exif.shutterSpeed,
-                    selectedImage.exif.iso && `ISO ${selectedImage.exif.iso}`
-                  ].filter(Boolean).join('  ·  ')}
-                </p>
-              )}
             </div>
           </div>
 
           {/* Mobile swipe indicator */}
-          <div className="absolute bottom-24 left-1/2 -translate-x-1/2 sm:hidden">
+          <div className="absolute bottom-16 left-1/2 -translate-x-1/2 sm:hidden">
             <div className="flex items-center gap-3 text-white/20">
               <ChevronLeft size={14} strokeWidth={1} />
               <span className="font-mono text-[9px] tracking-widest uppercase">swipe</span>
