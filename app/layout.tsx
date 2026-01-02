@@ -2,6 +2,7 @@ import type React from "react"
 import type { Metadata } from "next"
 import { Inter, Playfair_Display, JetBrains_Mono } from "next/font/google"
 import { SpeedInsights } from "@vercel/speed-insights/next"
+import { Analytics } from "@vercel/analytics/next"
 import { SocialButtons } from "@/components/social-buttons"
 import { BackToTop } from "@/components/back-to-top"
 import { ThemeProvider } from "@/components/theme-provider"
@@ -122,6 +123,7 @@ export default function RootLayout({
           <SocialButtons />
           <BackToTop />
         </ThemeProvider>
+        <Analytics />
         <SpeedInsights />
       </body>
     </html>
