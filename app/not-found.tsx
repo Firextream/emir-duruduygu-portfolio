@@ -44,6 +44,9 @@ export default function NotFound() {
           <div className="mt-12 pt-8 border-t border-border">
             <p className="text-sm text-muted-foreground mb-4">You might be looking for:</p>
             <div className="flex flex-wrap justify-center gap-4 md:gap-6">
+              <Link href="/about" className="text-sm text-foreground hover:text-accent transition-colors underline-offset-4 hover:underline">
+                About
+              </Link>
               <Link href="/portfolio" className="text-sm text-foreground hover:text-accent transition-colors underline-offset-4 hover:underline">
                 Portfolio
               </Link>

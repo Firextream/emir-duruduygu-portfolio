@@ -4,6 +4,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { ArrowDown } from "lucide-react"
 import { useEffect, useState } from "react"
+import { Typewriter } from "@/components/typewriter"
 
 const categories = [
   "Architecture",
@@ -51,7 +52,13 @@ export function HeroSection() {
               <span 
                 className={`block font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-medium tracking-tight text-foreground transition-all duration-700 delay-200 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
               >
-                Light & <span className="text-accent">Shadow</span>
+                <Typewriter 
+                  words={["Light & Shadow", "Urban Stories", "Quiet Moments", "Hidden Details"]}
+                  className="text-accent"
+                  typingSpeed={80}
+                  deletingSpeed={40}
+                  pauseTime={3000}
+                />
               </span>
             </h1>
             
@@ -96,8 +103,10 @@ export function HeroSection() {
             alt="Featured architectural photograph"
             fill
             priority
+            quality={100}
             className="object-cover"
             sizes="(max-width: 1024px) 100vw, 50vw"
+            unoptimized
           />
           
           {/* Top Gradient Overlay for Navigation Visibility */}

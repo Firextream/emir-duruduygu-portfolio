@@ -83,7 +83,7 @@ export function BlogPostMeta({ post, className }: BlogPostMetaProps) {
   return (
     <div className={cn("flex items-center gap-4 text-sm text-muted-foreground", className)}>
       {post.category && (
-        <span className="px-2 py-1 bg-muted rounded-sm text-xs font-medium">
+        <span className="px-3 py-1.5 bg-accent/10 text-accent border border-accent/20 rounded text-xs font-medium uppercase tracking-wider">
           {post.category}
         </span>
       )}
@@ -96,22 +96,32 @@ interface BlogPostAuthorProps {
   author?: string
   date?: string | null
   authorTitle?: string
+  authorImage?: string | null
   className?: string
 }
 
-export function BlogPostAuthor({ author, date, authorTitle, className }: BlogPostAuthorProps) {
-  const authorImage = getAssetPath("/placeholder-user.jpg") // Default author image
+export function BlogPostAuthor({ author, date, authorTitle, authorImage, className }: BlogPostAuthorProps) {
+  // Get initials from author name
+  const initials = author 
+    ? author.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2)
+    : "ED"
   
   return (
     <div className={cn("flex items-center gap-4 py-6 px-6 bg-muted/30 rounded-lg border border-border/50", className)}>
-      <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-full overflow-hidden bg-background flex-shrink-0 border-2 border-accent/20 shadow-lg">
-        <Image
-          src={authorImage}
-          alt={author || "Author"}
-          fill
-          className="object-cover"
-          sizes="80px"
-        />
+      <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-full overflow-hidden bg-accent/10 flex-shrink-0 border-2 border-accent/20 shadow-lg flex items-center justify-center">
+        {authorImage ? (
+          <Image
+            src={authorImage}
+            alt={author || "Author"}
+            fill
+            className="object-cover"
+            sizes="80px"
+          />
+        ) : (
+          <span className="font-serif text-2xl sm:text-3xl text-accent font-medium">
+            {initials}
+          </span>
+        )}
       </div>
       <div className="flex-1">
         <p className="font-serif text-lg sm:text-xl font-medium text-foreground mb-1">{author || "Anonymous"}</p>

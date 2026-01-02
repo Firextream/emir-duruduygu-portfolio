@@ -16,6 +16,9 @@ import {
 import { ReadingProgress } from "@/components/reading-progress"
 import { RelatedPosts } from "@/components/blog/related-posts"
 import { Navigation } from "@/components/navigation"
+import { ShareButton } from "@/components/share-button"
+import { TableOfContents } from "@/components/blog/table-of-contents"
+import { StructuredData, BreadcrumbStructuredData } from "@/lib/structured-data"
 
 // Force dynamic rendering
 export const dynamic = 'force-dynamic'
@@ -36,6 +39,7 @@ interface Post {
   category?: string
   author?: string
   authorTitle?: string
+  authorImage?: string | null
   image?: string | null
   featured?: boolean
 }
@@ -66,6 +70,24 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
   return (
     <>
+      <StructuredData 
+        type="article" 
+        data={{
+          title: post.title,
+          description: post.excerpt,
+          image: post.image,
+          datePublished: post.date,
+          author: post.author,
+          url: `/blog/${post.slug}`
+        }} 
+      />
+      <BreadcrumbStructuredData 
+        items={[
+          { name: "Home", url: "/" },
+          { name: "Blog", url: "/blog" },
+          { name: post.title, url: `/blog/${post.slug}` }
+        ]} 
+      />
       <Navigation />
       <ReadingProgress />
       <main className="min-h-screen bg-background pt-20">
@@ -120,16 +142,22 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           </div>
         )}
 
+        {/* Table of Contents */}
+        <ScrollReveal delay={0.25}>
+          <TableOfContents content={post.content} className="mb-8" />
+        </ScrollReveal>
+
         <ScrollReveal delay={0.3}>
           <BlogPostContent content={post.content} />
         </ScrollReveal>
 
         <ScrollReveal delay={0.4}>
-          <footer className="mt-16 pt-8 border-t border-border">
+          <footer className="mt-8 pt-8 border-t border-border">
             <BlogPostAuthor 
               author={post.author} 
               date={post.date}
               authorTitle={post.authorTitle}
+              authorImage={post.authorImage}
               className="mb-8" 
             />
 
@@ -139,13 +167,16 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                   Published on {formatDate(post.date)}
                 </p>
               )}
-              <Link 
-                href="/blog" 
-                className="text-sm text-foreground hover:text-muted-foreground transition-colors"
-                aria-label="Read more articles"
-              >
-                Read more articles →
-              </Link>
+              <div className="flex items-center gap-6">
+                <ShareButton title={post.title} />
+                <Link 
+                  href="/blog" 
+                  className="text-sm text-foreground hover:text-muted-foreground transition-colors"
+                  aria-label="Read more articles"
+                >
+                  Read more articles →
+                </Link>
+              </div>
             </div>
           </footer>
         </ScrollReveal>

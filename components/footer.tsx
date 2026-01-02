@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { ArrowUpRight, ArrowUp } from "lucide-react"
+import { ArrowUpRight, ArrowUp, Github, Music } from "lucide-react"
 
 export function Footer() {
   const currentYear = new Date().getFullYear()
@@ -54,6 +54,12 @@ export function Footer() {
             {/* Center: Navigation */}
             <nav className="flex flex-wrap gap-4 sm:gap-6 text-sm">
               <Link 
+                href="/about" 
+                className="text-muted-foreground hover:text-foreground transition-colors link-underline"
+              >
+                About
+              </Link>
+              <Link 
                 href="/portfolio" 
                 className="text-muted-foreground hover:text-foreground transition-colors link-underline"
               >
@@ -70,12 +76,6 @@ export function Footer() {
                 className="text-muted-foreground hover:text-foreground transition-colors link-underline"
               >
                 Blog
-              </Link>
-              <Link 
-                href="/resume" 
-                className="text-muted-foreground hover:text-foreground transition-colors link-underline"
-              >
-                Resume
               </Link>
               <Link 
                 href="/contact" 
@@ -103,6 +103,14 @@ export function Footer() {
                   className="text-muted-foreground hover:text-foreground transition-colors"
                 >
                   Li
+                </a>
+                <a 
+                  href="https://github.com/emirdogu" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  Gh
                 </a>
               </div>
               

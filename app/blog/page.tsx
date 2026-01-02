@@ -1,9 +1,11 @@
 import type { Metadata } from "next"
+import Link from "next/link"
 import { getAllPosts } from "@/lib/notion"
 import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
 import { BlogList } from "@/components/blog/blog-list"
 import { PostCard } from "@/components/post-card"
+import { Archive, Rss } from "lucide-react"
 
 export const metadata: Metadata = {
   title: "Blog",
@@ -58,9 +60,30 @@ export default async function BlogPage() {
             <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-foreground mb-4 sm:mb-6">
               Thoughts & Stories
             </h1>
-            <p className="text-muted-foreground text-base sm:text-lg max-w-2xl">
+            <p className="text-muted-foreground text-base sm:text-lg max-w-2xl mb-6">
               New discoveries, projects, photography, and thoughts on various topics along the way.
             </p>
+            
+            {/* Quick Links */}
+            <div className="flex items-center gap-4 text-sm">
+              <Link 
+                href="/blog/archive"
+                className="inline-flex items-center gap-2 text-muted-foreground hover:text-accent transition-colors"
+              >
+                <Archive className="w-4 h-4" />
+                Archive
+              </Link>
+              <span className="text-border">|</span>
+              <a 
+                href="/feed.xml"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-muted-foreground hover:text-accent transition-colors"
+              >
+                <Rss className="w-4 h-4" />
+                RSS Feed
+              </a>
+            </div>
           </div>
 
           {/* Featured Post */}

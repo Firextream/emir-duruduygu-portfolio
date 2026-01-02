@@ -5,6 +5,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next"
 import { SocialButtons } from "@/components/social-buttons"
 import { BackToTop } from "@/components/back-to-top"
 import { ThemeProvider } from "@/components/theme-provider"
+import { StructuredData } from "@/lib/structured-data"
 import "./globals.css"
 
 const inter = Inter({
@@ -46,6 +47,9 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://emirduruduygu.vercel.app"),
   alternates: {
     canonical: "/",
+    types: {
+      "application/rss+xml": "/feed.xml",
+    },
   },
   openGraph: {
     title: "Emir Duruduygu - Photography & Creative Portfolio",
@@ -92,7 +96,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${playfair.variable} ${jetbrains.variable}`}>
+    <html lang="en" className={`${inter.variable} ${playfair.variable} ${jetbrains.variable}`} suppressHydrationWarning>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
         <meta name="format-detection" content="telephone=no, date=no, email=no, address=no" />
@@ -105,13 +109,15 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <meta name="theme-color" content="#fafafa" />
       </head>
-      <body className="font-sans antialiased min-h-screen flex flex-col">
+      <body className="font-sans antialiased min-h-screen flex flex-col" suppressHydrationWarning>
         <ThemeProvider
           attribute="class"
           defaultTheme="light"
           enableSystem
           disableTransitionOnChange
         >
+          <StructuredData type="website" data={{}} />
+          <StructuredData type="person" data={{}} />
           {children}
           <SocialButtons />
           <BackToTop />

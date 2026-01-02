@@ -211,6 +211,19 @@ export function GalleryGrid({ images, categories }: GalleryGridProps) {
             Swipe to navigate
           </div>
 
+          {/* Keyboard hints for desktop */}
+          <div className="absolute bottom-36 left-1/2 -translate-x-1/2 hidden lg:flex items-center gap-4 text-white/40 text-xs font-mono">
+            <span className="flex items-center gap-1">
+              <kbd className="px-1.5 py-0.5 bg-white/10 rounded">←</kbd>
+              <kbd className="px-1.5 py-0.5 bg-white/10 rounded">→</kbd>
+              navigate
+            </span>
+            <span className="flex items-center gap-1">
+              <kbd className="px-1.5 py-0.5 bg-white/10 rounded">ESC</kbd>
+              close
+            </span>
+          </div>
+
           {/* Counter */}
           <div className="absolute top-6 left-6 font-mono text-sm text-white/60">
             {selectedImageIndex !== null && `${selectedImageIndex + 1} / ${filteredImages.length}`}
