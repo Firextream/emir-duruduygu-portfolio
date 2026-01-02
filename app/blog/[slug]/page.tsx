@@ -248,8 +248,6 @@ export async function generateStaticParams() {
         slug: post.slug,
       }))
     
-    console.log("Generated static params for slugs:", slugs.map(s => s.slug))
-    
     return slugs
   } catch (error) {
     console.error("Error generating static params for blog posts:", error)

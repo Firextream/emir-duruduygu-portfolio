@@ -36,7 +36,7 @@ export function SpotifyNowPlaying({ className, variant = "default" }: SpotifyNow
           setTrack(data)
         }
       } catch (error) {
-        console.log('Spotify not connected')
+        // Spotify not connected - silent fail
       } finally {
         setLoading(false)
       }
