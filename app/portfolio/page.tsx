@@ -32,34 +32,34 @@ export default async function PortfolioPage() {
       <Navigation />
       
       {/* Hero Section */}
-      <section className="relative h-[70vh] flex items-end bg-foreground overflow-hidden">
+      <section className="relative h-[70vh] flex items-end bg-neutral-900 overflow-hidden">
         {/* Background Pattern */}
         <div className="absolute inset-0 opacity-5">
           <div className="absolute inset-0" style={{
-            backgroundImage: `repeating-linear-gradient(90deg, transparent, transparent 100px, currentColor 100px, currentColor 101px)`,
+            backgroundImage: `repeating-linear-gradient(90deg, transparent, transparent 100px, white 100px, white 101px)`,
           }} />
         </div>
         
         <div className="relative max-w-7xl mx-auto px-6 lg:px-12 pb-16 lg:pb-24 w-full">
           <div className="grid grid-cols-12 gap-8">
             <div className="col-span-12 lg:col-span-8">
-              <span className="inline-flex items-center gap-3 text-background/50 mb-6">
-                <span className="w-12 h-px bg-background/30" />
+              <span className="inline-flex items-center gap-3 text-white/50 mb-6">
+                <span className="w-12 h-px bg-white/30" />
                 <span className="font-mono text-xs tracking-[0.3em] uppercase">Portfolio</span>
               </span>
-              <h1 className="font-serif text-5xl md:text-6xl lg:text-7xl xl:text-8xl text-background font-light leading-[0.9] tracking-tight">
+              <h1 className="font-serif text-5xl md:text-6xl lg:text-7xl xl:text-8xl text-white font-light leading-[0.9] tracking-tight">
                 Selected
                 <br />
                 <span className="italic">Works</span>
               </h1>
             </div>
             <div className="col-span-12 lg:col-span-4 flex flex-col justify-end">
-              <p className="text-background/80 text-lg leading-relaxed">
+              <p className="text-white/80 text-lg leading-relaxed">
                 A curated collection exploring architecture, electronics, and photography.
               </p>
-              <div className="flex items-center gap-3 mt-8 text-background/70">
+              <div className="flex items-center gap-3 mt-8 text-white/70">
                 <span className="font-mono text-xs tracking-wider">{projects.length} Projects</span>
-                <span className="w-px h-4 bg-background/40" />
+                <span className="w-px h-4 bg-white/40" />
                 <span className="font-mono text-xs tracking-wider">{categories.length} Categories</span>
               </div>
             </div>
@@ -67,7 +67,7 @@ export default async function PortfolioPage() {
         </div>
         
         {/* Scroll Indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-background/60">
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/60">
           <ArrowDown size={20} className="animate-bounce" />
         </div>
       </section>

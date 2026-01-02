@@ -307,7 +307,7 @@ export function GalleryGrid({ images, categories }: GalleryGridProps) {
           </div>
 
           {/* Image Container - takes remaining space */}
-          <div className="flex-1 flex items-center justify-center p-4 pt-16 pb-28">
+          <div className="flex-1 flex items-center justify-center p-4 pt-16 pb-32 overflow-hidden">
             <div className="relative w-full h-full max-w-6xl flex items-center justify-center">
               {/* Loading indicator */}
               {lightboxLoading && (
@@ -322,7 +322,7 @@ export function GalleryGrid({ images, categories }: GalleryGridProps) {
                   src={selectedImage.src}
                   alt={selectedImage.alt || selectedImage.title || selectedImage.name || "Gallery image"}
                   className={cn(
-                    "max-w-full max-h-full object-contain transition-opacity duration-300",
+                    "max-w-full max-h-[calc(100vh-200px)] w-auto h-auto object-contain transition-opacity duration-300",
                     lightboxLoading ? "opacity-0" : "opacity-100"
                   )}
                   onLoad={() => setLightboxLoading(false)}
