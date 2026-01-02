@@ -1,8 +1,8 @@
 "use client"
 
-import { useState, useEffect, useRef, TouchEvent } from "react"
+import { useState, useEffect, TouchEvent } from "react"
 import Image from "next/image"
-import { X, ChevronLeft, ChevronRight, ArrowUpRight, Loader2, Camera, Aperture, Timer, Sun } from "lucide-react"
+import { X, ChevronLeft, ChevronRight, ArrowUpRight } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 interface ExifData {
@@ -250,67 +250,69 @@ export function GalleryGrid({ images, categories }: GalleryGridProps) {
         </div>
       )}
 
-      {/* Lightbox */}
+      {/* Lightbox - Minimal Design */}
       {selectedImage && (
         <div 
-          className="fixed inset-0 z-50 bg-black flex flex-col"
+          className="fixed inset-0 z-50 bg-black"
           onTouchStart={onTouchStart}
           onTouchMove={onTouchMove}
           onTouchEnd={onTouchEnd}
         >
-          {/* Close Button - Mobile Optimized */}
+          {/* Top Bar */}
+          <div className="absolute top-0 left-0 right-0 z-50 flex items-center justify-between px-4 py-4 sm:px-6 sm:py-5">
+            {/* Counter */}
+            <span className="font-mono text-[11px] text-white/50 tracking-wider">
+              {selectedImageIndex !== null && `${selectedImageIndex + 1} / ${filteredImages.length}`}
+            </span>
+            
+            {/* Close Button */}
+            <button
+              onClick={closeLightbox}
+              className="w-10 h-10 flex items-center justify-center text-white/50 hover:text-white transition-colors"
+              aria-label="Close"
+            >
+              <X size={20} strokeWidth={1.5} />
+            </button>
+          </div>
+
+          {/* Navigation - Minimal arrows */}
           <button
+            onClick={(e) => { e.stopPropagation(); goToPrevious(); }}
+            className="absolute left-2 sm:left-6 top-1/2 -translate-y-1/2 z-50 w-12 h-12 hidden sm:flex items-center justify-center text-white/30 hover:text-white transition-colors"
+            aria-label="Previous"
+          >
+            <ChevronLeft size={28} strokeWidth={1} />
+          </button>
+          <button
+            onClick={(e) => { e.stopPropagation(); goToNext(); }}
+            className="absolute right-2 sm:right-6 top-1/2 -translate-y-1/2 z-50 w-12 h-12 hidden sm:flex items-center justify-center text-white/30 hover:text-white transition-colors"
+            aria-label="Next"
+          >
+            <ChevronRight size={28} strokeWidth={1} />
+          </button>
+
+          {/* Image Container */}
+          <div 
+            className="absolute inset-0 flex items-center justify-center px-4 sm:px-16"
             onClick={closeLightbox}
-            className="absolute top-4 right-4 md:top-6 md:right-6 z-50 w-14 h-14 md:w-12 md:h-12 flex items-center justify-center text-white bg-black/40 hover:bg-black/60 backdrop-blur-sm rounded-full transition-all active:scale-95"
-            aria-label="Close lightbox"
           >
-            <X size={28} className="md:w-7 md:h-7" />
-          </button>
-
-          {/* Navigation Buttons - Hidden on mobile (use swipe instead) */}
-          <button
-            onClick={goToPrevious}
-            className="absolute left-4 top-1/2 -translate-y-1/2 md:left-6 z-50 w-12 h-12 md:w-16 md:h-16 hidden sm:flex items-center justify-center text-white bg-black/40 hover:bg-black/60 backdrop-blur-sm rounded-full transition-all active:scale-95"
-            aria-label="Previous image"
-          >
-            <ChevronLeft size={32} className="md:w-10 md:h-10" />
-          </button>
-          <button
-            onClick={goToNext}
-            className="absolute right-4 top-1/2 -translate-y-1/2 md:right-6 z-50 w-12 h-12 md:w-16 md:h-16 hidden sm:flex items-center justify-center text-white bg-black/40 hover:bg-black/60 backdrop-blur-sm rounded-full transition-all active:scale-95"
-            aria-label="Next image"
-          >
-            <ChevronRight size={32} className="md:w-10 md:h-10" />
-          </button>
-
-          {/* Swipe hint for mobile */}
-          <div className="absolute bottom-32 left-1/2 -translate-x-1/2 sm:hidden text-white/40 text-xs font-mono">
-            Swipe to navigate
-          </div>
-
-          {/* Counter - moved to top left */}
-          <div className="absolute top-6 left-6 font-mono text-xs text-white/60 bg-black/30 backdrop-blur-sm px-2 py-1 rounded">
-            {selectedImageIndex !== null && `${selectedImageIndex + 1} / ${filteredImages.length}`}
-          </div>
-
-          {/* Image Container - takes remaining space */}
-          <div className="flex-1 flex items-center justify-center px-4 py-16 overflow-hidden" style={{ paddingBottom: '120px' }}>
-            <div className="relative flex items-center justify-center" style={{ maxWidth: '90vw', maxHeight: 'calc(100vh - 180px)' }}>
-              {/* Loading indicator */}
+            <div 
+              className="relative w-full h-full flex items-center justify-center"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Loading */}
               {lightboxLoading && (
-                <div className="absolute inset-0 flex items-center justify-center z-10">
-                  <Loader2 className="w-8 h-8 text-white/60 animate-spin" />
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="w-5 h-5 border border-white/20 border-t-white/60 rounded-full animate-spin" />
                 </div>
               )}
               
-              {/* Use regular img for external URLs (Notion) */}
               {selectedImage.src.startsWith('http') ? (
                 <img
                   src={selectedImage.src}
                   alt={selectedImage.alt || selectedImage.title || selectedImage.name || "Gallery image"}
-                  style={{ maxWidth: '90vw', maxHeight: 'calc(100vh - 180px)', width: 'auto', height: 'auto' }}
                   className={cn(
-                    "object-contain transition-opacity duration-300",
+                    "max-w-full max-h-[calc(100vh-160px)] w-auto h-auto object-contain transition-opacity duration-500",
                     lightboxLoading ? "opacity-0" : "opacity-100"
                   )}
                   onLoad={() => setLightboxLoading(false)}
@@ -321,10 +323,10 @@ export function GalleryGrid({ images, categories }: GalleryGridProps) {
                   alt={selectedImage.alt || selectedImage.title || selectedImage.name || "Gallery image"}
                   fill
                   className={cn(
-                    "object-contain transition-opacity duration-300",
+                    "object-contain transition-opacity duration-500",
                     lightboxLoading ? "opacity-0" : "opacity-100"
                   )}
-                  sizes="90vw"
+                  sizes="100vw"
                   priority
                   onLoad={() => setLightboxLoading(false)}
                 />
@@ -332,34 +334,40 @@ export function GalleryGrid({ images, categories }: GalleryGridProps) {
             </div>
           </div>
 
-          {/* Image Info - fixed at bottom with darker solid background */}
-          <div className="absolute bottom-0 left-0 right-0 bg-black py-3 px-6">
-            <div className="max-w-7xl mx-auto">
-              <div className="flex items-end justify-between gap-4">
-                {/* Title and Location */}
-                <div className="text-left flex-1">
-                  <p className="text-white font-serif text-lg sm:text-xl mb-1">
-                    {selectedImage.title || selectedImage.name}
-                  </p>
-                  <div className="flex items-center gap-2 text-white/60 text-sm mb-1">
-                    {selectedImage.category && <span>{selectedImage.category}</span>}
-                    {selectedImage.place && <span>• {selectedImage.place}</span>}
-                  </div>
-                  
-                  {/* EXIF Data - single line with icons removed */}
-                  {selectedImage.exif && (
-                    <div className="text-white/50 font-mono text-xs">
-                      {[
-                        selectedImage.exif.camera,
-                        selectedImage.exif.focalLength,
-                        selectedImage.exif.aperture,
-                        selectedImage.exif.shutterSpeed,
-                        selectedImage.exif.iso && `ISO ${selectedImage.exif.iso}`
-                      ].filter(Boolean).join(' ')}
-                    </div>
-                  )}
-                </div>
-              </div>
+          {/* Bottom Info - Clean & Centered */}
+          <div className="absolute bottom-0 left-0 right-0 z-50 pb-5 pt-8 bg-gradient-to-t from-black/80 via-black/40 to-transparent">
+            <div className="text-center px-4">
+              {/* Title */}
+              <h3 className="font-serif text-base sm:text-lg text-white/90 mb-1">
+                {selectedImage.title || selectedImage.name}
+              </h3>
+              
+              {/* Category & Location */}
+              <p className="font-mono text-[10px] sm:text-[11px] tracking-wider text-white/40 uppercase mb-2">
+                {[selectedImage.category, selectedImage.place].filter(Boolean).join(' · ')}
+              </p>
+              
+              {/* EXIF - Compact */}
+              {selectedImage.exif && (
+                <p className="font-mono text-[10px] text-white/30 tracking-wide">
+                  {[
+                    selectedImage.exif.camera,
+                    selectedImage.exif.focalLength,
+                    selectedImage.exif.aperture && `ƒ/${selectedImage.exif.aperture.replace('f/', '')}`,
+                    selectedImage.exif.shutterSpeed,
+                    selectedImage.exif.iso && `ISO ${selectedImage.exif.iso}`
+                  ].filter(Boolean).join('  ·  ')}
+                </p>
+              )}
+            </div>
+          </div>
+
+          {/* Mobile swipe indicator */}
+          <div className="absolute bottom-24 left-1/2 -translate-x-1/2 sm:hidden">
+            <div className="flex items-center gap-3 text-white/20">
+              <ChevronLeft size={14} strokeWidth={1} />
+              <span className="font-mono text-[9px] tracking-widest uppercase">swipe</span>
+              <ChevronRight size={14} strokeWidth={1} />
             </div>
           </div>
         </div>
