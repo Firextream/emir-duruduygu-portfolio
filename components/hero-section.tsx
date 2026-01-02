@@ -49,8 +49,9 @@ export function HeroSection() {
               >
                 Capturing
               </span>
+              {/* Fixed height container to prevent layout shift */}
               <span 
-                className={`block font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-medium tracking-tight text-foreground transition-all duration-700 delay-200 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+                className={`block font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-medium tracking-tight text-foreground transition-all duration-700 delay-200 min-h-[2.4em] ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
               >
                 <Typewriter 
                   words={["Light & Shadow", "Urban Stories", "Quiet Moments", "Hidden Details"]}
