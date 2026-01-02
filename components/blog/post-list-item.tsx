@@ -1,5 +1,9 @@
+"use client"
+
+import { useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
+import { cn } from "@/lib/utils"
 
 interface Post {
   id: string
@@ -15,6 +19,45 @@ interface Post {
 interface PostListItemProps {
   post: Post
   index?: number
+}
+
+// Optimized image for external URLs
+function ListItemImage({ src, alt, priority }: { src: string; alt: string; priority: boolean }) {
+  const [isLoaded, setIsLoaded] = useState(false)
+  const isExternal = src.startsWith('http')
+  
+  return (
+    <>
+      {!isLoaded && (
+        <div className="absolute inset-0 bg-secondary animate-pulse" />
+      )}
+      {isExternal ? (
+        <img
+          src={src}
+          alt={alt}
+          className={cn(
+            "absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105",
+            isLoaded ? "opacity-100" : "opacity-0"
+          )}
+          loading={priority ? "eager" : "lazy"}
+          onLoad={() => setIsLoaded(true)}
+        />
+      ) : (
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          className={cn(
+            "object-cover transition-transform duration-500 group-hover:scale-105",
+            isLoaded ? "opacity-100" : "opacity-0"
+          )}
+          sizes="120px"
+          priority={priority}
+          onLoad={() => setIsLoaded(true)}
+        />
+      )}
+    </>
+  )
 }
 
 export function PostListItem({ post, index = 0 }: PostListItemProps) {
@@ -62,14 +105,10 @@ export function PostListItem({ post, index = 0 }: PostListItemProps) {
         {post.image && (
           <div className="hidden md:block col-span-2 lg:col-span-2">
             <div className="relative aspect-square overflow-hidden bg-secondary">
-              <Image
+              <ListItemImage
                 src={post.image}
                 alt={post.title}
-                fill
-                className="object-cover transition-transform duration-500 group-hover:scale-105"
-                sizes="120px"
                 priority={index < 3}
-                loading={index < 3 ? undefined : "lazy"}
               />
             </div>
           </div>

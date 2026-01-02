@@ -1,6 +1,10 @@
+"use client"
+
+import { useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { ArrowUpRight } from "lucide-react"
+import { cn } from "@/lib/utils"
 
 interface Post {
   id: string
@@ -16,6 +20,45 @@ interface Post {
 interface PostCardProps {
   post: Post
   variant?: "default" | "featured"
+}
+
+// Optimized blog image component
+function BlogImage({ src, alt, priority = false, sizes }: { src: string; alt: string; priority?: boolean; sizes: string }) {
+  const [isLoaded, setIsLoaded] = useState(false)
+  const isExternal = src.startsWith('http')
+  
+  return (
+    <>
+      {!isLoaded && (
+        <div className="absolute inset-0 bg-secondary animate-pulse" />
+      )}
+      {isExternal ? (
+        <img
+          src={src}
+          alt={alt}
+          className={cn(
+            "absolute inset-0 w-full h-full object-cover transition-all duration-700 group-hover:scale-105",
+            isLoaded ? "opacity-100" : "opacity-0"
+          )}
+          loading={priority ? "eager" : "lazy"}
+          onLoad={() => setIsLoaded(true)}
+        />
+      ) : (
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          className={cn(
+            "object-cover transition-all duration-700 group-hover:scale-105",
+            isLoaded ? "opacity-100" : "opacity-0"
+          )}
+          sizes={sizes}
+          priority={priority}
+          onLoad={() => setIsLoaded(true)}
+        />
+      )}
+    </>
+  )
 }
 
 export function PostCard({ post, variant = "default" }: PostCardProps) {
@@ -34,13 +77,11 @@ export function PostCard({ post, variant = "default" }: PostCardProps) {
           {/* Image */}
           <div className="relative aspect-[4/3] overflow-hidden bg-secondary">
             {post.cover && (
-              <Image
+              <BlogImage
                 src={post.cover}
                 alt={post.title}
-                fill
-                className="object-cover transition-all duration-700 group-hover:scale-105"
-                sizes="(max-width: 768px) 100vw, 50vw"
                 priority
+                sizes="(max-width: 768px) 100vw, 50vw"
               />
             )}
             <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/10 transition-colors duration-500" />
@@ -84,11 +125,9 @@ export function PostCard({ post, variant = "default" }: PostCardProps) {
         {/* Image */}
         <div className="relative aspect-[4/3] overflow-hidden bg-secondary">
           {post.cover && (
-            <Image
+            <BlogImage
               src={post.cover}
               alt={post.title}
-              fill
-              className="object-cover transition-all duration-700 group-hover:scale-105"
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             />
           )}
