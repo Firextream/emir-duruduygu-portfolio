@@ -152,8 +152,8 @@ export function PortfolioGrid({ projects, categories }: PortfolioGridProps) {
                 </div>
               </div>
               
-              {/* Project Number */}
-              <div className="absolute -left-2 lg:-left-4 top-4 font-mono text-[10px] text-muted-foreground tracking-wider">
+              {/* Project Number - inside card on mobile, outside on desktop */}
+              <div className="absolute left-3 top-3 md:-left-4 md:top-4 font-mono text-xs md:text-[10px] text-white/70 md:text-muted-foreground tracking-wider z-10 bg-black/30 md:bg-transparent px-2 py-1 md:p-0 rounded">
                 {String(index + 1).padStart(2, '0')}
               </div>
             </Link>
