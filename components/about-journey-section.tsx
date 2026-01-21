@@ -15,7 +15,7 @@ interface AboutData {
 
 // About content - minimal and focused
 const aboutData: AboutData = {
-  name: "Emir Duruduygu",
+  name: "Duruduygu",
   title: "Architectural Photographer",
   bio: "Capturing the soul of modern and brutalist architecture through minimalist composition and dramatic interplay of light and shadow.",
   location: "Istanbul, Turkey",

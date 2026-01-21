@@ -1,10 +1,92 @@
 "use client"
 
-import { useState, useRef } from "react"
+import { useState, useRef, useEffect } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { cn } from "@/lib/utils"
 import { ArrowUpRight, Eye } from "lucide-react"
+
+// Optimized image component with loading state and intersection observer
+function PortfolioImage({ 
+  src, 
+  alt, 
+  priority = false,
+  isHovered 
+}: { 
+  src: string
+  alt: string
+  priority?: boolean
+  isHovered: boolean
+}) {
+  const [isLoaded, setIsLoaded] = useState(false)
+  const [isInView, setIsInView] = useState(priority)
+  const imgRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (priority) return
+    
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsInView(true)
+          observer.disconnect()
+        }
+      },
+      { rootMargin: '200px', threshold: 0 }
+    )
+
+    if (imgRef.current) {
+      observer.observe(imgRef.current)
+    }
+
+    return () => observer.disconnect()
+  }, [priority])
+
+  return (
+    <div ref={imgRef} className="absolute inset-0">
+      {/* Skeleton placeholder with shimmer */}
+      {!isLoaded && (
+        <div className="absolute inset-0 bg-gradient-to-br from-secondary via-secondary/80 to-secondary/60 overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent skeleton-shimmer" />
+        </div>
+      )}
+      
+      {isInView && (
+        src.startsWith('http') ? (
+          <img
+            src={src}
+            alt={alt}
+            className={cn(
+              "absolute inset-0 w-full h-full object-cover transition-all duration-500",
+              isLoaded ? "opacity-100" : "opacity-0",
+              isHovered ? "scale-105 brightness-75" : "scale-100 brightness-100"
+            )}
+            loading={priority ? "eager" : "lazy"}
+            decoding="async"
+            fetchPriority={priority ? "high" : "low"}
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            onLoad={() => setIsLoaded(true)}
+          />
+        ) : (
+          <Image
+            src={src}
+            alt={alt}
+            fill
+            className={cn(
+              "object-cover transition-all duration-500",
+              isLoaded ? "opacity-100" : "opacity-0",
+              isHovered ? "scale-105 brightness-75" : "scale-100 brightness-100"
+            )}
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            priority={priority}
+            quality={75}
+            onLoad={() => setIsLoaded(true)}
+          />
+        )
+      )}
+    </div>
+  )
+}
 
 interface PortfolioItem {
   id: string
@@ -95,15 +177,11 @@ export function PortfolioGrid({ projects, categories }: PortfolioGridProps) {
               onMouseLeave={() => setHoveredId(null)}
             >
               <div className={cn("relative w-full h-full overflow-hidden bg-secondary", sizeClass.split(' ').slice(3).join(' '))}>
-                <Image
+                <PortfolioImage
                   src={imageUrl}
                   alt={title}
-                  fill
-                  className={cn(
-                    "object-cover transition-all duration-700",
-                    isHovered ? "scale-105 brightness-75" : "scale-100 brightness-100"
-                  )}
-                  sizes="(max-width: 768px) 100vw, 50vw"
+                  priority={index < 2}
+                  isHovered={isHovered}
                 />
                 
                 {/* Gradient Overlay */}

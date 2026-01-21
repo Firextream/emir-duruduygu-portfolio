@@ -2,8 +2,8 @@ import type { MetadataRoute } from "next"
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Emir Duruduygu - Photography & Creative Portfolio",
-    short_name: "ED Portfolio",
+    name: "Duruduygu - Photography & Creative Portfolio",
+    short_name: "Duruduygu",
     description: "Amateur photographer and curious explorer. Architecture, street photography, and everything that catches my eye.",
     start_url: "/",
     display: "standalone",

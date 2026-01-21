@@ -61,7 +61,7 @@ export function HeroSection() {
           </div>
 
           <h1 className="font-heading font-extralight text-3xl sm:text-4xl md:text-6xl mb-4 sm:mb-6 tracking-tighter leading-none">
-            Emir Duruduygu
+            Duruduygu
           </h1>
 
           <p className="text-lg sm:text-xl md:text-2xl mb-8 sm:mb-16 text-white/70 font-light tracking-wide leading-relaxed px-2 sm:px-0">

@@ -22,7 +22,7 @@ interface SearchProps {
 const searchableContent: SearchResult[] = [
   // Pages
   { id: "page-home", type: "page", title: "Home", url: "/" },
-  { id: "page-about", type: "page", title: "About", excerpt: "Learn more about Emir Duruduygu", url: "/about" },
+  { id: "page-about", type: "page", title: "About", excerpt: "Learn more about Duruduygu", url: "/about" },
   { id: "page-portfolio", type: "page", title: "Portfolio", excerpt: "A curated collection of projects", url: "/portfolio" },
   { id: "page-gallery", type: "page", title: "Gallery", excerpt: "Photography collection", url: "/gallery" },
   { id: "page-blog", type: "page", title: "Blog", excerpt: "Thoughts and stories", url: "/blog" },

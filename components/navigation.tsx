@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation"
 import { useState, useEffect } from "react"
 import { cn } from "@/lib/utils"
 import { ThemeToggle } from "@/components/theme-toggle"
+import { ColorThemePicker } from "@/components/color-theme-picker"
 
 const navLinks = [
   { href: "/about", label: "About", num: "01" },
@@ -67,7 +68,7 @@ export function Navigation() {
                   : "text-foreground hover:text-accent"
               )}
             >
-              Emir Duruduygu
+              Duruduygu
             </Link>
 
             {/* Desktop Navigation - Editorial Style */}
@@ -110,7 +111,10 @@ export function Navigation() {
               })}
               
               {/* Theme Toggle */}
-              <div className="ml-2">
+              <div className="ml-2 flex items-center gap-1">
+                <ColorThemePicker className={cn(
+                  useWhiteText ? "text-white hover:bg-white/10" : ""
+                )} />
                 <ThemeToggle variant="minimal" className={cn(
                   useWhiteText ? "text-white hover:bg-white/10" : ""
                 )} />

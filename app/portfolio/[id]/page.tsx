@@ -177,7 +177,7 @@ export default async function PortfolioDetailPage({
             href="/"
             className="font-serif text-white/40 hover:text-white/70 transition-colors"
           >
-            Emir Duruduygu
+            Duruduygu
           </Link>
           <Link 
             href="/portfolio"

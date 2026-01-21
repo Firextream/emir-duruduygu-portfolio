@@ -7,6 +7,8 @@ import { SocialButtons } from "@/components/social-buttons"
 import { BackToTop } from "@/components/back-to-top"
 import { ThemeProvider } from "@/components/theme-provider"
 import { StructuredData } from "@/lib/structured-data"
+import { SkipToContent } from "@/components/skip-to-content"
+import { ServiceWorkerRegistration } from "@/components/service-worker-registration"
 import "./globals.css"
 
 const inter = Inter({
@@ -33,13 +35,13 @@ const jetbrains = JetBrains_Mono({
 })
 
 export const metadata: Metadata = {
-  title: "Emir Duruduygu - Photography & Creative Portfolio",
+  title: "Duruduygu - Photography & Creative Portfolio",
   description:
-    "Amateur photographer and curious explorer. Architecture, street photography, and everything that catches my eye along the way.",
+    "Amateur photographer and curious explorer. Architecture, street photography, and everything that catches my eye.",
   keywords: ["photography", "architecture", "street photography", "portfolio", "creative", "exploration"],
-  authors: [{ name: "Emir Duruduygu" }],
-  creator: "Emir Duruduygu",
-  publisher: "Emir Duruduygu Portfolio",
+  authors: [{ name: "Duruduygu" }],
+  creator: "Duruduygu",
+  publisher: "Duruduygu Portfolio",
   formatDetection: {
     email: false,
     address: false,
@@ -53,16 +55,16 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "Emir Duruduygu - Photography & Creative Portfolio",
+    title: "Duruduygu - Photography & Creative Portfolio",
     description: "Amateur photographer and curious explorer. Capturing moments, places, and things that catch my eye.",
     url: "https://emirduruduygu.vercel.app",
-    siteName: "Emir Duruduygu Portfolio",
+    siteName: "Duruduygu Portfolio",
     images: [
       {
         url: "/coastal-harbor-scene.jpg",
         width: 1200,
         height: 630,
-        alt: "Emir Duruduygu - Coastal Harbor Scene",
+        alt: "Duruduygu - Coastal Harbor Scene",
       },
     ],
     locale: "en_US",
@@ -70,7 +72,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Emir Duruduygu - Photography & Creative Portfolio",
+    title: "Duruduygu - Photography & Creative Portfolio",
     description: "Amateur photographer and curious explorer. Capturing moments, places, and things that catch my eye.",
     images: ["/coastal-harbor-scene.jpg"],
   },
@@ -104,8 +106,12 @@ export default function RootLayout({
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <meta name="view-transition" content="same-origin" />
+        {/* Preload critical resources */}
+        <link rel="preload" href="/coastal-harbor-scene.jpg" as="image" fetchPriority="high" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://prod-files-secure.s3.us-west-2.amazonaws.com" />
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <meta name="theme-color" content="#fafafa" />
@@ -117,9 +123,13 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <SkipToContent />
+          <ServiceWorkerRegistration />
           <StructuredData type="website" data={{}} />
           <StructuredData type="person" data={{}} />
-          {children}
+          <main id="main-content">
+            {children}
+          </main>
           <SocialButtons />
           <BackToTop />
         </ThemeProvider>

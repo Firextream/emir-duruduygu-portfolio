@@ -9,7 +9,7 @@ import { ArrowRight, Camera, Cpu, Building2, MapPin } from "lucide-react"
 
 export const metadata: Metadata = {
   title: "About",
-  description: "Learn more about Emir Duruduygu - photographer, engineer, and visual storyteller.",
+  description: "Learn more about Duruduygu - photographer, engineer, and visual storyteller.",
 }
 
 const interests = [
@@ -116,7 +116,7 @@ export default function AboutPage() {
               <div className="relative aspect-square overflow-hidden bg-secondary rounded-lg">
                 <Image
                   src="/emir-profile.jpg"
-                  alt="Emir Duruduygu"
+                  alt="Duruduygu"
                   fill
                   className="object-cover object-top"
                   sizes="(max-width: 1024px) 100vw, 50vw"

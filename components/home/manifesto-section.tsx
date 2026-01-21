@@ -24,7 +24,7 @@ export function ManifestoSection() {
           <div className="mt-12 flex items-center justify-center gap-4">
             <span className="w-12 h-px bg-border" />
             <p className="font-mono text-sm tracking-wider text-muted-foreground uppercase">
-              Emir Duruduygu
+              Duruduygu
             </p>
             <span className="w-12 h-px bg-border" />
           </div>

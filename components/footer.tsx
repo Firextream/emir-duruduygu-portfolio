@@ -45,7 +45,7 @@ export function Footer() {
             {/* Left: Logo & Copyright */}
             <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-8">
               <Link href="/" className="font-serif text-xl font-medium text-foreground">
-                Emir Duruduygu
+                Duruduygu
               </Link>
               <span className="text-sm text-muted-foreground">
                 © {currentYear} All rights reserved.

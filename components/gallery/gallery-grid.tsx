@@ -1,8 +1,8 @@
 "use client"
 
-import { useState, useEffect, TouchEvent } from "react"
+import { useState, useEffect, useRef, TouchEvent } from "react"
 import Image from "next/image"
-import { X, ChevronLeft, ChevronRight, ArrowUpRight } from "lucide-react"
+import { X, ChevronLeft, ChevronRight, ArrowUpRight, Download } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 interface ExifData {
@@ -31,57 +31,99 @@ interface GalleryGridProps {
   categories: string[]
 }
 
-// Optimized image component with loading state
+// Generate optimized thumbnail URL for Notion images
+function getOptimizedUrl(src: string, width: number = 400): string {
+  // For Notion S3 images, we can't modify URL directly but browser will cache
+  // For local images, Next.js handles optimization
+  return src
+}
+
+// Optimized image component with loading state and intersection observer
 function GalleryImageCard({ 
   image, 
   onClick,
-  priority = false
+  priority = false,
+  index = 0
 }: { 
   image: GalleryImage
   onClick: () => void
-  priority?: boolean 
+  priority?: boolean
+  index?: number
 }) {
   const [isLoaded, setIsLoaded] = useState(false)
+  const [isInView, setIsInView] = useState(priority)
+  const cardRef = useRef<HTMLButtonElement>(null)
+
+  useEffect(() => {
+    if (priority) return
+    
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsInView(true)
+          observer.disconnect()
+        }
+      },
+      { rootMargin: '300px', threshold: 0 } // Daha erken yükle
+    )
+
+    if (cardRef.current) {
+      observer.observe(cardRef.current)
+    }
+
+    return () => observer.disconnect()
+  }, [priority])
   
   return (
     <button
+      ref={cardRef}
       onClick={onClick}
-      className="group relative w-full overflow-hidden bg-secondary cursor-pointer break-inside-avoid mb-4 block"
+      className="group relative w-full overflow-hidden bg-secondary/50 cursor-pointer break-inside-avoid mb-4 block"
+      style={{ minHeight: isLoaded ? 'auto' : '250px' }}
     >
       <div className="relative">
-        {/* Loading skeleton */}
+        {/* Gradient skeleton - daha hoş görünüm */}
         {!isLoaded && (
-          <div className="absolute inset-0 bg-secondary animate-pulse" />
+          <div 
+            className="absolute inset-0 bg-gradient-to-br from-secondary via-secondary/80 to-secondary/60 overflow-hidden"
+            style={{ minHeight: '250px' }}
+          >
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent skeleton-shimmer" />
+          </div>
         )}
         
-        {/* Use regular img for external URLs (Notion) to avoid timeout */}
-        {image.src.startsWith('http') ? (
-          <img
-            src={image.src}
-            alt={image.alt || image.title || image.name || "Gallery image"}
-            className={cn(
-              "w-full h-auto object-cover transition-all duration-500 group-hover:scale-105",
-              isLoaded ? "opacity-100" : "opacity-0"
-            )}
-            loading={priority ? "eager" : "lazy"}
-            decoding="async"
-            fetchPriority={priority ? "high" : "auto"}
-            onLoad={() => setIsLoaded(true)}
-          />
-        ) : (
-          <Image
-            src={image.src}
-            alt={image.alt || image.title || image.name || "Gallery image"}
-            width={800}
-            height={600}
-            className={cn(
-              "w-full h-auto object-cover transition-all duration-500 group-hover:scale-105",
-              isLoaded ? "opacity-100" : "opacity-0"
-            )}
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            priority={priority}
-            onLoad={() => setIsLoaded(true)}
-          />
+        {/* Only load image when in view */}
+        {isInView && (
+          image.src.startsWith('http') ? (
+            <img
+              src={image.src}
+              alt={image.alt || image.title || image.name || "Gallery image"}
+              className={cn(
+                "w-full h-auto object-cover transition-all duration-300 group-hover:scale-105",
+                isLoaded ? "opacity-100" : "opacity-0"
+              )}
+              loading={priority ? "eager" : "lazy"}
+              decoding="async"
+              fetchPriority={priority ? "high" : "low"}
+              onLoad={() => setIsLoaded(true)}
+              // Daha küçük boyutlar iste
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            />
+          ) : (
+            <Image
+              src={image.src}
+              alt={image.alt || image.title || image.name || "Gallery image"}
+              width={600}
+              height={450}
+              className={cn(
+                "w-full h-auto object-cover transition-all duration-500 group-hover:scale-105",
+                isLoaded ? "opacity-100" : "opacity-0"
+              )}
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              priority={priority}
+              onLoad={() => setIsLoaded(true)}
+            />
+          )
         )}
         
         {/* Hover Overlay */}
@@ -244,7 +286,8 @@ export function GalleryGrid({ images, categories }: GalleryGridProps) {
             key={image.id} 
             image={image} 
             onClick={() => openLightbox(index)}
-            priority={index < 6}
+            priority={index < 3}
+            index={index}
           />
         ))}
       </div>
@@ -271,14 +314,39 @@ export function GalleryGrid({ images, categories }: GalleryGridProps) {
               {selectedImageIndex !== null && `${selectedImageIndex + 1} / ${filteredImages.length}`}
             </span>
             
-            {/* Close Button */}
-            <button
-              onClick={closeLightbox}
-              className="w-10 h-10 flex items-center justify-center text-white/50 hover:text-white transition-colors"
-              aria-label="Close"
-            >
-              <X size={20} strokeWidth={1.5} />
-            </button>
+            {/* Actions */}
+            <div className="flex items-center gap-2">
+              {/* Download Button */}
+              <button
+                onClick={(e) => {
+                  e.stopPropagation()
+                  if (selectedImage) {
+                    const link = document.createElement('a')
+                    link.href = selectedImage.src
+                    link.download = selectedImage.title || selectedImage.name || 'photo'
+                    link.target = '_blank'
+                    link.rel = 'noopener noreferrer'
+                    document.body.appendChild(link)
+                    link.click()
+                    document.body.removeChild(link)
+                  }
+                }}
+                className="w-10 h-10 flex items-center justify-center text-white/50 hover:text-white transition-colors"
+                aria-label="Download"
+                title="Download photo"
+              >
+                <Download size={18} strokeWidth={1.5} />
+              </button>
+              
+              {/* Close Button */}
+              <button
+                onClick={closeLightbox}
+                className="w-10 h-10 flex items-center justify-center text-white/50 hover:text-white transition-colors"
+                aria-label="Close"
+              >
+                <X size={20} strokeWidth={1.5} />
+              </button>
+            </div>
           </div>
 
           {/* Navigation - Minimal arrows */}

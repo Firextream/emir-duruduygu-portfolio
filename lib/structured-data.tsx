@@ -21,12 +21,12 @@ export function generateStructuredData({ type, data }: StructuredDataProps) {
         dateModified: data.dateModified || data.datePublished,
         author: {
           "@type": "Person",
-          name: data.author || "Emir Duruduygu",
+          name: data.author || "Duruduygu",
           url: siteUrl,
         },
         publisher: {
           "@type": "Person",
-          name: "Emir Duruduygu",
+          name: "Duruduygu",
           url: siteUrl,
           logo: {
             "@type": "ImageObject",
@@ -43,12 +43,12 @@ export function generateStructuredData({ type, data }: StructuredDataProps) {
       return {
         "@context": "https://schema.org",
         "@type": "WebSite",
-        name: "Emir Duruduygu Portfolio",
+        name: "Duruduygu Portfolio",
         description: "Amateur photographer and curious explorer. Architecture, street photography, and everything that catches my eye.",
         url: siteUrl,
         author: {
           "@type": "Person",
-          name: "Emir Duruduygu",
+          name: "Duruduygu",
         },
         potentialAction: {
           "@type": "SearchAction",
@@ -61,7 +61,7 @@ export function generateStructuredData({ type, data }: StructuredDataProps) {
       return {
         "@context": "https://schema.org",
         "@type": "Person",
-        name: "Emir Duruduygu",
+        name: "Duruduygu",
         url: siteUrl,
         image: `${siteUrl}/profile-image.jpg`,
         jobTitle: "Electrical & Electronics Engineering Student",
@@ -90,7 +90,7 @@ export function generateStructuredData({ type, data }: StructuredDataProps) {
         image: data.image,
         creator: {
           "@type": "Person",
-          name: "Emir Duruduygu",
+          name: "Duruduygu",
         },
         dateCreated: data.date,
         genre: data.category,

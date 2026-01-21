@@ -5,7 +5,7 @@ import { Download, ArrowRight } from "lucide-react"
 
 export const metadata: Metadata = {
   title: "Resume",
-  description: "Professional experience and background of Emir Duruduygu.",
+  description: "Professional experience and background of Duruduygu.",
 }
 
 const experience = [
@@ -64,7 +64,7 @@ export default function ResumePage() {
               Resume
             </span>
             <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl text-foreground mb-6">
-              Emir Duruduygu
+              Duruduygu
             </h1>
             <p className="text-muted-foreground text-lg mb-8">
               Electrical & Electronics Engineering Student · Istanbul, Turkey

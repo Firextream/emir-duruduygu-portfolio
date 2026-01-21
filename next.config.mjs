@@ -8,11 +8,26 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
+  // Enable experimental features for better performance
+  experimental: {
+    optimizeCss: true,
+  },
+  // Compress output
+  compress: true,
+  // Power header optimization
+  poweredByHeader: false,
   images: {
     // Enable Vercel image optimization for better performance
     formats: ['image/avif', 'image/webp'],
-    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048],
-    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+    // Smaller device sizes for faster loading
+    deviceSizes: [480, 640, 750, 828, 1080, 1200],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256],
+    // Lower quality for faster loading (still looks good)
+    qualities: [75],
+    // Long cache for better performance
+    minimumCacheTTL: 60 * 60 * 24 * 60, // 60 days cache
+    // Limit concurrent image optimization
+    dangerouslyAllowSVG: false,
     remotePatterns: [
       {
         protocol: 'https',

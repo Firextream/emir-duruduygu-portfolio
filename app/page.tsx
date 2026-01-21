@@ -1,15 +1,17 @@
+import dynamic from "next/dynamic"
 import { Navigation } from "@/components/navigation"
 import { HeroSection } from "@/components/hero-section"
-import { LatestPostsSection } from "@/components/home/latest-posts-section"
-import { SelectedProjectsSection } from "@/components/home/selected-projects-section"
-import { ManifestoSection } from "@/components/home/manifesto-section"
-import { NewsletterSection } from "@/components/home/newsletter-section"
 import { Footer } from "@/components/footer"
 import { getAllPosts, getGalleryImages } from "@/lib/notion"
 
-// Force dynamic rendering to ensure env vars are available at runtime
-export const dynamic = 'force-dynamic'
-export const revalidate = 0
+// Lazy load below-the-fold sections
+const LatestPostsSection = dynamic(() => import("@/components/home/latest-posts-section").then(mod => ({ default: mod.LatestPostsSection })))
+const SelectedProjectsSection = dynamic(() => import("@/components/home/selected-projects-section").then(mod => ({ default: mod.SelectedProjectsSection })))
+const ManifestoSection = dynamic(() => import("@/components/home/manifesto-section").then(mod => ({ default: mod.ManifestoSection })))
+const NewsletterSection = dynamic(() => import("@/components/home/newsletter-section").then(mod => ({ default: mod.NewsletterSection })))
+
+// ISR with 60 second revalidation for better TTFB
+export const revalidate = 60
 
 export default async function HomePage() {
   // Fetch posts and gallery images on the server side

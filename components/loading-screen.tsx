@@ -27,7 +27,7 @@ export function LoadingScreen() {
     <div className="fixed inset-0 z-50 bg-background flex items-center justify-center">
       <div className="text-center space-y-8">
         <div className="space-y-4">
-          <h1 className="font-heading font-extralight text-4xl tracking-wider text-foreground">Emir Duruduygu</h1>
+          <h1 className="font-heading font-extralight text-4xl tracking-wider text-foreground">Duruduygu</h1>
           <p className="text-muted-foreground font-light tracking-[0.2em] uppercase text-sm">Loading Portfolio</p>
         </div>
 

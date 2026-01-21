@@ -18,7 +18,7 @@ export function BrandLogo() {
       className="group relative inline-block font-heading font-light text-2xl tracking-wide text-foreground hover:text-accent transition-all duration-700 hover:tracking-wider"
     >
       <div className="relative">
-        <span className="relative z-10 inline-block">Emir Duruduygu</span>
+        <span className="relative z-10 inline-block">Duruduygu</span>
 
         {/* Architectural frame elements */}
         <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-700">

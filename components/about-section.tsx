@@ -17,7 +17,7 @@ interface AboutData {
 
 // About content - can be updated from Notion manually or kept as static
 const aboutData: AboutData = {
-  name: "Emir Duruduygu",
+  name: "Duruduygu",
   title: "Architectural Photographer",
   bio: "I'm a passionate architectural photographer based in Istanbul, dedicated to capturing the soul of modern and brutalist architecture. With over 5 years of experience, I specialize in finding the perfect interplay of light, shadow, and geometric forms that define contemporary architectural design.",
   location: "Istanbul, Turkey",

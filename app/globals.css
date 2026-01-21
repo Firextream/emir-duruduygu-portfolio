@@ -26,6 +26,10 @@
 }
 
 :root {
+  /* Dynamic accent colors (can be changed via ColorThemePicker) */
+  --accent-light: #3d5a4c;
+  --accent-dark: #7eb896;
+  
   /* Refined sophisticated palette */
   --background: #faf9f7;
   --foreground: #171614;
@@ -39,8 +43,8 @@
   --secondary-foreground: #171614;
   --muted: #9a9590;
   --muted-foreground: #9a9590;
-  /* Warmer forest accent */
-  --accent: #3d5a4c;
+  /* Warmer forest accent - now dynamic */
+  --accent: var(--accent-light);
   --accent-foreground: #faf9f7;
   --destructive: #c44040;
   --destructive-foreground: #ffffff;
@@ -77,7 +81,7 @@
   --secondary-foreground: #f5f3f0;
   --muted: #8a8580;
   --muted-foreground: #a8a39e;
-  --accent: #7eb896;
+  --accent: var(--accent-dark);
   --accent-foreground: #1a1917;
   --destructive: #dc2626;
   --destructive-foreground: #ffffff;
@@ -1235,4 +1239,145 @@
 .dark {
   --accent: var(--accent-dark);
   --ring: var(--accent-dark);
+}
+
+/* ============================================
+   View Transitions API
+   ============================================ */
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.3s;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+::view-transition-old(root) {
+  animation-name: fade-out;
+}
+
+::view-transition-new(root) {
+  animation-name: fade-in;
+}
+
+@keyframes fade-out {
+  from { opacity: 1; transform: scale(1); }
+  to { opacity: 0; transform: scale(0.98); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: scale(1.02); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
+  }
+}
+
+/* ===== Print Styles ===== */
+@media print {
+  /* Hide non-essential elements */
+  nav,
+  footer,
+  .back-to-top,
+  .social-buttons,
+  .reading-progress,
+  .share-button,
+  .newsletter-signup,
+  .color-theme-picker,
+  .language-switcher,
+  .skip-to-content,
+  .spotify-now-playing,
+  .floating-elements,
+  .cursor-follower,
+  [data-no-print],
+  button:not([data-print]) {
+    display: none !important;
+  }
+
+  /* Reset background and colors */
+  body {
+    background: white !important;
+    color: black !important;
+    font-size: 12pt !important;
+    line-height: 1.5 !important;
+  }
+
+  /* Ensure links are visible */
+  a {
+    color: black !important;
+    text-decoration: underline !important;
+  }
+
+  /* Show link URLs in print */
+  a[href^="http"]:after {
+    content: " (" attr(href) ")";
+    font-size: 10pt;
+    color: #555;
+  }
+
+  /* Don't show URL for internal links */
+  a[href^="/"]:after,
+  a[href^="#"]:after {
+    content: "";
+  }
+
+  /* Page breaks */
+  h1, h2, h3 {
+    page-break-after: avoid;
+  }
+
+  img, pre, blockquote {
+    page-break-inside: avoid;
+  }
+
+  /* Full width for content */
+  .container,
+  .max-w-4xl,
+  .max-w-7xl,
+  article {
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* Images */
+  img {
+    max-width: 100% !important;
+    height: auto !important;
+  }
+
+  /* Code blocks */
+  pre, code {
+    background: #f5f5f5 !important;
+    border: 1px solid #ddd !important;
+    font-size: 10pt !important;
+    white-space: pre-wrap !important;
+    word-wrap: break-word !important;
+  }
+
+  /* Tables */
+  table {
+    border-collapse: collapse !important;
+  }
+
+  th, td {
+    border: 1px solid #ddd !important;
+    padding: 8px !important;
+  }
+
+  /* Header for print */
+  @page {
+    margin: 2cm;
+  }
+
+  @page :first {
+    margin-top: 1cm;
+  }
 }
