@@ -58,7 +58,7 @@ export function Navigation() {
       >
         <nav className="max-w-7xl mx-auto px-6 lg:px-12">
           <div className="flex items-center justify-between h-16 lg:h-20">
-            {/* Logo - white only on portfolio pages (dark bg), dark on homepage (light bg on left) */}
+            {/* Logo */}
             <Link
               href="/"
               className={cn(
@@ -71,7 +71,7 @@ export function Navigation() {
               Duruduygu
             </Link>
 
-            {/* Desktop Navigation - Editorial Style */}
+            {/* Desktop Navigation */}
             <div className="hidden md:flex items-center gap-8">
               {navLinks.map((link) => {
                 const isActive = pathname === link.href || pathname.startsWith(link.href + "/")

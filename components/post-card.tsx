@@ -41,6 +41,7 @@ function BlogImage({ src, alt, priority = false, sizes }: { src: string; alt: st
             isLoaded ? "opacity-100" : "opacity-0"
           )}
           loading={priority ? "eager" : "lazy"}
+          fetchPriority={priority ? "high" : "auto"}
           onLoad={() => setIsLoaded(true)}
         />
       ) : (
@@ -54,6 +55,7 @@ function BlogImage({ src, alt, priority = false, sizes }: { src: string; alt: st
           )}
           sizes={sizes}
           priority={priority}
+          fetchPriority={priority ? "high" : "auto"}
           onLoad={() => setIsLoaded(true)}
         />
       )}

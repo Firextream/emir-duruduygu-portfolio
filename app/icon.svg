@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 512 512" fill="none">
+  <!-- D monogram logo - geometric style -->
+  <path fill="#171717" d="M80 64h48v384H80V64z"/>
+  <path fill="#171717" d="M80 64h200v48H128v288h152v48H80V64z"/>
+  <path fill="#171717" d="M280 112h48v48h-48v-48z"/>
+  <path fill="#171717" d="M328 112h104v48H328v-48z"/>
+  <path fill="#171717" d="M384 160h48v192h-48V160z"/>
+  <path fill="#171717" d="M280 352h152v48H280v-48z"/>
+  <path fill="#171717" d="M280 352h48v48h-48v-48z"/>
+</svg>

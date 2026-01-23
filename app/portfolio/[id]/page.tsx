@@ -6,9 +6,8 @@ import { getPortfolioItems } from "@/lib/notion"
 import { Navigation } from "@/components/navigation"
 import { ArrowLeft, ArrowRight, MapPin, Calendar, ArrowUpRight } from "lucide-react"
 
-// Force dynamic rendering
-export const dynamic = 'force-dynamic'
-export const revalidate = 0
+// ISR with 60 second revalidation for better performance
+export const revalidate = 60
 
 interface PortfolioItem {
   id: string
@@ -19,6 +18,21 @@ interface PortfolioItem {
   alt?: string
   date?: string
   place?: string
+}
+
+// Generate static params for all portfolio items
+export async function generateStaticParams() {
+  try {
+    const items = await getPortfolioItems()
+    return items
+      .filter((item: PortfolioItem) => item && item.id)
+      .map((item: PortfolioItem) => ({
+        id: item.id,
+      }))
+  } catch (error) {
+    console.error("Error generating static params for portfolio:", error)
+    return []
+  }
 }
 
 export async function generateMetadata({ 

@@ -20,9 +20,8 @@ import { ShareButton } from "@/components/share-button"
 import { TableOfContents } from "@/components/blog/table-of-contents"
 import { StructuredData, BreadcrumbStructuredData } from "@/lib/structured-data"
 
-// Force dynamic rendering
-export const dynamic = 'force-dynamic'
-export const revalidate = 0
+// ISR with 60 second revalidation for better performance
+export const revalidate = 60
 
 interface BlogPostPageProps {
   params: Promise<{ slug: string }>
@@ -128,6 +127,8 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 src={post.image}
                 alt={`Featured image for ${post.title}`}
                 className="w-full h-full object-cover"
+                loading="eager"
+                fetchPriority="high"
               />
             ) : (
               <Image
@@ -136,6 +137,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 fill
                 className="object-cover"
                 priority
+                fetchPriority="high"
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1000px"
               />
             )}

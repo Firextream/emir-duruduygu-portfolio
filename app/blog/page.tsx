@@ -13,9 +13,8 @@ export const metadata: Metadata = {
   description: "Thoughts on photography, process, gear, and the spaces between frames.",
 }
 
-// Force dynamic rendering to ensure env vars are available at runtime
-export const dynamic = 'force-dynamic'
-export const revalidate = 0
+// ISR with 60 second revalidation for better performance
+export const revalidate = 60
 
 export default async function BlogPage() {
   const posts = await getAllPosts()

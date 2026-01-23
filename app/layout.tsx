@@ -90,6 +90,15 @@ export const metadata: Metadata = {
   verification: {
     google: "your-google-verification-code",
   },
+  icons: {
+    icon: [
+      { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
+      { url: "/icon-512.png", sizes: "512x512", type: "image/png" },
+    ],
+    apple: [
+      { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
+    ],
+  },
     generator: 'v0.app'
 }
 
@@ -111,7 +120,11 @@ export default function RootLayout({
         <link rel="preload" href="/coastal-harbor-scene.jpg" as="image" fetchPriority="high" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        {/* Preconnect to Notion image hosts for faster LCP */}
+        <link rel="preconnect" href="https://prod-files-secure.s3.us-west-2.amazonaws.com" />
+        <link rel="preconnect" href="https://s3.us-west-2.amazonaws.com" />
         <link rel="dns-prefetch" href="https://prod-files-secure.s3.us-west-2.amazonaws.com" />
+        <link rel="dns-prefetch" href="https://s3.us-west-2.amazonaws.com" />
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <meta name="theme-color" content="#fafafa" />
