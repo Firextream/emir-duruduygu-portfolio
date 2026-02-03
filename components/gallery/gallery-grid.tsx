@@ -134,13 +134,10 @@ function GalleryImageCard({
           <div className="flex items-end justify-between w-full opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500">
             <div className="text-white">
               {image.category && (
-                <p className="font-mono text-[10px] tracking-wider uppercase mb-1">
+                <p className="font-mono text-[10px] tracking-wider uppercase">
                   {image.category}
                 </p>
               )}
-              <h3 className="font-serif text-lg lg:text-xl">
-                {image.title || image.name}
-              </h3>
             </div>
             <ArrowUpRight className="w-5 h-5 text-white" />
           </div>
@@ -411,11 +408,6 @@ export function GalleryGrid({ images, categories }: GalleryGridProps) {
           {/* Bottom Info - Solid background */}
           <div className="absolute bottom-0 left-0 right-0 z-50 bg-black py-4 px-4">
             <div className="text-center">
-              {/* Title */}
-              <h3 className="font-serif text-sm sm:text-base text-white/90 mb-1">
-                {selectedImage.title || selectedImage.name}
-              </h3>
-              
               {/* Category & Location */}
               <p className="font-mono text-[10px] tracking-wider text-white/40 uppercase">
                 {[selectedImage.category, selectedImage.place].filter(Boolean).join(' · ')}

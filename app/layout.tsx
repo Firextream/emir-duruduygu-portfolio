@@ -35,10 +35,10 @@ const jetbrains = JetBrains_Mono({
 })
 
 export const metadata: Metadata = {
-  title: "Duruduygu - Photography & Creative Portfolio",
+  title: "Duruduygu - Photography & Stories",
   description:
-    "Amateur photographer and curious explorer. Architecture, street photography, and everything that catches my eye.",
-  keywords: ["photography", "architecture", "street photography", "portfolio", "creative", "exploration"],
+    "Amateur photographer and curious explorer. Capturing architecture, street moments, and anything that sparks inspiration—structure, light, and the unexpected.",
+  keywords: ["photography", "gallery", "blog", "street photography", "architecture", "stories", "creative"],
   authors: [{ name: "Duruduygu" }],
   creator: "Duruduygu",
   publisher: "Duruduygu Portfolio",
@@ -55,10 +55,10 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "Duruduygu - Photography & Creative Portfolio",
-    description: "Amateur photographer and curious explorer. Capturing moments, places, and things that catch my eye.",
+    title: "Duruduygu - Photography & Stories",
+    description: "Amateur photographer and curious explorer. Capturing architecture, street moments, and anything that sparks inspiration—structure, light, and the unexpected.",
     url: "https://emirduruduygu.vercel.app",
-    siteName: "Duruduygu Portfolio",
+    siteName: "Duruduygu",
     images: [
       {
         url: "/coastal-harbor-scene.jpg",
@@ -72,8 +72,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Duruduygu - Photography & Creative Portfolio",
-    description: "Amateur photographer and curious explorer. Capturing moments, places, and things that catch my eye.",
+    title: "Duruduygu - Photography & Stories",
+    description: "Amateur photographer and curious explorer. Capturing architecture, street moments, and anything that sparks inspiration—structure, light, and the unexpected.",
     images: ["/coastal-harbor-scene.jpg"],
   },
   robots: {

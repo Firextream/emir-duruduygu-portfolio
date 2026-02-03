@@ -32,7 +32,7 @@ export function BrandLogo() {
         {/* Subtitle */}
         <div className="absolute -bottom-6 left-0 opacity-0 group-hover:opacity-100 transition-all duration-500 delay-200">
           <span className="text-xs font-light tracking-widest text-muted-foreground uppercase">
-            Architecture & Design
+            Photography & Stories
           </span>
         </div>
       </div>
