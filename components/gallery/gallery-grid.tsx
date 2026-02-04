@@ -187,9 +187,6 @@ export function GalleryGrid({ images, categories }: GalleryGridProps) {
   const [touchStart, setTouchStart] = useState<number | null>(null)
   const [touchEnd, setTouchEnd] = useState<number | null>(null)
   const [lightboxLoading, setLightboxLoading] = useState(false)
-  const initialVisible = 18
-  const [visibleCount, setVisibleCount] = useState(initialVisible)
-  const userScrolledRef = useRef(false)
 
   // Memoize filtered images
   const filteredImages = useMemo(() => {
@@ -198,44 +195,7 @@ export function GalleryGrid({ images, categories }: GalleryGridProps) {
       : images
   }, [activeCategory, images])
 
-  // Visible images for progressive loading
-  const visibleImages = useMemo(() => {
-    return filteredImages.slice(0, visibleCount)
-  }, [filteredImages, visibleCount])
-
-  // Load more images when scrolling near bottom (after user scrolls)
-  useEffect(() => {
-    const handleScroll = () => {
-      if (!userScrolledRef.current) {
-        if (window.scrollY > 0) {
-          userScrolledRef.current = true
-        } else {
-          return
-        }
-      }
-
-      if (visibleCount >= filteredImages.length) return
-      
-      const scrollTop = window.scrollY
-      const windowHeight = window.innerHeight
-      const docHeight = document.documentElement.scrollHeight
-      
-      // Load more when 500px from bottom
-      if (scrollTop + windowHeight >= docHeight - 500) {
-        setVisibleCount(prev => Math.min(prev + 12, filteredImages.length))
-      }
-    }
-
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [visibleCount, filteredImages.length])
-
-  // Removed grid span logic and preload here to revert to stable CSS column masonry and simpler behavior. We keep progressive loading and retries in the card component.
-
-  // Reset visible count when category changes
-  useEffect(() => {
-    setVisibleCount(initialVisible)
-  }, [activeCategory])
+  // Removed progressive loading to avoid CLS in masonry columns.
 
   const openLightbox = useCallback((index: number) => {
     setSelectedImageIndex(index)
@@ -356,7 +316,7 @@ export function GalleryGrid({ images, categories }: GalleryGridProps) {
 
       {/* Images Grid - Masonry Style */}
       <div className="columns-1 md:columns-2 lg:columns-3 gap-4 space-y-4">
-        {visibleImages.map((image, index) => (
+        {filteredImages.map((image, index) => (
           <GalleryImageCard 
             key={image.id} 
             image={image} 
@@ -366,18 +326,6 @@ export function GalleryGrid({ images, categories }: GalleryGridProps) {
           />
         ))}
       </div>
-
-      {/* Load More Button */}
-      {visibleCount < filteredImages.length && (
-        <div className="text-center py-8">
-          <button
-            onClick={() => setVisibleCount(prev => Math.min(prev + 24, filteredImages.length))}
-            className="inline-flex items-center gap-2 px-6 py-3 text-sm font-mono tracking-wider uppercase border border-border hover:border-foreground hover:bg-foreground/5 transition-all duration-200"
-          >
-            Load More ({filteredImages.length - visibleCount} remaining)
-          </button>
-        </div>
-      )}
 
       {filteredImages.length === 0 && (
         <div className="text-center py-24">

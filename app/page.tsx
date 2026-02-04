@@ -10,8 +10,8 @@ const SelectedProjectsSection = dynamic(() => import("@/components/home/selected
 const ManifestoSection = dynamic(() => import("@/components/home/manifesto-section").then(mod => ({ default: mod.ManifestoSection })))
 const NewsletterSection = dynamic(() => import("@/components/home/newsletter-section").then(mod => ({ default: mod.NewsletterSection })))
 
-// ISR with 5 minute revalidation for better TTFB
-export const revalidate = 300
+// Always render fresh to avoid expired Notion image URLs
+export const dynamic = "force-dynamic"
 
 export default async function HomePage() {
   // Fetch posts and gallery images on the server side
@@ -39,6 +39,7 @@ export default async function HomePage() {
     id: img?.id || "",
     title: img?.name || img?.title || "",
     imageUrl: img?.src || "/placeholder.svg",
+    fallbackUrl: img?.srcOriginal || img?.srcFull || undefined,
     category: img?.category || undefined
   }))
   

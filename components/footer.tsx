@@ -10,7 +10,7 @@ export function Footer() {
   return (
     <footer className="border-t border-border bg-background">
       {/* Large CTA Section */}
-      <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-12 py-12 sm:py-16 lg:py-24">
+      <div className="max-w-[1400px] mx-auto px-5 sm:px-6 lg:px-12 py-12 sm:py-16 lg:py-24">
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 sm:gap-8">
           <div className="space-y-3 sm:space-y-4">
             <p className="text-xs sm:text-sm font-mono tracking-wider text-muted-foreground uppercase">
@@ -33,7 +33,7 @@ export function Footer() {
       
       {/* Bottom Section */}
       <div className="border-t border-border">
-        <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-12 py-6 sm:py-8">
+        <div className="max-w-[1400px] mx-auto px-5 sm:px-6 lg:px-12 py-6 sm:py-8">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 sm:gap-8">
             {/* Left: Logo & Copyright */}
             <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-8">

@@ -1,11 +1,11 @@
 import Link from "next/link"
-import Image from "next/image"
 import { ArrowUpRight } from "lucide-react"
 
 interface GalleryImage {
   id: string
   title: string
   imageUrl: string
+  fallbackUrl?: string
   category?: string
   slug?: string
 }
@@ -22,7 +22,7 @@ export function SelectedProjectsSection({ projects }: SelectedProjectsSectionPro
 
   return (
     <section className="py-12 lg:py-16">
-      <div className="max-w-6xl mx-auto px-6 lg:px-12">
+      <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
         {/* Section Header - Minimal */}
         <div className="flex items-center justify-between mb-6">
           <h2 className="font-serif text-lg md:text-xl text-foreground tracking-tight">
@@ -43,15 +43,24 @@ export function SelectedProjectsSection({ projects }: SelectedProjectsSectionPro
           {displayProjects.map((project, index) => (
             <Link key={project.id} href="/gallery" className="group block">
               <div className="relative aspect-square overflow-hidden bg-secondary/50">
-                <Image 
-                  src={project.imageUrl} 
-                  alt={project.title} 
-                  fill 
-                  className="object-cover transition-all duration-500 group-hover:scale-105" 
-                  sizes="(max-width: 768px) 50vw, 25vw"
-                  priority={index < 6}
-                  fetchPriority={index < 3 ? 'high' : 'auto'}
-                  loading={index < 6 ? undefined : "lazy"}
+                <img
+                  src={project.imageUrl}
+                  alt={project.title}
+                  className="absolute inset-0 w-full h-full object-cover transition-all duration-500 group-hover:scale-105"
+                  loading={index < 6 ? "eager" : "lazy"}
+                  decoding="async"
+                  fetchPriority={index < 3 ? "high" : "auto"}
+                  referrerPolicy="no-referrer"
+                  onError={(event) => {
+                    const img = event.currentTarget
+                    if (img.dataset.fallback === "true") return
+                    img.dataset.fallback = "true"
+                    if (project.fallbackUrl) {
+                      img.src = project.fallbackUrl
+                    } else {
+                      img.src = "/placeholder.jpg"
+                    }
+                  }}
                 />
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-300" />
                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">

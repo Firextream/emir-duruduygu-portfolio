@@ -21,7 +21,7 @@ export function LatestPostsSection({ posts }: LatestPostsSectionProps) {
 
   return (
     <section className="py-20 lg:py-32">
-      <div className="max-w-7xl mx-auto px-6 lg:px-12">
+      <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
         {/* Section Header */}
         <div className="flex items-end justify-between mb-16">
           <div className="space-y-4">
