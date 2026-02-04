@@ -79,14 +79,16 @@ export function HeroSection() {
         </div>
         
         {/* Right Column - Featured Image */}
-        <div className="relative h-[50vh] lg:h-auto">
+        <div className="relative h-[50vh] lg:h-auto bg-neutral-50 dark:bg-neutral-900">
+          {/* subtle solid background to prevent bright 'pop' while loading */}
+          <div className="absolute inset-0 bg-neutral-50 dark:bg-neutral-900" aria-hidden="true" />
           <Image
             src="/coastal-harbor-scene.jpg"
             alt="Featured architectural photograph"
             fill
             priority
             fetchPriority="high"
-            className="object-cover"
+            className="object-cover bg-neutral-50 dark:bg-neutral-900"
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 100vw, 60vw"
             quality={95}
             placeholder="blur"
