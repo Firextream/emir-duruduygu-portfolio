@@ -156,7 +156,7 @@ function GalleryImageCard({
       
       {/* Hover Overlay - subtle */}
       <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-200" />
-    </button>
+    </div>
   )
 }
 
