@@ -13,8 +13,8 @@ export function NewsletterSection() {
     setStatus("loading")
 
     try {
-      // Formspree ile email toplama
-      const res = await fetch("https://formspree.io/f/maqyjnqd", {
+      // Resend API ile email toplama
+      const res = await fetch("/api/newsletter", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
