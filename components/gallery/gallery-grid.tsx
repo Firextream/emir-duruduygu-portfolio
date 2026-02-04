@@ -90,8 +90,16 @@ function GalleryImageCard({
     : { aspectRatio: '3 / 2', minHeight: '140px' }
   
   return (
-    <button
+    <div
+      role="button"
+      tabIndex={0}
       onClick={onClick}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault()
+          onClick()
+        }
+      }}
       onMouseEnter={handleMouseEnter}
       onTouchStart={handleMouseEnter}
       className="group relative w-full overflow-hidden bg-neutral-800/30 cursor-pointer break-inside-avoid mb-3 block"
