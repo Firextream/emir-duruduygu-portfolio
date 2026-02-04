@@ -86,46 +86,47 @@ function GalleryImageCard({
       onClick={onClick}
       onMouseEnter={handleMouseEnter}
       onTouchStart={handleMouseEnter}
-      className="group relative w-full overflow-hidden bg-neutral-900/30 cursor-pointer break-inside-avoid mb-3 block"
+      className="group relative w-full overflow-hidden bg-neutral-800/30 cursor-pointer break-inside-avoid mb-3 block"
     >
-      {/* Blur placeholder - loads instantly */}
-      {image.blurDataUrl && !isLoaded && (
-        <img
-          src={image.blurDataUrl}
-          alt=""
-          className="absolute inset-0 w-full h-full object-cover scale-105 blur-lg"
-          aria-hidden="true"
-        />
-      )}
-      
-      {/* Skeleton if no blur */}
-      {!image.blurDataUrl && !isLoaded && !hasError && (
-        <div className="w-full aspect-[4/3] bg-neutral-800/50" />
-      )}
-      
-      {/* Error state */}
-      {hasError && (
-        <div className="w-full aspect-[4/3] flex items-center justify-center bg-neutral-800/30 text-neutral-600 text-xs">
-          ✕
-        </div>
-      )}
-      
-      {/* Main image */}
-      {imageSrc && !hasError && (
-        <img
-          src={imageSrc}
-          alt={image.alt || image.title || image.name || "Gallery image"}
-          className={cn(
-            "w-full h-auto object-cover transition-opacity duration-300 group-hover:scale-[1.02]",
-            isLoaded ? "opacity-100" : "opacity-0"
-          )}
-          loading={index < 6 ? "eager" : "lazy"}
-          decoding="async"
-          fetchPriority={index < 3 ? "high" : "auto"}
-          onLoad={handleLoad}
-          onError={handleError}
-        />
-      )}
+      {/* Container with aspect ratio to prevent layout shift */}
+      <div className="relative w-full" style={{ minHeight: '150px' }}>
+        {/* Blur placeholder - loads instantly */}
+        {image.blurDataUrl && (
+          <img
+            src={image.blurDataUrl}
+            alt=""
+            className={cn(
+              "absolute inset-0 w-full h-full object-cover scale-105 blur-lg transition-opacity duration-500",
+              isLoaded ? "opacity-0" : "opacity-100"
+            )}
+            aria-hidden="true"
+          />
+        )}
+        
+        {/* Error state */}
+        {hasError && (
+          <div className="w-full aspect-[4/3] flex items-center justify-center bg-neutral-800/30 text-neutral-600 text-xs">
+            ✕
+          </div>
+        )}
+        
+        {/* Main image - always in DOM to reserve space */}
+        {imageSrc && !hasError && (
+          <img
+            src={imageSrc}
+            alt={image.alt || image.title || image.name || "Gallery image"}
+            className={cn(
+              "w-full h-auto object-cover transition-opacity duration-500 group-hover:scale-[1.02]",
+              isLoaded ? "opacity-100" : "opacity-0"
+            )}
+            loading={index < 6 ? "eager" : "lazy"}
+            decoding="async"
+            fetchPriority={index < 3 ? "high" : "auto"}
+            onLoad={handleLoad}
+            onError={handleError}
+          />
+        )}
+      </div>
       
       {/* Hover Overlay - subtle */}
       <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-200" />
