@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { ArrowDown } from "lucide-react"
 import Link from "next/link"
+import Image from "next/image"
 
 export function HeroSection() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
@@ -43,15 +44,15 @@ export function HeroSection() {
     <section className="relative h-screen flex items-center justify-center overflow-hidden layer-base">
       
       <div className="absolute inset-0 z-0">
-        <div className="w-full h-full">
-          <img
-            src="/coastal-harbor-scene.jpg"
-            alt="Coastal Harbor Scene"
-            className="w-full h-full object-cover"
-            loading="eager"
-            fetchPriority="high"
-          />
-        </div>
+        <Image
+          src="/coastal-harbor-scene.jpg"
+          alt="Coastal Harbor Scene"
+          fill
+          className="object-cover"
+          priority
+          quality={90}
+          sizes="100vw"
+        />
       </div>
 
       <div className="relative z-10 text-white max-w-4xl mx-auto px-4 sm:px-6 flex items-center justify-start h-full">
