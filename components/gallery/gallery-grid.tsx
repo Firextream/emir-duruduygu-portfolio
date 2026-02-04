@@ -368,17 +368,24 @@ export function GalleryGrid({ images, categories }: GalleryGridProps) {
             <div className="flex items-center gap-2">
               {/* Download Button */}
               <button
-                onClick={(e) => {
+                onClick={async (e) => {
                   e.stopPropagation()
                   if (selectedImage) {
-                    const link = document.createElement('a')
-                    link.href = selectedImage.src
-                    link.download = selectedImage.title || selectedImage.name || 'photo'
-                    link.target = '_blank'
-                    link.rel = 'noopener noreferrer'
-                    document.body.appendChild(link)
-                    link.click()
-                    document.body.removeChild(link)
+                    try {
+                      const response = await fetch(selectedImage.src)
+                      const blob = await response.blob()
+                      const url = window.URL.createObjectURL(blob)
+                      const link = document.createElement('a')
+                      link.href = url
+                      link.download = `${selectedImage.title || selectedImage.name || 'duruduygu-photo'}.jpg`
+                      document.body.appendChild(link)
+                      link.click()
+                      document.body.removeChild(link)
+                      window.URL.revokeObjectURL(url)
+                    } catch (error) {
+                      // Fallback: open in new tab
+                      window.open(selectedImage.src, '_blank')
+                    }
                   }
                 }}
                 className="w-10 h-10 flex items-center justify-center text-white/50 hover:text-white transition-colors"
