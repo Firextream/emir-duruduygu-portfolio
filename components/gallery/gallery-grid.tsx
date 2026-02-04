@@ -17,6 +17,7 @@ interface ExifData {
 interface GalleryImage {
   id: string
   src: string
+  srcOriginal?: string
   alt: string
   name?: string
   title?: string
@@ -372,7 +373,9 @@ export function GalleryGrid({ images, categories }: GalleryGridProps) {
                   e.stopPropagation()
                   if (selectedImage) {
                     const filename = selectedImage.title || selectedImage.name || 'duruduygu-photo'
-                    const downloadUrl = `/api/download?url=${encodeURIComponent(selectedImage.src)}&filename=${encodeURIComponent(filename)}`
+                    // Use original URL for download (not Cloudinary)
+                    const originalUrl = (selectedImage as any).srcOriginal || selectedImage.src
+                    const downloadUrl = `/api/download?url=${encodeURIComponent(originalUrl)}&filename=${encodeURIComponent(filename)}`
                     const link = document.createElement('a')
                     link.href = downloadUrl
                     link.download = `${filename}.jpg`
