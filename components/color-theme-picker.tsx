@@ -113,10 +113,10 @@ export function ColorThemePicker({ className }: { className?: string }) {
                 <button
                   onClick={() => setTheme("light")}
                   className={cn(
-                    "flex-1 flex items-center justify-center gap-2 py-2 rounded-lg transition-all",
+                    "flex-1 flex items-center justify-center gap-2 py-2.5 rounded-lg border transition-all font-medium",
                     resolvedTheme === "light"
-                      ? "bg-accent text-accent-foreground"
-                      : "bg-muted text-muted-foreground hover:text-foreground"
+                      ? "bg-accent text-accent-foreground border-accent"
+                      : "bg-secondary/50 text-foreground border-border hover:bg-secondary hover:border-foreground/20"
                   )}
                 >
                   <Sun className="w-4 h-4" />
@@ -125,10 +125,10 @@ export function ColorThemePicker({ className }: { className?: string }) {
                 <button
                   onClick={() => setTheme("dark")}
                   className={cn(
-                    "flex-1 flex items-center justify-center gap-2 py-2 rounded-lg transition-all",
+                    "flex-1 flex items-center justify-center gap-2 py-2.5 rounded-lg border transition-all font-medium",
                     resolvedTheme === "dark"
-                      ? "bg-accent text-accent-foreground"
-                      : "bg-muted text-muted-foreground hover:text-foreground"
+                      ? "bg-accent text-accent-foreground border-accent"
+                      : "bg-secondary/50 text-foreground border-border hover:bg-secondary hover:border-foreground/20"
                   )}
                 >
                   <Moon className="w-4 h-4" />
