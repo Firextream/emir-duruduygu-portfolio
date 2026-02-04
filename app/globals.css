@@ -42,7 +42,7 @@
   --secondary: #f0eeea;
   --secondary-foreground: #171614;
   --muted: #9a9590;
-  --muted-foreground: #9a9590;
+  --muted-foreground: #736e69;
   /* Warmer forest accent - now dynamic */
   --accent: var(--accent-light);
   --accent-foreground: #faf9f7;

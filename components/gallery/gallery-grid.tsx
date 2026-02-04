@@ -101,6 +101,8 @@ function GalleryImageCard({
 
   // Use original URL as fallback if proxy fails
   const imageSrc = hasError ? null : (useOriginal ? image.srcOriginal : image.src)
+  const imageSrcSet = useOriginal ? undefined : image.srcSet
+  const imageSizes = imageSrcSet ? "(max-width: 640px) 100vw, 33vw" : undefined
 
   // Compute aspect style if we have dimensions to prevent layout shifts
   const aspectStyle: React.CSSProperties = image.width && image.height
@@ -155,8 +157,10 @@ function GalleryImageCard({
         {/* Main image - always in DOM to reserve space */}
         {imageSrc && !hasError && (
           <img
-            src={imageSrc}            srcSet={image.srcSet}
-            sizes="(max-width: 640px) 100vw, 33vw"            alt={image.alt || image.title || image.name || "Gallery image"}
+            src={imageSrc}
+            srcSet={imageSrcSet}
+            sizes={imageSizes}
+            alt={image.alt || image.title || image.name || "Gallery image"}
             className={cn(
               "w-full h-auto object-cover transition-opacity duration-500 group-hover:scale-[1.02]",
               isLoaded ? "opacity-100" : "opacity-0"
@@ -164,6 +168,7 @@ function GalleryImageCard({
             loading={index < 6 ? "eager" : "lazy"}
             decoding="async"
             fetchPriority={index < 3 ? "high" : "auto"}
+            referrerPolicy={useOriginal ? "no-referrer" : undefined}
             onLoad={handleLoad}
             onError={handleError}
           />
