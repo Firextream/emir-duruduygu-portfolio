@@ -34,16 +34,6 @@ export default function ContactPage() {
               {/* Contact Info */}
               <div className="space-y-6 pt-8 border-t border-border">
                 <div>
-                  <p className="font-mono text-xs tracking-wider text-muted-foreground uppercase mb-2">Email</p>
-                  <a 
-                    href="mailto:edmesaj@outlook.com" 
-                    className="text-lg text-foreground hover:text-accent transition-colors link-underline"
-                  >
-                    edmesaj@outlook.com
-                  </a>
-                </div>
-                
-                <div>
                   <p className="font-mono text-xs tracking-wider text-muted-foreground uppercase mb-2">Social</p>
                   <div className="flex gap-6">
                     <a href="https://www.instagram.com/emir_duruduygu/" target="_blank" rel="noopener noreferrer" className="text-foreground hover:text-accent transition-colors">

@@ -28,13 +28,6 @@ export function Footer() {
               />
             </Link>
           </div>
-          
-          <a 
-            href="mailto:edmesaj@outlook.com"
-            className="text-lg text-muted-foreground hover:text-foreground transition-colors link-underline"
-          >
-            edmesaj@outlook.com
-          </a>
         </div>
       </div>
       

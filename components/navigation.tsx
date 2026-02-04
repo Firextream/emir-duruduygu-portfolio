@@ -211,13 +211,7 @@ export function Navigation() {
           {/* Mobile menu footer */}
           <div className="absolute bottom-8 left-6 right-6">
             <div className="flex flex-col gap-3 text-sm text-muted-foreground">
-              <a 
-                href="mailto:edmesaj@outlook.com" 
-                className="hover:text-foreground transition-colors"
-              >
-                edmesaj@outlook.com
-              </a>
-              <div className="flex gap-4 mt-4">
+              <div className="flex gap-4">
                 <a href="https://www.instagram.com/emir_duruduygu/" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">Instagram</a>
                 <a href="https://www.linkedin.com/in/emir-duruduygu-90800a27a/" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">LinkedIn</a>
               </div>
