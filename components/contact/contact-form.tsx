@@ -32,14 +32,25 @@ export function ContactForm() {
     setErrorMessage("")
 
     try {
-      // Simulate API call - replace with actual endpoint
-      await new Promise((resolve) => setTimeout(resolve, 1500))
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to send message")
+      }
 
       setStatus("success")
       setFormData({ name: "", email: "", message: "" })
-    } catch {
+    } catch (error) {
       setStatus("error")
-      setErrorMessage("Something went wrong. Please try again or email directly.")
+      setErrorMessage(error instanceof Error ? error.message : "Something went wrong. Please try again or email directly.")
     }
   }
 
