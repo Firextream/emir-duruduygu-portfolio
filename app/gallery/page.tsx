@@ -9,8 +9,8 @@ export const metadata: Metadata = {
   description: "A curated collection of architectural and street photography.",
 }
 
-// ISR with 60 second revalidation for better performance
-export const revalidate = 60
+// ISR with 5 minute revalidation for better performance
+export const revalidate = 300
 
 export default async function GalleryPage() {
   const images = await getGalleryImages()

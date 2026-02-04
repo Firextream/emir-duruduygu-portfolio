@@ -10,8 +10,8 @@ const SelectedProjectsSection = dynamic(() => import("@/components/home/selected
 const ManifestoSection = dynamic(() => import("@/components/home/manifesto-section").then(mod => ({ default: mod.ManifestoSection })))
 const NewsletterSection = dynamic(() => import("@/components/home/newsletter-section").then(mod => ({ default: mod.NewsletterSection })))
 
-// ISR with 60 second revalidation for better TTFB
-export const revalidate = 60
+// ISR with 5 minute revalidation for better TTFB
+export const revalidate = 300
 
 export default async function HomePage() {
   // Fetch posts and gallery images on the server side

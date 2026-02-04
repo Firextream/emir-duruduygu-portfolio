@@ -3,7 +3,6 @@
 import Image from "next/image"
 import Link from "next/link"
 import { ArrowDown } from "lucide-react"
-import { useEffect, useState } from "react"
 import { Typewriter } from "@/components/typewriter"
 
 const categories = [
@@ -20,12 +19,6 @@ const categories = [
 ]
 
 export function HeroSection() {
-  const [isLoaded, setIsLoaded] = useState(true) // Start as true to avoid delay
-  
-  useEffect(() => {
-    setIsLoaded(true)
-  }, [])
-
   return (
     <section className="relative min-h-screen flex flex-col">
       {/* Main Content */}
@@ -34,9 +27,7 @@ export function HeroSection() {
         <div className="flex flex-col justify-center px-5 sm:px-6 lg:px-12 py-8 lg:py-24">
           <div className="max-w-xl space-y-8">
             {/* Subtitle */}
-            <div 
-              className={`transition-all duration-700 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
-            >
+            <div>
               <p className="font-mono text-sm tracking-wider text-muted-foreground uppercase">
                 Visual Storyteller & Photographer
               </p>
@@ -44,15 +35,11 @@ export function HeroSection() {
             
             {/* Main Title */}
             <h1 className="space-y-1 sm:space-y-2">
-              <span 
-                className={`block font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-medium tracking-tight text-foreground transition-all duration-700 delay-100 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
-              >
+              <span className="block font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-medium tracking-tight text-foreground">
                 Capturing
               </span>
               {/* Fixed height container to prevent layout shift */}
-              <span 
-                className={`block font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-medium tracking-tight text-foreground transition-all duration-700 delay-200 min-h-[2.4em] ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
-              >
+              <span className="block font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-medium tracking-tight text-foreground min-h-[2.4em]">
                 <Typewriter 
                   words={["Light & Shadow", "Urban Stories", "Quiet Moments", "Hidden Details"]}
                   className="text-accent"
@@ -64,16 +51,12 @@ export function HeroSection() {
             </h1>
             
             {/* Description */}
-            <p 
-              className={`text-base sm:text-lg md:text-xl text-muted-foreground max-w-md leading-relaxed transition-all duration-700 delay-300 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
-            >
+            <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-md leading-relaxed">
               Amateur photographer and curious explorer. Capturing architecture, street moments, and anything that sparks inspiration—structure, light, and the unexpected.
             </p>
             
             {/* CTA Buttons */}
-            <div 
-              className={`flex items-center gap-6 pt-4 transition-all duration-700 delay-400 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
-            >
+            <div className="flex items-center gap-6 pt-4">
               <Link 
                 href="/portfolio"
                 className="group inline-flex items-center gap-3 text-foreground font-medium"
@@ -96,9 +79,7 @@ export function HeroSection() {
         </div>
         
         {/* Right Column - Featured Image */}
-        <div 
-          className={`relative h-[50vh] lg:h-auto transition-all duration-1000 delay-200 ${isLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}
-        >
+        <div className="relative h-[50vh] lg:h-auto">
           <Image
             src="/coastal-harbor-scene.jpg"
             alt="Featured architectural photograph"
@@ -141,9 +122,7 @@ export function HeroSection() {
       </div>
       
       {/* Scroll Indicator */}
-      <div 
-        className={`absolute bottom-24 left-6 lg:left-12 flex flex-col items-center gap-2 transition-all duration-700 delay-500 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
-      >
+      <div className="absolute bottom-24 left-6 lg:left-12 flex flex-col items-center gap-2">
         <span className="font-mono text-xs tracking-wider text-muted-foreground uppercase rotate-90 origin-center mb-8">
           Scroll
         </span>
