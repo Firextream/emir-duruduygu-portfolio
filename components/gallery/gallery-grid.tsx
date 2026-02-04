@@ -54,6 +54,7 @@ function GalleryImageCard({
 }) {
   const [isLoaded, setIsLoaded] = useState(false)
   const [hasError, setHasError] = useState(false)
+  const [retryCount, setRetryCount] = useState(0)
 
   // Hover'da full res versiyonu preload et
   const handleMouseEnter = useCallback(() => {
@@ -64,12 +65,21 @@ function GalleryImageCard({
 
   const handleLoad = useCallback(() => {
     setIsLoaded(true)
+    setHasError(false)
   }, [])
 
   const handleError = useCallback(() => {
-    setHasError(true)
-    setIsLoaded(true)
-  }, [])
+    // Auto-retry up to 2 times
+    if (retryCount < 2) {
+      setRetryCount(prev => prev + 1)
+    } else {
+      setHasError(true)
+      setIsLoaded(true)
+    }
+  }, [retryCount])
+
+  // Retry mechanism - change src to trigger reload
+  const imageSrc = hasError ? null : (retryCount > 0 ? `${image.src}&retry=${retryCount}` : image.src)
   
   return (
     <button
@@ -104,15 +114,15 @@ function GalleryImageCard({
       )}
       
       {/* Main image */}
-      {image.src && !hasError && (
+      {imageSrc && !hasError && (
         <img
-          src={image.src}
+          src={imageSrc}
           alt={image.alt || image.title || image.name || "Gallery image"}
           className={cn(
             "w-full h-auto object-cover transition-all duration-500 group-hover:scale-105",
             isLoaded ? "opacity-100" : "opacity-0"
           )}
-          loading={index < 6 ? "eager" : "lazy"}
+          loading={index < 8 ? "eager" : "lazy"}
           decoding="async"
           onLoad={handleLoad}
           onError={handleError}
@@ -299,7 +309,7 @@ export function GalleryGrid({ images, categories }: GalleryGridProps) {
       </div>
 
       {/* Images Grid - Masonry Style */}
-      <div className="columns-2 md:columns-3 lg:columns-4 gap-3">
+      <div className="columns-1 sm:columns-2 lg:columns-3 gap-4">
         {visibleImages.map((image, index) => (
           <GalleryImageCard 
             key={image.id} 
