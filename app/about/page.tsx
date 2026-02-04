@@ -32,6 +32,11 @@ const interests = [
 
 const timeline = [
   {
+    year: "2025",
+    title: "Photography Journey",
+    description: "Started exploring photography, focusing on urban and architectural subjects.",
+  },
+  {
     year: "2024",
     title: "Joined ITU ROV Team",
     description: "Contributing to underwater robotics as an electronics team member.",
@@ -40,11 +45,6 @@ const timeline = [
     year: "2023",
     title: "Started at ITU",
     description: "Began studying Electrical & Electronics Engineering.",
-  },
-  {
-    year: "2025",
-    title: "Photography Journey",
-    description: "Started exploring photography, focusing on urban and architectural subjects.",
   },
 ]
 
