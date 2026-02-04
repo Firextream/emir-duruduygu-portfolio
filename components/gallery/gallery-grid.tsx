@@ -119,13 +119,13 @@ function GalleryImageCard({
       onMouseEnter={handleMouseEnter}
       onTouchStart={handleMouseEnter}
       className="group relative w-full overflow-hidden bg-secondary/30 cursor-pointer break-inside-avoid mb-4 block rounded-sm"
-      style={{ minHeight: isLoaded ? 'auto' : '200px' }}
+      style={{ minHeight: '200px' }}
     >
       <div className="relative">
-        {/* Skeleton placeholder - daha hafif */}
-        {!isLoaded && (
+        {/* Skeleton placeholder */}
+        {!isLoaded && !hasError && (
           <div 
-            className="absolute inset-0 bg-secondary/50"
+            className="absolute inset-0 bg-secondary/50 animate-pulse"
             style={{ minHeight: '200px' }}
           />
         )}
@@ -137,8 +137,8 @@ function GalleryImageCard({
           </div>
         )}
         
-        {/* Image - Only load when in view and src exists */}
-        {isInView && !hasError && image.src && (
+        {/* Image - Always try to render if src exists */}
+        {image.src && !hasError && (
           <Image
             src={image.src}
             alt={image.alt || image.title || image.name || "Gallery image"}
@@ -150,12 +150,19 @@ function GalleryImageCard({
             )}
             sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
             quality={70}
-            loading={priority ? "eager" : "lazy"}
+            loading={index < 6 ? "eager" : "lazy"}
             placeholder="blur"
             blurDataURL={shimmerBase64}
             onLoad={handleLoad}
             onError={handleError}
           />
+        )}
+        
+        {/* No src fallback */}
+        {!image.src && (
+          <div className="w-full h-48 flex items-center justify-center bg-secondary/30 text-muted-foreground text-sm">
+            No image
+          </div>
         )}
         
         {/* Hover Overlay */}
