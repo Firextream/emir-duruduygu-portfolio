@@ -22,8 +22,7 @@ export function Navigation() {
   
   // Check if we're on pages with dark hero backgrounds
   const isHomePage = pathname === "/"
-  const isPortfolioPage = pathname === "/portfolio" || pathname.startsWith("/portfolio/")
-  const hasDarkHero = isHomePage || isPortfolioPage
+  const hasDarkHero = isHomePage
   const useWhiteText = hasDarkHero && !isScrolled
 
   useEffect(() => {
