@@ -28,28 +28,29 @@ export function NewsletterSignup({
     if (!email) return
     
     setStatus("loading")
+    setMessage("")
     
-    // Simulate API call - replace with actual newsletter service
-    // e.g., Buttondown, ConvertKit, Mailchimp
     try {
-      await new Promise(resolve => setTimeout(resolve, 1500))
+      const response = await fetch("/api/newsletter", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email: email.trim() }),
+      })
       
-      // Example Buttondown integration:
-      // const res = await fetch('https://api.buttondown.email/v1/subscribers', {
-      //   method: 'POST',
-      //   headers: {
-      //     'Authorization': `Token ${process.env.BUTTONDOWN_API_KEY}`,
-      //     'Content-Type': 'application/json',
-      //   },
-      //   body: JSON.stringify({ email }),
-      // })
+      const data = await response.json()
+      
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to subscribe")
+      }
       
       setStatus("success")
-      setMessage("Thanks for subscribing! Check your email to confirm.")
+      setMessage(data.message || "Thanks for subscribing!")
       setEmail("")
     } catch (error) {
       setStatus("error")
-      setMessage("Something went wrong. Please try again.")
+      setMessage(error instanceof Error ? error.message : "Something went wrong. Please try again.")
     }
   }
 

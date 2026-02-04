@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, useRef, TouchEvent } from "react"
+import { useState, useEffect, useRef, TouchEvent, useMemo, useCallback } from "react"
 import Image from "next/image"
 import { X, ChevronLeft, ChevronRight, ArrowUpRight, Download } from "lucide-react"
 import { cn } from "@/lib/utils"
@@ -24,6 +24,7 @@ interface GalleryImage {
   category?: string
   featured?: boolean
   exif?: ExifData | null
+  blurDataUrl?: string
 }
 
 interface GalleryGridProps {
@@ -31,14 +32,10 @@ interface GalleryGridProps {
   categories: string[]
 }
 
-// Generate optimized thumbnail URL for Notion images
-function getOptimizedUrl(src: string, width: number = 400): string {
-  // For Notion S3 images, we can't modify URL directly but browser will cache
-  // For local images, Next.js handles optimization
-  return src
-}
+// Generate blur placeholder as a tiny colored rectangle
+const shimmerBase64 = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMjMyMzIzIi8+PC9zdmc+"
 
-// Optimized image component with loading state and intersection observer
+// Optimized image component with aggressive lazy loading
 function GalleryImageCard({ 
   image, 
   onClick,
@@ -52,10 +49,17 @@ function GalleryImageCard({
 }) {
   const [isLoaded, setIsLoaded] = useState(false)
   const [isInView, setIsInView] = useState(priority)
+  const [hasError, setHasError] = useState(false)
   const cardRef = useRef<HTMLButtonElement>(null)
 
   useEffect(() => {
-    if (priority) return
+    if (priority) {
+      setIsInView(true)
+      return
+    }
+    
+    // Use native lazy loading support detection
+    const supportsLazy = 'loading' in HTMLImageElement.prototype
     
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -64,7 +68,11 @@ function GalleryImageCard({
           observer.disconnect()
         }
       },
-      { rootMargin: '300px', threshold: 0 } // Daha erken yükle
+      { 
+        // Mobilde daha erken yükle (viewport + 500px)
+        rootMargin: '500px 0px', 
+        threshold: 0 
+      }
     )
 
     if (cardRef.current) {
@@ -73,65 +81,66 @@ function GalleryImageCard({
 
     return () => observer.disconnect()
   }, [priority])
+
+  const handleLoad = useCallback(() => {
+    setIsLoaded(true)
+  }, [])
+
+  const handleError = useCallback(() => {
+    setHasError(true)
+    setIsLoaded(true)
+  }, [])
   
   return (
     <button
       ref={cardRef}
       onClick={onClick}
-      className="group relative w-full overflow-hidden bg-secondary/50 cursor-pointer break-inside-avoid mb-4 block"
-      style={{ minHeight: isLoaded ? 'auto' : '250px' }}
+      className="group relative w-full overflow-hidden bg-secondary/30 cursor-pointer break-inside-avoid mb-4 block rounded-sm"
+      style={{ minHeight: isLoaded ? 'auto' : '200px' }}
     >
       <div className="relative">
-        {/* Gradient skeleton - daha hoş görünüm */}
+        {/* Skeleton placeholder - daha hafif */}
         {!isLoaded && (
           <div 
-            className="absolute inset-0 bg-gradient-to-br from-secondary via-secondary/80 to-secondary/60 overflow-hidden"
-            style={{ minHeight: '250px' }}
-          >
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent skeleton-shimmer" />
+            className="absolute inset-0 bg-secondary/50"
+            style={{ minHeight: '200px' }}
+          />
+        )}
+        
+        {/* Error state */}
+        {hasError && (
+          <div className="absolute inset-0 flex items-center justify-center bg-secondary/50 text-muted-foreground text-sm">
+            Failed to load
           </div>
         )}
         
-        {/* Only load image when in view */}
-        {isInView && (
-          image.src.startsWith('http') ? (
-            <img
-              src={image.src}
-              alt={image.alt || image.title || image.name || "Gallery image"}
-              className={cn(
-                "w-full h-auto object-cover transition-all duration-300 group-hover:scale-105",
-                isLoaded ? "opacity-100" : "opacity-0"
-              )}
-              loading={priority ? "eager" : "lazy"}
-              decoding="async"
-              fetchPriority={priority ? "high" : "low"}
-              onLoad={() => setIsLoaded(true)}
-              // Daha küçük boyutlar iste
-              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-            />
-          ) : (
-            <Image
-              src={image.src}
-              alt={image.alt || image.title || image.name || "Gallery image"}
-              width={600}
-              height={450}
-              className={cn(
-                "w-full h-auto object-cover transition-all duration-500 group-hover:scale-105",
-                isLoaded ? "opacity-100" : "opacity-0"
-              )}
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              priority={priority}
-              onLoad={() => setIsLoaded(true)}
-            />
-          )
+        {/* Image - Only load when in view */}
+        {isInView && !hasError && (
+          <Image
+            src={image.src}
+            alt={image.alt || image.title || image.name || "Gallery image"}
+            width={600}
+            height={400}
+            className={cn(
+              "w-full h-auto object-cover transition-all duration-300 group-hover:scale-105",
+              isLoaded ? "opacity-100" : "opacity-0"
+            )}
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            quality={75}
+            loading={priority ? "eager" : "lazy"}
+            placeholder="blur"
+            blurDataURL={shimmerBase64}
+            onLoad={handleLoad}
+            onError={handleError}
+          />
         )}
         
         {/* Hover Overlay */}
-        <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/30 transition-colors duration-500" />
+        <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/30 transition-colors duration-300" />
         
         {/* Hover Content */}
         <div className="absolute inset-0 flex items-end p-4 lg:p-6">
-          <div className="flex items-end justify-between w-full opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500">
+          <div className="flex items-end justify-between w-full opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
             <div className="text-white">
               {image.category && (
                 <p className="font-mono text-[10px] tracking-wider uppercase">
@@ -153,33 +162,67 @@ export function GalleryGrid({ images, categories }: GalleryGridProps) {
   const [touchStart, setTouchStart] = useState<number | null>(null)
   const [touchEnd, setTouchEnd] = useState<number | null>(null)
   const [lightboxLoading, setLightboxLoading] = useState(false)
+  const [visibleCount, setVisibleCount] = useState(12) // Start with 12 images
 
-  const filteredImages = activeCategory 
-    ? images.filter((img) => img.category === activeCategory) 
-    : images
+  // Memoize filtered images
+  const filteredImages = useMemo(() => {
+    return activeCategory 
+      ? images.filter((img) => img.category === activeCategory) 
+      : images
+  }, [activeCategory, images])
 
-  const openLightbox = (index: number) => {
+  // Visible images for progressive loading
+  const visibleImages = useMemo(() => {
+    return filteredImages.slice(0, visibleCount)
+  }, [filteredImages, visibleCount])
+
+  // Load more images when scrolling near bottom
+  useEffect(() => {
+    const handleScroll = () => {
+      if (visibleCount >= filteredImages.length) return
+      
+      const scrollTop = window.scrollY
+      const windowHeight = window.innerHeight
+      const docHeight = document.documentElement.scrollHeight
+      
+      // Load more when 500px from bottom
+      if (scrollTop + windowHeight >= docHeight - 500) {
+        setVisibleCount(prev => Math.min(prev + 12, filteredImages.length))
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [visibleCount, filteredImages.length])
+
+  // Reset visible count when category changes
+  useEffect(() => {
+    setVisibleCount(12)
+  }, [activeCategory])
+
+  const openLightbox = useCallback((index: number) => {
     setLightboxLoading(true)
     setSelectedImageIndex(index)
-  }
-  const closeLightbox = () => {
+  }, [])
+
+  const closeLightbox = useCallback(() => {
     setSelectedImageIndex(null)
     setLightboxLoading(false)
-  }
+  }, [])
 
-  const goToPrevious = () => {
+  const goToPrevious = useCallback(() => {
     if (selectedImageIndex !== null) {
       setLightboxLoading(true)
       setSelectedImageIndex(selectedImageIndex === 0 ? filteredImages.length - 1 : selectedImageIndex - 1)
     }
-  }
+  }, [selectedImageIndex, filteredImages.length])
 
-  const goToNext = () => {
+  const goToNext = useCallback(() => {
     if (selectedImageIndex !== null) {
       setLightboxLoading(true)
       setSelectedImageIndex(selectedImageIndex === filteredImages.length - 1 ? 0 : selectedImageIndex + 1)
     }
-  }
+  }, [selectedImageIndex, filteredImages.length])
 
   // Preload adjacent images
   useEffect(() => {
@@ -276,18 +319,28 @@ export function GalleryGrid({ images, categories }: GalleryGridProps) {
         ))}
       </div>
 
-      {/* Images Grid - Masonry Style */}
+      {/* Images Grid - Masonry Style with Progressive Loading */}
       <div className="columns-1 md:columns-2 lg:columns-3 gap-4 space-y-4">
-        {filteredImages.map((image, index) => (
+        {visibleImages.map((image, index) => (
           <GalleryImageCard 
             key={image.id} 
             image={image} 
             onClick={() => openLightbox(index)}
-            priority={index < 3}
+            priority={index < 6}
             index={index}
           />
         ))}
       </div>
+
+      {/* Load More Indicator */}
+      {visibleCount < filteredImages.length && (
+        <div className="text-center py-8">
+          <div className="inline-flex items-center gap-2 text-muted-foreground text-sm">
+            <div className="w-4 h-4 border-2 border-muted-foreground/30 border-t-muted-foreground rounded-full animate-spin" />
+            Loading more...
+          </div>
+        </div>
+      )}
 
       {filteredImages.length === 0 && (
         <div className="text-center py-24">
@@ -378,30 +431,19 @@ export function GalleryGrid({ images, categories }: GalleryGridProps) {
                 </div>
               )}
               
-              {selectedImage.src.startsWith('http') ? (
-                <img
-                  src={selectedImage.src}
-                  alt={selectedImage.alt || selectedImage.title || selectedImage.name || "Gallery image"}
-                  className={cn(
-                    "max-w-full max-h-full w-auto h-auto object-contain transition-opacity duration-300",
-                    lightboxLoading ? "opacity-0" : "opacity-100"
-                  )}
-                  onLoad={() => setLightboxLoading(false)}
-                />
-              ) : (
-                <Image
-                  src={selectedImage.src}
-                  alt={selectedImage.alt || selectedImage.title || selectedImage.name || "Gallery image"}
-                  fill
-                  className={cn(
-                    "object-contain transition-opacity duration-300",
-                    lightboxLoading ? "opacity-0" : "opacity-100"
-                  )}
-                  sizes="100vw"
-                  priority
-                  onLoad={() => setLightboxLoading(false)}
-                />
-              )}
+              <Image
+                src={selectedImage.src}
+                alt={selectedImage.alt || selectedImage.title || selectedImage.name || "Gallery image"}
+                fill
+                className={cn(
+                  "object-contain transition-opacity duration-300",
+                  lightboxLoading ? "opacity-0" : "opacity-100"
+                )}
+                sizes="100vw"
+                quality={85}
+                priority
+                onLoad={() => setLightboxLoading(false)}
+              />
             </div>
           </div>
 
