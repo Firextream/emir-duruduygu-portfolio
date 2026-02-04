@@ -50,14 +50,14 @@ function GalleryImageCard({
   index?: number
 }) {
   const [isLoaded, setIsLoaded] = useState(false)
-  // İlk 12 resmi hemen yükle, diğerlerini lazy load yap
-  const [isInView, setIsInView] = useState(priority || index < 12)
+  // İlk 6 resmi hemen yükle, diğerlerini lazy load yap
+  const [isInView, setIsInView] = useState(priority || index < 6)
   const [hasError, setHasError] = useState(false)
   const cardRef = useRef<HTMLButtonElement>(null)
 
   useEffect(() => {
-    // İlk 12 resim zaten yüklenecek
-    if (priority || index < 12) {
+    // İlk 6 resim zaten yüklenecek
+    if (priority || index < 6) {
       setIsInView(true)
       return
     }
@@ -76,8 +76,8 @@ function GalleryImageCard({
         }
       },
       { 
-        // Daha geniş margin - daha erken yükle
-        rootMargin: '800px 0px', 
+        // Viewport'a yaklaşınca yükle
+        rootMargin: '400px 0px', 
         threshold: 0 
       }
     )
@@ -126,14 +126,14 @@ function GalleryImageCard({
           <Image
             src={image.src}
             alt={image.alt || image.title || image.name || "Gallery image"}
-            width={800}
-            height={600}
+            width={480}
+            height={360}
             className={cn(
               "w-full h-auto object-cover transition-all duration-300 group-hover:scale-105",
               isLoaded ? "opacity-100" : "opacity-0"
             )}
-            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-            quality={85}
+            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+            quality={70}
             loading={priority ? "eager" : "lazy"}
             placeholder="blur"
             blurDataURL={shimmerBase64}
@@ -169,7 +169,7 @@ export function GalleryGrid({ images, categories }: GalleryGridProps) {
   const [touchStart, setTouchStart] = useState<number | null>(null)
   const [touchEnd, setTouchEnd] = useState<number | null>(null)
   const [lightboxLoading, setLightboxLoading] = useState(false)
-  const [visibleCount, setVisibleCount] = useState(24) // Start with 24 images for better initial experience
+  const [visibleCount, setVisibleCount] = useState(12) // Start with 12 images for fast initial load
 
   // Memoize filtered images
   const filteredImages = useMemo(() => {
@@ -204,7 +204,7 @@ export function GalleryGrid({ images, categories }: GalleryGridProps) {
 
   // Reset visible count when category changes
   useEffect(() => {
-    setVisibleCount(24)
+    setVisibleCount(12)
   }, [activeCategory])
 
   const openLightbox = useCallback((index: number) => {
