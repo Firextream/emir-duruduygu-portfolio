@@ -123,7 +123,7 @@ function GalleryImageCard({
       )}
     >
       {/* Container with aspect ratio to prevent layout shift */}
-      <div className="relative w-full" style={aspectStyle}>
+      <div className="relative w-full overflow-hidden" style={aspectStyle}>
         {/* Blur placeholder - loads instantly */}
         {image.blurDataUrl && (
           <img
@@ -139,7 +139,7 @@ function GalleryImageCard({
         
         {/* Error state with retry */}
         {hasError && (
-          <div className="w-full aspect-[4/3] flex items-center justify-center bg-neutral-800/30 text-neutral-600 text-xs">
+          <div className="absolute inset-0 flex items-center justify-center bg-neutral-800/30 text-neutral-600 text-xs">
             <button
               onClick={() => {
                 // try original URL and reset load state
@@ -162,7 +162,7 @@ function GalleryImageCard({
             sizes={imageSizes}
             alt={image.alt || image.title || image.name || "Gallery image"}
             className={cn(
-              "w-full h-auto object-cover transition-opacity duration-500 group-hover:scale-[1.02]",
+              "absolute inset-0 w-full h-full object-cover transition-opacity duration-500 group-hover:scale-[1.02]",
               isLoaded ? "opacity-100" : "opacity-0"
             )}
             loading={index < 6 ? "eager" : "lazy"}
