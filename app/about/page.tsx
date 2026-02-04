@@ -42,7 +42,7 @@ const timeline = [
     description: "Began studying Electrical & Electronics Engineering.",
   },
   {
-    year: "2023",
+    year: "2025",
     title: "Photography Journey",
     description: "Started exploring photography, focusing on urban and architectural subjects.",
   },
