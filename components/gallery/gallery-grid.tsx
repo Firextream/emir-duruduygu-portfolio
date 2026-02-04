@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, TouchEvent, useMemo, useCallback } from "react"
+import { useState, useEffect, useRef, TouchEvent, useMemo, useCallback } from "react"
 import { X, ChevronLeft, ChevronRight, Download } from "lucide-react"
 import { cn } from "@/lib/utils"
 
@@ -47,12 +47,14 @@ function GalleryImageCard({
   image, 
   onClick,
   priority = false,
-  index = 0
+  index = 0,
+  rowSpan
 }: { 
   image: GalleryImage
   onClick: () => void
   priority?: boolean
   index?: number
+  rowSpan?: number
 }) {
   const [isLoaded, setIsLoaded] = useState(false)
   const [hasError, setHasError] = useState(false)
@@ -94,6 +96,7 @@ function GalleryImageCard({
       onMouseEnter={handleMouseEnter}
       onTouchStart={handleMouseEnter}
       className="group relative w-full overflow-hidden bg-neutral-800/30 cursor-pointer break-inside-avoid mb-3 block"
+      style={rowSpan ? { gridRowEnd: `span ${rowSpan}` } : undefined}
     >
       {/* Container with aspect ratio to prevent layout shift */}
       <div className="relative w-full" style={aspectStyle}>
@@ -149,6 +152,13 @@ export function GalleryGrid({ images, categories }: GalleryGridProps) {
   const [lightboxLoading, setLightboxLoading] = useState(false)
   const [visibleCount, setVisibleCount] = useState(15) // Start with 15 images for fast initial load
 
+  // For grid row spans to avoid layout shift
+  const gridRef = useRef<HTMLDivElement | null>(null)
+  const [rowSpans, setRowSpans] = useState<Record<string, number>>({})
+
+  // Preload links tracker
+  const preloaded = useRef<Record<string, boolean>>({})
+
   // Memoize filtered images
   const filteredImages = useMemo(() => {
     return activeCategory 
@@ -179,6 +189,63 @@ export function GalleryGrid({ images, categories }: GalleryGridProps) {
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [visibleCount, filteredImages.length])
+
+  // Compute grid row spans from server-probed image dimensions to lock layout
+  useEffect(() => {
+    const computeSpans = () => {
+      const grid = gridRef.current
+      if (!grid) return
+
+      const gridWidth = grid.clientWidth
+      const cols = window.innerWidth >= 1024 ? 3 : window.innerWidth >= 640 ? 2 : 1
+      const gap = 16 * (cols === 1 ? 0 : 1) // approximate gap in px (tailwind gap-4 ~ 16px)
+      const colWidth = Math.floor((gridWidth - (cols - 1) * gap) / cols)
+      const baseRow = 8 // grid-auto-rows base (px)
+
+      const newSpans: Record<string, number> = {}
+      visibleImages.forEach((img) => {
+        if (img.width && img.height) {
+          const renderedH = Math.round(colWidth * (img.height / img.width))
+          const span = Math.max(1, Math.ceil((renderedH + gap) / baseRow))
+          newSpans[img.id] = span
+        } else {
+          // fallback span for unknown sizes
+          newSpans[img.id] = Math.max(1, Math.ceil((140 + gap) / baseRow))
+        }
+      })
+
+      setRowSpans(newSpans)
+    }
+
+    computeSpans()
+    let timeout: number | undefined
+    const onResize = () => {
+      clearTimeout(timeout)
+      timeout = window.setTimeout(computeSpans, 120)
+    }
+
+    window.addEventListener('resize', onResize)
+    return () => {
+      window.removeEventListener('resize', onResize)
+      clearTimeout(timeout)
+    }
+  }, [visibleImages])
+
+  // Preload next images (after the prioritized ones) to improve perceived speed
+  useEffect(() => {
+    const start = 6
+    const end = Math.min(12, visibleImages.length)
+    for (let i = start; i < end; i++) {
+      const img = visibleImages[i]
+      if (!img || preloaded.current[img.id]) continue
+      const link = document.createElement('link')
+      link.rel = 'preload'
+      link.as = 'image'
+      link.href = img.src
+      document.head.appendChild(link)
+      preloaded.current[img.id] = true
+    }
+  }, [visibleImages])
 
   // Reset visible count when category changes
   useEffect(() => {
@@ -303,7 +370,7 @@ export function GalleryGrid({ images, categories }: GalleryGridProps) {
       </div>
 
       {/* Images Grid - Masonry Style */}
-      <div className="columns-1 sm:columns-2 lg:columns-3 gap-4">
+      <div ref={gridRef} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" style={{ gridAutoRows: '8px' }}>
         {visibleImages.map((image, index) => (
           <GalleryImageCard 
             key={image.id} 
@@ -311,6 +378,7 @@ export function GalleryGrid({ images, categories }: GalleryGridProps) {
             onClick={() => openLightbox(index)}
             priority={index < 8}
             index={index}
+            rowSpan={rowSpans[image.id]}
           />
         ))}
       </div>
