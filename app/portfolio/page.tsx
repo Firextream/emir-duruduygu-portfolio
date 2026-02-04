@@ -15,7 +15,7 @@ export default function PortfolioPage() {
       <Navigation />
       
       {/* Coming Soon Section */}
-      <main className="flex-1 flex items-center justify-center px-6">
+      <main className="flex-1 flex items-center justify-center px-6 pt-24">
         <div className="text-center max-w-xl">
           {/* Icon */}
           <div className="w-20 h-20 mx-auto mb-8 border-2 border-accent/30 rounded-full flex items-center justify-center">
@@ -29,7 +29,7 @@ export default function PortfolioPage() {
           
           {/* Description */}
           <p className="text-muted-foreground text-lg mb-8 leading-relaxed">
-            Bu bölüm üzerinde çalışıyorum. Yakında burada projelerimi ve çalışmalarımı paylaşacağım.
+            This section is currently under construction. Projects and works will be shared here soon.
           </p>
           
           {/* Subtitle */}
@@ -42,7 +42,7 @@ export default function PortfolioPage() {
             href="/gallery"
             className="inline-flex items-center gap-3 px-8 py-4 bg-foreground text-background font-medium rounded-sm hover:bg-foreground/90 transition-colors"
           >
-            Galeriye Göz At
+            Browse Gallery
           </Link>
         </div>
       </main>
