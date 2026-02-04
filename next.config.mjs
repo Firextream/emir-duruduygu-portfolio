@@ -22,8 +22,8 @@ const nextConfig = {
     // Optimized device sizes - smaller for mobile
     deviceSizes: [320, 420, 640, 750, 828, 1080, 1200],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
-    // Lower quality for faster loading (still looks good)
-    qualities: [75],
+    // Higher quality for better image display
+    qualities: [85],
     // Long cache for better performance
     minimumCacheTTL: 60 * 60 * 24 * 60, // 60 days cache
     // Limit concurrent image optimization
