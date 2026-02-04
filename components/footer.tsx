@@ -109,7 +109,7 @@ export function Footer() {
                   Li
                 </a>
                 <a 
-                  href="https://github.com/emirdogu" 
+                  href="https://github.com/Firextream" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="text-muted-foreground hover:text-foreground transition-colors"
