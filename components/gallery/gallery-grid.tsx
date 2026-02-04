@@ -94,7 +94,6 @@ function GalleryImageCard({
       onMouseEnter={handleMouseEnter}
       onTouchStart={handleMouseEnter}
       className="group relative w-full overflow-hidden bg-neutral-800/30 cursor-pointer break-inside-avoid mb-3 block"
-      style={rowSpan ? { gridRowEnd: `span ${rowSpan}` } : undefined}
     >
       {/* Container with aspect ratio to prevent layout shift */}
       <div className="relative w-full" style={aspectStyle}>
