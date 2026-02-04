@@ -1,7 +1,6 @@
 "use client"
 
 import { useState, useEffect, useRef, TouchEvent, useMemo, useCallback } from "react"
-import Image from "next/image"
 import { X, ChevronLeft, ChevronRight, ArrowUpRight, Download } from "lucide-react"
 import { cn } from "@/lib/utils"
 
@@ -33,9 +32,6 @@ interface GalleryGridProps {
   images: GalleryImage[]
   categories: string[]
 }
-
-// Generate blur placeholder as a tiny colored rectangle
-const shimmerBase64 = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMjMyMzIzIi8+PC9zdmc+"
 
 // Preload helper function
 const preloadImage = (src: string) => {
@@ -137,22 +133,17 @@ function GalleryImageCard({
           </div>
         )}
         
-        {/* Image - Always try to render if src exists */}
+        {/* Image - Use native img for Notion URLs */}
         {image.src && !hasError && (
-          <Image
+          <img
             src={image.src}
             alt={image.alt || image.title || image.name || "Gallery image"}
-            width={480}
-            height={360}
             className={cn(
               "w-full h-auto object-cover transition-all duration-300 group-hover:scale-105",
               isLoaded ? "opacity-100" : "opacity-0"
             )}
-            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-            quality={70}
             loading={index < 6 ? "eager" : "lazy"}
-            placeholder="blur"
-            blurDataURL={shimmerBase64}
+            decoding="async"
             onLoad={handleLoad}
             onError={handleError}
           />
