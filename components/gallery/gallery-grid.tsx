@@ -203,6 +203,74 @@ export function GalleryGrid({ images, categories }: GalleryGridProps) {
     setLightboxLoading(true)
   }, [])
 
+  // Helper component to progressively load original-quality image when available
+  function OriginalLoader({ srcOriginal, onLoaded }: { srcOriginal: string, onLoaded?: () => void }) {
+    const [loaded, setLoaded] = useState(false)
+    const [loading, setLoading] = useState(false)
+
+    useEffect(() => {
+      setLoaded(false)
+      setLoading(false)
+
+      // Respect Save-Data or slow connections — don't auto-download huge originals
+      const conn = (navigator as any).connection
+      const saveData = conn && conn.saveData
+      const effectiveType = conn && conn.effectiveType
+
+      const shouldAutoLoad = !saveData && (!effectiveType || effectiveType === '4g')
+
+      if (shouldAutoLoad) {
+        setLoading(true)
+        const img = new Image()
+        img.src = srcOriginal
+        img.decoding = 'async'
+        img.onload = () => {
+          setLoaded(true)
+          setLoading(false)
+          onLoaded && onLoaded()
+        }
+        img.onerror = () => {
+          setLoading(false)
+        }
+      }
+    }, [srcOriginal, onLoaded])
+
+    if (!srcOriginal) return null
+
+    // If loaded, render the original with a fade-in; otherwise render a small load button
+    return loaded ? (
+      <img
+        src={srcOriginal}
+        alt=""
+        className="absolute max-w-full max-h-full w-auto h-auto object-contain transition-opacity duration-300 opacity-100"
+        loading="eager"
+        decoding="async"
+        fetchPriority="high"
+        onLoad={() => onLoaded && onLoaded()}
+      />
+    ) : (
+      <div className="absolute bottom-4 right-4 z-50">
+        <button
+          onClick={() => {
+            setLoading(true)
+            const img = new Image()
+            img.src = srcOriginal
+            img.decoding = 'async'
+            img.onload = () => {
+              setLoaded(true)
+              setLoading(false)
+              onLoaded && onLoaded()
+            }
+            img.onerror = () => setLoading(false)
+          }}
+          className="bg-black/60 text-white px-3 py-1 text-xs rounded"
+        >
+          {loading ? 'Loading…' : 'Load original'}
+        </button>
+      </div>
+    )
+  }
+
   const closeLightbox = useCallback(() => {
     setSelectedImageIndex(null)
     setLightboxLoading(false)
@@ -436,7 +504,7 @@ export function GalleryGrid({ images, categories }: GalleryGridProps) {
                 aria-hidden="true"
               />
               
-              {/* Main high-res image */}
+              {/* Main high-res image (fast/lightbox source) */}
               <img
                 src={selectedImage.srcFull || selectedImage.src}
                 alt={selectedImage.alt || selectedImage.title || selectedImage.name || "Gallery image"}
@@ -450,6 +518,14 @@ export function GalleryGrid({ images, categories }: GalleryGridProps) {
                 onLoad={() => setLightboxLoading(false)}
                 onError={() => setLightboxLoading(false)}
               />
+
+              {/* Optional original-quality progressive swap (only if srcOriginal is provided) */}
+              {selectedImage.srcOriginal && (
+                <OriginalLoader
+                  srcOriginal={selectedImage.srcOriginal}
+                  onLoaded={() => setLightboxLoading(false)}
+                />
+              )}
             </div>
           </div>
 
