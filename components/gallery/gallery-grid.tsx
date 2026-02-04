@@ -50,18 +50,23 @@ function GalleryImageCard({
   index?: number
 }) {
   const [isLoaded, setIsLoaded] = useState(false)
-  const [isInView, setIsInView] = useState(priority)
+  // İlk 12 resmi hemen yükle, diğerlerini lazy load yap
+  const [isInView, setIsInView] = useState(priority || index < 12)
   const [hasError, setHasError] = useState(false)
   const cardRef = useRef<HTMLButtonElement>(null)
 
   useEffect(() => {
-    if (priority) {
+    // İlk 12 resim zaten yüklenecek
+    if (priority || index < 12) {
       setIsInView(true)
       return
     }
     
-    // Use native lazy loading support detection
-    const supportsLazy = 'loading' in HTMLImageElement.prototype
+    // IntersectionObserver yoksa direkt yükle
+    if (typeof IntersectionObserver === 'undefined') {
+      setIsInView(true)
+      return
+    }
     
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -71,8 +76,8 @@ function GalleryImageCard({
         }
       },
       { 
-        // Mobilde daha erken yükle (viewport + 500px)
-        rootMargin: '500px 0px', 
+        // Daha geniş margin - daha erken yükle
+        rootMargin: '800px 0px', 
         threshold: 0 
       }
     )
@@ -82,7 +87,7 @@ function GalleryImageCard({
     }
 
     return () => observer.disconnect()
-  }, [priority])
+  }, [priority, index])
 
   const handleLoad = useCallback(() => {
     setIsLoaded(true)
@@ -116,8 +121,8 @@ function GalleryImageCard({
           </div>
         )}
         
-        {/* Image - Only load when in view */}
-        {isInView && !hasError && (
+        {/* Image - Only load when in view and src exists */}
+        {isInView && !hasError && image.src && (
           <Image
             src={image.src}
             alt={image.alt || image.title || image.name || "Gallery image"}
@@ -164,7 +169,7 @@ export function GalleryGrid({ images, categories }: GalleryGridProps) {
   const [touchStart, setTouchStart] = useState<number | null>(null)
   const [touchEnd, setTouchEnd] = useState<number | null>(null)
   const [lightboxLoading, setLightboxLoading] = useState(false)
-  const [visibleCount, setVisibleCount] = useState(9) // Start with 9 images for faster initial load
+  const [visibleCount, setVisibleCount] = useState(24) // Start with 24 images for better initial experience
 
   // Memoize filtered images
   const filteredImages = useMemo(() => {
@@ -199,7 +204,7 @@ export function GalleryGrid({ images, categories }: GalleryGridProps) {
 
   // Reset visible count when category changes
   useEffect(() => {
-    setVisibleCount(12)
+    setVisibleCount(24)
   }, [activeCategory])
 
   const openLightbox = useCallback((index: number) => {
@@ -335,13 +340,15 @@ export function GalleryGrid({ images, categories }: GalleryGridProps) {
         ))}
       </div>
 
-      {/* Load More Indicator */}
+      {/* Load More Button */}
       {visibleCount < filteredImages.length && (
         <div className="text-center py-8">
-          <div className="inline-flex items-center gap-2 text-muted-foreground text-sm">
-            <div className="w-4 h-4 border-2 border-muted-foreground/30 border-t-muted-foreground rounded-full animate-spin" />
-            Loading more...
-          </div>
+          <button
+            onClick={() => setVisibleCount(prev => Math.min(prev + 24, filteredImages.length))}
+            className="inline-flex items-center gap-2 px-6 py-3 text-sm font-mono tracking-wider uppercase border border-border hover:border-foreground hover:bg-foreground/5 transition-all duration-200"
+          >
+            Load More ({filteredImages.length - visibleCount} remaining)
+          </button>
         </div>
       )}
 
