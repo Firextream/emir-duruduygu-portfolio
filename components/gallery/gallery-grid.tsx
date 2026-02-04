@@ -18,6 +18,8 @@ interface GalleryImage {
   src: string
   srcFull?: string
   srcOriginal?: string
+  width?: number
+  height?: number
   alt: string
   name?: string
   title?: string
@@ -80,6 +82,11 @@ function GalleryImageCard({
 
   // Use original URL as fallback if proxy fails
   const imageSrc = hasError ? null : (useOriginal ? image.srcOriginal : image.src)
+
+  // Compute aspect style if we have dimensions to prevent layout shifts
+  const aspectStyle: React.CSSProperties = image.width && image.height
+    ? { aspectRatio: `${image.width}/${image.height}` }
+    : { aspectRatio: '3 / 2', minHeight: '140px' }
   
   return (
     <button
@@ -89,7 +96,7 @@ function GalleryImageCard({
       className="group relative w-full overflow-hidden bg-neutral-800/30 cursor-pointer break-inside-avoid mb-3 block"
     >
       {/* Container with aspect ratio to prevent layout shift */}
-      <div className="relative w-full" style={{ minHeight: '150px' }}>
+      <div className="relative w-full" style={aspectStyle}>
         {/* Blur placeholder - loads instantly */}
         {image.blurDataUrl && (
           <img
