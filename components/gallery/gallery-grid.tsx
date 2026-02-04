@@ -16,6 +16,7 @@ interface ExifData {
 interface GalleryImage {
   id: string
   src: string
+  srcSet?: string
   srcFull?: string
   srcOriginal?: string
   width?: number
@@ -130,8 +131,8 @@ function GalleryImageCard({
         {/* Main image - always in DOM to reserve space */}
         {imageSrc && !hasError && (
           <img
-            src={imageSrc}
-            alt={image.alt || image.title || image.name || "Gallery image"}
+            src={imageSrc}            srcSet={image.srcSet}
+            sizes="(max-width: 640px) 100vw, 33vw"            alt={image.alt || image.title || image.name || "Gallery image"}
             className={cn(
               "w-full h-auto object-cover transition-opacity duration-500 group-hover:scale-[1.02]",
               isLoaded ? "opacity-100" : "opacity-0"
