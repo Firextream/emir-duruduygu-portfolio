@@ -1,107 +1,51 @@
 import type { Metadata } from "next"
-import { getPortfolioItems } from "@/lib/notion"
 import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
-import { PortfolioGrid } from "@/components/portfolio/portfolio-grid"
-import { ArrowDown } from "lucide-react"
+import { Construction } from "lucide-react"
+import Link from "next/link"
 
 export const metadata: Metadata = {
   title: "Portfolio",
   description: "A curated collection of architectural, street, and travel photography projects.",
 }
 
-// ISR with 60 second revalidation for better performance
-export const revalidate = 60
-
-export default async function PortfolioPage() {
-  const items = await getPortfolioItems()
-  
-  // Filter out null items and ensure proper format
-  const projects = (items || []).filter((item): item is NonNullable<typeof item> => item !== null)
-  
-  // Get unique categories
-  const categories = [...new Set(
-    projects
-      .map(item => item.category)
-      .filter((category): category is string => Boolean(category))
-  )]
-
+export default function PortfolioPage() {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background flex flex-col">
       <Navigation />
       
-      {/* Hero Section */}
-      <section className="relative h-[70vh] flex items-end bg-neutral-900 overflow-hidden">
-        {/* Background Pattern */}
-        <div className="absolute inset-0 opacity-5">
-          <div className="absolute inset-0" style={{
-            backgroundImage: `repeating-linear-gradient(90deg, transparent, transparent 100px, white 100px, white 101px)`,
-          }} />
-        </div>
-        
-        <div className="relative max-w-7xl mx-auto px-6 lg:px-12 pb-16 lg:pb-24 w-full">
-          <div className="grid grid-cols-12 gap-8">
-            <div className="col-span-12 lg:col-span-8">
-              <span className="inline-flex items-center gap-3 text-white/50 mb-6">
-                <span className="w-12 h-px bg-white/30" />
-                <span className="font-mono text-xs tracking-[0.3em] uppercase">Portfolio</span>
-              </span>
-              <h1 className="font-serif text-5xl md:text-6xl lg:text-7xl xl:text-8xl text-white font-light leading-[0.9] tracking-tight">
-                Selected
-                <br />
-                <span className="italic">Works</span>
-              </h1>
-            </div>
-            <div className="col-span-12 lg:col-span-4 flex flex-col justify-end">
-              <p className="text-white/80 text-lg leading-relaxed">
-                A curated collection exploring architecture, electronics, and photography.
-              </p>
-              <div className="flex items-center gap-3 mt-8 text-white/70">
-                <span className="font-mono text-xs tracking-wider">{projects.length} Projects</span>
-                <span className="w-px h-4 bg-white/40" />
-                <span className="font-mono text-xs tracking-wider">{categories.length} Categories</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        {/* Scroll Indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/60">
-          <ArrowDown size={20} className="animate-bounce" />
-        </div>
-      </section>
-
-      {/* Portfolio Content */}
-      <main className="py-16 lg:py-24">
-        <div className="max-w-7xl mx-auto px-6 lg:px-12">
-          <PortfolioGrid projects={projects} categories={categories} />
-        </div>
-      </main>
-
       {/* Coming Soon Section */}
-      <section className="py-24 lg:py-32 bg-muted/30">
-        <div className="max-w-4xl mx-auto px-6 lg:px-12 text-center">
-          <div className="inline-flex items-center gap-3 text-muted-foreground mb-8">
-            <span className="w-8 h-px bg-muted-foreground/30" />
-            <span className="font-mono text-xs tracking-[0.3em] uppercase">Coming Soon</span>
-            <span className="w-8 h-px bg-muted-foreground/30" />
+      <main className="flex-1 flex items-center justify-center px-6">
+        <div className="text-center max-w-xl">
+          {/* Icon */}
+          <div className="w-20 h-20 mx-auto mb-8 border-2 border-accent/30 rounded-full flex items-center justify-center">
+            <Construction className="w-10 h-10 text-accent" />
           </div>
           
-          <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-light text-foreground/80 leading-tight mb-6">
-            More projects <span className="italic">coming soon</span>
-          </h2>
+          {/* Title */}
+          <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl text-foreground mb-6">
+            Coming Soon
+          </h1>
           
-          <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto mb-8">
-            This space will be filled with architecture, electronics, and photography projects over time.
-            Each new creation will find its place here.
+          {/* Description */}
+          <p className="text-muted-foreground text-lg mb-8 leading-relaxed">
+            Bu bölüm üzerinde çalışıyorum. Yakında burada projelerimi ve çalışmalarımı paylaşacağım.
           </p>
           
-          <div className="flex items-center justify-center gap-2 text-muted-foreground/60">
-            <div className="w-2 h-2 rounded-full bg-accent/60 animate-pulse" />
-            <span className="font-mono text-xs tracking-wider">Building the portfolio...</span>
-          </div>
+          {/* Subtitle */}
+          <p className="font-mono text-sm text-muted-foreground/70 tracking-wider uppercase mb-12">
+            Portfolio • Projects • Works
+          </p>
+          
+          {/* CTA */}
+          <Link 
+            href="/gallery"
+            className="inline-flex items-center gap-3 px-8 py-4 bg-foreground text-background font-medium rounded-sm hover:bg-foreground/90 transition-colors"
+          >
+            Galeriye Göz At
+          </Link>
         </div>
-      </section>
+      </main>
       
       <Footer />
     </div>
