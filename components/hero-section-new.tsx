@@ -51,6 +51,7 @@ export function HeroSection() {
           className="object-cover"
           priority
           quality={90}
+          unoptimized
           sizes="100vw"
           placeholder="empty"
         />

@@ -79,26 +79,25 @@ export function HeroSection() {
         </div>
         
         {/* Right Column - Featured Image */}
-        <div className="relative h-[50vh] lg:h-auto bg-white dark:bg-neutral-900">
-          {/* solid plain white background to match request */}
-          <div className="absolute inset-0 bg-white dark:bg-neutral-900" aria-hidden="true" />
-          {/* Keep dark-mode subtle overlay; transparent in light mode to keep background pure white */}
-          <div className="absolute inset-0 bg-black/0 dark:bg-black/5 pointer-events-none" aria-hidden="true" />
+        <div className="relative h-[50vh] lg:h-auto bg-neutral-50 dark:bg-neutral-900">
+          {/* subtle solid background to prevent bright 'pop' while loading */}
+          <div className="absolute inset-0 bg-neutral-50 dark:bg-neutral-900" aria-hidden="true" />
           <Image
             src="/coastal-harbor-scene.jpg"
             alt="Featured architectural photograph"
             fill
             priority
             fetchPriority="high"
-            className="object-cover bg-neutral-100 dark:bg-neutral-900 transition-opacity duration-500"
+            className="object-cover bg-neutral-50 dark:bg-neutral-900"
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 100vw, 60vw"
             quality={100}
+            unoptimized
             placeholder="blur"
             blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAAUH/8QAIRAAAgEEAQUBAAAAAAAAAAAAAQIDAAQFESEGEhMxQVH/xAAVAQEBAAAAAAAAAAAAAAAAAAADBP/EABsRAAICAwEAAAAAAAAAAAAAAAECABEDITFB/9oADAMBAAIRAxEAPwCtp8lLDlpreSNZFB0CD6PzVW31Tmo2Ky4+J42UEMpjXYP+UpWQGJa2xc//2Q=="
           />
           
           {/* Top Gradient Overlay for Navigation Visibility */}
-          <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-black/40 to-transparent pointer-events-none" />
+          <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-black/50 to-transparent pointer-events-none" />
           
           {/* Image Overlay Info */}
           <div className="absolute bottom-6 left-6 right-6 flex items-end justify-between text-white/80">
