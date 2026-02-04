@@ -431,18 +431,16 @@ export function GalleryGrid({ images, categories }: GalleryGridProps) {
                 </div>
               )}
               
-              <Image
+              {/* Use native img for reliable loading of external URLs */}
+              <img
                 src={selectedImage.src}
                 alt={selectedImage.alt || selectedImage.title || selectedImage.name || "Gallery image"}
-                fill
                 className={cn(
-                  "object-contain transition-opacity duration-300",
+                  "max-w-full max-h-full w-auto h-auto object-contain transition-opacity duration-300",
                   lightboxLoading ? "opacity-0" : "opacity-100"
                 )}
-                sizes="100vw"
-                quality={85}
-                priority
                 onLoad={() => setLightboxLoading(false)}
+                onError={() => setLightboxLoading(false)}
               />
             </div>
           </div>
