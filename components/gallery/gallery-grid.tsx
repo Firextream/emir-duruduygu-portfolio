@@ -182,7 +182,9 @@ export function GalleryGrid({ images, categories }: GalleryGridProps) {
   const [touchStart, setTouchStart] = useState<number | null>(null)
   const [touchEnd, setTouchEnd] = useState<number | null>(null)
   const [lightboxLoading, setLightboxLoading] = useState(false)
-  const [visibleCount, setVisibleCount] = useState(10) // Start with 10 images for faster initial load
+  const initialVisible = 18
+  const [visibleCount, setVisibleCount] = useState(initialVisible)
+  const userScrolledRef = useRef(false)
 
   // Memoize filtered images
   const filteredImages = useMemo(() => {
@@ -196,9 +198,17 @@ export function GalleryGrid({ images, categories }: GalleryGridProps) {
     return filteredImages.slice(0, visibleCount)
   }, [filteredImages, visibleCount])
 
-  // Load more images when scrolling near bottom
+  // Load more images when scrolling near bottom (after user scrolls)
   useEffect(() => {
     const handleScroll = () => {
+      if (!userScrolledRef.current) {
+        if (window.scrollY > 0) {
+          userScrolledRef.current = true
+        } else {
+          return
+        }
+      }
+
       if (visibleCount >= filteredImages.length) return
       
       const scrollTop = window.scrollY
@@ -219,7 +229,7 @@ export function GalleryGrid({ images, categories }: GalleryGridProps) {
 
   // Reset visible count when category changes
   useEffect(() => {
-    setVisibleCount(10)
+    setVisibleCount(initialVisible)
   }, [activeCategory])
 
   const openLightbox = useCallback((index: number) => {
