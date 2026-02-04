@@ -17,6 +17,7 @@ interface ExifData {
 interface GalleryImage {
   id: string
   src: string
+  srcFull?: string
   srcOriginal?: string
   alt: string
   name?: string
@@ -238,7 +239,8 @@ export function GalleryGrid({ images, categories }: GalleryGridProps) {
     for (let offset = -2; offset <= 2; offset++) {
       if (offset === 0) continue
       const idx = (selectedImageIndex + offset + filteredImages.length) % filteredImages.length
-      if (filteredImages[idx]) preloadImage(filteredImages[idx].src)
+      const image = filteredImages[idx]
+      if (image) preloadImage(image.srcFull || image.src)
     }
   }, [selectedImageIndex, filteredImages])
 
@@ -437,9 +439,9 @@ export function GalleryGrid({ images, categories }: GalleryGridProps) {
                 <div className="w-8 h-8 border-2 border-white/10 border-t-white/50 rounded-full animate-spin" />
               </div>
               
-              {/* Main image - loads immediately */}
+              {/* Main image - loads immediately, use srcFull for high quality */}
               <img
-                src={selectedImage.src}
+                src={selectedImage.srcFull || selectedImage.src}
                 alt={selectedImage.alt || selectedImage.title || selectedImage.name || "Gallery image"}
                 className={cn(
                   "max-w-full max-h-full w-auto h-auto object-contain transition-opacity duration-200",

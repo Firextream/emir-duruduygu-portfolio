@@ -5,6 +5,8 @@ import { GalleryGrid } from "@/components/gallery/gallery-grid"
 interface GalleryImage {
   id: string
   src: string
+  srcFull?: string
+  srcOriginal?: string
   alt: string
   name?: string
   title?: string
