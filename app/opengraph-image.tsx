@@ -17,44 +17,42 @@ export default async function Image() {
           height: '100%',
           width: '100%',
           display: 'flex',
-          flexDirection: 'column',
+          flexDirection: 'row',
           alignItems: 'center',
           justifyContent: 'center',
-          backgroundColor: '#0a0a0a',
-          backgroundImage: 'linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%)',
+          backgroundColor: '#fafafa',
+          gap: '60px',
+          padding: '60px',
         }}
       >
-        {/* Decorative line */}
-        <div
+        {/* Logo Image */}
+        <img
+          src="https://duruduygu.com/icon-512.jpg"
+          alt="Duruduygu Logo"
+          width={400}
+          height={400}
           style={{
-            position: 'absolute',
-            top: '60px',
-            left: '60px',
-            width: '80px',
-            height: '2px',
-            backgroundColor: '#d4a574',
+            borderRadius: '8px',
           }}
         />
         
-        {/* Main content */}
+        {/* Text Content */}
         <div
           style={{
             display: 'flex',
             flexDirection: 'column',
-            alignItems: 'center',
+            alignItems: 'flex-start',
             justifyContent: 'center',
-            textAlign: 'center',
-            padding: '40px',
           }}
         >
           <div
             style={{
-              fontSize: 72,
+              fontSize: 64,
               fontWeight: 600,
-              color: '#fafafa',
+              color: '#0a0a0a',
               letterSpacing: '-0.02em',
               lineHeight: 1.1,
-              marginBottom: '20px',
+              marginBottom: '16px',
             }}
           >
             Duruduygu
@@ -62,11 +60,11 @@ export default async function Image() {
           
           <div
             style={{
-              fontSize: 28,
-              color: '#d4a574',
-              letterSpacing: '0.1em',
+              fontSize: 24,
+              color: '#666666',
+              letterSpacing: '0.05em',
               textTransform: 'uppercase',
-              marginBottom: '40px',
+              marginBottom: '24px',
             }}
           >
             Photography & Creative Portfolio
@@ -74,26 +72,15 @@ export default async function Image() {
           
           <div
             style={{
-              fontSize: 20,
+              fontSize: 18,
               color: '#888888',
-              maxWidth: '600px',
+              maxWidth: '400px',
+              lineHeight: 1.5,
             }}
           >
-            Amateur photographer and curious explorer. Architecture, street photography, and everything that catches my eye.
+            Amateur photographer and curious explorer. Capturing architecture, street moments, and the unexpected.
           </div>
         </div>
-        
-        {/* Bottom decorative line */}
-        <div
-          style={{
-            position: 'absolute',
-            bottom: '60px',
-            right: '60px',
-            width: '80px',
-            height: '2px',
-            backgroundColor: '#d4a574',
-          }}
-        />
       </div>
     ),
     {
