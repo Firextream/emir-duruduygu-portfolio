@@ -41,7 +41,7 @@ export function HeroSection() {
   }
 
   return (
-    <section className="relative h-screen flex items-center justify-center overflow-hidden layer-base">
+    <section className="relative h-screen flex items-center justify-center overflow-hidden layer-base bg-black">
       
       <div className="absolute inset-0 z-0">
         <Image
@@ -52,6 +52,7 @@ export function HeroSection() {
           priority
           quality={90}
           sizes="100vw"
+          placeholder="empty"
         />
       </div>
 
