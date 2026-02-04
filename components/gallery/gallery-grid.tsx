@@ -119,14 +119,14 @@ function GalleryImageCard({
           <Image
             src={image.src}
             alt={image.alt || image.title || image.name || "Gallery image"}
-            width={800}
-            height={600}
+            width={600}
+            height={450}
             className={cn(
               "w-full h-auto object-cover transition-all duration-300 group-hover:scale-105",
               isLoaded ? "opacity-100" : "opacity-0"
             )}
-            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-            quality={85}
+            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+            quality={75}
             loading={priority ? "eager" : "lazy"}
             placeholder="blur"
             blurDataURL={shimmerBase64}
@@ -162,7 +162,7 @@ export function GalleryGrid({ images, categories }: GalleryGridProps) {
   const [touchStart, setTouchStart] = useState<number | null>(null)
   const [touchEnd, setTouchEnd] = useState<number | null>(null)
   const [lightboxLoading, setLightboxLoading] = useState(false)
-  const [visibleCount, setVisibleCount] = useState(12) // Start with 12 images
+  const [visibleCount, setVisibleCount] = useState(9) // Start with 9 images for faster initial load
 
   // Memoize filtered images
   const filteredImages = useMemo(() => {
