@@ -20,56 +20,22 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Send email via Resend
-    if (!process.env.RESEND_API_KEY) {
-      console.log("📧 Contact form submission (demo mode):", { name, email, message })
-      return NextResponse.json({
-        success: true,
-        message: "Message received! (Demo mode - configure Resend for production)",
-      })
-    }
-
-    const response = await fetch("https://api.resend.com/emails", {
+    // Send to Formspree - emails go to edmesaj@outlook.com
+    const response = await fetch("https://formspree.io/f/maqyjnqd", {
       method: "POST",
       headers: {
-        "Authorization": `Bearer ${process.env.RESEND_API_KEY}`,
         "Content-Type": "application/json",
+        "Accept": "application/json",
       },
       body: JSON.stringify({
-        from: "Duruduygu Portfolio <onboarding@resend.dev>",
-        to: "eduruduygu2@gmail.com",
-        subject: `New message from ${name}`,
-        reply_to: email,
-        html: `
-          <h2>New Contact Form Submission</h2>
-          <p><strong>Name:</strong> ${name}</p>
-          <p><strong>Email:</strong> ${email}</p>
-          <p><strong>Message:</strong></p>
-          <p>${message.replace(/\n/g, '<br>')}</p>
-          <hr>
-          <p style="color: #666; font-size: 12px;">
-            Sent from your portfolio website contact form
-          </p>
-        `,
-        text: `
-New Contact Form Submission
-
-Name: ${name}
-Email: ${email}
-
-Message:
-${message}
-
----
-Sent from your portfolio website contact form
-        `,
+        name,
+        email,
+        message,
       }),
     })
 
     if (!response.ok) {
-      const error = await response.json()
-      console.error("Resend error:", error)
-      throw new Error("Failed to send email")
+      throw new Error("Failed to send message")
     }
 
     return NextResponse.json({
