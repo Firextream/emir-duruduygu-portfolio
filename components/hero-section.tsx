@@ -79,11 +79,11 @@ export function HeroSection() {
         </div>
         
         {/* Right Column - Featured Image */}
-        <div className="relative h-[50vh] lg:h-auto bg-neutral-100 dark:bg-neutral-900" style={{ backgroundColor: '#f0eeea' }}>
-          {/* subtle solid background to prevent bright 'pop' while loading */}
-          <div className="absolute inset-0 bg-neutral-100 dark:bg-neutral-900" aria-hidden="true" />
-          {/* Slight dark overlay to avoid flashing very bright highlights on refresh */}
-          <div className="absolute inset-0 bg-black/5 dark:bg-black/5 pointer-events-none" aria-hidden="true" />
+        <div className="relative h-[50vh] lg:h-auto bg-white dark:bg-neutral-900">
+          {/* solid plain white background to match request */}
+          <div className="absolute inset-0 bg-white dark:bg-neutral-900" aria-hidden="true" />
+          {/* Keep dark-mode subtle overlay; transparent in light mode to keep background pure white */}
+          <div className="absolute inset-0 bg-black/0 dark:bg-black/5 pointer-events-none" aria-hidden="true" />
           <Image
             src="/coastal-harbor-scene.jpg"
             alt="Featured architectural photograph"
