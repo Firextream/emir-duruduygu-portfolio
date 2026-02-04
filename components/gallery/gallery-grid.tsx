@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, useRef, TouchEvent, useMemo, useCallback } from "react"
+import { useState, useEffect, TouchEvent, useMemo, useCallback } from "react"
 import { X, ChevronLeft, ChevronRight, ArrowUpRight, Download } from "lucide-react"
 import { cn } from "@/lib/utils"
 
@@ -53,51 +53,14 @@ function GalleryImageCard({
   index?: number
 }) {
   const [isLoaded, setIsLoaded] = useState(false)
-  // İlk 6 resmi hemen yükle, diğerlerini lazy load yap
-  const [isInView, setIsInView] = useState(priority || index < 6)
   const [hasError, setHasError] = useState(false)
-  const cardRef = useRef<HTMLButtonElement>(null)
 
-  // Hover'da full res versiyonı preload et
+  // Hover'da full res versiyonu preload et
   const handleMouseEnter = useCallback(() => {
     if (image.srcFull && image.srcFull !== image.src) {
       preloadImage(image.srcFull)
     }
   }, [image.srcFull, image.src])
-
-  useEffect(() => {
-    // İlk 6 resim zaten yüklenecek
-    if (priority || index < 6) {
-      setIsInView(true)
-      return
-    }
-    
-    // IntersectionObserver yoksa direkt yükle
-    if (typeof IntersectionObserver === 'undefined') {
-      setIsInView(true)
-      return
-    }
-    
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsInView(true)
-          observer.disconnect()
-        }
-      },
-      { 
-        // Viewport'a yaklaşınca yükle
-        rootMargin: '400px 0px', 
-        threshold: 0 
-      }
-    )
-
-    if (cardRef.current) {
-      observer.observe(cardRef.current)
-    }
-
-    return () => observer.disconnect()
-  }, [priority, index])
 
   const handleLoad = useCallback(() => {
     setIsLoaded(true)
@@ -110,67 +73,64 @@ function GalleryImageCard({
   
   return (
     <button
-      ref={cardRef}
       onClick={onClick}
       onMouseEnter={handleMouseEnter}
       onTouchStart={handleMouseEnter}
-      className="group relative w-full overflow-hidden bg-secondary/30 cursor-pointer break-inside-avoid mb-4 block rounded-sm"
-      style={{ minHeight: '200px' }}
+      className="group relative w-full overflow-hidden bg-neutral-900/50 cursor-pointer break-inside-avoid mb-3 block"
     >
-      <div className="relative">
-        {/* Skeleton placeholder */}
-        {!isLoaded && !hasError && (
-          <div 
-            className="absolute inset-0 bg-secondary/50 animate-pulse"
-            style={{ minHeight: '200px' }}
-          />
-        )}
-        
-        {/* Error state */}
-        {hasError && (
-          <div className="absolute inset-0 flex items-center justify-center bg-secondary/50 text-muted-foreground text-sm">
-            Failed to load
-          </div>
-        )}
-        
-        {/* Image - Use native img for Notion URLs */}
-        {image.src && !hasError && (
-          <img
-            src={image.src}
-            alt={image.alt || image.title || image.name || "Gallery image"}
-            className={cn(
-              "w-full h-auto object-cover transition-all duration-300 group-hover:scale-105",
-              isLoaded ? "opacity-100" : "opacity-0"
-            )}
-            loading={index < 6 ? "eager" : "lazy"}
-            decoding="async"
-            onLoad={handleLoad}
-            onError={handleError}
-          />
-        )}
-        
-        {/* No src fallback */}
-        {!image.src && (
-          <div className="w-full h-48 flex items-center justify-center bg-secondary/30 text-muted-foreground text-sm">
-            No image
-          </div>
-        )}
-        
-        {/* Hover Overlay */}
-        <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/30 transition-colors duration-300" />
-        
-        {/* Hover Content */}
-        <div className="absolute inset-0 flex items-end p-4 lg:p-6">
-          <div className="flex items-end justify-between w-full opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
-            <div className="text-white">
-              {image.category && (
-                <p className="font-mono text-[10px] tracking-wider uppercase">
-                  {image.category}
-                </p>
-              )}
-            </div>
-            <ArrowUpRight className="w-5 h-5 text-white" />
-          </div>
+      {/* Blur placeholder - loads instantly */}
+      {image.blurDataUrl && (
+        <img
+          src={image.blurDataUrl}
+          alt=""
+          className={cn(
+            "absolute inset-0 w-full h-full object-cover scale-110 blur-xl transition-opacity duration-500",
+            isLoaded ? "opacity-0" : "opacity-100"
+          )}
+          aria-hidden="true"
+        />
+      )}
+      
+      {/* Skeleton if no blur */}
+      {!image.blurDataUrl && !isLoaded && !hasError && (
+        <div className="absolute inset-0 bg-neutral-800 animate-pulse" />
+      )}
+      
+      {/* Error state */}
+      {hasError && (
+        <div className="w-full aspect-[4/3] flex items-center justify-center bg-neutral-800 text-neutral-500 text-xs">
+          Failed to load
+        </div>
+      )}
+      
+      {/* Main image */}
+      {image.src && !hasError && (
+        <img
+          src={image.src}
+          alt={image.alt || image.title || image.name || "Gallery image"}
+          className={cn(
+            "w-full h-auto object-cover transition-all duration-500 group-hover:scale-105",
+            isLoaded ? "opacity-100" : "opacity-0"
+          )}
+          loading={index < 6 ? "eager" : "lazy"}
+          decoding="async"
+          onLoad={handleLoad}
+          onError={handleError}
+        />
+      )}
+      
+      {/* Hover Overlay */}
+      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-300" />
+      
+      {/* Hover Content */}
+      <div className="absolute inset-0 flex items-end p-3 lg:p-4">
+        <div className="flex items-end justify-between w-full opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
+          {image.category && (
+            <span className="font-mono text-[10px] tracking-wider uppercase text-white/80">
+              {image.category}
+            </span>
+          )}
+          <ArrowUpRight className="w-4 h-4 text-white/80" />
         </div>
       </div>
     </button>
@@ -183,7 +143,7 @@ export function GalleryGrid({ images, categories }: GalleryGridProps) {
   const [touchStart, setTouchStart] = useState<number | null>(null)
   const [touchEnd, setTouchEnd] = useState<number | null>(null)
   const [lightboxLoading, setLightboxLoading] = useState(false)
-  const [visibleCount, setVisibleCount] = useState(12) // Start with 12 images for fast initial load
+  const [visibleCount, setVisibleCount] = useState(20) // Start with 20 images
 
   // Memoize filtered images
   const filteredImages = useMemo(() => {
@@ -218,7 +178,7 @@ export function GalleryGrid({ images, categories }: GalleryGridProps) {
 
   // Reset visible count when category changes
   useEffect(() => {
-    setVisibleCount(12)
+    setVisibleCount(20)
   }, [activeCategory])
 
   const openLightbox = useCallback((index: number) => {
@@ -338,14 +298,14 @@ export function GalleryGrid({ images, categories }: GalleryGridProps) {
         ))}
       </div>
 
-      {/* Images Grid - Masonry Style with Progressive Loading */}
-      <div className="columns-1 md:columns-2 lg:columns-3 gap-4 space-y-4">
+      {/* Images Grid - Masonry Style */}
+      <div className="columns-2 md:columns-3 lg:columns-4 gap-3">
         {visibleImages.map((image, index) => (
           <GalleryImageCard 
             key={image.id} 
             image={image} 
             onClick={() => openLightbox(index)}
-            priority={index < 6}
+            priority={index < 8}
             index={index}
           />
         ))}
