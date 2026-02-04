@@ -37,6 +37,13 @@ interface GalleryGridProps {
 // Generate blur placeholder as a tiny colored rectangle
 const shimmerBase64 = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMjMyMzIzIi8+PC9zdmc+"
 
+// Preload helper function
+const preloadImage = (src: string) => {
+  if (typeof window === 'undefined' || !src) return
+  const img = new window.Image()
+  img.src = src
+}
+
 // Optimized image component with aggressive lazy loading
 function GalleryImageCard({ 
   image, 
@@ -54,6 +61,13 @@ function GalleryImageCard({
   const [isInView, setIsInView] = useState(priority || index < 6)
   const [hasError, setHasError] = useState(false)
   const cardRef = useRef<HTMLButtonElement>(null)
+
+  // Hover'da full res versiyonı preload et
+  const handleMouseEnter = useCallback(() => {
+    if (image.srcFull && image.srcFull !== image.src) {
+      preloadImage(image.srcFull)
+    }
+  }, [image.srcFull, image.src])
 
   useEffect(() => {
     // İlk 6 resim zaten yüklenecek
@@ -102,6 +116,8 @@ function GalleryImageCard({
     <button
       ref={cardRef}
       onClick={onClick}
+      onMouseEnter={handleMouseEnter}
+      onTouchStart={handleMouseEnter}
       className="group relative w-full overflow-hidden bg-secondary/30 cursor-pointer break-inside-avoid mb-4 block rounded-sm"
       style={{ minHeight: isLoaded ? 'auto' : '200px' }}
     >
@@ -235,18 +251,15 @@ export function GalleryGrid({ images, categories }: GalleryGridProps) {
   useEffect(() => {
     if (selectedImageIndex === null) return
     
-    const preloadImage = (src: string) => {
-      const img = new window.Image()
-      img.src = src
-    }
-    
-    // Preload next 2 and previous 2 images for smoother navigation
-    for (let offset = -2; offset <= 2; offset++) {
-      if (offset === 0) continue
+    // Preload next 3 and previous 3 images for smoother navigation
+    const preloadOffsets = [-3, -2, -1, 1, 2, 3]
+    preloadOffsets.forEach(offset => {
       const idx = (selectedImageIndex + offset + filteredImages.length) % filteredImages.length
       const image = filteredImages[idx]
-      if (image) preloadImage(image.srcFull || image.src)
-    }
+      if (image) {
+        preloadImage(image.srcFull || image.src)
+      }
+    })
   }, [selectedImageIndex, filteredImages])
 
   // Swipe gesture handling
@@ -436,26 +449,29 @@ export function GalleryGrid({ images, categories }: GalleryGridProps) {
               className="relative flex items-center justify-center w-full h-full"
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Blur backdrop while loading */}
-              <div 
+              {/* Thumbnail as immediate placeholder */}
+              <img
+                src={selectedImage.src}
+                alt=""
                 className={cn(
-                  "absolute inset-0 flex items-center justify-center transition-opacity duration-200",
-                  lightboxLoading ? "opacity-100" : "opacity-0 pointer-events-none"
+                  "absolute max-w-full max-h-full w-auto h-auto object-contain transition-opacity duration-300",
+                  lightboxLoading ? "opacity-100 blur-sm scale-[1.02]" : "opacity-0"
                 )}
-              >
-                <div className="w-8 h-8 border-2 border-white/10 border-t-white/50 rounded-full animate-spin" />
-              </div>
+                loading="eager"
+                aria-hidden="true"
+              />
               
-              {/* Main image - loads immediately, use srcFull for high quality */}
+              {/* Main high-res image */}
               <img
                 src={selectedImage.srcFull || selectedImage.src}
                 alt={selectedImage.alt || selectedImage.title || selectedImage.name || "Gallery image"}
                 className={cn(
-                  "max-w-full max-h-full w-auto h-auto object-contain transition-opacity duration-200",
-                  lightboxLoading ? "opacity-30" : "opacity-100"
+                  "max-w-full max-h-full w-auto h-auto object-contain transition-opacity duration-300",
+                  lightboxLoading ? "opacity-0" : "opacity-100"
                 )}
                 loading="eager"
                 decoding="async"
+                fetchPriority="high"
                 onLoad={() => setLightboxLoading(false)}
                 onError={() => setLightboxLoading(false)}
               />
