@@ -11,7 +11,7 @@ export function BrandLogo() {
     >
       {/* Logo Image */}
       <Image
-        src="/icon-192.png"
+        src="/icon-192.jpg"
         alt="Duruduygu Logo"
         width={36}
         height={36}
