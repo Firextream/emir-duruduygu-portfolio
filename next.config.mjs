@@ -19,11 +19,11 @@ const nextConfig = {
   images: {
     // Enable Vercel image optimization for better performance
     formats: ['image/avif', 'image/webp'],
-    // Optimized device sizes - smaller for mobile
-    deviceSizes: [320, 420, 640, 750, 828, 1080, 1200],
-    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
-    // Allowed quality values
-    qualities: [75, 85, 90],
+    // Optimized device sizes - include larger sizes for high-res displays
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384, 512],
+    // Higher quality values for better image fidelity
+    qualities: [75, 85, 90, 95],
     // Long cache for better performance
     minimumCacheTTL: 60 * 60 * 24 * 60, // 60 days cache
     // Limit concurrent image optimization

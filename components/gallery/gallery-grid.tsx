@@ -126,14 +126,14 @@ function GalleryImageCard({
           <Image
             src={image.src}
             alt={image.alt || image.title || image.name || "Gallery image"}
-            width={600}
-            height={450}
+            width={800}
+            height={600}
             className={cn(
               "w-full h-auto object-cover transition-all duration-300 group-hover:scale-105",
               isLoaded ? "opacity-100" : "opacity-0"
             )}
-            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-            quality={75}
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            quality={85}
             loading={priority ? "eager" : "lazy"}
             placeholder="blur"
             blurDataURL={shimmerBase64}
