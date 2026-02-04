@@ -157,7 +157,7 @@ export function GalleryGrid({ images, categories }: GalleryGridProps) {
   const [touchStart, setTouchStart] = useState<number | null>(null)
   const [touchEnd, setTouchEnd] = useState<number | null>(null)
   const [lightboxLoading, setLightboxLoading] = useState(false)
-  const [visibleCount, setVisibleCount] = useState(15) // Start with 15 images for fast initial load
+  const [visibleCount, setVisibleCount] = useState(10) // Start with 10 images for faster initial load
 
   // Memoize filtered images
   const filteredImages = useMemo(() => {
@@ -194,7 +194,7 @@ export function GalleryGrid({ images, categories }: GalleryGridProps) {
 
   // Reset visible count when category changes
   useEffect(() => {
-    setVisibleCount(15)
+    setVisibleCount(10)
   }, [activeCategory])
 
   const openLightbox = useCallback((index: number) => {
