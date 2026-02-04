@@ -9,8 +9,8 @@ export const metadata: Metadata = {
   description: "A curated collection of architectural and street photography.",
 }
 
-// ISR with 5 minute revalidation for better performance
-export const revalidate = 300
+// Always render fresh to avoid expired Notion image URLs
+export const dynamic = "force-dynamic"
 
 export default async function GalleryPage() {
   const images = await getGalleryImages()
