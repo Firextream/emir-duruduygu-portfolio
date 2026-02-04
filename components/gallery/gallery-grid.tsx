@@ -54,7 +54,7 @@ function GalleryImageCard({
 }) {
   const [isLoaded, setIsLoaded] = useState(false)
   const [hasError, setHasError] = useState(false)
-  const [retryCount, setRetryCount] = useState(0)
+  const [useOriginal, setUseOriginal] = useState(false)
 
   // Hover'da full res versiyonu preload et
   const handleMouseEnter = useCallback(() => {
@@ -69,24 +69,24 @@ function GalleryImageCard({
   }, [])
 
   const handleError = useCallback(() => {
-    // Auto-retry up to 2 times
-    if (retryCount < 2) {
-      setRetryCount(prev => prev + 1)
+    // If proxy fails, try original URL
+    if (!useOriginal && image.srcOriginal) {
+      setUseOriginal(true)
     } else {
       setHasError(true)
       setIsLoaded(true)
     }
-  }, [retryCount])
+  }, [useOriginal, image.srcOriginal])
 
-  // Retry mechanism - change src to trigger reload
-  const imageSrc = hasError ? null : (retryCount > 0 ? `${image.src}&retry=${retryCount}` : image.src)
+  // Use original URL as fallback if proxy fails
+  const imageSrc = hasError ? null : (useOriginal ? image.srcOriginal : image.src)
   
   return (
     <button
       onClick={onClick}
       onMouseEnter={handleMouseEnter}
       onTouchStart={handleMouseEnter}
-      className="group relative w-full overflow-hidden bg-neutral-900/50 cursor-pointer break-inside-avoid mb-3 block"
+      className="group relative w-full overflow-hidden bg-neutral-900/50 cursor-pointer break-inside-avoid mb-4 block"
     >
       {/* Blur placeholder - loads instantly */}
       {image.blurDataUrl && (
