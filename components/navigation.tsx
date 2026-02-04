@@ -24,6 +24,7 @@ export function Navigation() {
   const isHomePage = pathname === "/"
   const hasDarkHero = isHomePage
   const useWhiteText = hasDarkHero && !isScrolled
+  const isPortfolioPage = false // Portfolio page no longer has dark hero
 
   useEffect(() => {
     const handleScroll = () => {
