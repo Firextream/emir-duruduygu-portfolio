@@ -49,8 +49,9 @@ export function SelectedProjectsSection({ projects }: SelectedProjectsSectionPro
                   fill 
                   className="object-cover transition-all duration-500 group-hover:scale-105" 
                   sizes="(max-width: 768px) 50vw, 25vw"
-                  priority={index < 4}
-                  loading={index < 4 ? undefined : "lazy"}
+                  priority={index < 6}
+                  fetchPriority={index < 3 ? 'high' : 'auto'}
+                  loading={index < 6 ? undefined : "lazy"}
                 />
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-300" />
                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">

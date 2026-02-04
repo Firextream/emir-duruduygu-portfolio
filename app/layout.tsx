@@ -123,8 +123,12 @@ export default function RootLayout({
         {/* Preconnect to Notion image hosts for faster LCP */}
         <link rel="preconnect" href="https://prod-files-secure.s3.us-west-2.amazonaws.com" />
         <link rel="preconnect" href="https://s3.us-west-2.amazonaws.com" />
+        <link rel="preconnect" href="https://wsrv.nl" />
+        <link rel="preconnect" href="https://public.notion-static.com" />
         <link rel="dns-prefetch" href="https://prod-files-secure.s3.us-west-2.amazonaws.com" />
         <link rel="dns-prefetch" href="https://s3.us-west-2.amazonaws.com" />
+        <link rel="dns-prefetch" href="https://wsrv.nl" />
+        <link rel="dns-prefetch" href="https://public.notion-static.com" />
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <meta name="theme-color" content="#fafafa" />
