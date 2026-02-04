@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect, TouchEvent, useMemo, useCallback } from "react"
-import { X, ChevronLeft, ChevronRight, ArrowUpRight, Download } from "lucide-react"
+import { X, ChevronLeft, ChevronRight, Download } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 interface ExifData {
@@ -86,30 +86,27 @@ function GalleryImageCard({
       onClick={onClick}
       onMouseEnter={handleMouseEnter}
       onTouchStart={handleMouseEnter}
-      className="group relative w-full overflow-hidden bg-neutral-900/50 cursor-pointer break-inside-avoid mb-4 block"
+      className="group relative w-full overflow-hidden bg-neutral-900/30 cursor-pointer break-inside-avoid mb-3 block"
     >
       {/* Blur placeholder - loads instantly */}
-      {image.blurDataUrl && (
+      {image.blurDataUrl && !isLoaded && (
         <img
           src={image.blurDataUrl}
           alt=""
-          className={cn(
-            "absolute inset-0 w-full h-full object-cover scale-110 blur-xl transition-opacity duration-500",
-            isLoaded ? "opacity-0" : "opacity-100"
-          )}
+          className="absolute inset-0 w-full h-full object-cover scale-105 blur-lg"
           aria-hidden="true"
         />
       )}
       
       {/* Skeleton if no blur */}
       {!image.blurDataUrl && !isLoaded && !hasError && (
-        <div className="absolute inset-0 bg-neutral-800 animate-pulse" />
+        <div className="w-full aspect-[4/3] bg-neutral-800/50" />
       )}
       
       {/* Error state */}
       {hasError && (
-        <div className="w-full aspect-[4/3] flex items-center justify-center bg-neutral-800 text-neutral-500 text-xs">
-          Failed to load
+        <div className="w-full aspect-[4/3] flex items-center justify-center bg-neutral-800/30 text-neutral-600 text-xs">
+          ✕
         </div>
       )}
       
@@ -119,30 +116,19 @@ function GalleryImageCard({
           src={imageSrc}
           alt={image.alt || image.title || image.name || "Gallery image"}
           className={cn(
-            "w-full h-auto object-cover transition-all duration-500 group-hover:scale-105",
+            "w-full h-auto object-cover transition-opacity duration-300 group-hover:scale-[1.02]",
             isLoaded ? "opacity-100" : "opacity-0"
           )}
-          loading={index < 8 ? "eager" : "lazy"}
+          loading={index < 6 ? "eager" : "lazy"}
           decoding="async"
+          fetchPriority={index < 3 ? "high" : "auto"}
           onLoad={handleLoad}
           onError={handleError}
         />
       )}
       
-      {/* Hover Overlay */}
-      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-300" />
-      
-      {/* Hover Content */}
-      <div className="absolute inset-0 flex items-end p-3 lg:p-4">
-        <div className="flex items-end justify-between w-full opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
-          {image.category && (
-            <span className="font-mono text-[10px] tracking-wider uppercase text-white/80">
-              {image.category}
-            </span>
-          )}
-          <ArrowUpRight className="w-4 h-4 text-white/80" />
-        </div>
-      </div>
+      {/* Hover Overlay - subtle */}
+      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-200" />
     </button>
   )
 }
@@ -153,7 +139,7 @@ export function GalleryGrid({ images, categories }: GalleryGridProps) {
   const [touchStart, setTouchStart] = useState<number | null>(null)
   const [touchEnd, setTouchEnd] = useState<number | null>(null)
   const [lightboxLoading, setLightboxLoading] = useState(false)
-  const [visibleCount, setVisibleCount] = useState(20) // Start with 20 images
+  const [visibleCount, setVisibleCount] = useState(15) // Start with 15 images for fast initial load
 
   // Memoize filtered images
   const filteredImages = useMemo(() => {
@@ -188,7 +174,7 @@ export function GalleryGrid({ images, categories }: GalleryGridProps) {
 
   // Reset visible count when category changes
   useEffect(() => {
-    setVisibleCount(20)
+    setVisibleCount(15)
   }, [activeCategory])
 
   const openLightbox = useCallback((index: number) => {
