@@ -201,8 +201,8 @@ export function GalleryGrid({ images, categories }: GalleryGridProps) {
   }, [activeCategory])
 
   const openLightbox = useCallback((index: number) => {
-    setLightboxLoading(true)
     setSelectedImageIndex(index)
+    setLightboxLoading(true)
   }, [])
 
   const closeLightbox = useCallback(() => {
@@ -212,19 +212,19 @@ export function GalleryGrid({ images, categories }: GalleryGridProps) {
 
   const goToPrevious = useCallback(() => {
     if (selectedImageIndex !== null) {
-      setLightboxLoading(true)
       setSelectedImageIndex(selectedImageIndex === 0 ? filteredImages.length - 1 : selectedImageIndex - 1)
+      setLightboxLoading(true)
     }
   }, [selectedImageIndex, filteredImages.length])
 
   const goToNext = useCallback(() => {
     if (selectedImageIndex !== null) {
-      setLightboxLoading(true)
       setSelectedImageIndex(selectedImageIndex === filteredImages.length - 1 ? 0 : selectedImageIndex + 1)
+      setLightboxLoading(true)
     }
   }, [selectedImageIndex, filteredImages.length])
 
-  // Preload adjacent images
+  // Preload adjacent images aggressively
   useEffect(() => {
     if (selectedImageIndex === null) return
     
@@ -233,12 +233,12 @@ export function GalleryGrid({ images, categories }: GalleryGridProps) {
       img.src = src
     }
     
-    // Preload next and previous images
-    const prevIndex = selectedImageIndex === 0 ? filteredImages.length - 1 : selectedImageIndex - 1
-    const nextIndex = selectedImageIndex === filteredImages.length - 1 ? 0 : selectedImageIndex + 1
-    
-    if (filteredImages[prevIndex]) preloadImage(filteredImages[prevIndex].src)
-    if (filteredImages[nextIndex]) preloadImage(filteredImages[nextIndex].src)
+    // Preload next 2 and previous 2 images for smoother navigation
+    for (let offset = -2; offset <= 2; offset++) {
+      if (offset === 0) continue
+      const idx = (selectedImageIndex + offset + filteredImages.length) % filteredImages.length
+      if (filteredImages[idx]) preloadImage(filteredImages[idx].src)
+    }
   }, [selectedImageIndex, filteredImages])
 
   // Swipe gesture handling
@@ -424,21 +424,26 @@ export function GalleryGrid({ images, categories }: GalleryGridProps) {
               className="relative flex items-center justify-center w-full h-full"
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Loading */}
-              {lightboxLoading && (
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-5 h-5 border border-white/20 border-t-white/60 rounded-full animate-spin" />
-                </div>
-              )}
+              {/* Blur backdrop while loading */}
+              <div 
+                className={cn(
+                  "absolute inset-0 flex items-center justify-center transition-opacity duration-200",
+                  lightboxLoading ? "opacity-100" : "opacity-0 pointer-events-none"
+                )}
+              >
+                <div className="w-8 h-8 border-2 border-white/10 border-t-white/50 rounded-full animate-spin" />
+              </div>
               
-              {/* Use native img for reliable loading of external URLs */}
+              {/* Main image - loads immediately */}
               <img
                 src={selectedImage.src}
                 alt={selectedImage.alt || selectedImage.title || selectedImage.name || "Gallery image"}
                 className={cn(
-                  "max-w-full max-h-full w-auto h-auto object-contain transition-opacity duration-300",
-                  lightboxLoading ? "opacity-0" : "opacity-100"
+                  "max-w-full max-h-full w-auto h-auto object-contain transition-opacity duration-200",
+                  lightboxLoading ? "opacity-30" : "opacity-100"
                 )}
+                loading="eager"
+                decoding="async"
                 onLoad={() => setLightboxLoading(false)}
                 onError={() => setLightboxLoading(false)}
               />
