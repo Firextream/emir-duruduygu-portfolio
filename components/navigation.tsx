@@ -210,10 +210,15 @@ export function Navigation() {
           
           {/* Mobile menu footer */}
           <div className="absolute bottom-8 left-6 right-6">
-            <div className="flex flex-col gap-3 text-sm text-muted-foreground">
+            <div className="flex flex-col gap-4 text-sm text-muted-foreground">
               <div className="flex gap-4">
                 <a href="https://www.instagram.com/emir_duruduygu/" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">Instagram</a>
                 <a href="https://www.linkedin.com/in/emir-duruduygu-90800a27a/" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">LinkedIn</a>
+                <a href="https://github.com/Firextream" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">GitHub</a>
+              </div>
+              <div className="flex items-center gap-2">
+                <ThemeToggle variant="minimal" />
+                <span className="text-xs text-muted-foreground/80">Theme</span>
               </div>
             </div>
           </div>
