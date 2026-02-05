@@ -96,7 +96,7 @@ function GalleryImageCard({
       onMouseEnter={handleMouseEnter}
       onTouchStart={handleMouseEnter}
       style={aspectStyle}
-      className="group relative w-full overflow-hidden bg-neutral-800/30 cursor-pointer block break-inside-avoid mb-4"
+      className="group relative w-full overflow-hidden bg-transparent cursor-pointer block break-inside-avoid mb-4"
     >
       {/* Container fills the reserved aspect ratio to prevent layout shift */}
       <div className="relative w-full h-full overflow-hidden">
@@ -139,7 +139,7 @@ function GalleryImageCard({
             alt={image.alt || image.title || image.name || "Gallery image"}
             className={cn(
               "absolute inset-0 w-full h-full transition-[opacity,transform,filter] duration-500 ease-out group-hover:scale-[1.02] group-hover:saturate-[1.05]",
-              hasRatio ? "object-cover" : "object-contain",
+              "object-cover",
               isLoaded ? "opacity-100" : "opacity-0"
             )}
             loading={index < 6 ? "eager" : "lazy"}
