@@ -42,44 +42,46 @@ export function SelectedProjectsSection({ projects }: SelectedProjectsSectionPro
           </Link>
         </div>
 
-        {/* Responsive Masonry - preserves original aspect ratios */}
-        <div className="columns-2 md:columns-3 lg:columns-4 gap-4 [column-fill:balance]">
-          {displayProjects.map((project, index) => (
-            <Link key={project.id} href="/gallery" className="group block break-inside-avoid mb-4">
-              <div
-                className="relative w-full overflow-hidden bg-secondary/50"
-                style={{
-                  aspectRatio: project.width && project.height
-                    ? `${project.width}/${project.height}`
-                    : "4 / 3",
-                }}
-              >
-                <img
-                  src={project.imageUrl}
-                  alt={project.title}
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
-                  loading={index < 6 ? "eager" : "lazy"}
-                  decoding="async"
-                  fetchPriority={index < 3 ? "high" : "auto"}
-                  referrerPolicy="no-referrer"
-                  onError={(event) => {
-                    const img = event.currentTarget
-                    if (img.dataset.fallback === "true") return
-                    img.dataset.fallback = "true"
-                    if (project.fallbackUrl) {
-                      img.src = project.fallbackUrl
-                    } else {
-                      img.src = "/placeholder.jpg"
-                    }
+        {/* Horizontal Slider - preserves original aspect ratios */}
+        <div className="relative">
+          <div className="flex gap-5 overflow-x-auto pb-2 scrollbar-hide snap-x snap-mandatory">
+            {displayProjects.map((project, index) => (
+              <Link key={project.id} href="/gallery" className="group flex-none snap-start">
+                <div
+                  className="relative h-[240px] sm:h-[280px] md:h-[320px] lg:h-[380px] overflow-hidden bg-secondary/50"
+                  style={{
+                    aspectRatio: project.width && project.height
+                      ? `${project.width}/${project.height}`
+                      : "4 / 3",
                   }}
-                />
-                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/25 transition-colors duration-300" />
-                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <ArrowUpRight size={16} className="text-white" />
+                >
+                  <img
+                    src={project.imageUrl}
+                    alt={project.title}
+                    className="absolute inset-0 w-full h-full object-contain transition-transform duration-500 ease-out group-hover:scale-[1.02]"
+                    loading={index < 6 ? "eager" : "lazy"}
+                    decoding="async"
+                    fetchPriority={index < 3 ? "high" : "auto"}
+                    referrerPolicy="no-referrer"
+                    onError={(event) => {
+                      const img = event.currentTarget
+                      if (img.dataset.fallback === "true") return
+                      img.dataset.fallback = "true"
+                      if (project.fallbackUrl) {
+                        img.src = project.fallbackUrl
+                      } else {
+                        img.src = "/placeholder.jpg"
+                      }
+                    }}
+                  />
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <ArrowUpRight size={16} className="text-white" />
+                  </div>
                 </div>
-              </div>
-            </Link>
-          ))}
+              </Link>
+            ))}
+          </div>
         </div>
       </div>
     </section>
