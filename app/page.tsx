@@ -51,14 +51,15 @@ export default async function HomePage() {
   return (
     <div className="flex flex-col min-h-screen">
       <Navigation />
-      <main className="flex-1">
+      <div className="flex-1">
         <HeroSection />
         <LatestPostsSection posts={latestPosts} />
         <SelectedProjectsSection projects={selectedProjects} />
         <ManifestoSection />
         <NewsletterSection />
-      </main>
+      </div>
       <Footer />
     </div>
   )
 }
+

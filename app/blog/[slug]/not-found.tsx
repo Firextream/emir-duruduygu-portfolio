@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button"
 
 export default function BlogPostNotFound() {
   return (
-    <main className="min-h-screen bg-background flex items-center justify-center">
+    <div className="min-h-screen bg-background flex items-center justify-center">
       <div className="container mx-auto px-4 text-center max-w-2xl">
         <div className="mb-8">
           <FileX className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
@@ -26,6 +26,6 @@ export default function BlogPostNotFound() {
           </Button>
         </div>
       </div>
-    </main>
+    </div>
   )
 }

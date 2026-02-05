@@ -144,7 +144,7 @@ export default function RootLayout({
           <ServiceWorkerRegistration />
           <StructuredData type="website" data={{}} />
           <StructuredData type="person" data={{}} />
-          <main id="main-content">
+          <main id="main-content" tabIndex={-1}>
             {children}
           </main>
           <SocialButtons />

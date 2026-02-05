@@ -52,7 +52,7 @@ export default function AboutPage() {
   return (
     <div className="min-h-screen flex flex-col">
       <Navigation />
-      <main className="flex-1 pt-24 lg:pt-32">
+      <div className="flex-1 pt-24 lg:pt-32">
         {/* Hero Section */}
         <section className="max-w-[1600px] mx-auto px-6 lg:px-12 pb-16 lg:pb-24">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center">
@@ -218,8 +218,9 @@ export default function AboutPage() {
             </Link>
           </div>
         </section>
-      </main>
+      </div>
       <Footer />
     </div>
   )
 }
+

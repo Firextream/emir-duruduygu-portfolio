@@ -7,7 +7,7 @@ export default function NotFound() {
   return (
     <div className="min-h-screen flex flex-col bg-background">
       <Navigation />
-      <main className="flex-1 flex items-center justify-center px-6">
+      <div className="flex-1 flex items-center justify-center px-6">
         <div className="text-center max-w-2xl mx-auto py-24">
           {/* Large 404 */}
           <div className="relative mb-8">
@@ -62,8 +62,9 @@ export default function NotFound() {
             </div>
           </div>
         </div>
-      </main>
+      </div>
       <Footer />
     </div>
   )
 }
+

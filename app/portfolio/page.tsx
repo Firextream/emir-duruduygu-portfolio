@@ -15,7 +15,7 @@ export default function PortfolioPage() {
       <Navigation />
 
       {/* Coming Soon Section */}
-      <main className="flex-1 pt-24 lg:pt-32 pb-16 lg:pb-24">
+      <div className="flex-1 pt-24 lg:pt-32 pb-16 lg:pb-24">
         <div className="max-w-[1600px] mx-auto px-6 lg:px-12">
           <div className="max-w-2xl">
             {/* Icon */}
@@ -47,9 +47,10 @@ export default function PortfolioPage() {
             </Link>
           </div>
         </div>
-      </main>
+      </div>
 
       <Footer />
     </div>
   )
 }
+

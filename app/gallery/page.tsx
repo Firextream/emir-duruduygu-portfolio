@@ -25,7 +25,7 @@ export default async function GalleryPage() {
   return (
     <div className="min-h-screen flex flex-col">
       <Navigation />
-      <main className="flex-1 pt-20 sm:pt-24 lg:pt-32 pb-12 sm:pb-16 lg:pb-24">
+      <div className="flex-1 pt-20 sm:pt-24 lg:pt-32 pb-12 sm:pb-16 lg:pb-24">
         <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-12">
           {/* Page Header */}
           <div className="mb-10 sm:mb-16 lg:mb-24">
@@ -42,8 +42,9 @@ export default async function GalleryPage() {
 
           <GalleryClient images={images} categories={categories} />
         </div>
-      </main>
+      </div>
       <Footer />
     </div>
   )
 }
+
