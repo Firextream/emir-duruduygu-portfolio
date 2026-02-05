@@ -55,7 +55,7 @@ export function AboutJourneySection() {
                 <h2 className="text-2xl md:text-3xl font-extralight text-foreground mb-2">
                   {aboutData.name}
                 </h2>
-                <p className="text-sm text-muted-foreground/80 font-light leading-relaxed max-w-lg">
+                <p className="text-sm text-muted-foreground font-light leading-relaxed max-w-lg">
                   {aboutData.bio}
                 </p>
               </div>

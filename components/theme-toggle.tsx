@@ -20,7 +20,11 @@ export function ThemeToggle({ className, variant = "default" }: ThemeToggleProps
 
   if (!mounted) {
     return (
-      <button className={cn("w-9 h-9 flex items-center justify-center", className)}>
+      <button
+        type="button"
+        aria-label="Toggle theme"
+        className={cn("w-9 h-9 flex items-center justify-center", className)}
+      >
         <Sun size={18} className="opacity-50" />
       </button>
     )

@@ -128,7 +128,7 @@ export function AboutSection() {
                 <Heart className="w-4 h-4 text-accent" />
                 My Philosophy
               </h4>
-              <p className="text-muted-foreground/80 text-sm leading-relaxed italic">
+              <p className="text-muted-foreground text-sm leading-relaxed italic">
                 "{about.philosophy}"
               </p>
             </div>

@@ -218,7 +218,7 @@ export function Navigation() {
               </div>
               <div className="flex items-center gap-2">
                 <ThemeToggle variant="minimal" />
-                <span className="text-xs text-muted-foreground/80">Theme</span>
+                <span className="text-xs text-muted-foreground">Theme</span>
               </div>
             </div>
           </div>

@@ -86,9 +86,9 @@ function GalleryImageCard({
   const imageSrcSet = useOriginal ? undefined : image.srcSet
   const imageSizes = imageSrcSet ? "(max-width: 640px) 100vw, 33vw" : undefined
   const hasRatio = Boolean(image.width && image.height)
-  const aspectStyle: React.CSSProperties | undefined = hasRatio
-    ? { aspectRatio: `${image.width}/${image.height}` }
-    : undefined
+  const aspectStyle: React.CSSProperties = {
+    aspectRatio: hasRatio ? `${image.width}/${image.height}` : "4 / 3",
+  }
 
   return (
     <button
@@ -137,9 +137,8 @@ function GalleryImageCard({
             sizes={imageSizes}
             alt={image.alt || image.title || image.name || "Gallery image"}
             className={cn(
-              hasRatio
-                ? "absolute inset-0 w-full h-full object-cover transition-[opacity,transform,filter] duration-500 ease-out group-hover:scale-[1.02] group-hover:saturate-[1.05]"
-                : "w-full h-auto object-contain transition-[opacity,transform,filter] duration-500 ease-out group-hover:scale-[1.02] group-hover:saturate-[1.05]",
+              "absolute inset-0 w-full h-full transition-[opacity,transform,filter] duration-500 ease-out group-hover:scale-[1.02] group-hover:saturate-[1.05]",
+              hasRatio ? "object-cover" : "object-contain",
               isLoaded ? "opacity-100" : "opacity-0"
             )}
             loading={index < 6 ? "eager" : "lazy"}
