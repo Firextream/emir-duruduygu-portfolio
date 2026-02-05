@@ -23,7 +23,7 @@ const nextConfig = {
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384, 512],
     // Higher quality values for better image fidelity
-    qualities: [75, 85, 90, 95],
+    qualities: [75, 85, 90, 95, 100],
     // Long cache for better performance
     minimumCacheTTL: 60 * 60 * 24 * 60, // 60 days cache
     // Limit concurrent image optimization
