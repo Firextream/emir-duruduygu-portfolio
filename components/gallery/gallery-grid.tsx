@@ -291,7 +291,7 @@ export function GalleryGrid({ images, categories }: GalleryGridProps) {
       </div>
 
       {/* Images Grid - Masonry columns with true aspect ratios */}
-      <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4 [column-fill:auto]">
+      <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4 [column-fill:balance]">
         {filteredImages.map((image, index) => (
           <GalleryImageCard 
             key={image.id} 
