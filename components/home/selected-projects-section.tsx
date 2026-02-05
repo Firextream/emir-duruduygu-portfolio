@@ -102,16 +102,16 @@ export function SelectedProjectsSection({ projects }: SelectedProjectsSectionPro
         <div className="relative">
           <div
             ref={scrollerRef}
-            className="flex items-start gap-5 overflow-x-auto pb-2 scrollbar-hide snap-x snap-mandatory scroll-smooth touch-pan-x"
+            className="flex items-start gap-3 md:gap-4 overflow-x-auto pb-2 scrollbar-hide snap-x snap-mandatory scroll-smooth touch-pan-x"
           >
             {displayProjects.map((project, index) => (
               <Link
                 key={project.id}
                 href="/gallery"
-                className="group flex-none snap-start min-w-[78vw] sm:min-w-[64vw] md:min-w-[56vw] lg:min-w-[48vw] xl:min-w-[44vw] 2xl:min-w-[40vw]"
+                className="group flex-none snap-start w-auto"
               >
                 <div
-                  className="relative h-[240px] sm:h-[280px] md:h-[320px] lg:h-[360px] xl:h-[380px] overflow-hidden bg-secondary/50"
+                  className="relative h-[240px] sm:h-[280px] md:h-[320px] lg:h-[360px] xl:h-[380px] overflow-hidden bg-transparent"
                   style={{
                     aspectRatio: project.width && project.height
                       ? `${project.width}/${project.height}`
