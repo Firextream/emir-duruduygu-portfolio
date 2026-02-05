@@ -95,10 +95,11 @@ function GalleryImageCard({
       onClick={onClick}
       onMouseEnter={handleMouseEnter}
       onTouchStart={handleMouseEnter}
+      style={aspectStyle}
       className="group relative w-full overflow-hidden bg-neutral-800/30 cursor-pointer block break-inside-avoid mb-4"
     >
-      {/* Container with aspect ratio to prevent layout shift */}
-      <div className="relative w-full overflow-hidden" style={aspectStyle}>
+      {/* Container fills the reserved aspect ratio to prevent layout shift */}
+      <div className="relative w-full h-full overflow-hidden">
         {/* Blur placeholder - loads instantly */}
         {image.blurDataUrl && (
           <img
@@ -291,7 +292,7 @@ export function GalleryGrid({ images, categories }: GalleryGridProps) {
       </div>
 
       {/* Images Grid - Masonry columns with true aspect ratios */}
-      <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4 [column-fill:balance]">
+      <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4 [column-fill:auto]">
         {filteredImages.map((image, index) => (
           <GalleryImageCard 
             key={image.id} 

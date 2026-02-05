@@ -113,6 +113,8 @@ export function Footer() {
               
               <button
                 onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+                type="button"
+                aria-label="Back to top"
                 className="group flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
               >
                 <span className="hidden sm:inline">Back to top</span>

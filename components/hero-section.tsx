@@ -52,7 +52,7 @@ export function HeroSection() {
             
             {/* Description */}
             <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-md leading-relaxed">
-              Amateur photographer and curious explorer. Capturing architecture, street moments, and anything that sparks inspiration—structure, light, and the unexpected.
+              Amateur photographer and curious explorer. Capturing architecture, street moments, and anything that sparks inspiration - structure, light, and the unexpected.
             </p>
             
             {/* CTA Buttons */}

@@ -237,6 +237,10 @@
 
 /* Enhanced minimalist animations and micro-interactions */
 @layer utilities {
+  /* Ensure any legacy text-muted-foreground/80 usages meet contrast */
+  .text-muted-foreground\/80 {
+    color: var(--muted-foreground) !important;
+  }
   .animate-fade-in {
     animation: fadeIn 0.8s ease-out forwards;
   }
