@@ -3,7 +3,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 export default function GalleryLoading() {
   return (
     <div className="min-h-screen bg-background">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-16">
+      <div className="max-w-[1600px] mx-auto px-6 lg:px-12 pt-24 pb-16">
         {/* Header Skeleton */}
         <div className="text-center mb-16">
           <Skeleton className="h-12 w-64 mx-auto mb-4" />

@@ -13,7 +13,7 @@ export default function ContactPage() {
     <div className="min-h-screen flex flex-col">
       <Navigation />
       <main className="flex-1 pt-24 lg:pt-32 pb-16 lg:pb-24">
-        <div className="max-w-7xl mx-auto px-6 lg:px-12">
+        <div className="max-w-[1600px] mx-auto px-6 lg:px-12">
           {/* Hero Section */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 mb-16">
             {/* Left - Title & Info */}

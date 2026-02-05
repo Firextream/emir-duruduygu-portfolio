@@ -12,7 +12,7 @@ const stats = [
 export function StatsSection() {
   return (
     <section className="py-16 lg:py-20 border-y border-border">
-      <div className="max-w-7xl mx-auto px-6 lg:px-12">
+      <div className="max-w-[1600px] mx-auto px-6 lg:px-12">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 lg:gap-12">
           {stats.map((stat, index) => (
             <div key={index} className="text-center">

@@ -5,7 +5,7 @@ export default function Loading() {
       <div className="h-16 border-b border-border" />
       
       <main className="flex-1 pt-20 sm:pt-24 lg:pt-32 pb-12 sm:pb-16 lg:pb-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
+        <div className="max-w-[1600px] mx-auto px-6 lg:px-12">
           {/* Page Header Skeleton */}
           <div className="mb-10 sm:mb-16 lg:mb-24">
             <div className="h-4 w-16 bg-muted animate-pulse rounded mb-3" />

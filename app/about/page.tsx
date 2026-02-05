@@ -54,7 +54,7 @@ export default function AboutPage() {
       <Navigation />
       <main className="flex-1 pt-24 lg:pt-32">
         {/* Hero Section */}
-        <section className="max-w-7xl mx-auto px-6 lg:px-12 pb-16 lg:pb-24">
+        <section className="max-w-[1600px] mx-auto px-6 lg:px-12 pb-16 lg:pb-24">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center">
             {/* Text Content */}
             <div className="space-y-8 order-2 lg:order-1">
@@ -129,7 +129,7 @@ export default function AboutPage() {
 
         {/* Interests Section */}
         <section className="border-t border-border py-16 lg:py-24">
-          <div className="max-w-7xl mx-auto px-6 lg:px-12">
+          <div className="max-w-[1600px] mx-auto px-6 lg:px-12">
             <div className="mb-12">
               <span className="font-mono text-sm tracking-wider text-accent uppercase">
                 What I Do

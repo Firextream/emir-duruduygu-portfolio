@@ -52,7 +52,7 @@ export default async function ArchivePage() {
     <div className="min-h-screen flex flex-col">
       <Navigation />
       <main className="flex-1 pt-20 sm:pt-24 lg:pt-32 pb-12 sm:pb-16 lg:pb-24">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-12">
+        <div className="max-w-[1600px] mx-auto px-6 lg:px-12">
           {/* Page Header */}
           <div className="mb-12 sm:mb-16">
             <div className="flex items-center gap-2 mb-4">

@@ -41,14 +41,14 @@ export function HeroSection() {
   }
 
   return (
-    <section className="relative h-screen flex items-center justify-center overflow-hidden layer-base bg-black">
+    <section className="relative h-screen flex items-center justify-center overflow-hidden layer-base bg-white">
       
       <div className="absolute inset-0 z-0">
         <Image
           src="/coastal-harbor-scene.jpg"
           alt="Coastal Harbor Scene"
           fill
-          className="object-cover"
+          className="object-cover bg-white"
           priority
           quality={90}
           unoptimized
