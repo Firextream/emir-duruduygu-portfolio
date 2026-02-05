@@ -41,8 +41,8 @@
   --primary-foreground: #faf9f7;
   --secondary: #f0eeea;
   --secondary-foreground: #171614;
-  --muted: #9a9590;
-  --muted-foreground: #736e69;
+  --muted: #8f8a85;
+  --muted-foreground: #5f5a55;
   /* Warmer forest accent - now dynamic */
   --accent: var(--accent-light);
   --accent-foreground: #faf9f7;
@@ -79,8 +79,8 @@
   --primary-foreground: #1a1917;
   --secondary: #2d2b28;
   --secondary-foreground: #f5f3f0;
-  --muted: #8a8580;
-  --muted-foreground: #a8a39e;
+  --muted: #8f8a85;
+  --muted-foreground: #b5b0ab;
   --accent: var(--accent-dark);
   --accent-foreground: #1a1917;
   --destructive: #dc2626;

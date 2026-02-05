@@ -37,7 +37,7 @@ const jetbrains = JetBrains_Mono({
 export const metadata: Metadata = {
   title: "Duruduygu - Photography & Stories",
   description:
-    "Amateur photographer and curious explorer. Capturing architecture, street moments, and anything that sparks inspiration—structure, light, and the unexpected.",
+    "Amateur photographer and curious explorer. Capturing architecture, street moments, and anything that sparks inspiration - structure, light, and the unexpected.",
   keywords: ["photography", "gallery", "blog", "street photography", "architecture", "stories", "creative"],
   authors: [{ name: "Duruduygu" }],
   creator: "Duruduygu",
@@ -56,7 +56,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "Duruduygu - Photography & Creative Portfolio",
-    description: "Amateur photographer and curious explorer. Capturing architecture, street moments, and anything that sparks inspiration—structure, light, and the unexpected.",
+    description: "Amateur photographer and curious explorer. Capturing architecture, street moments, and anything that sparks inspiration - structure, light, and the unexpected.",
     url: "https://duruduygu.com",
     siteName: "Duruduygu",
     images: [
@@ -73,7 +73,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary",
     title: "Duruduygu - Photography & Creative Portfolio",
-    description: "Amateur photographer and curious explorer. Capturing architecture, street moments, and anything that sparks inspiration—structure, light, and the unexpected.",
+    description: "Amateur photographer and curious explorer. Capturing architecture, street moments, and anything that sparks inspiration - structure, light, and the unexpected.",
     images: ["/icon-512.jpg"],
   },
   robots: {

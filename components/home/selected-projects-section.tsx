@@ -108,7 +108,7 @@ export function SelectedProjectsSection({ projects }: SelectedProjectsSectionPro
               <Link
                 key={project.id}
                 href="/gallery"
-                className="group flex-none snap-start w-[70vw] sm:w-[360px] md:w-[420px] lg:w-[460px] xl:w-[500px]"
+                className="group flex-none snap-start w-[64vw] sm:w-[320px] md:w-[360px] lg:w-[400px] xl:w-[440px] 2xl:w-[480px]"
               >
                 <div
                   className="relative aspect-[4/3] overflow-hidden bg-transparent"
