@@ -24,7 +24,7 @@ export function SelectedProjectsSection({ projects }: SelectedProjectsSectionPro
 
   return (
     <section className="py-12 lg:py-16">
-      <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
+      <div className="max-w-[1600px] mx-auto px-6 lg:px-12">
         {/* Section Header - Minimal */}
         <div className="flex items-center justify-between mb-6">
           <h2 className="font-serif text-lg md:text-xl text-foreground tracking-tight">

@@ -35,7 +35,7 @@ export function NewsletterSection() {
 
   return (
     <section className="py-20 lg:py-32 border-t border-border">
-      <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
+      <div className="max-w-[1600px] mx-auto px-6 lg:px-12">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center">
           {/* Left Column - Text */}
           <div className="space-y-6">

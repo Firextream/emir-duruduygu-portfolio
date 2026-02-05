@@ -86,20 +86,15 @@ function GalleryImageCard({
   const imageSrcSet = useOriginal ? undefined : image.srcSet
   const imageSizes = imageSrcSet ? "(max-width: 640px) 100vw, 33vw" : undefined
 
-  // Compute aspect style if we have dimensions to prevent layout shifts
-  const aspectStyle: React.CSSProperties = image.width && image.height
-    ? { aspectRatio: `${image.width}/${image.height}` }
-    : { aspectRatio: '3 / 2', minHeight: '140px' }
-  
   return (
     <button
       onClick={onClick}
       onMouseEnter={handleMouseEnter}
       onTouchStart={handleMouseEnter}
-      className="group relative w-full overflow-hidden bg-neutral-800/30 cursor-pointer break-inside-avoid mb-3 block"
+      className="group relative w-full overflow-hidden bg-neutral-800/30 cursor-pointer block"
     >
       {/* Container with aspect ratio to prevent layout shift */}
-      <div className="relative w-full overflow-hidden" style={aspectStyle}>
+      <div className="relative w-full overflow-hidden aspect-[4/3]">
         {/* Blur placeholder - loads instantly */}
         {image.blurDataUrl && (
           <img
@@ -290,8 +285,8 @@ export function GalleryGrid({ images, categories }: GalleryGridProps) {
         ))}
       </div>
 
-      {/* Images Grid - Masonry Style */}
-      <div className="columns-1 md:columns-2 lg:columns-3 gap-4 space-y-4">
+      {/* Images Grid - Fixed ratio grid to avoid CLS */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
         {filteredImages.map((image, index) => (
           <GalleryImageCard 
             key={image.id} 
