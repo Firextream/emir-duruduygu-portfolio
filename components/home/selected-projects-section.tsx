@@ -108,10 +108,10 @@ export function SelectedProjectsSection({ projects }: SelectedProjectsSectionPro
               <Link
                 key={project.id}
                 href="/gallery"
-                className="group flex-none snap-start w-[78vw] sm:w-[68vw] md:w-[60vw] lg:w-[52vw] xl:w-[48vw] 2xl:w-[44vw]"
+                className="group flex-none snap-start min-w-[78vw] sm:min-w-[64vw] md:min-w-[56vw] lg:min-w-[48vw] xl:min-w-[44vw] 2xl:min-w-[40vw]"
               >
                 <div
-                  className="relative overflow-hidden bg-secondary/50"
+                  className="relative h-[240px] sm:h-[280px] md:h-[320px] lg:h-[360px] xl:h-[380px] overflow-hidden bg-secondary/50"
                   style={{
                     aspectRatio: project.width && project.height
                       ? `${project.width}/${project.height}`
