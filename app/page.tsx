@@ -35,13 +35,18 @@ export default async function HomePage() {
     readTime: post?.readTime ? parseInt(post.readTime) : undefined
   }))
   
-  const selectedProjects = galleryImages.slice(0, 8).map(img => ({
-    id: img?.id || "",
-    title: img?.name || img?.title || "",
-    imageUrl: img?.src || "/placeholder.svg",
-    fallbackUrl: img?.srcOriginal || img?.srcFull || undefined,
-    category: img?.category || undefined
-  }))
+  const selectedPool = galleryImages.filter(img => img?.selected)
+  const selectedProjects = (selectedPool.length > 0 ? selectedPool : galleryImages)
+    .slice(0, 8)
+    .map(img => ({
+      id: img?.id || "",
+      title: img?.name || img?.title || "",
+      imageUrl: img?.src || "/placeholder.svg",
+      fallbackUrl: img?.srcOriginal || img?.srcFull || undefined,
+      width: img?.width || undefined,
+      height: img?.height || undefined,
+      category: img?.category || undefined
+    }))
   
   return (
     <div className="flex flex-col min-h-screen">

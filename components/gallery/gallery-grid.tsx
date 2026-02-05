@@ -138,8 +138,8 @@ function GalleryImageCard({
             alt={image.alt || image.title || image.name || "Gallery image"}
             className={cn(
               hasRatio
-                ? "absolute inset-0 w-full h-full object-cover transition-opacity duration-500 group-hover:scale-[1.02]"
-                : "w-full h-auto object-contain transition-opacity duration-500 group-hover:scale-[1.02]",
+                ? "absolute inset-0 w-full h-full object-cover transition-[opacity,transform,filter] duration-500 ease-out group-hover:scale-[1.02] group-hover:saturate-[1.05]"
+                : "w-full h-auto object-contain transition-[opacity,transform,filter] duration-500 ease-out group-hover:scale-[1.02] group-hover:saturate-[1.05]",
               isLoaded ? "opacity-100" : "opacity-0"
             )}
             loading={index < 6 ? "eager" : "lazy"}
