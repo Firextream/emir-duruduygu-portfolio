@@ -102,26 +102,21 @@ export function SelectedProjectsSection({ projects }: SelectedProjectsSectionPro
         <div className="relative">
           <div
             ref={scrollerRef}
-            className="flex items-start gap-3 md:gap-4 overflow-x-auto pb-2 scrollbar-hide snap-x snap-mandatory scroll-smooth touch-pan-x"
+            className="flex items-start gap-2 sm:gap-3 md:gap-4 overflow-x-auto pb-2 scrollbar-hide snap-x snap-mandatory scroll-smooth touch-pan-x"
           >
             {displayProjects.map((project, index) => (
               <Link
                 key={project.id}
                 href="/gallery"
-                className="group flex-none snap-start w-auto"
+                className="group flex-none snap-start w-[70vw] sm:w-[360px] md:w-[420px] lg:w-[460px] xl:w-[500px]"
               >
                 <div
-                  className="relative h-[240px] sm:h-[280px] md:h-[320px] lg:h-[360px] xl:h-[380px] overflow-hidden bg-transparent"
-                  style={{
-                    aspectRatio: project.width && project.height
-                      ? `${project.width}/${project.height}`
-                      : "4 / 3",
-                  }}
+                  className="relative aspect-[4/3] overflow-hidden bg-transparent"
                 >
                   <img
                     src={project.imageUrl}
                     alt={project.title}
-                    className="absolute inset-0 w-full h-full object-contain transition-transform duration-500 ease-out group-hover:scale-[1.02]"
+                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.02]"
                     loading={index < 6 ? "eager" : "lazy"}
                     decoding="async"
                     fetchPriority={index < 3 ? "high" : "auto"}
