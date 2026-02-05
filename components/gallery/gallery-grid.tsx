@@ -85,16 +85,20 @@ function GalleryImageCard({
   const imageSrc = hasError ? null : (useOriginal ? image.srcOriginal : image.src)
   const imageSrcSet = useOriginal ? undefined : image.srcSet
   const imageSizes = imageSrcSet ? "(max-width: 640px) 100vw, 33vw" : undefined
+  const hasRatio = Boolean(image.width && image.height)
+  const aspectStyle: React.CSSProperties | undefined = hasRatio
+    ? { aspectRatio: `${image.width}/${image.height}` }
+    : undefined
 
   return (
     <button
       onClick={onClick}
       onMouseEnter={handleMouseEnter}
       onTouchStart={handleMouseEnter}
-      className="group relative w-full overflow-hidden bg-neutral-800/30 cursor-pointer block"
+      className="group relative w-full overflow-hidden bg-neutral-800/30 cursor-pointer block break-inside-avoid mb-4"
     >
       {/* Container with aspect ratio to prevent layout shift */}
-      <div className="relative w-full overflow-hidden aspect-[4/3]">
+      <div className="relative w-full overflow-hidden" style={aspectStyle}>
         {/* Blur placeholder - loads instantly */}
         {image.blurDataUrl && (
           <img
@@ -133,7 +137,9 @@ function GalleryImageCard({
             sizes={imageSizes}
             alt={image.alt || image.title || image.name || "Gallery image"}
             className={cn(
-              "absolute inset-0 w-full h-full object-cover transition-opacity duration-500 group-hover:scale-[1.02]",
+              hasRatio
+                ? "absolute inset-0 w-full h-full object-cover transition-opacity duration-500 group-hover:scale-[1.02]"
+                : "w-full h-auto object-contain transition-opacity duration-500 group-hover:scale-[1.02]",
               isLoaded ? "opacity-100" : "opacity-0"
             )}
             loading={index < 6 ? "eager" : "lazy"}
@@ -285,8 +291,8 @@ export function GalleryGrid({ images, categories }: GalleryGridProps) {
         ))}
       </div>
 
-      {/* Images Grid - Fixed ratio grid to avoid CLS */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+      {/* Images Grid - Masonry columns with true aspect ratios */}
+      <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4 [column-fill:balance]">
         {filteredImages.map((image, index) => (
           <GalleryImageCard 
             key={image.id} 
