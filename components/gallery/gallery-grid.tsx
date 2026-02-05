@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, useRef, TouchEvent, useMemo, useCallback } from "react"
+import { useState, useEffect, TouchEvent, useMemo, useCallback } from "react"
 import { X, ChevronLeft, ChevronRight, Download } from "lucide-react"
 import { cn } from "@/lib/utils"
 
@@ -55,8 +55,6 @@ function GalleryImageCard({
   priority?: boolean
   index?: number
 }) {
-  const cardRef = useRef<HTMLButtonElement | null>(null)
-  const [isInView, setIsInView] = useState(false)
   const [isLoaded, setIsLoaded] = useState(false)
   const [hasError, setHasError] = useState(false)
   const [useOriginal, setUseOriginal] = useState(false)
@@ -83,22 +81,6 @@ function GalleryImageCard({
     }
   }, [useOriginal, image.srcOriginal])
 
-  useEffect(() => {
-    if (!cardRef.current || isInView) return
-    const node = cardRef.current
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsInView(true)
-          observer.unobserve(node)
-        }
-      },
-      { rootMargin: "120px 0px", threshold: 0.15 }
-    )
-    observer.observe(node)
-    return () => observer.disconnect()
-  }, [isInView])
-
   // Use original URL as fallback if proxy fails
   const imageSrc = hasError ? null : (useOriginal ? image.srcOriginal : image.src)
   const imageSrcSet = useOriginal ? undefined : image.srcSet
@@ -111,16 +93,10 @@ function GalleryImageCard({
   
   return (
     <button
-      ref={cardRef}
       onClick={onClick}
       onMouseEnter={handleMouseEnter}
       onTouchStart={handleMouseEnter}
-      style={{ transitionDelay: `${Math.min(index, 14) * 45}ms` }}
-      className={cn(
-        "group relative w-full overflow-hidden bg-neutral-800/30 cursor-pointer break-inside-avoid mb-3 block",
-        "transition-[opacity,transform,filter] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] motion-reduce:transition-none",
-        isInView ? "opacity-100 translate-y-0 blur-0" : "opacity-0 translate-y-6 blur-[2px]"
-      )}
+      className="group relative w-full overflow-hidden bg-neutral-800/30 cursor-pointer break-inside-avoid mb-3 block"
     >
       {/* Container with aspect ratio to prevent layout shift */}
       <div className="relative w-full overflow-hidden" style={aspectStyle}>

@@ -1,14 +1,14 @@
-import dynamic from "next/dynamic"
+import nextDynamic from "next/dynamic"
 import { Navigation } from "@/components/navigation"
 import { HeroSection } from "@/components/hero-section"
 import { Footer } from "@/components/footer"
 import { getAllPosts, getGalleryImages } from "@/lib/notion"
 
 // Lazy load below-the-fold sections
-const LatestPostsSection = dynamic(() => import("@/components/home/latest-posts-section").then(mod => ({ default: mod.LatestPostsSection })))
-const SelectedProjectsSection = dynamic(() => import("@/components/home/selected-projects-section").then(mod => ({ default: mod.SelectedProjectsSection })))
-const ManifestoSection = dynamic(() => import("@/components/home/manifesto-section").then(mod => ({ default: mod.ManifestoSection })))
-const NewsletterSection = dynamic(() => import("@/components/home/newsletter-section").then(mod => ({ default: mod.NewsletterSection })))
+const LatestPostsSection = nextDynamic(() => import("@/components/home/latest-posts-section").then(mod => ({ default: mod.LatestPostsSection })))
+const SelectedProjectsSection = nextDynamic(() => import("@/components/home/selected-projects-section").then(mod => ({ default: mod.SelectedProjectsSection })))
+const ManifestoSection = nextDynamic(() => import("@/components/home/manifesto-section").then(mod => ({ default: mod.ManifestoSection })))
+const NewsletterSection = nextDynamic(() => import("@/components/home/newsletter-section").then(mod => ({ default: mod.NewsletterSection })))
 
 // Always render fresh to avoid expired Notion image URLs
 export const dynamic = "force-dynamic"
