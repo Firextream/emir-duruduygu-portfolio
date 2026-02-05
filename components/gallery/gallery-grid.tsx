@@ -95,11 +95,10 @@ function GalleryImageCard({
       onClick={onClick}
       onMouseEnter={handleMouseEnter}
       onTouchStart={handleMouseEnter}
-      style={aspectStyle}
       className="group relative w-full overflow-hidden bg-transparent cursor-pointer block break-inside-avoid mb-4"
     >
-      {/* Container fills the reserved aspect ratio to prevent layout shift */}
-      <div className="relative w-full h-full overflow-hidden">
+      {/* Container reserves aspect ratio to prevent layout shift */}
+      <div className="relative w-full overflow-hidden" style={aspectStyle}>
         {/* Blur placeholder - loads instantly */}
         {image.blurDataUrl && (
           <img
