@@ -19,9 +19,41 @@ from PIL import Image
 from PIL.ExifTags import TAGS
 
 # ========== AYARLAR ==========
-NOTION_API_KEY = "ntn_E76109446161Jhjeach8UarGy0g8t1rsCUiK7pDHBB2f5l"
-DATABASE_ID = "25c1c5a5cc6880b38e78e2e0cc0ef717"
-IMGBB_API_KEY = ""  # https://api.imgbb.com/ adresinden ücretsiz API key al
+# Use environment variables (works on Vercel, CI, and locally with .env.local)
+# NOTION_TOKEN or NOTION_API_KEY
+# NOTION_GALLERY_DATABASE_ID (or DATABASE_ID for legacy)
+# IMGBB_API_KEY (optional)
+# ==============================
+
+
+def load_env_local(path=".env.local"):
+    """Simple .env.local loader for local use (no extra deps)."""
+    env = {}
+    if not os.path.exists(path):
+        return env
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            for line in f:
+                line = line.strip()
+                if not line or line.startswith("#") or "=" not in line:
+                    continue
+                key, value = line.split("=", 1)
+                env[key.strip()] = value.strip()
+    except Exception:
+        pass
+    return env
+
+
+_env_file = load_env_local()
+
+
+def get_env(key, fallback_env=_env_file):
+    return os.getenv(key) or fallback_env.get(key)
+
+
+NOTION_API_KEY = get_env("NOTION_TOKEN") or get_env("NOTION_API_KEY")
+DATABASE_ID = get_env("NOTION_GALLERY_DATABASE_ID") or get_env("DATABASE_ID")
+IMGBB_API_KEY = get_env("IMGBB_API_KEY") or ""
 # ==============================
 
 NOTION_API_URL = "https://api.notion.com/v1"
@@ -235,6 +267,11 @@ def main():
         sys.exit(1)
     
     folder_path = sys.argv[1]
+
+    if not NOTION_API_KEY or not DATABASE_ID:
+        print("Missing NOTION_TOKEN/NOTION_API_KEY or NOTION_GALLERY_DATABASE_ID.")
+        print("Set them in your environment or .env.local before running.")
+        sys.exit(1)
     
     if not os.path.exists(folder_path):
         print(f"Klasör bulunamadı: {folder_path}")
