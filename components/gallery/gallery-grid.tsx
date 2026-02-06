@@ -21,6 +21,7 @@ interface GalleryImage {
   srcOriginal?: string
   width?: number
   height?: number
+  aspectRatio?: string
   alt: string
   name?: string
   title?: string
@@ -85,10 +86,14 @@ function GalleryImageCard({
   const imageSrc = hasError ? null : (useOriginal ? image.srcOriginal : image.src)
   const imageSrcSet = useOriginal ? undefined : image.srcSet
   const imageSizes = imageSrcSet ? "(max-width: 640px) 100vw, 33vw" : undefined
-  const hasRatio = Boolean(image.width && image.height)
-  const aspectStyle: React.CSSProperties = {
-    aspectRatio: hasRatio ? `${image.width}/${image.height}` : "4 / 3",
-  }
+  const ratio =
+    image.width && image.height
+      ? `${image.width}/${image.height}`
+      : image.aspectRatio
+  const hasAspect = Boolean(ratio)
+  const aspectStyle: React.CSSProperties | undefined = hasAspect
+    ? { aspectRatio: ratio }
+    : undefined
 
   return (
     <button
@@ -100,7 +105,7 @@ function GalleryImageCard({
       {/* Container reserves aspect ratio to prevent layout shift */}
       <div className="relative w-full overflow-hidden" style={aspectStyle}>
         {/* Blur placeholder - loads instantly */}
-        {image.blurDataUrl && (
+        {image.blurDataUrl && hasAspect && (
           <img
             src={image.blurDataUrl}
             alt=""
@@ -137,8 +142,9 @@ function GalleryImageCard({
             sizes={imageSizes}
             alt={image.alt || image.title || image.name || "Gallery image"}
             className={cn(
-              "absolute inset-0 w-full h-full transition-[opacity,transform,filter] duration-500 ease-out group-hover:scale-[1.02] group-hover:saturate-[1.05]",
-              "object-cover",
+              hasAspect
+                ? "absolute inset-0 w-full h-full transition-[opacity,transform,filter] duration-500 ease-out group-hover:scale-[1.02] group-hover:saturate-[1.05] object-cover"
+                : "w-full h-auto block transition-[opacity,transform,filter] duration-500 ease-out group-hover:scale-[1.02] group-hover:saturate-[1.05]",
               isLoaded ? "opacity-100" : "opacity-0"
             )}
             loading={index < 6 ? "eager" : "lazy"}

@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import Link from "next/link"
 import { ArrowUpRight, ChevronLeft, ChevronRight } from "lucide-react"
 
@@ -15,15 +15,79 @@ interface GalleryImage {
   slug?: string
 }
 
+interface GalleryApiImage {
+  id: string
+  name?: string
+  alt?: string
+  src: string
+  srcFull?: string
+  srcOriginal?: string
+  width?: number
+  height?: number
+  category?: string
+  selected?: boolean
+}
+
+interface GalleryApiResponse {
+  success: boolean
+  total: number
+  images: GalleryApiImage[]
+  error?: string
+}
+
 interface SelectedProjectsSectionProps {
   projects: GalleryImage[]
 }
 
 export function SelectedProjectsSection({ projects }: SelectedProjectsSectionProps) {
-  if (projects.length === 0) return null
+  const [projectItems, setProjectItems] = useState<GalleryImage[]>(projects)
+  const [refreshToken, setRefreshToken] = useState(0)
+  const refreshOnceRef = useRef(false)
+  const refreshInFlightRef = useRef(false)
+
+  useEffect(() => {
+    setProjectItems(projects)
+  }, [projects])
+
+  const refreshProjects = useCallback(async () => {
+    if (refreshInFlightRef.current) return
+    refreshInFlightRef.current = true
+
+    try {
+      const response = await fetch("/api/gallery?limit=8&selected=1", {
+        cache: "no-store",
+      })
+      if (!response.ok) {
+        throw new Error(`Gallery refresh failed (${response.status})`)
+      }
+      const data = (await response.json()) as GalleryApiResponse
+      if (!data?.images || data.images.length === 0) {
+        throw new Error("Gallery refresh returned no images")
+      }
+
+      const mapped = data.images.map((img) => ({
+        id: img.id,
+        title: img.name || img.alt || "Untitled",
+        imageUrl: img.src,
+        fallbackUrl: img.srcOriginal || img.srcFull || undefined,
+        width: img.width,
+        height: img.height,
+        category: img.category,
+      }))
+
+      setProjectItems(mapped)
+      setRefreshToken((token) => token + 1)
+    } catch (error) {
+      console.warn("Gallery refresh failed:", error)
+    } finally {
+      refreshInFlightRef.current = false
+    }
+  }, [])
+
+  if (projectItems.length === 0) return null
 
   // Show up to 8 selected images in a horizontal slider
-  const displayProjects = projects.slice(0, 8)
+  const displayProjects = projectItems.slice(0, 8)
   const scrollerRef = useRef<HTMLDivElement | null>(null)
   const [canScrollLeft, setCanScrollLeft] = useState(false)
   const [canScrollRight, setCanScrollRight] = useState(false)
@@ -106,7 +170,7 @@ export function SelectedProjectsSection({ projects }: SelectedProjectsSectionPro
           >
             {displayProjects.map((project, index) => (
               <Link
-                key={project.id}
+                key={`${project.id}-${refreshToken}`}
                 href="/gallery"
                 className="group flex-none snap-start w-[64vw] sm:w-[320px] md:w-[360px] lg:w-[400px] xl:w-[440px] 2xl:w-[480px]"
               >
@@ -123,13 +187,22 @@ export function SelectedProjectsSection({ projects }: SelectedProjectsSectionPro
                     referrerPolicy="no-referrer"
                     onError={(event) => {
                       const img = event.currentTarget
-                      if (img.dataset.fallback === "true") return
-                      img.dataset.fallback = "true"
-                      if (project.fallbackUrl) {
+                      const stage = img.dataset.stage || "primary"
+                      if (stage === "primary" && project.fallbackUrl) {
+                        img.dataset.stage = "fallback"
                         img.src = project.fallbackUrl
-                      } else {
-                        img.src = "/placeholder.jpg"
+                        return
                       }
+
+                      if (!refreshOnceRef.current) {
+                        refreshOnceRef.current = true
+                        img.dataset.stage = "refresh"
+                        void refreshProjects()
+                        return
+                      }
+
+                      img.dataset.stage = "failed"
+                      img.src = "/placeholder.jpg"
                     }}
                   />
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />
