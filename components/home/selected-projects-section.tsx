@@ -45,10 +45,13 @@ export function SelectedProjectsSection({ projects }: SelectedProjectsSectionPro
   const refreshOnceRef = useRef(false)
   const refreshInFlightRef = useRef(false)
   const refreshAttemptsRef = useRef(0)
+  const initialRefreshDoneRef = useRef(false)
 
   useEffect(() => {
     setProjectItems(projects)
     refreshOnceRef.current = false
+    refreshAttemptsRef.current = 0
+    initialRefreshDoneRef.current = false
   }, [projects])
 
   const refreshProjects = useCallback(async () => {
@@ -115,6 +118,12 @@ export function SelectedProjectsSection({ projects }: SelectedProjectsSectionPro
     setCanScrollLeft(el.scrollLeft > 4)
     setCanScrollRight(el.scrollLeft < maxScrollLeft - 4)
   }
+
+  useEffect(() => {
+    if (initialRefreshDoneRef.current) return
+    initialRefreshDoneRef.current = true
+    void refreshProjects()
+  }, [refreshProjects])
 
   useEffect(() => {
     const el = scrollerRef.current

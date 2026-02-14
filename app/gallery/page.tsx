@@ -1,5 +1,5 @@
 import type { Metadata } from "next"
-import { getGalleryImages } from "@/lib/notion"
+import { getGalleryImagesFresh } from "@/lib/notion"
 import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
 import { GalleryClient } from "./GalleryClient"
@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 export const dynamic = "force-dynamic"
 
 export default async function GalleryPage() {
-  const images = await getGalleryImages()
+  const images = await getGalleryImagesFresh()
   
   // Get unique categories
   const categories = [...new Set(

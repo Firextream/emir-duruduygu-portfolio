@@ -2,7 +2,7 @@ import nextDynamic from "next/dynamic"
 import { Navigation } from "@/components/navigation"
 import { HeroSection } from "@/components/hero-section"
 import { Footer } from "@/components/footer"
-import { getAllPosts, getGalleryImages } from "@/lib/notion"
+import { getAllPosts, getGalleryImagesFresh } from "@/lib/notion"
 
 // Lazy load below-the-fold sections
 const LatestPostsSection = nextDynamic(() => import("@/components/home/latest-posts-section").then(mod => ({ default: mod.LatestPostsSection })))
@@ -17,7 +17,7 @@ export default async function HomePage() {
   // Fetch posts and gallery images on the server side
   const [postsData, galleryImagesData] = await Promise.all([
     getAllPosts(),
-    getGalleryImages()
+    getGalleryImagesFresh()
   ])
   
   // Ensure we have arrays to work with

@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server"
-import { getGalleryImages } from "@/lib/notion"
+import { getGalleryImagesFresh } from "@/lib/notion"
 
 export const dynamic = "force-dynamic"
 export const revalidate = 0
@@ -17,7 +17,7 @@ export async function GET(request: Request) {
 
     const limit = limitParam ? Math.max(0, Number.parseInt(limitParam, 10)) : null
 
-    let images = await getGalleryImages()
+    let images = await getGalleryImagesFresh()
 
     if (selectedOnly) {
       const selected = images.filter((img) => img.selected)
