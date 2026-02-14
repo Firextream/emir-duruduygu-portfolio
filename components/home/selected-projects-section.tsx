@@ -44,12 +44,15 @@ export function SelectedProjectsSection({ projects }: SelectedProjectsSectionPro
   const [refreshToken, setRefreshToken] = useState(0)
   const refreshOnceRef = useRef(false)
   const refreshInFlightRef = useRef(false)
+  const refreshAttemptsRef = useRef(0)
 
   useEffect(() => {
     setProjectItems(projects)
+    refreshOnceRef.current = false
   }, [projects])
 
   const refreshProjects = useCallback(async () => {
+    if (refreshAttemptsRef.current >= 2) return
     if (refreshInFlightRef.current) return
     refreshInFlightRef.current = true
 
@@ -77,12 +80,25 @@ export function SelectedProjectsSection({ projects }: SelectedProjectsSectionPro
 
       setProjectItems(mapped)
       setRefreshToken((token) => token + 1)
+      refreshAttemptsRef.current += 1
     } catch (error) {
       console.warn("Gallery refresh failed:", error)
     } finally {
       refreshInFlightRef.current = false
     }
   }, [])
+
+  const checkForBrokenImages = useCallback(() => {
+    const el = scrollerRef.current
+    if (!el) return
+    const imgs = Array.from(el.querySelectorAll("img"))
+    if (imgs.length === 0) return
+    const failed = imgs.some((img) => img.complete && img.naturalWidth === 0)
+    if (failed && !refreshOnceRef.current) {
+      refreshOnceRef.current = true
+      void refreshProjects()
+    }
+  }, [refreshProjects])
 
   if (projectItems.length === 0) return null
 
@@ -108,11 +124,16 @@ export function SelectedProjectsSection({ projects }: SelectedProjectsSectionPro
     el.addEventListener("scroll", onScroll, { passive: true })
     const ro = new ResizeObserver(() => updateScrollState())
     ro.observe(el)
+
+    const t1 = window.setTimeout(checkForBrokenImages, 1200)
+    const t2 = window.setTimeout(checkForBrokenImages, 4000)
     return () => {
       el.removeEventListener("scroll", onScroll)
       ro.disconnect()
+      window.clearTimeout(t1)
+      window.clearTimeout(t2)
     }
-  }, [displayProjects.length])
+  }, [displayProjects.length, checkForBrokenImages])
 
   const scrollByAmount = (direction: "left" | "right") => {
     const el = scrollerRef.current
