@@ -9,6 +9,7 @@ import { ThemeProvider } from "@/components/theme-provider"
 import { StructuredData } from "@/lib/structured-data"
 import { SkipToContent } from "@/components/skip-to-content"
 import { ServiceWorkerCleanup } from "@/components/service-worker-registration"
+import { SpotifyCornerIndicator } from "@/components/spotify-corner-indicator"
 import "./globals.css"
 
 const inter = Inter({
@@ -147,6 +148,7 @@ export default function RootLayout({
           <main id="main-content" tabIndex={-1}>
             {children}
           </main>
+          <SpotifyCornerIndicator />
           <SocialButtons />
           <BackToTop />
         </ThemeProvider>
