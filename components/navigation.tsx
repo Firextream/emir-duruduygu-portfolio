@@ -19,6 +19,7 @@ export function Navigation() {
   const pathname = usePathname()
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const isTransparentHeader = !isScrolled
 
   useEffect(() => {
     const handleScroll = () => {
@@ -47,7 +48,7 @@ export function Navigation() {
           "fixed top-0 left-0 right-0 z-50 transition-all duration-500",
           isScrolled 
             ? "bg-background/95 backdrop-blur-md border-b border-border" 
-            : "bg-transparent",
+            : "bg-gradient-to-b from-background/75 via-background/45 to-transparent backdrop-blur-sm",
         )}
       >
         <nav className="max-w-[1600px] mx-auto px-6 lg:px-12">
@@ -74,7 +75,9 @@ export function Navigation() {
                       "text-[10px] font-mono tracking-wider absolute -top-3 left-0 transition-colors duration-300",
                       isActive 
                         ? "text-accent" 
-                        : "text-muted-foreground group-hover:text-accent"
+                        : isTransparentHeader
+                          ? "text-foreground/70 group-hover:text-accent"
+                          : "text-muted-foreground group-hover:text-accent"
                     )}>
                       {link.num}
                     </span>
@@ -82,7 +85,9 @@ export function Navigation() {
                       "text-sm tracking-wide transition-colors duration-300",
                       isActive 
                         ? "text-foreground font-medium"
-                        : "text-muted-foreground group-hover:text-foreground",
+                        : isTransparentHeader
+                          ? "text-foreground/90 group-hover:text-foreground"
+                          : "text-muted-foreground group-hover:text-foreground",
                     )}>
                       {link.label}
                     </span>
