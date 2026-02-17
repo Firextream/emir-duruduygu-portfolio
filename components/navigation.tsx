@@ -48,7 +48,7 @@ export function Navigation() {
           "fixed top-0 left-0 right-0 z-50 transition-all duration-500",
           isScrolled 
             ? "bg-background/95 backdrop-blur-md border-b border-border" 
-            : "bg-gradient-to-b from-background/75 via-background/45 to-transparent backdrop-blur-sm",
+            : "bg-transparent",
         )}
       >
         <nav className="max-w-[1600px] mx-auto px-6 lg:px-12">
@@ -62,7 +62,13 @@ export function Navigation() {
             </Link>
 
             {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center gap-8">
+            <div
+              className={cn(
+                "hidden md:flex items-center gap-8 transition-all duration-300",
+                isTransparentHeader &&
+                  "px-5 py-2 rounded-full bg-background/60 backdrop-blur-md border border-border/50 shadow-[0_8px_30px_rgba(0,0,0,0.10)]"
+              )}
+            >
               {navLinks.map((link) => {
                 const isActive = pathname === link.href || pathname.startsWith(link.href + "/")
                 return (
@@ -72,11 +78,12 @@ export function Navigation() {
                     className="group relative"
                   >
                     <span className={cn(
-                      "text-[10px] font-mono tracking-wider absolute -top-3 left-0 transition-colors duration-300",
+                      "text-[10px] font-mono tracking-wider absolute left-0 transition-colors duration-300",
+                      isTransparentHeader ? "-top-2.5" : "-top-3",
                       isActive 
                         ? "text-accent" 
                         : isTransparentHeader
-                          ? "text-foreground/70 group-hover:text-accent"
+                          ? "text-foreground/65 group-hover:text-accent"
                           : "text-muted-foreground group-hover:text-accent"
                     )}>
                       {link.num}
@@ -86,7 +93,7 @@ export function Navigation() {
                       isActive 
                         ? "text-foreground font-medium"
                         : isTransparentHeader
-                          ? "text-foreground/90 group-hover:text-foreground"
+                          ? "text-foreground/85 group-hover:text-foreground"
                           : "text-muted-foreground group-hover:text-foreground",
                     )}>
                       {link.label}
