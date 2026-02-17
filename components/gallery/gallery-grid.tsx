@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useState, useEffect, TouchEvent, useMemo, useCallback } from "react"
 import { X, ChevronLeft, ChevronRight, Download } from "lucide-react"
@@ -89,7 +89,7 @@ function GalleryImageCard({
   const ratio =
     image.width && image.height
       ? `${image.width}/${image.height}`
-      : image.aspectRatio
+      : image.aspectRatio || "3/4"
   const hasAspect = Boolean(ratio)
   const aspectStyle: React.CSSProperties | undefined = hasAspect
     ? { aspectRatio: ratio }
@@ -100,7 +100,7 @@ function GalleryImageCard({
       onClick={onClick}
       onMouseEnter={handleMouseEnter}
       onTouchStart={handleMouseEnter}
-      className="group relative w-full overflow-hidden bg-transparent cursor-pointer block break-inside-avoid mb-4"
+      className="group relative w-full overflow-hidden bg-transparent cursor-pointer block break-inside-avoid mb-4 min-h-[44px]"
     >
       {/* Container reserves aspect ratio to prevent layout shift */}
       <div className="relative w-full overflow-hidden" style={aspectStyle}>
@@ -272,7 +272,7 @@ export function GalleryGrid({ images, categories }: GalleryGridProps) {
         <button 
           onClick={() => setActiveCategory(null)}
           className={cn(
-            "font-mono text-xs sm:text-sm tracking-wider uppercase transition-colors whitespace-nowrap py-1",
+            "font-mono text-xs sm:text-sm tracking-wider uppercase transition-colors whitespace-nowrap min-h-[32px] px-1 py-1",
             activeCategory === null 
               ? "text-foreground" 
               : "text-muted-foreground hover:text-foreground"
@@ -285,7 +285,7 @@ export function GalleryGrid({ images, categories }: GalleryGridProps) {
             key={category}
             onClick={() => setActiveCategory(category)}
             className={cn(
-              "font-mono text-xs sm:text-sm tracking-wider uppercase transition-colors whitespace-nowrap py-1",
+              "font-mono text-xs sm:text-sm tracking-wider uppercase transition-colors whitespace-nowrap min-h-[32px] px-1 py-1",
               activeCategory === category 
                 ? "text-foreground" 
                 : "text-muted-foreground hover:text-foreground"
@@ -340,7 +340,7 @@ export function GalleryGrid({ images, categories }: GalleryGridProps) {
                   if (selectedImage) {
                     const filename = selectedImage.title || selectedImage.name || 'duruduygu-photo'
                     // Use original URL for download (not Cloudinary)
-                    const originalUrl = (selectedImage as any).srcOriginal || selectedImage.src
+                    const originalUrl = selectedImage.srcOriginal || selectedImage.src
                     const downloadUrl = `/api/download?url=${encodeURIComponent(originalUrl)}&filename=${encodeURIComponent(filename)}`
                     const link = document.createElement('a')
                     link.href = downloadUrl
@@ -426,10 +426,10 @@ export function GalleryGrid({ images, categories }: GalleryGridProps) {
           <div className="absolute bottom-0 left-0 right-0 z-50 bg-black py-4 px-4">
             <div className="text-center">
               {/* Category & Location */}
-              <p className="font-mono text-[10px] tracking-wider text-white/40 uppercase">
+              <p className="font-mono text-[10px] tracking-wider text-white/40 uppercase leading-relaxed">
                 {[selectedImage.category, selectedImage.place].filter(Boolean).join(' · ')}
                 {selectedImage.exif && (
-                  <span className="hidden sm:inline">
+                  <span className="block sm:inline">
                     {' · '}{[selectedImage.exif.camera, selectedImage.exif.focalLength, selectedImage.exif.aperture, selectedImage.exif.shutterSpeed, selectedImage.exif.iso && `ISO ${selectedImage.exif.iso}`].filter(Boolean).join(' · ')}
                   </span>
                 )}
@@ -450,3 +450,4 @@ export function GalleryGrid({ images, categories }: GalleryGridProps) {
     </div>
   )
 }
+
