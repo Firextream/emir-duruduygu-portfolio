@@ -101,7 +101,7 @@ export function HeroSection() {
           <div className="absolute bottom-6 left-6 right-6 flex items-end justify-between text-white/80">
             <div>
               <p className="font-mono text-xs tracking-wider uppercase">Featured Work</p>
-              <p className="font-serif text-lg mt-1">Balcony Rhythms</p>
+              <p className="font-serif text-lg mt-1">Urban Pleats</p>
             </div>
             <span className="font-mono text-sm">2024</span>
           </div>
