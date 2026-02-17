@@ -46,7 +46,7 @@ export function SpotifyCornerIndicator({ className }: { className?: string }) {
   const isActive = Boolean(track.isPlaying && track.songUrl)
   const nowPlayingText =
     track.title && track.artist ? `${track.title} - ${track.artist}` : track.title || "Listening on Spotify"
-  const shouldScroll = nowPlayingText.length > 28
+  const shouldScroll = nowPlayingText.length > 24
 
   return (
     <a
@@ -57,7 +57,7 @@ export function SpotifyCornerIndicator({ className }: { className?: string }) {
       aria-label={isActive ? `Now playing: ${nowPlayingText}` : "Spotify not active"}
       title={nowPlayingText}
       className={cn(
-        "fixed bottom-6 right-6 md:bottom-44 z-40 flex h-9 w-[220px] items-center gap-2 rounded-full border border-border bg-background/85 px-3 text-[11px] font-mono tracking-wide text-foreground/85 backdrop-blur-sm transition-all duration-300 md:w-[280px]",
+        "fixed bottom-6 right-6 md:bottom-44 z-40 flex h-[34px] w-[208px] items-center gap-1.5 rounded-full border border-border bg-background/85 px-2.5 text-[11px] font-mono tracking-wide text-foreground/85 backdrop-blur-sm transition-all duration-300 md:w-[264px]",
         isActive ? "pointer-events-auto translate-y-0 opacity-100" : "pointer-events-none translate-y-2 opacity-0",
         className,
       )}
@@ -74,7 +74,7 @@ export function SpotifyCornerIndicator({ className }: { className?: string }) {
             aria-hidden="true"
           >
             <span className="whitespace-nowrap">{nowPlayingText}</span>
-            <span className="opacity-40">·</span>
+            <span className="opacity-40">-</span>
             <span className="whitespace-nowrap">{nowPlayingText}</span>
           </span>
         ) : (
