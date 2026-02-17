@@ -1,7 +1,6 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { Music2 } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 interface SpotifyNowPlayingState {
@@ -45,7 +44,8 @@ export function SpotifyCornerIndicator({ className }: { className?: string }) {
   }, [])
 
   const isActive = Boolean(track.isPlaying && track.songUrl)
-  const title = track.title && track.artist ? `${track.title} - ${track.artist}` : "Listening on Spotify"
+  const nowPlayingText =
+    track.title && track.artist ? `${track.title} - ${track.artist}` : track.title || "Listening on Spotify"
 
   return (
     <a
@@ -53,11 +53,10 @@ export function SpotifyCornerIndicator({ className }: { className?: string }) {
       target={isActive ? "_blank" : undefined}
       rel={isActive ? "noopener noreferrer" : undefined}
       tabIndex={isActive ? 0 : -1}
-      aria-label={isActive ? `Now playing: ${title}` : "Spotify not active"}
-      title={title}
+      aria-label={isActive ? `Now playing: ${nowPlayingText}` : "Spotify not active"}
+      title={nowPlayingText}
       className={cn(
-        "fixed bottom-6 right-6 md:bottom-44 z-40 flex h-9 items-center gap-2 rounded-full border border-border bg-background/85 px-3 text-[11px] font-mono tracking-wide text-foreground/85 backdrop-blur-sm transition-all duration-300",
-        "min-w-[44px] justify-center md:min-w-[116px] md:justify-start",
+        "fixed bottom-6 right-6 md:bottom-44 z-40 flex h-9 w-[220px] items-center gap-2 rounded-full border border-border bg-background/85 px-3 text-[11px] font-mono tracking-wide text-foreground/85 backdrop-blur-sm transition-all duration-300 md:w-[280px]",
         isActive ? "pointer-events-auto translate-y-0 opacity-100" : "pointer-events-none translate-y-2 opacity-0",
         className,
       )}
@@ -66,8 +65,7 @@ export function SpotifyCornerIndicator({ className }: { className?: string }) {
         <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-500/70" />
         <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
       </span>
-      <Music2 className="h-3.5 w-3.5 text-foreground/70 md:hidden" aria-hidden="true" />
-      <span className="hidden md:inline">Spotify active</span>
+      <span className="truncate text-foreground/80">{nowPlayingText}</span>
     </a>
   )
 }
