@@ -39,7 +39,7 @@ export function NewsletterSection() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center">
           {/* Left Column - Text */}
           <div className="space-y-6">
-            <span className="font-mono text-sm tracking-wider text-accent uppercase">
+            <span className="font-mono text-sm tracking-wider text-foreground/70 uppercase">
               Newsletter
             </span>
             <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl text-foreground leading-tight">

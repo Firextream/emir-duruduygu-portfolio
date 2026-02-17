@@ -7,7 +7,7 @@ interface StructuredDataProps {
 
 // Generate JSON-LD structured data
 export function generateStructuredData({ type, data }: StructuredDataProps) {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://emirduruduygu.vercel.app"
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.duruduygu.com"
   
   switch (type) {
     case "article":
@@ -121,7 +121,7 @@ export function BreadcrumbStructuredData({
 }: { 
   items: { name: string; url: string }[] 
 }) {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://emirduruduygu.vercel.app"
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.duruduygu.com"
   
   const jsonLd = {
     "@context": "https://schema.org",

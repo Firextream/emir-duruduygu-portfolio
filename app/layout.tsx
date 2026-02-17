@@ -47,7 +47,7 @@ export const metadata: Metadata = {
     address: false,
     telephone: false,
   },
-  metadataBase: new URL("https://emirduruduygu.vercel.app"),
+  metadataBase: new URL("https://www.duruduygu.com"),
   alternates: {
     canonical: "/",
     types: {
@@ -57,7 +57,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Duruduygu - Photography & Creative Portfolio",
     description: "Amateur photographer and curious explorer. Capturing architecture, street moments, and anything that sparks inspiration - structure, light, and the unexpected.",
-    url: "https://duruduygu.com",
+    url: "https://www.duruduygu.com",
     siteName: "Duruduygu",
     images: [
       {

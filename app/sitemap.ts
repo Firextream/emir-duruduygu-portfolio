@@ -2,7 +2,7 @@ import { MetadataRoute } from 'next'
 import { getAllPosts } from '@/lib/notion'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = 'https://emirduruduygu.com'
+  const baseUrl = 'https://www.duruduygu.com'
   
   // Static pages
   const staticPages: MetadataRoute.Sitemap = [

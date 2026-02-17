@@ -27,7 +27,7 @@ export default async function Image() {
       >
         {/* Logo Image */}
         <img
-          src="https://duruduygu.com/icon-512.jpg"
+          src="https://www.duruduygu.com/icon-512.jpg"
           alt="Duruduygu Logo"
           width={400}
           height={400}

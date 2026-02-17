@@ -11,7 +11,7 @@ export function ManifestoSection() {
         
         <div className="text-center relative z-10">
           {/* Label */}
-          <span className="font-mono text-sm tracking-wider text-accent uppercase mb-8 block">
+          <span className="font-mono text-sm tracking-wider text-foreground/70 uppercase mb-8 block">
             Philosophy
           </span>
           

@@ -20,9 +20,8 @@ export function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   
-  // Check if we're on pages with dark hero backgrounds
-  const isHomePage = pathname === "/"
-  const hasDarkHero = isHomePage
+  // Keep high contrast nav labels on all pages.
+  const hasDarkHero = false
   const useWhiteText = hasDarkHero && !isScrolled
   const isPortfolioPage = false // Portfolio page no longer has dark hero
 
@@ -128,20 +127,20 @@ export function Navigation() {
               aria-label="Toggle menu"
             >
               <div className="relative w-6 h-5">
-                <span 
+                <span
                   className={cn(
-                    "absolute left-0 w-full h-0.5 rounded-full transition-all duration-300",
+                    "absolute left-0 top-1/2 -translate-y-1/2 w-full h-0.5 rounded-full transition-all duration-300 transform-gpu",
                     isMobileMenuOpen 
                       ? "bg-foreground" 
                       : isPortfolioPage && !isScrolled 
                         ? "bg-white" 
                         : "bg-foreground",
-                    isMobileMenuOpen ? "top-1/2 -translate-y-1/2 rotate-45" : "top-0"
+                    isMobileMenuOpen ? "translate-y-0 rotate-45" : "-translate-y-2"
                   )}
                 />
-                <span 
+                <span
                   className={cn(
-                    "absolute left-0 top-1/2 -translate-y-1/2 w-full h-0.5 rounded-full transition-all duration-300",
+                    "absolute left-0 top-1/2 -translate-y-1/2 w-full h-0.5 rounded-full transition-all duration-300 transform-gpu",
                     isMobileMenuOpen 
                       ? "bg-foreground" 
                       : isPortfolioPage && !isScrolled 
@@ -150,15 +149,15 @@ export function Navigation() {
                     isMobileMenuOpen ? "opacity-0 scale-0" : "opacity-100 scale-100"
                   )}
                 />
-                <span 
+                <span
                   className={cn(
-                    "absolute left-0 w-full h-0.5 rounded-full transition-all duration-300",
+                    "absolute left-0 top-1/2 -translate-y-1/2 w-full h-0.5 rounded-full transition-all duration-300 transform-gpu",
                     isMobileMenuOpen 
                       ? "bg-foreground" 
                       : isPortfolioPage && !isScrolled 
                         ? "bg-white" 
                         : "bg-foreground",
-                    isMobileMenuOpen ? "top-1/2 -translate-y-1/2 -rotate-45" : "bottom-0"
+                    isMobileMenuOpen ? "translate-y-0 -rotate-45" : "translate-y-2"
                   )}
                 />
               </div>

@@ -50,7 +50,7 @@ export function Breadcrumb({ items, className = "" }: BreadcrumbProps) {
 
 // JSON-LD structured data for breadcrumbs
 export function BreadcrumbJsonLd({ items }: { items: BreadcrumbItem[] }) {
-  const baseUrl = "https://emirduruduygu.vercel.app"
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.duruduygu.com"
   
   const jsonLd = {
     "@context": "https://schema.org",

@@ -80,7 +80,9 @@ export function Footer() {
             </nav>
             
             {/* Spotify Now Playing */}
-            <SpotifyNowPlaying variant="minimal" />
+            <div className="min-w-[260px] md:min-w-[300px] md:max-w-[360px]">
+              <SpotifyNowPlaying variant="minimal" className="w-full" />
+            </div>
             
             {/* Right: Social & Back to Top */}
             <div className="flex items-center gap-6">

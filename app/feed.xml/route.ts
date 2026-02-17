@@ -3,7 +3,7 @@ import { getAllPosts } from "@/lib/notion"
 export async function GET() {
   const posts = await getAllPosts()
   
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://emirduruduygu.vercel.app"
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.duruduygu.com"
   
   const rssItems = posts
     .filter(post => post !== null)

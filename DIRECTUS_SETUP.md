@@ -60,6 +60,7 @@ Set these in Vercel Project Settings -> Environment Variables:
 - `DIRECTUS_POSTS_COLLECTION=posts` (optional)
 - `DIRECTUS_GALLERY_COLLECTION=gallery_images` (optional)
 - `DIRECTUS_PORTFOLIO_COLLECTION=portfolio_items` (optional)
+- `NEXT_PUBLIC_SITE_URL=https://www.duruduygu.com`
 
 ## 3) Directus Permissions
 
@@ -89,3 +90,28 @@ After deployment:
 - `/portfolio/[id]` resolves with Directus item IDs
 - `/api/test-gallery` returns non-empty images
 
+## 6) Daily Content Workflow (Directus-only)
+
+Open admin panel: `https://cms.duruduygu.com/admin`
+
+### Blog (`posts`)
+- Required: `title`, `slug`, `content`, `status`
+- Recommended: `excerpt`, `date`, `category`, `featured`, `cover_image`
+- Publish rule: set `status=published`
+
+### Gallery (`gallery_images`)
+- Required: `image`
+- Recommended: `title`, `alt`, `place`, `category`, `selected`, `featured`, `status`
+- Publish rule: set `status=published`
+
+### Portfolio (`portfolio_items`)
+- Required: `image`
+- Recommended: `title`, `description`, `place`, `category`, `date`, `status`
+- Publish rule: set `status=published`
+
+### Post-publish checks
+- `https://www.duruduygu.com/api/test-gallery`
+- `https://www.duruduygu.com/gallery`
+- `https://www.duruduygu.com/blog`
+
+Draft items are hidden from the site.
