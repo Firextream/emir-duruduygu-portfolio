@@ -46,6 +46,7 @@ export function SpotifyCornerIndicator({ className }: { className?: string }) {
   const isActive = Boolean(track.isPlaying && track.songUrl)
   const nowPlayingText =
     track.title && track.artist ? `${track.title} - ${track.artist}` : track.title || "Listening on Spotify"
+  const shouldScroll = nowPlayingText.length > 28
 
   return (
     <a
@@ -65,7 +66,21 @@ export function SpotifyCornerIndicator({ className }: { className?: string }) {
         <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-500/70" />
         <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
       </span>
-      <span className="truncate text-foreground/80">{nowPlayingText}</span>
+      <span className="relative block flex-1 overflow-hidden text-foreground/80">
+        {shouldScroll ? (
+          <span
+            className="flex min-w-max items-center gap-4 animate-marquee"
+            style={{ animationDuration: "12s" }}
+            aria-hidden="true"
+          >
+            <span className="whitespace-nowrap">{nowPlayingText}</span>
+            <span className="opacity-40">·</span>
+            <span className="whitespace-nowrap">{nowPlayingText}</span>
+          </span>
+        ) : (
+          <span className="whitespace-nowrap">{nowPlayingText}</span>
+        )}
+      </span>
     </a>
   )
 }
