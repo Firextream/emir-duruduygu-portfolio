@@ -118,7 +118,7 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <meta name="view-transition" content="same-origin" />
         {/* Preload critical hero asset */}
-        <link rel="preload" href="/coastal-harbor-scene-desktop.avif" as="image" type="image/avif" fetchPriority="high" />
+        <link rel="preload" href="/2-IMG_3849.jpg" as="image" type="image/jpeg" fetchPriority="high" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         {/* Preconnect to Notion image hosts for faster LCP */}

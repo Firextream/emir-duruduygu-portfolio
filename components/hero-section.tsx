@@ -82,19 +82,15 @@ export function HeroSection() {
           {/* subtle solid background to prevent bright 'pop' while loading */}
           <div className="absolute inset-0 bg-white dark:bg-neutral-900" aria-hidden="true" />
           <picture className="absolute inset-0 block">
-            <source media="(max-width: 767px)" type="image/avif" srcSet="/coastal-harbor-scene-mobile.avif" />
-            <source media="(max-width: 767px)" type="image/webp" srcSet="/coastal-harbor-scene-mobile.webp" />
-            <source type="image/avif" srcSet="/coastal-harbor-scene-desktop.avif" />
-            <source type="image/webp" srcSet="/coastal-harbor-scene-desktop.webp" />
             <img
-              src="/coastal-harbor-scene-desktop.jpg"
+              src="/2-IMG_3849.jpg"
               alt="Featured architectural photograph"
               className="w-full h-full object-cover bg-white dark:bg-neutral-900"
               loading="eager"
               fetchPriority="high"
               decoding="async"
-              width={2624}
-              height={3936}
+              width={5734}
+              height={3823}
             />
           </picture>
           
@@ -105,7 +101,7 @@ export function HeroSection() {
           <div className="absolute bottom-6 left-6 right-6 flex items-end justify-between text-white/80">
             <div>
               <p className="font-mono text-xs tracking-wider uppercase">Featured Work</p>
-              <p className="font-serif text-lg mt-1">Coastal Serenity</p>
+              <p className="font-serif text-lg mt-1">Balcony Rhythms</p>
             </div>
             <span className="font-mono text-sm">2024</span>
           </div>
