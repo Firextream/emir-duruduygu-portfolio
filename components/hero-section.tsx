@@ -89,7 +89,7 @@ export function HeroSection() {
             <img
               src="/2-IMG_3849-desktop.jpg"
               alt="Featured architectural photograph"
-              className="w-full h-full object-cover bg-white dark:bg-neutral-900"
+              className="w-full h-full object-cover bg-white dark:bg-neutral-900 brightness-[0.88] contrast-[1.08] saturate-[0.92]"
               loading="eager"
               fetchPriority="high"
               decoding="async"
@@ -99,15 +99,16 @@ export function HeroSection() {
           </picture>
           
           {/* Top Gradient Overlay for Navigation Visibility */}
-          <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-black/50 to-transparent pointer-events-none" />
+          <div className="absolute inset-x-0 top-0 h-36 bg-gradient-to-b from-black/62 via-black/28 to-transparent pointer-events-none" />
+          <div className="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-black/68 via-black/25 to-transparent pointer-events-none" />
           
           {/* Image Overlay Info */}
-          <div className="absolute bottom-6 left-6 right-6 flex items-end justify-between text-white/80">
+          <div className="absolute bottom-6 left-6 right-6 flex items-end justify-between text-white/95 [text-shadow:0_1px_8px_rgba(0,0,0,0.55)]">
             <div>
-              <p className="font-mono text-xs tracking-wider uppercase">Featured Work</p>
+              <p className="font-mono text-xs tracking-wider uppercase text-white/80">Featured Work</p>
               <p className="font-serif text-lg mt-1">Urban Pleats</p>
             </div>
-            <span className="font-mono text-sm">2024</span>
+            <span className="font-mono text-sm text-white/90">2025</span>
           </div>
         </div>
       </div>
