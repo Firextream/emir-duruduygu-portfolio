@@ -64,9 +64,9 @@ export function Navigation() {
             {/* Desktop Navigation */}
             <div
               className={cn(
-                "hidden md:flex items-center gap-8 transition-all duration-300",
+                "hidden md:flex items-center gap-6 transition-all duration-300",
                 isTransparentHeader &&
-                  "px-5 py-2 rounded-full bg-background/60 backdrop-blur-md border border-border/50 shadow-[0_8px_30px_rgba(0,0,0,0.10)]"
+                  "px-5 py-2.5 rounded-full bg-background/60 backdrop-blur-md border border-border/50 shadow-[0_8px_30px_rgba(0,0,0,0.10)]"
               )}
             >
               {navLinks.map((link) => {
@@ -75,11 +75,10 @@ export function Navigation() {
                   <Link
                     key={link.href}
                     href={link.href}
-                    className="group relative"
+                    className="group relative flex flex-col items-start justify-center leading-none min-w-[66px]"
                   >
                     <span className={cn(
-                      "text-[10px] font-mono tracking-wider absolute left-0 transition-colors duration-300",
-                      isTransparentHeader ? "-top-2.5" : "-top-3",
+                      "text-[10px] font-mono tracking-wider mb-1 transition-colors duration-300",
                       isActive 
                         ? "text-accent" 
                         : isTransparentHeader
@@ -89,7 +88,7 @@ export function Navigation() {
                       {link.num}
                     </span>
                     <span className={cn(
-                      "text-sm tracking-wide transition-colors duration-300",
+                      "text-sm tracking-wide leading-none transition-colors duration-300",
                       isActive 
                         ? "text-foreground font-medium"
                         : isTransparentHeader
@@ -108,7 +107,7 @@ export function Navigation() {
               })}
               
               {/* Theme Toggle */}
-              <div className="ml-2 flex items-center gap-1">
+              <div className="ml-1 flex items-center gap-2 self-center">
                 <ColorThemePicker />
                 <ThemeToggle variant="minimal" />
               </div>
