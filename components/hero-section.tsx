@@ -82,15 +82,19 @@ export function HeroSection() {
           {/* subtle solid background to prevent bright 'pop' while loading */}
           <div className="absolute inset-0 bg-white dark:bg-neutral-900" aria-hidden="true" />
           <picture className="absolute inset-0 block">
+            <source media="(max-width: 767px)" type="image/avif" srcSet="/2-IMG_3849-mobile.avif" />
+            <source media="(max-width: 767px)" type="image/webp" srcSet="/2-IMG_3849-mobile.webp" />
+            <source type="image/avif" srcSet="/2-IMG_3849-desktop.avif" />
+            <source type="image/webp" srcSet="/2-IMG_3849-desktop.webp" />
             <img
-              src="/2-IMG_3849.jpg"
+              src="/2-IMG_3849-desktop.jpg"
               alt="Featured architectural photograph"
               className="w-full h-full object-cover bg-white dark:bg-neutral-900"
               loading="eager"
               fetchPriority="high"
               decoding="async"
-              width={5734}
-              height={3823}
+              width={1920}
+              height={1280}
             />
           </picture>
           
