@@ -115,3 +115,10 @@ Open admin panel: `https://cms.duruduygu.com/admin`
 - `https://www.duruduygu.com/blog`
 
 Draft items are hidden from the site.
+
+## 7) Newsletter Contacts (Resend)
+
+Newsletter subscribers are stored in Resend audience contacts, not in API Keys.
+
+- Dashboard path: `Audiences -> [Your Audience] -> Contacts`
+- Setup details: see `NEWSLETTER_SETUP.md`

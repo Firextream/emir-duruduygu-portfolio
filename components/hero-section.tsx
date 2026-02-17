@@ -1,6 +1,5 @@
 "use client"
 
-import Image from "next/image"
 import Link from "next/link"
 import { ArrowDown } from "lucide-react"
 import { Typewriter } from "@/components/typewriter"
@@ -82,19 +81,22 @@ export function HeroSection() {
         <div className="relative h-[50vh] lg:h-auto bg-white dark:bg-neutral-900">
           {/* subtle solid background to prevent bright 'pop' while loading */}
           <div className="absolute inset-0 bg-white dark:bg-neutral-900" aria-hidden="true" />
-          <Image
-            src="/coastal-harbor-scene.jpg"
-            alt="Featured architectural photograph"
-            fill
-            priority
-            fetchPriority="high"
-            className="object-cover bg-white dark:bg-neutral-900"
-            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 100vw, 60vw"
-            quality={100}
-            unoptimized
-            placeholder="blur"
-            blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAAUH/8QAIRAAAgEEAQUBAAAAAAAAAAAAAQIDAAQFESEGEhMxQVH/xAAVAQEBAAAAAAAAAAAAAAAAAAADBP/EABsRAAICAwEAAAAAAAAAAAAAAAECABEDITFB/9oADAMBAAIRAxEAPwCtp8lLDlpreSNZFB0CD6PzVW31Tmo2Ky4+J42UEMpjXYP+UpWQGJa2xc//2Q=="
-          />
+          <picture className="absolute inset-0 block">
+            <source media="(max-width: 767px)" type="image/avif" srcSet="/coastal-harbor-scene-mobile.avif" />
+            <source media="(max-width: 767px)" type="image/webp" srcSet="/coastal-harbor-scene-mobile.webp" />
+            <source type="image/avif" srcSet="/coastal-harbor-scene-desktop.avif" />
+            <source type="image/webp" srcSet="/coastal-harbor-scene-desktop.webp" />
+            <img
+              src="/coastal-harbor-scene-desktop.jpg"
+              alt="Featured architectural photograph"
+              className="w-full h-full object-cover bg-white dark:bg-neutral-900"
+              loading="eager"
+              fetchPriority="high"
+              decoding="async"
+              width={2624}
+              height={3936}
+            />
+          </picture>
           
           {/* Top Gradient Overlay for Navigation Visibility */}
           <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-black/50 to-transparent pointer-events-none" />

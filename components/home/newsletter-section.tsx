@@ -7,10 +7,12 @@ import { ArrowRight } from "lucide-react"
 export function NewsletterSection() {
   const [email, setEmail] = useState("")
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle")
+  const [statusMessage, setStatusMessage] = useState("")
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setStatus("loading")
+    setStatusMessage("")
 
     try {
       // Resend API ile email toplama
@@ -23,13 +25,18 @@ export function NewsletterSection() {
       })
 
       if (res.ok) {
+        const data = await res.json()
         setStatus("success")
+        setStatusMessage(data?.message || "Thanks for subscribing.")
         setEmail("")
       } else {
+        const data = await res.json().catch(() => null)
         setStatus("error")
+        setStatusMessage(data?.error || "Subscription failed. Please try again.")
       }
     } catch {
       setStatus("error")
+      setStatusMessage("Connection problem. Please try again.")
     }
   }
 
@@ -55,7 +62,7 @@ export function NewsletterSection() {
             {status === "success" ? (
               <div className="p-8 border border-accent/30 bg-accent/5">
                 <p className="font-serif text-2xl text-foreground mb-2">Welcome aboard.</p>
-                <p className="text-muted-foreground">Thanks for subscribing. Check your inbox soon.</p>
+                <p className="text-muted-foreground">{statusMessage || "Thanks for subscribing. Check your inbox soon."}</p>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-6">
@@ -86,6 +93,12 @@ export function NewsletterSection() {
                 <p className="text-sm text-muted-foreground">
                   No spam, unsubscribe anytime.
                 </p>
+
+                {status === "error" && (
+                  <p className="text-sm text-red-600">
+                    {statusMessage}
+                  </p>
+                )}
               </form>
             )}
           </div>

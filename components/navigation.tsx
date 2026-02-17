@@ -19,11 +19,6 @@ export function Navigation() {
   const pathname = usePathname()
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  
-  // Keep high contrast nav labels on all pages.
-  const hasDarkHero = false
-  const useWhiteText = hasDarkHero && !isScrolled
-  const isPortfolioPage = false // Portfolio page no longer has dark hero
 
   useEffect(() => {
     const handleScroll = () => {
@@ -60,12 +55,7 @@ export function Navigation() {
             {/* Logo */}
             <Link
               href="/"
-              className={cn(
-                "font-serif text-xl lg:text-2xl font-medium tracking-tight transition-colors duration-300",
-                isPortfolioPage && !isScrolled
-                  ? "text-white hover:text-white/80" 
-                  : "text-foreground hover:text-accent"
-              )}
+              className="font-serif text-xl lg:text-2xl font-medium tracking-tight text-foreground hover:text-accent transition-colors duration-300"
             >
               Duruduygu
             </Link>
@@ -84,25 +74,21 @@ export function Navigation() {
                       "text-[10px] font-mono tracking-wider absolute -top-3 left-0 transition-colors duration-300",
                       isActive 
                         ? "text-accent" 
-                        : useWhiteText 
-                          ? "text-white/60 group-hover:text-accent" 
-                          : "text-muted-foreground group-hover:text-accent"
+                        : "text-muted-foreground group-hover:text-accent"
                     )}>
                       {link.num}
                     </span>
                     <span className={cn(
                       "text-sm tracking-wide transition-colors duration-300",
                       isActive 
-                        ? useWhiteText ? "text-white font-medium" : "text-foreground font-medium"
-                        : useWhiteText 
-                          ? "text-white/80 group-hover:text-white" 
-                          : "text-muted-foreground group-hover:text-foreground",
+                        ? "text-foreground font-medium"
+                        : "text-muted-foreground group-hover:text-foreground",
                     )}>
                       {link.label}
                     </span>
                     <span className={cn(
                       "absolute -bottom-1 left-0 h-px transition-all duration-300",
-                      useWhiteText ? "bg-white" : "bg-accent",
+                      "bg-accent",
                       isActive ? "w-full" : "w-0 group-hover:w-full"
                     )} />
                   </Link>
@@ -111,12 +97,8 @@ export function Navigation() {
               
               {/* Theme Toggle */}
               <div className="ml-2 flex items-center gap-1">
-                <ColorThemePicker className={cn(
-                  useWhiteText ? "text-white hover:bg-white/10" : ""
-                )} />
-                <ThemeToggle variant="minimal" className={cn(
-                  useWhiteText ? "text-white hover:bg-white/10" : ""
-                )} />
+                <ColorThemePicker />
+                <ThemeToggle variant="minimal" />
               </div>
             </div>
 
@@ -130,33 +112,21 @@ export function Navigation() {
                 <span
                   className={cn(
                     "absolute left-0 top-1/2 -translate-y-1/2 w-full h-0.5 rounded-full transition-all duration-300 transform-gpu",
-                    isMobileMenuOpen 
-                      ? "bg-foreground" 
-                      : isPortfolioPage && !isScrolled 
-                        ? "bg-white" 
-                        : "bg-foreground",
+                    "bg-foreground",
                     isMobileMenuOpen ? "translate-y-0 rotate-45" : "-translate-y-2"
                   )}
                 />
                 <span
                   className={cn(
                     "absolute left-0 top-1/2 -translate-y-1/2 w-full h-0.5 rounded-full transition-all duration-300 transform-gpu",
-                    isMobileMenuOpen 
-                      ? "bg-foreground" 
-                      : isPortfolioPage && !isScrolled 
-                        ? "bg-white" 
-                        : "bg-foreground",
+                    "bg-foreground",
                     isMobileMenuOpen ? "opacity-0 scale-0" : "opacity-100 scale-100"
                   )}
                 />
                 <span
                   className={cn(
                     "absolute left-0 top-1/2 -translate-y-1/2 w-full h-0.5 rounded-full transition-all duration-300 transform-gpu",
-                    isMobileMenuOpen 
-                      ? "bg-foreground" 
-                      : isPortfolioPage && !isScrolled 
-                        ? "bg-white" 
-                        : "bg-foreground",
+                    "bg-foreground",
                     isMobileMenuOpen ? "translate-y-0 -rotate-45" : "translate-y-2"
                   )}
                 />

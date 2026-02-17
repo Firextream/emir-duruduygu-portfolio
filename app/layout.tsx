@@ -8,7 +8,7 @@ import { BackToTop } from "@/components/back-to-top"
 import { ThemeProvider } from "@/components/theme-provider"
 import { StructuredData } from "@/lib/structured-data"
 import { SkipToContent } from "@/components/skip-to-content"
-import { ServiceWorkerRegistration } from "@/components/service-worker-registration"
+import { ServiceWorkerCleanup } from "@/components/service-worker-registration"
 import "./globals.css"
 
 const inter = Inter({
@@ -116,8 +116,8 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <meta name="view-transition" content="same-origin" />
-        {/* Preload critical resources */}
-        <link rel="preload" href="/coastal-harbor-scene.jpg" as="image" fetchPriority="high" />
+        {/* Preload critical hero asset */}
+        <link rel="preload" href="/coastal-harbor-scene-desktop.avif" as="image" type="image/avif" fetchPriority="high" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         {/* Preconnect to Notion image hosts for faster LCP */}
@@ -141,7 +141,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <SkipToContent />
-          <ServiceWorkerRegistration />
+          <ServiceWorkerCleanup />
           <StructuredData type="website" data={{}} />
           <StructuredData type="person" data={{}} />
           <main id="main-content" tabIndex={-1}>
