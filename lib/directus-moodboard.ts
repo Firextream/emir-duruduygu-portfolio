@@ -13,7 +13,7 @@ const directusToken = normalizeEnvValue(
   process.env.DIRECTUS_STATIC_TOKEN || process.env.DIRECTUS_TOKEN
 )
 // Default collection name for moodboards in Directus
-const directusMoodboardCollection = "moodboards"
+const directusMoodboardCollection = normalizeEnvValue(process.env.DIRECTUS_MOODBOARD_COLLECTION) || "moodboards"
 
 const isDirectusConfigured = Boolean(directusUrl)
 
