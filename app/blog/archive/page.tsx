@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   description: "Browse all blog posts organized by year.",
 }
 
-export const dynamic = 'force-dynamic'
+export const revalidate = 3600
 
 interface PostsByYear {
   [year: string]: {

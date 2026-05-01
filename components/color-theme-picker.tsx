@@ -48,6 +48,13 @@ const colorThemes = [
     darkAccent: "#fbbf24",
     description: "Golden warmth"
   },
+  { 
+    id: "brutalist", 
+    name: "Brutalist", 
+    lightAccent: "#C1FF00", 
+    darkAccent: "#C1FF00",
+    description: "Cyber-brutalist neon"
+  },
 ]
 
 export function ColorThemePicker({ className }: { className?: string }) {
@@ -68,6 +75,7 @@ export function ColorThemePicker({ className }: { className?: string }) {
     if (selectedTheme) {
       document.documentElement.style.setProperty("--accent-light", selectedTheme.lightAccent)
       document.documentElement.style.setProperty("--accent-dark", selectedTheme.darkAccent)
+      document.documentElement.setAttribute("data-theme", themeId)
     }
   }
 

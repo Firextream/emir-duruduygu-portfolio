@@ -9,6 +9,20 @@
   outline-offset: 2px;
 }
 
+/* ─── Global link underline reset ───────────────────────────────────────────
+   Prevent browser-default underline conflicting with custom span underlines.
+   Components that need underline should add it explicitly.
+   ─────────────────────────────────────────────────────────────────────────── */
+a {
+  text-decoration: none;
+}
+
+/* ─── Ken-Burns hero image animation ──────────────────────────────────────── */
+@keyframes kenBurns {
+  0%   { transform: scale(1.06) translate(0.5%, 0.3%); }
+  100% { transform: scale(1.0)  translate(0%, 0%); }
+}
+
 /* Skip to main content link for accessibility */
 .skip-to-main {
   position: absolute;
@@ -103,6 +117,155 @@
   --sidebar-ring: oklch(0.439 0 0);
 }
 
+/* ═══════════════════════════════════════════════════════════
+   UI MODE: CYBER
+   Dark neon aesthetic. Applied via data-ui="cyber" on <html>.
+   ════════════════════════════════════════════════════════════ */
+[data-ui="cyber"] {
+  --background: #050505;
+  --foreground: #ffffff;
+  --card: #090909;
+  --card-foreground: #ffffff;
+  --popover: #090909;
+  --popover-foreground: #ffffff;
+  --primary: #C1FF00;
+  --primary-foreground: #000000;
+  --secondary: #141414;
+  --secondary-foreground: #ffffff;
+  --muted: #111111;
+  --muted-foreground: #888888;
+  --border: rgba(193, 255, 0, 0.25);
+  --input: rgba(193, 255, 0, 0.25);
+  --ring: rgba(193, 255, 0, 0.5);
+  --accent: #C1FF00;
+  --accent-foreground: #000000;
+}
+
+/* Cyber: subtle grid background */
+[data-ui="cyber"] body {
+  background-image:
+    linear-gradient(rgba(193, 255, 0, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(193, 255, 0, 0.025) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+/* Cyber: CRT scanlines overlay */
+[data-ui="cyber"] body::after {
+  content: "";
+  display: block;
+  position: fixed;
+  inset: 0;
+  background:
+    linear-gradient(rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.18) 50%),
+    linear-gradient(90deg, rgba(255, 0, 0, 0.04), rgba(0, 255, 0, 0.015), rgba(0, 0, 255, 0.04));
+  background-size: 100% 2px, 3px 100%;
+  z-index: 9998;
+  pointer-events: none;
+}
+
+/* Cyber: neon glow on primary headings */
+[data-ui="cyber"] h1,
+[data-ui="cyber"] h2 {
+  text-shadow: 0 0 12px rgba(193, 255, 0, 0.25), 0 0 30px rgba(193, 255, 0, 0.08);
+}
+
+/* Cyber: architectural shadow overrides */
+[data-ui="cyber"] .architectural-shadow {
+  box-shadow: 6px 6px 0px #C1FF00 !important;
+}
+
+[data-ui="cyber"] .hover\:architectural-shadow:hover {
+  box-shadow: 8px 8px 0px #C1FF00 !important;
+  transform: translate(-2px, -2px);
+}
+
+/* Cyber: border overrides */
+[data-ui="cyber"] .border-2 {
+  border-width: 1px !important;
+  border-color: rgba(193, 255, 0, 0.25) !important;
+}
+
+/* Cyber: single-page smooth scroll */
+[data-ui="cyber"] html,
+[data-ui="cyber"] body {
+  scroll-behavior: smooth;
+  scroll-snap-type: y proximity;
+}
+
+[data-ui="cyber"] .cyber-section {
+  scroll-snap-align: start;
+  min-height: 100svh;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   UI MODE: MINIMAL
+   Ultra-clean. Almost no color. Pure form.
+   Applied via data-ui="minimal" on <html>.
+   ════════════════════════════════════════════════════════════ */
+[data-ui="minimal"] {
+  --background: #fafafa;
+  --foreground: #0a0a0a;
+  --card: #f5f5f5;
+  --card-foreground: #0a0a0a;
+  --popover: #f5f5f5;
+  --popover-foreground: #0a0a0a;
+  --primary: #0a0a0a;
+  --primary-foreground: #fafafa;
+  --secondary: #eeeeee;
+  --secondary-foreground: #0a0a0a;
+  --muted: #f0f0f0;
+  --muted-foreground: #888888;
+  --border: rgba(0, 0, 0, 0.1);
+  --input: rgba(0, 0, 0, 0.08);
+  --ring: rgba(0, 0, 0, 0.3);
+  --accent: #0a0a0a;
+  --accent-foreground: #fafafa;
+}
+
+/* Minimal: force light background even in dark OS mode */
+[data-ui="minimal"] body {
+  background-color: #fafafa;
+  color: #0a0a0a;
+}
+
+/* Minimal: strip all decorative shadows */
+[data-ui="minimal"] .architectural-shadow,
+[data-ui="minimal"] .hover\:architectural-shadow:hover {
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+/* Minimal: ultra-thin borders */
+[data-ui="minimal"] .border-2,
+[data-ui="minimal"] .border {
+  border-width: 1px !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Minimal: no text glows */
+[data-ui="minimal"] h1,
+[data-ui="minimal"] h2,
+[data-ui="minimal"] h3 {
+  text-shadow: none;
+  font-weight: 300;
+  letter-spacing: -0.03em;
+}
+
+/* Minimal: muted accent — just a thin underline */
+[data-ui="minimal"] a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   LEGACY data-theme="brutalist" → now handled by data-ui="cyber"
+   Kept for backward compatibility during transition.
+   ════════════════════════════════════════════════════════════ */
+[data-theme="brutalist"] {
+  --accent: #C1FF00;
+  --accent-foreground: #000000;
+}
+
 @theme inline {
   --font-sans: "Inter", "Inter Fallback", system-ui, sans-serif;
   --font-serif: "Playfair Display", "Playfair Display Fallback", Georgia, serif;
@@ -158,6 +321,11 @@
     -webkit-text-size-adjust: 100%;
     -ms-text-size-adjust: 100%;
     text-size-adjust: 100%;
+  }
+
+  /* Core Modernist Typography */
+  h1, h2, h3 {
+    @apply tracking-tighter;
   }
 
   /* Typography classes */

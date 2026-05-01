@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import Image from "next/image"
 import { ArrowDown } from "lucide-react"
 import { Typewriter } from "@/components/typewriter"
 
@@ -17,7 +18,24 @@ const categories = [
   "Drawing",
 ]
 
-export function HeroSection() {
+interface HeroImage {
+  src: string
+  title?: string
+  date?: string | number
+}
+
+interface HeroSectionProps {
+  images?: HeroImage[]
+}
+
+export function HeroSection({ images }: HeroSectionProps) {
+  // Fallback static image if no images passed
+  const heroImages: HeroImage[] = images && images.length > 0
+    ? images
+    : [{ src: "/2-IMG_3849-desktop.jpg", title: "Urban Pleats", date: "2025" }]
+
+  const current = heroImages[0]
+
   return (
     <section className="relative min-h-screen flex flex-col">
       {/* Main Content */}
@@ -56,11 +74,12 @@ export function HeroSection() {
             
             {/* CTA Buttons */}
             <div className="flex items-center gap-6 pt-4">
+              {/* No-underline wrapper on the Link itself; underline comes only from the span */}
               <Link 
                 href="/portfolio"
-                className="group inline-flex items-center gap-3 text-foreground font-medium"
+                className="no-underline group inline-flex items-center gap-3 text-foreground font-medium"
               >
-                <span className="relative">
+                <span className="relative no-underline">
                   View Portfolio
                   <span className="absolute -bottom-1 left-0 w-0 h-px bg-accent group-hover:w-full transition-all duration-300" />
                 </span>
@@ -69,7 +88,7 @@ export function HeroSection() {
               
               <Link 
                 href="/contact"
-                className="text-muted-foreground hover:text-foreground transition-colors"
+                className="no-underline text-muted-foreground hover:text-foreground transition-colors"
               >
                 Get in touch
               </Link>
@@ -77,38 +96,32 @@ export function HeroSection() {
           </div>
         </div>
         
-        {/* Right Column - Featured Image */}
-        <div className="relative h-[50vh] lg:h-auto bg-white dark:bg-neutral-900">
-          {/* subtle solid background to prevent bright 'pop' while loading */}
-          <div className="absolute inset-0 bg-white dark:bg-neutral-900" aria-hidden="true" />
-          <picture className="absolute inset-0 block">
-            <source media="(max-width: 767px)" type="image/avif" srcSet="/2-IMG_3849-mobile.avif" />
-            <source media="(max-width: 767px)" type="image/webp" srcSet="/2-IMG_3849-mobile.webp" />
-            <source type="image/avif" srcSet="/2-IMG_3849-desktop.avif" />
-            <source type="image/webp" srcSet="/2-IMG_3849-desktop.webp" />
-            <img
-              src="/2-IMG_3849-desktop.jpg"
-              alt="Featured architectural photograph"
-              className="w-full h-full object-cover bg-white dark:bg-neutral-900 brightness-[0.88] contrast-[1.08] saturate-[0.92]"
-              loading="eager"
-              fetchPriority="high"
-              decoding="async"
-              width={1920}
-              height={1280}
+        {/* Right Column - Static Hero Image */}
+        <div className="relative h-[50vh] lg:h-auto overflow-hidden bg-neutral-900">
+          
+          <div className="absolute inset-0 z-0">
+            <Image
+              src={current.src}
+              alt={current.title || "Featured work"}
+              fill
+              className="object-cover"
+              priority
+              quality={100}
+              sizes="(max-width: 1024px) 100vw, 50vw"
             />
-          </picture>
-          
-          {/* Top Gradient Overlay for Navigation Visibility */}
-          <div className="absolute inset-x-0 top-0 h-36 bg-gradient-to-b from-black/62 via-black/28 to-transparent pointer-events-none" />
-          <div className="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-black/68 via-black/25 to-transparent pointer-events-none" />
-          
-          {/* Image Overlay Info */}
-          <div className="absolute bottom-6 left-6 right-6 flex items-end justify-between text-white/95 [text-shadow:0_1px_8px_rgba(0,0,0,0.55)]">
+          </div>
+
+          {/* Top gradient for nav visibility */}
+          <div className="absolute inset-x-0 top-0 h-36 bg-gradient-to-b from-black/60 via-black/25 to-transparent pointer-events-none z-20" />
+          {/* Bottom gradient */}
+          <div className="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-black/65 via-black/20 to-transparent pointer-events-none z-20" />
+
+          {/* Image info */}
+          <div className="absolute bottom-6 left-6 right-6 flex items-end justify-between text-white/95 z-30 [text-shadow:0_1px_8px_rgba(0,0,0,0.55)]">
             <div>
-              <p className="font-mono text-xs tracking-wider uppercase text-white/80">Featured Work</p>
-              <p className="font-serif text-lg mt-1">Urban Pleats</p>
+              <p className="font-mono text-xs tracking-wider uppercase text-white/75">Featured Work</p>
+              <p className="font-serif text-lg mt-1">{current.title || "Photography"}</p>
             </div>
-            <span className="font-mono text-sm text-white/90">2025</span>
           </div>
         </div>
       </div>

@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation"
 import { useState, useEffect } from "react"
 import { cn } from "@/lib/utils"
 import { ThemeToggle } from "@/components/theme-toggle"
+import { ThemeModeSwitcher } from "@/components/theme-mode-switcher"
 import { ColorThemePicker } from "@/components/color-theme-picker"
 
 const navLinks = [
@@ -13,6 +14,7 @@ const navLinks = [
   { href: "/gallery", label: "Gallery", num: "03" },
   { href: "/blog", label: "Blog", num: "04" },
   { href: "/contact", label: "Contact", num: "05" },
+  { href: "/moodboard", label: "Moodboard", num: "06" },
 ]
 
 export function Navigation() {
@@ -106,9 +108,10 @@ export function Navigation() {
                 )
               })}
               
-              {/* Theme Toggle */}
+              {/* Theme Toggle & Color Picker */}
               <div className="ml-1 flex items-center gap-2 self-center">
                 <ColorThemePicker />
+                <ThemeModeSwitcher />
                 <ThemeToggle variant="minimal" />
               </div>
             </div>
@@ -196,9 +199,10 @@ export function Navigation() {
                 <a href="https://www.linkedin.com/in/emir-duruduygu-90800a27a/" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">LinkedIn</a>
                 <a href="https://github.com/Firextream" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">GitHub</a>
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 mt-2">
+                <ColorThemePicker />
+                <ThemeModeSwitcher />
                 <ThemeToggle variant="minimal" />
-                <span className="text-xs text-muted-foreground">Theme</span>
               </div>
             </div>
           </div>
