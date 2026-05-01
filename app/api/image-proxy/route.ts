@@ -1,5 +1,8 @@
 import { NextResponse } from "next/server"
 
+// Use Edge runtime for zero cold-start latency
+export const runtime = "edge"
+
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url)
   const url = searchParams.get("url")
@@ -29,7 +32,9 @@ export async function GET(request: Request) {
     const response = await fetch(url, {
       headers,
       redirect: "follow",
-      cache: isDirectusAsset ? "force-cache" : "no-store",
+      // Always cache the fetched image at the edge to prevent re-downloading from S3
+      cache: "force-cache",
+      next: { revalidate: 3600 }
     })
 
     if (!response.ok) {
@@ -37,9 +42,8 @@ export async function GET(request: Request) {
     }
 
     const contentType = response.headers.get("content-type") || "image/jpeg"
-    const cacheControl = isDirectusAsset
-      ? "public, max-age=86400, s-maxage=604800, stale-while-revalidate=2592000"
-      : response.headers.get("cache-control") || "public, max-age=3600, s-maxage=3600, stale-while-revalidate=86400"
+    // Aggressive CDN caching for 1 year since the URL contains a unique signature/ID
+    const cacheControl = "public, max-age=31536000, s-maxage=31536000, immutable"
 
     return new NextResponse(response.body, {
       headers: {
