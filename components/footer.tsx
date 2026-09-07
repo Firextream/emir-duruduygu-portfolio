@@ -34,7 +34,7 @@ export function Footer() {
       {/* Bottom Section */}
       <div className="border-t border-border">
         <div className="max-w-[1600px] mx-auto px-5 sm:px-6 lg:px-12 py-6 sm:py-8">
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 sm:gap-8">
+          <div className="flex flex-col lg:flex-row lg:flex-wrap lg:items-center lg:justify-between gap-6 sm:gap-8">
             {/* Left: Logo & Copyright */}
             <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-8">
               <Link href="/" className="font-serif text-xl font-medium text-foreground">
@@ -80,7 +80,7 @@ export function Footer() {
             </nav>
             
             {/* Spotify Now Playing */}
-            <div className="min-w-[260px] md:min-w-[300px] md:max-w-[360px]">
+            <div className="w-full min-w-0 lg:w-auto lg:min-w-[300px] lg:max-w-[360px]">
               <SpotifyNowPlaying variant="minimal" className="w-full" />
             </div>
             

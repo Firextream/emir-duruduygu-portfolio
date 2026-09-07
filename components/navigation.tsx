@@ -58,7 +58,7 @@ export function Navigation() {
             {/* Logo */}
             <Link
               href="/"
-              className="font-serif text-xl lg:text-2xl font-medium tracking-tight text-foreground hover:text-accent transition-colors duration-300"
+              className="font-serif text-lg md:text-xl lg:text-2xl font-medium tracking-tight text-foreground hover:text-accent transition-colors duration-300 shrink-0"
             >
               Duruduygu
             </Link>
@@ -66,9 +66,9 @@ export function Navigation() {
             {/* Desktop Navigation */}
             <div
               className={cn(
-                "hidden md:flex items-center gap-6 transition-all duration-300",
+                "hidden md:flex items-center gap-3 lg:gap-6 min-w-0 transition-all duration-300",
                 isTransparentHeader &&
-                  "px-5 py-2.5 rounded-full bg-background/60 backdrop-blur-md border border-border/50 shadow-[0_8px_30px_rgba(0,0,0,0.10)]"
+                  "px-3 lg:px-5 py-2.5 rounded-full bg-background/60 backdrop-blur-md border border-border/50 shadow-[0_8px_30px_rgba(0,0,0,0.10)]"
               )}
             >
               {navLinks.map((link) => {
@@ -77,7 +77,7 @@ export function Navigation() {
                   <Link
                     key={link.href}
                     href={link.href}
-                    className="group relative flex flex-col items-start justify-center leading-none min-w-[66px]"
+                    className="group relative flex flex-col items-start justify-center leading-none min-w-0 lg:min-w-[66px] whitespace-nowrap"
                   >
                     <span className={cn(
                       "text-[10px] font-mono tracking-wider mb-1 transition-colors duration-300",
@@ -109,7 +109,7 @@ export function Navigation() {
               })}
               
               {/* Theme Toggle & Color Picker */}
-              <div className="ml-1 flex items-center gap-2 self-center">
+              <div className="ml-0 lg:ml-1 flex items-center gap-1 lg:gap-2 self-center shrink-0">
                 <ColorThemePicker />
                 <ThemeModeSwitcher />
                 <ThemeToggle variant="minimal" />
