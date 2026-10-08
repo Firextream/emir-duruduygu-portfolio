@@ -9,12 +9,13 @@ import { ThemeModeSwitcher } from "@/components/theme-mode-switcher"
 import { ColorThemePicker } from "@/components/color-theme-picker"
 
 const navLinks = [
-  { href: "/about", label: "About", num: "01" },
+  { href: "/lab", label: "Lab", num: "01" },
   { href: "/portfolio", label: "Portfolio", num: "02" },
   { href: "/gallery", label: "Gallery", num: "03" },
   { href: "/blog", label: "Blog", num: "04" },
-  { href: "/contact", label: "Contact", num: "05" },
-  { href: "/moodboard", label: "Moodboard", num: "06" },
+  { href: "/moodboard", label: "Moodboard", num: "05" },
+  { href: "/about", label: "About", num: "06" },
+  { href: "/contact", label: "Contact", num: "07" },
 ]
 
 export function Navigation() {
