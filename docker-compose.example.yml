@@ -1,0 +1,34 @@
+# Self-hosting example: the Next.js site behind a Cloudflare Tunnel.
+# Copy to docker-compose.yml, create .env from .env.example, then:
+#   docker compose up -d --build
+#
+# Directus runs from docker-compose.directus.yml. To let the site reach it as
+# http://directus:8055, start both files together:
+#   docker compose -f docker-compose.directus.yml -f docker-compose.yml up -d --build
+# and set DIRECTUS_URL=http://directus:8055 plus DIRECTUS_ASSETS_URL=https://<your public Directus host>.
+#
+# Cloudflare: route the tunnel's public hostname to http://web:3000. Do not enable
+# "Cache Everything" for HTML — the server picks the skin from a cookie.
+
+services:
+  web:
+    build:
+      context: .
+      args:
+        CONTENT_SOURCE: ${CONTENT_SOURCE:-mock}
+        DIRECTUS_URL: ${DIRECTUS_URL:-}
+        DIRECTUS_ASSETS_URL: ${DIRECTUS_ASSETS_URL:-}
+        NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-https://www.duruduygu.com}
+    restart: unless-stopped
+    env_file: .env
+    ports:
+      - "3000:3000"
+
+  cloudflared:
+    image: cloudflare/cloudflared:2024.12.2
+    restart: unless-stopped
+    command: tunnel --no-autoupdate run
+    environment:
+      TUNNEL_TOKEN: ${CLOUDFLARE_TUNNEL_TOKEN}
+    depends_on:
+      - web

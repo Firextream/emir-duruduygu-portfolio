@@ -4,8 +4,6 @@
   "private": true,
   "scripts": {
     "build": "next build",
-    "export:static": "next build && next export",
-    "deploy:gh": "npm run export:static && gh-pages -d out",
     "dev": "next dev",
     "lint": "next lint",
     "start": "next start",

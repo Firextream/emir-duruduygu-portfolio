@@ -1,7 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Remove 'output: export' for Vercel - it uses its own server
-  // trailingSlash and basePath not needed for Vercel deployment
+  // Standalone server output: runs on Vercel and in Docker (see Dockerfile). No static export —
+  // the contact/newsletter API routes need a server.
+  output: 'standalone',
   eslint: {
     ignoreDuringBuilds: true,
   },
