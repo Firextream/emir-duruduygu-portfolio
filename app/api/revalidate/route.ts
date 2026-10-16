@@ -11,8 +11,11 @@ export async function POST(request: NextRequest) {
     const tag = searchParams.get('tag')
     const path = searchParams.get('path')
 
-    // Verify secret
-    if (REVALIDATE_SECRET && secret !== REVALIDATE_SECRET) {
+    // Verify secret — without one configured, nobody may trigger revalidation
+    if (!REVALIDATE_SECRET) {
+      return NextResponse.json({ message: 'REVALIDATE_SECRET is not set' }, { status: 503 })
+    }
+    if (secret !== REVALIDATE_SECRET) {
       return NextResponse.json({ message: 'Invalid secret' }, { status: 401 })
     }
 
@@ -36,8 +39,8 @@ export async function POST(request: NextRequest) {
       })
     }
 
-    // Default: revalidate all common tags
-    const tags = ['gallery', 'blog', 'portfolio']
+    // Default: the new content layer (lib/content) plus the legacy Notion tags
+    const tags = ['content', 'gallery', 'posts', 'portfolio', 'moodboard']
     tags.forEach(t => revalidateTag(t))
     
     return NextResponse.json({ 
@@ -48,7 +51,7 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error('Revalidation error:', error)
     return NextResponse.json(
-      { message: 'Error revalidating', error: String(error) },
+      { message: 'Error revalidating' },
       { status: 500 }
     )
   }

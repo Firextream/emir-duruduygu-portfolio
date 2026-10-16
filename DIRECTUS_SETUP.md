@@ -1,5 +1,10 @@
 # Directus Setup (Vercel + External CMS)
 
+> **Redesign 2026:** the new three-skin site reads Directus through `lib/content` (`CONTENT_SOURCE=directus`).
+> Its collections (`photos`, `mood`, `posts`, `projects`, `project_log`, `settings`), permissions, switch-over steps
+> and the revalidate webhook are in **[SCHEMA.md](SCHEMA.md)**. The collections below are read only by the legacy
+> `lib/notion.js` code.
+
 This project now supports `Directus` as the primary CMS.
 If `DIRECTUS_URL` is set, the app reads from Directus. If not, it falls back to existing Notion/mock behavior.
 
