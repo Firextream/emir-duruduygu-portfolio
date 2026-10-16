@@ -1,0 +1,160 @@
+.curtain {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 20px;
+  padding: 48px;
+  color: var(--c-ink);
+  background: var(--c-bg);
+  opacity: 1;
+  transition: opacity 0.4s ease;
+}
+
+.line {
+  font-family: var(--c-ui);
+  font-size: 15px;
+  letter-spacing: 0.12em;
+  animation: blink 0.9s steps(2) infinite;
+}
+
+.name {
+  font-family: var(--c-display);
+  font-weight: var(--c-weight);
+  font-style: var(--c-style, normal);
+  font-size: min(22vw, 220px);
+  line-height: 0.9;
+  letter-spacing: var(--c-track);
+  overflow-wrap: anywhere;
+}
+
+.bar {
+  height: 8px;
+  max-width: 640px;
+  border: 1px solid var(--c-ink);
+  border-radius: var(--c-round, 0);
+  overflow: hidden;
+}
+
+.fill {
+  height: 100%;
+  background: var(--c-fill);
+  transform-origin: left;
+}
+
+/* ── per skin ─────────────────────────────────────────── */
+.quiet {
+  --c-bg: #e4ebee;
+  --c-ink: #2a2b2c;
+  --c-fill: #8a5a3c;
+  --c-ui: var(--font-pixel, var(--curtain-quiet-ui)), 'Pixelify Sans', monospace;
+  --c-display: var(--font-serif, var(--curtain-quiet)), 'Cormorant Garamond', serif;
+  --c-weight: 400;
+  --c-style: italic;
+  --c-track: -0.02em;
+  --c-ease: steps(12);
+}
+
+.soft {
+  --c-bg: radial-gradient(50% 40% at 80% 10%, rgba(26, 157, 255, 0.35), transparent 70%),
+    linear-gradient(180deg, #f5f8fb, #dbe4ee);
+  --c-ink: #162033;
+  --c-fill: #1a9dff;
+  --c-ui: var(--font-body, sans-serif), 'Zen Kaku Gothic New', 'Hiragino Sans', 'Yu Gothic', sans-serif;
+  --c-display: var(--font-display, var(--curtain-soft)), 'Unbounded', sans-serif;
+  --c-weight: 300;
+  --c-track: -0.02em;
+  --c-round: 999px;
+  --c-ease: cubic-bezier(0.6, 0, 0.2, 1);
+}
+
+.modern {
+  --c-bg: #ec3013;
+  --c-ink: #ffffff;
+  --c-fill: #ffffff;
+  --c-ui: var(--font-archivo, var(--curtain-modern)), 'Archivo', sans-serif;
+  --c-display: var(--font-archivo, var(--curtain-modern)), 'Archivo', sans-serif;
+  --c-weight: 800;
+  --c-track: -0.05em;
+  --c-ease: linear;
+}
+
+/* ── leave: animated in on the old page ───────────────── */
+.leave {
+  animation: rise 0.35s ease both;
+}
+
+.leave.modern {
+  animation: wipe 0.45s cubic-bezier(0.7, 0, 0.2, 1) both;
+}
+
+.leave .fill {
+  animation: fill 0.85s var(--c-ease) both;
+}
+
+/* ── arrive: painted at first paint by the new page, then faded out ── */
+.arrive {
+  display: none;
+}
+
+:global(html[data-switching]) .arrive {
+  display: flex;
+}
+
+:global(html[data-switching='out']) .arrive {
+  opacity: 0;
+  pointer-events: none;
+}
+
+@media (max-width: 760px) {
+  .curtain {
+    padding: 32px 18px;
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes wipe {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes fill {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0.25;
+  }
+}
+
+/* Reduced motion: no wipe, blink or bar animation — the curtain simply appears and cross-fades. */
+@media (prefers-reduced-motion: reduce) {
+  .leave,
+  .leave.modern,
+  .leave .fill,
+  .line {
+    animation: none;
+  }
+}

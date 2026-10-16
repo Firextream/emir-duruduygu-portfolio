@@ -1,0 +1,561 @@
+/* Modernist frame — values from ModernFrame.dc.html (1440 / 390). Radius 0, 2px rules. */
+.root {
+  --side: clamp(24px, 3.4vw, 48px);
+  --gap: 24px;
+  position: relative;
+  max-width: 1440px;
+  min-height: 100vh;
+  margin: 0 auto;
+  padding-bottom: 8px;
+  display: flex;
+  flex-direction: column;
+}
+
+.main {
+  flex: 1 0 auto;
+}
+
+/* ── header ────────────────────────────────────────────── */
+.header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  height: 86px; /* 84 + 2px rule (reference boxes are content-box) */
+  padding: 0 var(--side);
+  border-bottom: 2px solid var(--line);
+}
+
+.header:focus {
+  outline: none;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.brand:hover {
+  opacity: 0.8;
+}
+
+.star {
+  font-size: 26px;
+  color: var(--acc);
+}
+
+.wordmark {
+  font-weight: 800;
+  font-size: 42px;
+  line-height: 1;
+}
+
+.nav {
+  display: flex;
+  align-self: stretch;
+  gap: 32px;
+  margin: 0 auto;
+}
+
+.navLink {
+  display: flex;
+  align-items: center;
+  color: var(--mut);
+  font-weight: 600;
+  font-size: 16px;
+  text-decoration: none;
+}
+
+.navLink:hover {
+  color: var(--ink);
+}
+
+.navLink[aria-current='page'] {
+  color: var(--ink);
+  box-shadow: inset 0 -4px 0 var(--acc);
+}
+
+.clock {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  height: 40px;
+  padding-left: 16px;
+  border-left: 2px solid var(--line);
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.clockLabel,
+.clockCoords {
+  color: var(--mut);
+  white-space: nowrap;
+}
+
+.clockTime {
+  font-weight: 800;
+  font-size: 20px;
+  font-variant-numeric: tabular-nums;
+}
+
+.styleBtn {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  padding: 0 12px;
+  border: 1px solid var(--line);
+  background: var(--win);
+  color: var(--ink);
+  font-size: 15px;
+}
+
+.styleBtn:hover {
+  background: var(--hover);
+}
+
+.styleBtn[aria-expanded='true'] {
+  background: var(--hi);
+}
+
+.styleStar {
+  display: none;
+}
+
+/* ── style panel ───────────────────────────────────────── */
+.pop {
+  position: absolute;
+  z-index: 30;
+  top: calc(100% + 12px);
+  right: var(--side);
+  width: 340px;
+  background: var(--win);
+  border: 2px solid var(--line);
+}
+
+.popBar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 44px;
+  padding: 0 6px 0 14px;
+  border-bottom: 2px solid var(--line);
+  font-weight: 800;
+  font-size: 17px;
+}
+
+.popClose {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  margin: -2px -6px -2px auto;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+}
+
+.popClose > span {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--line);
+  background: var(--win);
+}
+
+.popBody {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 14px;
+}
+
+.skinList {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.skinOpt {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 46px;
+  padding: 0 12px;
+  border: 1px solid var(--rule);
+  background: transparent;
+  color: var(--ink);
+  font-size: 16px;
+  text-align: left;
+}
+
+.skinOpt:hover {
+  background: var(--hover);
+}
+
+.skinOpt[aria-pressed='true'] {
+  border-color: var(--acc);
+  background: var(--hi);
+}
+
+.swatch {
+  flex: none;
+  width: 26px;
+  height: 26px;
+  border: 1px solid var(--line);
+}
+
+.swatch[data-swatch='quiet'] {
+  background: linear-gradient(135deg, #e4ebee 50%, #8a5a3c 50%);
+}
+.swatch[data-swatch='soft'] {
+  background: radial-gradient(circle at 35% 30%, #ffffff 0 20%, #1a9dff 75%, #0b3a6b);
+}
+.swatch[data-swatch='modern'] {
+  background: linear-gradient(135deg, #f3f2f2 50%, #ec3013 50%);
+}
+
+.skinName {
+  flex: 1;
+}
+
+.skinHint {
+  font-size: 11px;
+  color: var(--mut);
+}
+
+.popNote {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--mut);
+}
+
+.crumbBar {
+  display: none;
+}
+
+/* ── red poster footer ─────────────────────────────────── */
+.footer {
+  margin-top: 80px;
+  padding: 56px var(--side) 28px;
+  background: var(--acc);
+  color: #ffffff;
+  --focus: #ffffff;
+}
+
+.footer :focus-visible {
+  outline-color: #ffffff;
+}
+
+.footTop {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 16px 24px;
+  padding-bottom: 32px;
+  border-bottom: 2px solid #ffffff;
+}
+
+.footTitle {
+  max-width: 900px;
+  font-weight: 800;
+  font-size: clamp(56px, 6.7vw, 96px);
+  line-height: 0.92;
+  letter-spacing: -0.05em;
+}
+
+.footEmail {
+  font-weight: 600;
+  font-size: 24px;
+  color: #ffffff;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 6px;
+}
+
+.footEmail:hover {
+  color: #ffffff;
+  text-decoration-thickness: 4px;
+}
+
+.footBottom {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px 32px;
+  margin-top: 28px;
+  font-size: 15px;
+}
+
+.footLinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  margin: 0 auto;
+}
+
+.footLinks a {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.footLinks a:hover {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+
+.topBtn {
+  min-height: 40px;
+  padding: 0 12px;
+  border: 1px solid #ffffff;
+  background: var(--acc);
+  color: #ffffff;
+  font-size: 15px;
+}
+
+.topBtn:hover {
+  background: var(--acc-600);
+}
+
+.topBtn:active {
+  background: var(--acc-700);
+}
+
+.dock {
+  display: none;
+}
+
+/* ── in-between desktop widths ─────────────────────────── */
+@media (max-width: 1220px) {
+  .clockCoords {
+    display: none;
+  }
+}
+
+@media (max-width: 1060px) {
+  .header {
+    flex-wrap: wrap;
+    height: auto;
+    padding-top: 14px;
+    gap: 0 20px;
+  }
+
+  .clock {
+    margin-left: auto;
+  }
+
+  .nav {
+    order: 3;
+    width: calc(100% + 2 * var(--side));
+    height: 52px;
+    margin: 14px calc(-1 * var(--side)) 0;
+    padding: 0 var(--side);
+    border-top: 2px solid var(--line);
+    gap: clamp(20px, 3vw, 32px);
+  }
+}
+
+/* ── mobile (≤ 760 px) — ModernFrame at 390 ────────────── */
+@media (max-width: 760px) {
+  .root {
+    --side: 16px;
+    padding-bottom: 0;
+  }
+
+  .header {
+    flex-wrap: nowrap;
+    gap: 10px;
+    height: 66px;
+    padding: 0 16px;
+  }
+
+  .brand {
+    gap: 8px;
+    min-height: 44px;
+  }
+
+  .star {
+    font-size: 19px;
+  }
+
+  .wordmark {
+    font-size: 30px;
+  }
+
+  .nav,
+  .clockLabel,
+  .clockCoords {
+    display: none;
+  }
+
+  .clock {
+    height: auto;
+    padding: 0;
+    border: 0;
+  }
+
+  .clockTime {
+    font-size: 17px;
+  }
+
+  .styleBtn {
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    color: var(--acc);
+    font-size: 18px;
+  }
+
+  .styleLabel {
+    display: none;
+  }
+
+  .styleStar {
+    display: inline;
+  }
+
+  .pop {
+    top: calc(100% + 8px);
+    right: 16px;
+    width: min(358px, calc(100vw - 32px));
+  }
+
+  .crumbBar {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 7px 16px;
+    border-bottom: 1px solid var(--rule);
+    font-size: 12px;
+    color: var(--mut);
+  }
+
+  .crumb {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .square {
+    width: 7px;
+    height: 7px;
+    background: var(--acc);
+  }
+
+  .footer {
+    margin-top: 44px;
+    padding: 26px 16px 20px;
+  }
+
+  .footTop {
+    display: block;
+    padding-bottom: 0;
+    border-bottom: 0;
+  }
+
+  .footTitle {
+    font-size: 32px;
+    line-height: 1.1;
+    letter-spacing: 0;
+  }
+
+  .footEmail {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    margin-top: 4px;
+    font-weight: 400;
+    font-size: 19px;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
+
+  .footBottom {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0;
+    margin-top: 20px;
+    font-size: 12px;
+  }
+
+  .footLinks {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    margin: 0 0 14px;
+    border-top: 2px solid #ffffff;
+    font-size: 15px;
+  }
+
+  .footLinks a {
+    display: flex;
+    align-items: center;
+    min-height: 48px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+  }
+
+  .copy {
+    grid-row: 2;
+    align-self: center;
+  }
+
+  .topBtn {
+    grid-row: 2;
+    min-height: 44px;
+    font-size: 14px;
+  }
+
+  .deskOnly {
+    display: none;
+  }
+
+  .dock {
+    position: sticky;
+    bottom: 0;
+    z-index: 5;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    margin-top: 18px;
+    padding-bottom: env(safe-area-inset-bottom);
+    background: var(--bar);
+    border-top: 2px solid var(--line);
+  }
+
+  .dockLink {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    min-height: 62px;
+    color: var(--mut);
+    font-size: 12px;
+    text-decoration: none;
+  }
+
+  .dockLink:active {
+    background: var(--hover);
+  }
+
+  .dockLink[aria-current='page'] {
+    color: var(--ink);
+    background: var(--win);
+    box-shadow: inset 0 3px 0 var(--acc);
+  }
+
+  .dockIcon {
+    font-size: 17px;
+    line-height: 1;
+  }
+}

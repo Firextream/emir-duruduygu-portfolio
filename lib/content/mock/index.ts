@@ -2,7 +2,7 @@
 import { SITE_LINKS } from '../links'
 import { parseMarkdown, type FigureResolver } from '../markdown'
 import type { ContentAdapter, Figure, Img, Mood, Photo, Post, Project, Settings } from '../types'
-import { ratio, toSeconds } from '../util'
+import { isoDate, ratio, toSeconds } from '../util'
 import * as data from './data'
 
 const local = (src: string, w: number, h: number, alt: string): Img => ({ src, w, h, alt, source: 'local' })
@@ -41,6 +41,7 @@ async function toPost(p: data.MockPost): Promise<Post> {
     title: p.title,
     excerpt: p.excerpt,
     date: p.date,
+    published: isoDate(p.date),
     year: p.year,
     read: p.read,
     place: p.place,

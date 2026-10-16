@@ -1,0 +1,57 @@
+/* Quiet — soft desktop-OS windows, printed photos, serif display. Light only (README tokens). */
+[data-skin='quiet'] {
+  --bg: #e4ebee;
+  --bg2: #dce4df;
+  --win: #f8f8f3;
+  --bar: #dfe7eb;
+  --ink: #2a2b2c;
+  --mut: #566064;
+  --line: #b4bfc5;
+  --rule: #cfd7da;
+  --sh: #c6cfd3;
+  --hover: rgba(42, 43, 44, 0.05);
+  --print: #ffffff;
+  --printi: #2a2b2c;
+  --printm: #5d6366;
+  --ph1: #e0e3df;
+  --ph2: #d4d8d4;
+  --paper: #f1e5cf;
+  --paperi: #3a3128;
+  --tape: rgba(232, 222, 196, 0.85);
+  --lcd: #c9d0c8;
+  --lcdi: #24332c;
+  --lcdg: rgba(36, 51, 44, 0.12);
+  --acci: #ffffff;
+  --acc: #8a5a3c;
+  --hi: color-mix(in oklch, var(--acc) 24%, #f8f8f3);
+  --focus: var(--acc);
+
+  --serif: var(--font-serif), 'Cormorant Garamond', Georgia, serif;
+  --pixel: var(--font-pixel), 'Pixelify Sans', ui-monospace, monospace;
+  --sans: var(--font-sans), 'IBM Plex Sans', system-ui, sans-serif;
+  --mono: var(--font-mono), 'IBM Plex Mono', ui-monospace, monospace;
+  --lcd-font: var(--font-lcd), 'Doto', ui-monospace, monospace;
+
+  background: var(--bg);
+}
+
+/* Accents (Umber is the default). */
+[data-skin='quiet'][data-acc='1'] {
+  --acc: #55704e;
+}
+[data-skin='quiet'][data-acc='2'] {
+  --acc: #46617f;
+}
+[data-skin='quiet'][data-acc='3'] {
+  --acc: #7a4b64;
+}
+
+[data-skin='quiet'] body {
+  background: linear-gradient(180deg, var(--bg), var(--bg2));
+  color: var(--ink);
+  font-family: var(--sans);
+}
+
+[data-skin='quiet'] ::selection {
+  background: var(--hi);
+}

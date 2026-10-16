@@ -1,0 +1,42 @@
+/* Soft Club — jewel case and obi on pale steel. One aqua for the obi, buttons and the selected marker. */
+[data-skin='soft'] {
+  --ink: #162033;
+  --mut: #5f6b7c;
+  --rule: rgba(22, 32, 51, 0.18);
+  --rule2: rgba(22, 32, 51, 0.14);
+  --paper: #f8fafc;
+  --aqua: #1a9dff;
+  --aqua-hover: #45b1ff;
+  --deep: #0f7fd6;
+  --ground: #eef2f6;
+  --ground2: #dbe2ea;
+  --stripe: repeating-linear-gradient(135deg, #e3e9f0 0 9px, #d8e0e9 9px 18px);
+  --lift: 0 30px 50px -34px rgba(20, 40, 80, 0.6);
+  --focus: var(--deep);
+
+  --display: var(--font-display), 'Unbounded', system-ui, sans-serif;
+  --body: var(--font-body), 'Zen Kaku Gothic New', 'Hiragino Sans', 'Yu Gothic', system-ui, sans-serif;
+  --num: var(--font-num), 'Doto', ui-monospace, monospace;
+
+  background: var(--ground);
+}
+
+[data-skin='soft'] body {
+  background: radial-gradient(50% 30% at 80% 0%, #ffffff, transparent 70%) no-repeat,
+    linear-gradient(180deg, var(--ground), var(--ground2));
+  background-attachment: scroll;
+  color: var(--ink);
+  font-family: var(--body);
+}
+
+[data-skin='soft'] a {
+  color: var(--ink);
+}
+
+[data-skin='soft'] a:hover {
+  color: var(--deep);
+}
+
+[data-skin='soft'] ::selection {
+  background: rgba(26, 157, 255, 0.25);
+}

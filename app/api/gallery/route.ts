@@ -1,6 +1,21 @@
 import { NextResponse } from "next/server"
 import { getGalleryImagesFresh } from "@/lib/notion"
 
+// Shape returned by the legacy lib/notion.js (untyped JS).
+interface LegacyImage {
+  id?: string
+  name?: string
+  alt?: string
+  src?: string
+  srcFull?: string
+  srcOriginal?: string
+  width?: number
+  height?: number
+  category?: string
+  selected?: boolean
+  [key: string]: unknown
+}
+
 export const dynamic = "force-dynamic"
 export const revalidate = 0
 
@@ -17,7 +32,7 @@ export async function GET(request: Request) {
 
     const limit = limitParam ? Math.max(0, Number.parseInt(limitParam, 10)) : null
 
-    let images = await getGalleryImagesFresh()
+    let images = (await getGalleryImagesFresh()) as LegacyImage[]
 
     if (selectedOnly) {
       const selected = images.filter((img) => img.selected)

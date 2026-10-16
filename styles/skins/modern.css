@@ -1,0 +1,40 @@
+/* Modernist — Swiss grid on the Modernist design system: Archivo, 2px rules, zero radius, one signal red. */
+[data-skin='modern'] {
+  --bg: #f3f2f2;
+  --win: #faf9f9;
+  --bar: #f3f2f2;
+  --ink: #201e1d;
+  --mut: #5c5856;
+  --line: #201e1d;
+  --rule: rgba(32, 30, 29, 0.28);
+  --hover: rgba(236, 48, 19, 0.06);
+  --ph1: #dddbda;
+  --ph2: #d2d0cf;
+  --paper: #efe7d6;
+  --acc: #ec3013;
+  --acc-600: #dd2b0f;
+  --acc-700: #ae1800;
+  --hi: color-mix(in oklch, #ec3013 14%, #faf9f9);
+  --focus: var(--acc);
+  --stripe: repeating-linear-gradient(135deg, var(--ph1) 0 9px, var(--ph2) 9px 18px);
+
+  --archivo: var(--font-archivo), 'Archivo', system-ui, sans-serif;
+
+  background: var(--bg);
+}
+
+[data-skin='modern'] body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--archivo);
+}
+
+[data-skin='modern'] ::selection {
+  background: var(--color-accent-200, #ffe0d9);
+}
+
+/* Modernist focus: 2px solid accent, offset 2px (README). */
+[data-skin='modern'] :focus-visible {
+  outline: 2px solid var(--acc);
+  outline-offset: 2px;
+}

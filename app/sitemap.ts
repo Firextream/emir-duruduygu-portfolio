@@ -1,64 +1,27 @@
-import { MetadataRoute } from 'next'
-import { getAllPosts } from '@/lib/notion'
+import type { MetadataRoute } from 'next'
+import { getPhotos, getPosts, getProjects } from '@/lib/content'
+import { SITE_URL } from '@/lib/routes/meta'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = 'https://www.duruduygu.com'
-  
-  // Static pages
-  const staticPages: MetadataRoute.Sitemap = [
-    {
-      url: baseUrl,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 1,
-    },
-    {
-      url: `${baseUrl}/portfolio`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/gallery`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/blog`,
-      lastModified: new Date(),
-      changeFrequency: 'daily',
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/resume`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/contact`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.6,
-    },
+  const [photos, posts, projects] = await Promise.all([getPhotos(), getPosts(), getProjects()])
+
+  const pages: MetadataRoute.Sitemap = [
+    { url: SITE_URL, changeFrequency: 'weekly', priority: 1 },
+    { url: `${SITE_URL}/gallery`, changeFrequency: 'weekly', priority: 0.9 },
+    { url: `${SITE_URL}/blog`, changeFrequency: 'weekly', priority: 0.8 },
+    { url: `${SITE_URL}/lab`, changeFrequency: 'monthly', priority: 0.8 },
+    { url: `${SITE_URL}/about`, changeFrequency: 'monthly', priority: 0.7 },
   ]
 
-  // Dynamic blog posts
-  let blogPages: MetadataRoute.Sitemap = []
-  try {
-    const posts = await getAllPosts()
-    blogPages = posts
-      .filter((post): post is NonNullable<typeof post> => post !== null && post.slug !== undefined)
-      .map((post) => ({
-        url: `${baseUrl}/blog/${post.slug}`,
-        lastModified: post.date ? new Date(post.date) : new Date(),
-        changeFrequency: 'monthly' as const,
-        priority: 0.6,
-      }))
-  } catch (error) {
-    console.error('Error generating blog sitemap:', error)
-  }
-
-  return [...staticPages, ...blogPages]
+  return [
+    ...pages,
+    ...photos.map((p) => ({ url: `${SITE_URL}/gallery/${p.id}`, changeFrequency: 'yearly' as const, priority: 0.5 })),
+    ...posts.map((p) => ({
+      url: `${SITE_URL}/blog/${p.slug}`,
+      lastModified: p.published ?? undefined,
+      changeFrequency: 'monthly' as const,
+      priority: 0.6,
+    })),
+    ...projects.map((p) => ({ url: `${SITE_URL}/lab/${p.slug}`, changeFrequency: 'monthly' as const, priority: 0.6 })),
+  ]
 }

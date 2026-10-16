@@ -5,7 +5,7 @@
 import { SITE_EMAIL, SITE_LINKS } from '../links'
 import { parseMarkdown, readMinutes, type FigureResolver } from '../markdown'
 import type { ContentAdapter, Figure, Img, Mood, Photo, Post, PostKind, Project, ProjectImage, Settings } from '../types'
-import { displayDate, logDate, ratio, toSeconds } from '../util'
+import { displayDate, isoDate, logDate, ratio, toSeconds } from '../util'
 
 const REVALIDATE = 300
 export const CONTENT_TAG = 'content'
@@ -171,6 +171,7 @@ async function posts(): Promise<Post[]> {
         title,
         excerpt: str(r.excerpt),
         date: displayDate(date) || '[DD.MM.YYYY]',
+        published: isoDate(date),
         year: date.slice(0, 4) || '[year]',
         read: kind === 'video' ? `▶ ${duration}` : str(r.read_time) || `${readMinutes(content)} min`,
         place: str(r.place, '[Place]'),

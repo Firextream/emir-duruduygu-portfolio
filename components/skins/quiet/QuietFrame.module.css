@@ -1,0 +1,625 @@
+/* Quiet frame — values from QuietFrame.dc.html (1440 / 390). */
+.root {
+  --side: clamp(24px, 5vw, 72px);
+  position: relative;
+  max-width: 1440px;
+  min-height: 100vh;
+  margin: 0 auto;
+  padding-bottom: 8px;
+  display: flex;
+  flex-direction: column;
+}
+
+.main {
+  flex: 1 0 auto;
+}
+
+.main:focus {
+  outline: none;
+}
+
+/* ── header ────────────────────────────────────────────── */
+.header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  height: 105px; /* 104 + 1px rule (reference boxes are content-box) */
+  margin: 0 var(--side);
+  border-bottom: 1px solid var(--line);
+}
+
+.header:focus {
+  outline: none;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.brand:hover {
+  opacity: 0.8;
+}
+
+.star {
+  flex: none;
+  width: 27px;
+  height: 27px;
+  fill: var(--acc);
+}
+
+.wordmark {
+  font-family: var(--pixel);
+  font-size: 34px;
+  line-height: 1;
+  letter-spacing: 0.01em;
+}
+
+.nav {
+  display: flex;
+  gap: 30px;
+  margin: 0 auto;
+}
+
+.navLink {
+  padding: 10px 0 6px;
+  border-bottom: 2px solid transparent;
+  color: var(--mut);
+  font-family: var(--pixel);
+  font-size: 20px;
+  text-decoration: none;
+}
+
+.navLink:hover {
+  color: var(--ink);
+  border-bottom-color: var(--line);
+}
+
+.navLink[aria-current='page'] {
+  color: var(--ink);
+  border-bottom-color: var(--acc);
+}
+
+.lcd {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 42px;
+  padding: 0 14px;
+  background: var(--lcd);
+  border: 1px solid var(--line);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.lcdLabel {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: var(--lcdi);
+}
+
+.lcdDigits {
+  position: relative;
+  font-family: var(--lcd-font);
+  font-weight: 900;
+  font-size: 24px;
+  line-height: 1;
+  color: var(--lcdg);
+}
+
+.lcdGhost {
+  display: block;
+}
+
+.lcdTime {
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--lcdi);
+}
+
+.lcdSep {
+  width: 1px;
+  height: 20px;
+  background: var(--lcdi);
+  opacity: 0.3;
+}
+
+.lcdCoords {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--lcdi);
+  white-space: nowrap;
+}
+
+.menuWrap {
+  display: contents;
+}
+
+.styleBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 40px;
+  padding: 0 12px;
+  border: 1px solid var(--line);
+  background: var(--win);
+  color: var(--ink);
+  font-family: var(--pixel);
+  font-size: 15px;
+  box-shadow: 3px 3px 0 var(--sh);
+  transition: transform 0.1s;
+}
+
+.styleBtn[aria-expanded='true'] {
+  background: var(--hi);
+}
+
+.styleBtn:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0 var(--sh);
+}
+
+/* ── style.cfg window ──────────────────────────────────── */
+.pop {
+  position: absolute;
+  z-index: 30;
+  top: calc(100% - 8px);
+  right: 0;
+  width: 340px;
+  background: var(--win);
+  border: 1px solid var(--line);
+  box-shadow: 6px 6px 0 var(--sh);
+}
+
+.popBar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 40px;
+  padding: 0 10px 0 14px;
+  background: var(--hi);
+  border-bottom: 1px solid var(--line);
+  font-family: var(--pixel);
+  font-size: 17px;
+}
+
+.popClose {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  margin: -2px -6px -2px auto;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  font-family: var(--pixel);
+}
+
+.popClose > span {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--line);
+  background: var(--win);
+}
+
+.popBody {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 14px;
+}
+
+.skinList {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.skinOpt {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 46px;
+  padding: 0 12px;
+  border: 1px solid var(--rule);
+  background: transparent;
+  color: var(--ink);
+  font-family: var(--pixel);
+  font-size: 16px;
+  text-align: left;
+}
+
+.skinOpt:hover {
+  background: var(--hover);
+}
+
+.skinOpt[aria-pressed='true'] {
+  border-color: var(--acc);
+  background: var(--hi);
+}
+
+.swatch {
+  flex: none;
+  width: 26px;
+  height: 26px;
+  border: 1px solid var(--line);
+}
+
+.swatch[data-swatch='quiet'] {
+  background: linear-gradient(135deg, #e4ebee 50%, #8a5a3c 50%);
+}
+.swatch[data-swatch='soft'] {
+  background: radial-gradient(circle at 35% 30%, #ffffff 0 20%, #1a9dff 75%, #0b3a6b);
+}
+.swatch[data-swatch='modern'] {
+  background: linear-gradient(135deg, #f3f2f2 50%, #ec3013 50%);
+}
+
+.skinName {
+  flex: 1;
+}
+
+.skinHint {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--mut);
+}
+
+.accRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.accLabel {
+  margin-right: auto;
+  font-family: var(--pixel);
+  font-size: 13px;
+  color: var(--mut);
+}
+
+.accSwatch {
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: 1px solid var(--line);
+}
+
+.accSwatch[data-i='0'] {
+  background: #8a5a3c;
+}
+.accSwatch[data-i='1'] {
+  background: #55704e;
+}
+.accSwatch[data-i='2'] {
+  background: #46617f;
+}
+.accSwatch[data-i='3'] {
+  background: #7a4b64;
+}
+
+.accSwatch[aria-pressed='true'] {
+  border: 2px solid var(--ink);
+  box-shadow: inset 0 0 0 3px var(--win);
+}
+
+.popNote {
+  font-family: var(--mono);
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--mut);
+}
+
+/* mobile-only crumb bar */
+.crumbBar {
+  display: none;
+}
+
+/* ── footer ────────────────────────────────────────────── */
+.footer {
+  margin: 80px var(--side) 0;
+  padding: 32px 0 36px;
+  border-top: 1px solid var(--line);
+}
+
+.footTop {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px 24px;
+}
+
+.footTitle {
+  font-family: var(--serif);
+  font-size: 44px;
+  line-height: 1.1;
+}
+
+.footEmail {
+  font-family: var(--pixel);
+  font-size: 24px;
+  color: var(--acc);
+  text-underline-offset: 3px;
+}
+
+.footEmail:hover {
+  text-underline-offset: 6px;
+}
+
+.footBottom {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px 32px;
+  margin-top: 28px;
+  font-family: var(--pixel);
+  font-size: 15px;
+  color: var(--mut);
+}
+
+.footLinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  margin: 0 auto;
+}
+
+.footLinks a {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.footLinks a:hover {
+  color: var(--acc);
+}
+
+.topBtn {
+  min-height: 40px;
+  padding: 0 12px;
+  border: 1px solid var(--line);
+  background: var(--win);
+  color: var(--ink);
+  font-family: var(--pixel);
+  font-size: 15px;
+  box-shadow: 3px 3px 0 var(--sh);
+  transition: transform 0.1s;
+}
+
+.topBtn:hover {
+  transform: translate(-1px, -1px);
+}
+
+.dock {
+  display: none;
+}
+
+/* ── in-between desktop widths: nav drops to its own row ── */
+@media (max-width: 1180px) {
+  .header {
+    flex-wrap: wrap;
+    height: auto;
+    padding: 18px 0 0;
+    gap: 16px 20px;
+  }
+
+  .lcd {
+    margin-left: auto;
+  }
+
+  .nav {
+    order: 3;
+    width: 100%;
+    margin: 0;
+    gap: clamp(18px, 3vw, 30px);
+  }
+}
+
+@media (max-width: 960px) {
+  .lcdSep,
+  .lcdCoords {
+    display: none;
+  }
+}
+
+/* ── mobile (≤ 760 px) — QuietFrame at 390 ─────────────── */
+@media (max-width: 760px) {
+  .root {
+    --side: 16px;
+    padding-bottom: 0;
+  }
+
+  .header {
+    flex-wrap: nowrap;
+    gap: 10px;
+    height: 65px;
+    margin: 0;
+    padding: 0 16px;
+  }
+
+  .brand {
+    gap: 8px;
+    min-height: 44px;
+  }
+
+  .star {
+    width: 18px;
+    height: 18px;
+  }
+
+  .wordmark {
+    font-size: 24px;
+  }
+
+  .nav,
+  .lcdLabel,
+  .lcdSep,
+  .lcdCoords {
+    display: none;
+  }
+
+  .lcd {
+    gap: 6px;
+    height: 32px;
+    padding: 0 8px;
+    box-shadow: none;
+  }
+
+  .lcdDigits {
+    font-size: 16px;
+  }
+
+  .styleBtn {
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    color: var(--acc);
+    font-size: 18px;
+    box-shadow: 2px 2px 0 var(--sh);
+  }
+
+  .styleLabel {
+    display: none;
+  }
+
+  .pop {
+    top: calc(100% + 8px);
+    right: 16px;
+    width: min(358px, calc(100vw - 32px));
+  }
+
+  .accSwatch {
+    width: 44px;
+    height: 44px;
+  }
+
+  .crumbBar {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 7px 16px;
+    border-bottom: 1px solid var(--rule);
+    font-family: var(--pixel);
+    font-size: 12px;
+    color: var(--mut);
+  }
+
+  .footer {
+    margin: 44px 16px 0;
+    padding: 24px 0 20px;
+  }
+
+  .footTop {
+    display: block;
+  }
+
+  .footTitle {
+    font-size: 32px;
+  }
+
+  .footEmail {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    margin-top: 4px;
+    font-size: 19px;
+  }
+
+  .footBottom {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0;
+    margin-top: 20px;
+    font-size: 12px;
+  }
+
+  .footLinks {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    margin: 0 0 14px;
+    border-top: 1px solid var(--line);
+    font-size: 15px;
+  }
+
+  .footLinks a {
+    display: flex;
+    align-items: center;
+    min-height: 48px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .copy {
+    grid-row: 2;
+  }
+
+  .topBtn {
+    grid-row: 2;
+    min-height: 44px;
+    font-size: 14px;
+    box-shadow: none;
+  }
+
+  .deskOnly {
+    display: none;
+  }
+
+  .dock {
+    position: sticky;
+    bottom: 0;
+    z-index: 5;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    margin-top: 18px;
+    padding-bottom: env(safe-area-inset-bottom);
+    background: var(--bar);
+    border-top: 1px solid var(--line);
+    box-shadow: 0 -3px 0 var(--sh);
+  }
+
+  .dockLink {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    min-height: 62px;
+    color: var(--mut);
+    font-family: var(--pixel);
+    font-size: 12px;
+    text-decoration: none;
+  }
+
+  .dockLink:active {
+    background: var(--hover);
+  }
+
+  .dockLink[aria-current='page'] {
+    color: var(--ink);
+    background: var(--win);
+    box-shadow: inset 0 3px 0 var(--acc);
+  }
+
+  .dockIcon {
+    font-size: 17px;
+    line-height: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .styleBtn:hover,
+  .topBtn:hover {
+    transform: none;
+  }
+}

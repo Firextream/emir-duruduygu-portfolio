@@ -2,26 +2,26 @@ import type { MetadataRoute } from "next"
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Duruduygu - Photography & Creative Portfolio",
+    name: "Duruduygu",
     short_name: "Duruduygu",
-    description: "Amateur photographer and curious explorer. Architecture, street photography, and everything that catches my eye.",
+    description: "Photographs of Istanbul, a journal, and a small lab for hardware and clothes.",
     start_url: "/",
     display: "standalone",
-    background_color: "#0a0a0a",
-    theme_color: "#3d5a4c",
+    background_color: "#f3f2f2",
+    theme_color: "#f3f2f2",
     orientation: "portrait-primary",
     icons: [
       {
         src: "/icon-192.jpg",
         sizes: "192x192",
         type: "image/jpeg",
-        purpose: "any maskable"
+        purpose: "any"
       },
       {
         src: "/icon-512.jpg",
         sizes: "512x512",
         type: "image/jpeg",
-        purpose: "any maskable"
+        purpose: "any"
       }
     ],
     categories: ["photography", "portfolio", "personal"],
@@ -32,14 +32,14 @@ export default function manifest(): MetadataRoute.Manifest {
         description: "View photography collection"
       },
       {
-        name: "Blog",
+        name: "Journal",
         url: "/blog",
-        description: "Read latest posts"
+        description: "Read the journal"
       },
       {
-        name: "Portfolio",
-        url: "/portfolio",
-        description: "View projects"
+        name: "Lab",
+        url: "/lab",
+        description: "Hardware and clothes in progress"
       }
     ]
   }

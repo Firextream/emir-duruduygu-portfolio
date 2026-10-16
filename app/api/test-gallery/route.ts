@@ -4,7 +4,7 @@ import { getGalleryImages } from '@/lib/notion'
 // Test endpoint to check gallery images
 export async function GET() {
   try {
-    const images = await getGalleryImages()
+    const images = (await getGalleryImages()) as { id?: string; name?: string; alt?: string; src?: string; category?: string }[]
     
     return NextResponse.json({
       success: true,

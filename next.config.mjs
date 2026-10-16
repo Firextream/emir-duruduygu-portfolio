@@ -1,92 +1,44 @@
 /** @type {import('next').NextConfig} */
+
+// Directus serves images straight to browsers (asset transforms, see components/site/ContentImage).
+// Its host is listed here as well so next/image accepts it if a loader is ever bypassed.
+const directusHosts = [process.env.DIRECTUS_ASSETS_URL, process.env.DIRECTUS_URL]
+  .filter(Boolean)
+  .map((value) => {
+    try {
+      const url = new URL(value)
+      return { protocol: url.protocol.replace(':', ''), hostname: url.hostname, port: url.port, pathname: '/assets/**' }
+    } catch {
+      return null
+    }
+  })
+  .filter(Boolean)
+
 const nextConfig = {
   // Standalone server output: runs on Vercel and in Docker (see Dockerfile). No static export —
   // the contact/newsletter API routes need a server.
   output: 'standalone',
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
-  typescript: {
-    ignoreBuildErrors: true,
-  },
-  // Enable experimental features for better performance
-  experimental: {
-    optimizeCss: true,
-  },
-  // Compress output
   compress: true,
-  // Power header optimization
   poweredByHeader: false,
   images: {
-    // Enable Vercel image optimization for better performance
     formats: ['image/avif', 'image/webp'],
-    // Optimized device sizes - include larger sizes for high-res displays
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
-    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384, 512],
-    // Higher quality values for better image fidelity
-    qualities: [75, 85, 90, 95, 100],
-    // Long cache for better performance
-    minimumCacheTTL: 60 * 60 * 24 * 60, // 60 days cache
-    // Limit concurrent image optimization
+    imageSizes: [96, 128, 256, 384, 512],
+    qualities: [75, 85],
+    minimumCacheTTL: 60 * 60 * 24 * 60,
     dangerouslyAllowSVG: false,
-    // Unoptimized false to ensure Next.js optimizes all images
-    unoptimized: false,
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'prod-files-secure.s3.us-west-2.amazonaws.com',
-        port: '',
-        pathname: '/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 's3.us-west-2.amazonaws.com',
-        port: '',
-        pathname: '/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 's3-us-west-2.amazonaws.com',
-        port: '',
-        pathname: '/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'public.notion-static.com',
-        port: '',
-        pathname: '/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'www.notion.so',
-        port: '',
-        pathname: '/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'notion.so',
-        port: '',
-        pathname: '/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'res.cloudinary.com',
-        port: '',
-        pathname: '/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'wsrv.nl',
-        port: '',
-        pathname: '/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'images.unsplash.com',
-        port: '',
-        pathname: '/**',
-      },
-    ],
+    remotePatterns: directusHosts,
+  },
+  async redirects() {
+    return [
+      // Routes from the old site that the redesign folds into other pages.
+      { source: '/portfolio', destination: '/gallery', permanent: true },
+      { source: '/portfolio/:id', destination: '/gallery', permanent: true },
+      { source: '/moodboard', destination: '/gallery#moodboard', permanent: true },
+      { source: '/blog/archive', destination: '/blog', permanent: true },
+      { source: '/resume', destination: '/about', permanent: false },
+      { source: '/contact', destination: '/about', permanent: false },
+    ]
   },
 }
 

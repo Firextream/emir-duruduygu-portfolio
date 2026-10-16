@@ -83,6 +83,8 @@ export interface Post {
   title: string
   excerpt: string
   date: string
+  /** ISO date (YYYY-MM-DD) for feeds and sitemaps; null while the date is a placeholder */
+  published: string | null
   year: string
   /** "[n] min" for essays/notes, "▶ mm:ss" for videos */
   read: string
