@@ -6,20 +6,17 @@
   padding: 40px var(--side) 0;
 }
 
+/* no stage box behind the photo: it sits flush left in cols 1–9 */
 .stageBox {
   grid-column: 1 / 10;
   grid-row: 1 / 3;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 720px;
-  background: var(--ph1);
+  align-self: start;
 }
 
-/* the photo's own ratio, as large as fits 980×640 — never cropped */
+/* the photo's own ratio, as large as fits the columns and 720px of height — never cropped */
 .stage {
   aspect-ratio: var(--w) / var(--h);
-  width: min(100% - 40px, 980px, 640px * var(--w) / var(--h));
+  width: min(100%, 720px * var(--w) / var(--h));
 }
 
 .img {
@@ -192,13 +189,10 @@
   .stageBox {
     grid-column: 1 / 13;
     grid-row: 1;
-    height: auto;
-    min-height: 420px;
-    padding: 32px 0;
   }
 
   .stage {
-    width: min(100% - 40px, 980px, 560px * var(--w) / var(--h));
+    width: min(100%, 560px * var(--w) / var(--h));
   }
 
   .pager {
@@ -221,8 +215,6 @@
   }
 
   .stageBox {
-    display: block;
-    min-height: 0;
     padding: 18px 0;
   }
 

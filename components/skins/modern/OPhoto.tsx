@@ -1,4 +1,4 @@
-// Modernist Photo — OPhoto.dc.html: image stage cols 1–9 (720px), aside cols 10–12 with [00N], title,
+// Modernist Photo — OPhoto.dc.html: the photo in cols 1–9 (no stage box — client decision), aside cols 10–12 with [00N], title,
 // PLACE/DATE/RATIO/SIZE/CAMERA, note, Prev / red Next; thumb strip below (current = 2px red outline).
 import Link from 'next/link'
 import type { CSSProperties } from 'react'
@@ -31,7 +31,7 @@ export default function OPhoto({ item: p, index, prev, next, total, photos }: Ph
                 className={s.img}
                 eager
                 quality={85}
-                sizes="(max-width: 760px) 100vw, (max-width: 1100px) 90vw, (max-width: 1440px) 68vw, 980px"
+                sizes="(max-width: 760px) 100vw, (max-width: 1100px) 92vw, (max-width: 1440px) 70vw, 1002px"
               />
             ) : (
               <div className={s.ph}>{p.ratio} · placeholder</div>
