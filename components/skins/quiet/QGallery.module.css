@@ -1,0 +1,344 @@
+/* Quiet Gallery — QGallery.dc.html */
+.page {
+  padding: 0 var(--side);
+}
+
+.mobOnly,
+.mobTabs,
+.cols2 {
+  display: none;
+}
+
+.mut {
+  color: var(--mut);
+}
+
+.intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 440px;
+  gap: 80px;
+  align-items: end;
+  padding: 56px 0 44px;
+}
+
+.kicker {
+  font-family: var(--pixel);
+  font-size: 14px;
+  color: var(--mut);
+}
+
+.h1 {
+  margin-top: 18px;
+  font-family: var(--serif);
+  font-weight: 400;
+  font-variant-numeric: lining-nums;
+  font-size: clamp(72px, 7.8vw, 112px);
+  line-height: 0.92;
+  letter-spacing: -0.01em;
+}
+
+.lede {
+  font-size: 18px;
+  line-height: 1.6;
+  color: var(--mut);
+  text-wrap: pretty;
+}
+
+/* tabs inside the window */
+.tabRow {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  padding: 12px 18px 0;
+  background: var(--bar);
+  border-bottom: 1px solid var(--line);
+}
+
+.tab {
+  height: 42px;
+  margin-bottom: -1px;
+  padding: 0 18px;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--mut);
+  font-family: var(--pixel);
+  font-size: 16px;
+}
+
+.tab:hover {
+  color: var(--ink);
+}
+
+.tab[aria-selected='true'] {
+  border-bottom-color: var(--win);
+  background: var(--win);
+  color: var(--ink);
+  box-shadow: inset 0 2px 0 var(--acc);
+}
+
+.sort {
+  margin-left: auto;
+  padding-bottom: 10px;
+  font-family: var(--pixel);
+  font-size: 13px;
+  color: var(--mut);
+}
+
+.body {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+}
+
+.tree {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 22px 18px;
+  border-right: 1px solid var(--line);
+  font-family: var(--pixel);
+  font-size: 15px;
+}
+
+.treeHead {
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--mut);
+}
+
+.treeItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 36px;
+  padding: 0 10px;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  font-family: var(--pixel);
+  font-size: 15px;
+  text-align: left;
+}
+
+.treeItem:hover {
+  background: var(--hover);
+}
+
+.treeItem[aria-selected='true'] {
+  background: var(--hi);
+}
+
+.readme {
+  position: relative;
+  margin-top: 28px;
+  padding: 28px 26px 20px;
+  background: var(--paper);
+  color: var(--paperi);
+  transform: rotate(-2deg);
+  box-shadow: 4px 5px 0 var(--sh);
+}
+
+.readmeTape {
+  position: absolute;
+  top: -11px;
+  left: 38%;
+  z-index: 2;
+  width: 84px;
+  height: 22px;
+  background: var(--tape);
+  transform: rotate(2deg);
+}
+
+.readmeLabel {
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  opacity: 0.75;
+}
+
+.readmeText {
+  margin-top: 10px;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 30px;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+
+.main {
+  min-width: 0;
+  padding: 34px 32px 8px;
+}
+
+.cols3,
+.cols4 {
+  display: grid;
+  align-items: start;
+}
+
+.cols2 {
+  align-items: start;
+}
+
+.cols3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 30px;
+}
+
+.cols4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.cols2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.cell {
+  margin-bottom: 32px;
+}
+
+.moodItem {
+  margin-bottom: 20px;
+}
+
+.cols2 .moodItem {
+  margin-bottom: 12px;
+}
+
+@media (max-width: 1180px) {
+  .intro {
+    grid-template-columns: minmax(0, 1fr) 340px;
+    gap: 48px;
+  }
+
+  .body {
+    grid-template-columns: 180px minmax(0, 1fr);
+  }
+
+  .cols3 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  /* three distributed columns become two: let the third column's prints flow under */
+  .cols3 > .col:nth-child(3) {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 30px;
+  }
+
+  .cols4 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .cols4 > .col:nth-child(4) {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0 20px;
+  }
+}
+
+@media (max-width: 960px) {
+  .intro {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
+  }
+
+  .body {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .tree {
+    display: none;
+  }
+}
+
+/* ── mobile (≤ 760 px) — QGallery at 390 ───────────────── */
+@media (max-width: 760px) {
+  .deskOnly,
+  .tabRow,
+  .tree,
+  .cols4 {
+    display: none !important;
+  }
+
+  .mobOnly {
+    display: inline;
+  }
+
+  .intro {
+    display: block;
+    padding: 28px 0 24px;
+  }
+
+  .kicker {
+    font-size: 12px;
+  }
+
+  .h1 {
+    margin-top: 12px;
+    font-size: min(15.9vw, 62px);
+    line-height: 0.95;
+  }
+
+  .lede {
+    margin-top: 14px;
+    font-size: 16px;
+  }
+
+  .mobTabs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-bottom: 16px;
+    border: 1px solid var(--line);
+    background: var(--bar);
+  }
+
+  .mobTab {
+    height: 51px;
+    border: 0;
+    border-bottom: 3px solid transparent;
+    background: transparent;
+    color: var(--mut);
+    font-family: var(--pixel);
+    font-size: 16px;
+  }
+
+  .mobTab[aria-selected='true'] {
+    border-bottom-color: var(--acc);
+    background: var(--win);
+    color: var(--ink);
+  }
+
+  .main {
+    padding: 20px 14px 0;
+  }
+
+  /* photographs: one column, in gallery order */
+  .cols3 {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .cols3 > .col,
+  .cols3 > .col:nth-child(3) {
+    display: contents;
+  }
+
+  .cell {
+    margin-bottom: 22px;
+  }
+
+  .cols2 {
+    display: grid;
+  }
+}

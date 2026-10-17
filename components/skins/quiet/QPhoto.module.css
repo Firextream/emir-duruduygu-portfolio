@@ -1,0 +1,344 @@
+/* Quiet Photo — QPhoto.dc.html */
+.page {
+  padding: 0 var(--side);
+}
+
+.mobOnly,
+.mobPager {
+  display: none;
+}
+
+.back {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 36px 0 22px;
+}
+
+.backLink {
+  font-family: var(--pixel);
+  font-size: 16px;
+  color: var(--acc);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.backLink:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.backRule {
+  flex: 1;
+  height: 1px;
+  background: var(--rule);
+}
+
+.file {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--mut);
+}
+
+.pos {
+  font-family: var(--pixel);
+  font-size: 14px;
+  color: var(--mut);
+  white-space: nowrap;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--line);
+  background: var(--bar);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 16px;
+  border: 1px solid var(--line);
+  background: var(--win);
+  color: var(--ink);
+  font-family: var(--pixel);
+  font-size: 16px;
+  text-decoration: none;
+  box-shadow: 3px 3px 0 var(--sh);
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+
+.btn:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0 var(--sh);
+}
+
+.btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 var(--sh);
+}
+
+.toolMeta {
+  margin-left: auto;
+  font-family: var(--pixel);
+  font-size: 13px;
+  color: var(--mut);
+}
+
+.body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 340px;
+}
+
+/* the ruled desk the print lies on */
+.desk {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 800px; /* 720 + 2×40 padding (reference boxes are content-box) */
+  padding: 40px;
+  background: repeating-linear-gradient(0deg, transparent 0 23px, var(--rule) 23px 24px), var(--bg);
+}
+
+.card {
+  padding: 10px 10px 14px;
+  background: var(--print);
+  border: 1px solid var(--line);
+  box-shadow: 4px 4px 0 var(--sh);
+}
+
+/* own ratio, as large as fits 820×640 */
+.stage {
+  aspect-ratio: var(--w) / var(--h);
+  width: min(100cqw - 24px, 820px, 640px * var(--w) / var(--h));
+}
+
+.desk {
+  container-type: inline-size;
+}
+
+.img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.ph {
+  display: flex;
+  align-items: flex-end;
+  width: 100%;
+  height: 100%;
+  padding: 8px;
+  background: repeating-linear-gradient(135deg, var(--ph1) 0 9px, var(--ph2) 9px 18px);
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--printm);
+}
+
+.aside {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  padding: 28px 26px;
+  border-left: 1px solid var(--line);
+}
+
+.label {
+  font-family: var(--pixel);
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--mut);
+}
+
+.h1 {
+  margin-top: 8px;
+  font-family: var(--serif);
+  font-weight: 400;
+  font-variant-numeric: lining-nums;
+  font-size: 44px;
+  line-height: 1.02;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+.rows {
+  border-top: 1px solid var(--line);
+}
+
+.rows > div {
+  display: grid;
+  grid-template-columns: 80px minmax(0, 1fr);
+  gap: 10px;
+  padding: 13px 0;
+  border-bottom: 1px solid var(--rule);
+  font-size: 15px;
+}
+
+.rows dd {
+  overflow-wrap: anywhere;
+}
+
+.note {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--mut);
+}
+
+.strip {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  padding: 14px 18px;
+  border-top: 1px solid var(--line);
+  overflow-x: auto;
+}
+
+.thumb {
+  /* content-box like the reference: the photo ratio applies to the picture, not the mat */
+  box-sizing: content-box;
+  display: block;
+  flex: none;
+  height: 64px;
+  padding: 3px;
+  background: var(--print);
+  border: 1px solid var(--line);
+  transition: transform 0.12s;
+}
+
+.thumb:hover {
+  transform: translateY(-2px);
+}
+
+.thumb[aria-current='page'] {
+  border: 2px solid var(--acc);
+}
+
+.thumbImg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.thumbPh {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(135deg, var(--ph1) 0 9px, var(--ph2) 9px 18px);
+}
+
+@media (max-width: 1100px) {
+  .body {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .desk {
+    min-height: 0;
+    padding: 32px 24px;
+  }
+
+  .aside {
+    border-left: 0;
+    border-top: 1px solid var(--line);
+  }
+}
+
+/* ── mobile (≤ 760 px) — QPhoto at 390 ─────────────────── */
+@media (max-width: 760px) {
+  .deskOnly,
+  .toolbar,
+  .strip,
+  .backRule,
+  .file {
+    display: none !important;
+  }
+
+  .mobOnly {
+    display: inline;
+  }
+
+  .back {
+    justify-content: space-between;
+    padding: 6px 0 2px;
+  }
+
+  .backLink {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    font-size: 15px;
+  }
+
+  .pos {
+    font-size: 13px;
+  }
+
+  .desk {
+    padding: 14px;
+    background: var(--bg);
+  }
+
+  .card {
+    padding: 7px 7px 10px;
+    box-shadow: 3px 3px 0 var(--sh);
+  }
+
+  .stage {
+    width: min(100cqw - 18px, 480px * var(--w) / var(--h));
+  }
+
+  .aside {
+    gap: 14px;
+    padding: 18px 16px 16px;
+  }
+
+  .h1 {
+    margin-top: 0;
+    font-size: 36px;
+  }
+
+  .rows > div {
+    grid-template-columns: 70px minmax(0, 1fr);
+    padding: 12px 0;
+    font-size: 14px;
+  }
+
+  .mobPager {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-top: 1px solid var(--line);
+  }
+
+  .mobPager a {
+    display: flex;
+    align-items: center;
+    min-height: 56px;
+    padding: 0 16px;
+    color: var(--ink);
+    font-family: var(--pixel);
+    font-size: 16px;
+    text-decoration: none;
+  }
+
+  .mobPager a:last-child {
+    justify-content: flex-end;
+    border-left: 1px solid var(--line);
+  }
+
+  .mobPager a:active {
+    background: var(--hover);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn:hover,
+  .btn:active,
+  .thumb:hover {
+    transform: none;
+  }
+}
