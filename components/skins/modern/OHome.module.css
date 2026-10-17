@@ -135,7 +135,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 38px;
+  height: 36px;
   padding: 0 14px;
   border-bottom: 2px solid var(--line);
   font-weight: 600;
@@ -261,7 +261,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 56px;
+  height: 52px;
   margin-top: 20px;
   padding: 0 16px;
   border: 2px solid var(--line);
@@ -562,7 +562,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  height: 46px;
+  height: 44px;
   padding: 0 20px;
   border-bottom: 2px solid var(--line);
   font-weight: 600;
@@ -638,7 +638,7 @@
 }
 
 .input {
-  height: 56px;
+  height: 52px;
   padding: 0 14px;
   border: 2px solid var(--line);
   border-radius: 0;
@@ -661,8 +661,8 @@
 
 .textarea {
   height: auto;
-  min-height: 120px;
   padding: 12px 14px;
+  line-height: 1.2;
   resize: vertical;
 }
 
@@ -1117,7 +1117,7 @@
   }
 
   .textarea {
-    min-height: 96px;
+    height: 72px;
   }
 
   .formNote {

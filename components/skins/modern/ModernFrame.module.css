@@ -21,7 +21,7 @@
   display: flex;
   align-items: center;
   gap: 28px;
-  height: 86px; /* 84 + 2px rule (reference boxes are content-box) */
+  height: 84px; /* the Modernist DS is border-box: the 2px rule is inside */
   padding: 0 var(--side);
   border-bottom: 2px solid var(--line);
 }
@@ -371,7 +371,7 @@
   .header {
     flex-wrap: nowrap;
     gap: 10px;
-    height: 66px;
+    height: 64px;
     padding: 0 16px;
   }
 

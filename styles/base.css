@@ -74,6 +74,11 @@ a {
   outline-offset: 2px;
 }
 
+/* the hidden attribute always wins over component display rules (tab panels) */
+[hidden] {
+  display: none !important;
+}
+
 .sr-only {
   position: absolute;
   width: 1px;

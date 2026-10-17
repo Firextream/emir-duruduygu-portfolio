@@ -23,10 +23,19 @@
   background: var(--bg);
 }
 
+/* The Modernist design system's base (styles.css): every reference inherits 15px / 1.55. */
 [data-skin='modern'] body {
   background: var(--bg);
   color: var(--ink);
   font-family: var(--archivo);
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+/* zero specificity: components always win */
+:where([data-skin='modern']) :where(h1, h2, h3, h4, h5, h6) {
+  line-height: 1.12;
+  letter-spacing: -0.015em;
 }
 
 [data-skin='modern'] ::selection {
