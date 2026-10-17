@@ -1,92 +1,24 @@
-import { NextRequest, NextResponse } from "next/server"
+// Newsletter endpoint — a stub for now: validate, log a redacted line, return ok.
+// No third-party service yet (the previous Resend audience version is in git history).
+import { NextResponse, type NextRequest } from 'next/server'
+import { z } from 'zod'
 
-function normalizeEmail(value: unknown) {
-  return String(value || "").trim().toLowerCase()
-}
-
-function hasNewsletterConfig() {
-  return Boolean(process.env.RESEND_API_KEY && process.env.RESEND_AUDIENCE_ID)
-}
+const Signup = z.object({
+  email: z.string().trim().toLowerCase().email().max(200),
+  website: z.string().max(0).optional(),
+})
 
 export async function POST(request: NextRequest) {
+  let body: unknown
   try {
-    const body = await request.json()
-    const email = normalizeEmail(body?.email)
-
-    if (!email || !email.includes("@")) {
-      return NextResponse.json(
-        { error: "Please provide a valid email address." },
-        { status: 400 }
-      )
-    }
-
-    if (!hasNewsletterConfig()) {
-      return NextResponse.json(
-        {
-          error: "Newsletter not configured. Please set RESEND_API_KEY and RESEND_AUDIENCE_ID.",
-        },
-        { status: 503 }
-      )
-    }
-
-    const response = await fetch(`https://api.resend.com/audiences/${process.env.RESEND_AUDIENCE_ID}/contacts`, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${process.env.RESEND_API_KEY}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email,
-        unsubscribed: false,
-      }),
-    })
-
-    if (!response.ok) {
-      let payload: { message?: string } = {}
-      try {
-        payload = await response.json()
-      } catch {
-        // Ignore JSON parsing errors from provider.
-      }
-
-      const message = String(payload?.message || "").toLowerCase()
-      const alreadySubscribed =
-        response.status === 409 ||
-        message.includes("already exists") ||
-        message.includes("already subscribed")
-
-      if (alreadySubscribed) {
-        return NextResponse.json(
-          { error: "This email is already subscribed." },
-          { status: 409 }
-        )
-      }
-
-      console.error("Resend newsletter error:", payload)
-      return NextResponse.json(
-        { error: "Unable to subscribe right now. Please try again shortly." },
-        { status: 502 }
-      )
-    }
-
-    return NextResponse.json({
-      success: true,
-      message: "Thanks for subscribing! You will receive new updates.",
-    })
-  } catch (error) {
-    console.error("Newsletter subscription error:", error)
-    return NextResponse.json(
-      { error: "Something went wrong. Please try again later." },
-      { status: 500 }
-    )
+    body = await request.json()
+  } catch {
+    return NextResponse.json({ ok: false, error: 'Invalid request.' }, { status: 400 })
   }
-}
-
-// Operational status endpoint (safe to expose).
-export async function GET() {
-  return NextResponse.json({
-    provider: "resend",
-    configured: hasNewsletterConfig(),
-    whereToCheck: "Resend Dashboard -> Audiences -> Contacts",
-  })
+  const parsed = Signup.safeParse(body)
+  if (!parsed.success) {
+    return NextResponse.json({ ok: false, error: 'Please give a valid email address.' }, { status: 400 })
+  }
+  console.info(`[newsletter] signup from …@${parsed.data.email.split('@')[1]}`)
+  return NextResponse.json({ ok: true })
 }

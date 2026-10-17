@@ -1,4 +1,5 @@
-/** @type {import('next').NextConfig} */
+import { dirname } from 'node:path'
+import { fileURLToPath } from 'node:url'
 
 // Directus serves images straight to browsers (asset transforms, see components/site/ContentImage).
 // Its host is listed here as well so next/image accepts it if a loader is ever bypassed.
@@ -14,10 +15,13 @@ const directusHosts = [process.env.DIRECTUS_ASSETS_URL, process.env.DIRECTUS_URL
   })
   .filter(Boolean)
 
+/** @type {import('next').NextConfig} */
 const nextConfig = {
   // Standalone server output: runs on Vercel and in Docker (see Dockerfile). No static export —
   // the contact/newsletter API routes need a server.
   output: 'standalone',
+  // Pin the tracing root to this repo (a stray lockfile higher up would otherwise be picked as the root).
+  outputFileTracingRoot: dirname(fileURLToPath(import.meta.url)),
   compress: true,
   poweredByHeader: false,
   images: {

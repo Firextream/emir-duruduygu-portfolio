@@ -12,6 +12,8 @@ export default function SkinDocument({ skin, fonts, children }: { skin: Skin; fo
   return (
     // data-acc / data-switching are set by the pre-paint script before hydration.
     <html lang="en" data-skin={skin} data-acc="0" className={`${fonts} ${curtainFonts}`} suppressHydrationWarning>
+      {/* App Router root layout: <head> is correct here (the rule targets the pages router) */}
+      {/* eslint-disable-next-line @next/next/no-head-element */}
       <head>
         <script dangerouslySetInnerHTML={{ __html: PREPAINT_SCRIPT }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }} />
