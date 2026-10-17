@@ -42,7 +42,7 @@ try {
           writeFileSync(join(out, route, `${skin}-${width}.png`), await fullPageShot(cdp, width))
           n++
         }
-        if (doRef) {
+        if (doRef && def.ref) {
           await cdp.send('Emulation.setDeviceMetricsOverride', { width, height: 900, deviceScaleFactor: 1, mobile: width <= 760 })
           const { page, arg = 0, empty = false } = def.ref
           const review = JSON.stringify({ page, arg, empty, dev: width <= 760 ? 'mobile' : 'desktop' })

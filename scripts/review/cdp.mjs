@@ -110,6 +110,10 @@ export async function openWithSkin(cdp, { base, path, skin, width, height = 900,
   const script = await cdp.send('Page.addScriptToEvaluateOnNewDocument', {
     source: `try{localStorage.setItem('duru-style-v2',JSON.stringify({skin:${JSON.stringify(skin)},acc:0}));sessionStorage.clear()}catch(e){}`,
   })
+  // start from a blank page so hash-only URLs (/gallery#moodboard) still trigger a real load
+  const blank = cdp.once('Page.loadEventFired', 5000)
+  await cdp.send('Page.navigate', { url: 'about:blank' })
+  await blank
   const loaded = cdp.once('Page.loadEventFired', 30000)
   await cdp.send('Page.navigate', { url: new URL(path, base).href })
   await loaded

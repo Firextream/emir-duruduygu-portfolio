@@ -2,6 +2,7 @@
 export const ROUTES = {
   home: { path: '/', ref: { page: 'home' } },
   gallery: { path: '/gallery', ref: { page: 'gallery' } },
+  'gallery-mood': { path: '/gallery#moodboard', ref: null },
   photo: { path: '/gallery/p01', ref: { page: 'photo', arg: 0 } },
   journal: { path: '/blog', ref: { page: 'journal' } },
   'journal-empty': { path: '/blog', ref: { page: 'journal', empty: true }, siteNote: 'needs MOCK_EMPTY=posts' },
