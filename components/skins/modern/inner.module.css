@@ -1,0 +1,161 @@
+/* Shared Modernist inner-page parts (README "Modernist inner pages"). */
+.head {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: 24px;
+  align-items: end;
+  padding: 40px var(--side) 32px;
+  border-bottom: 2px solid var(--line);
+}
+
+.title {
+  grid-column: 1 / 9;
+  min-width: 0;
+  font-weight: 800;
+  font-size: min(13.9vw, 200px);
+  line-height: 0.82;
+  letter-spacing: -0.06em;
+  overflow-wrap: anywhere;
+}
+
+.headSmall .title {
+  font-size: min(6.7vw, 96px);
+  line-height: 0.9;
+  letter-spacing: -0.05em;
+}
+
+.red {
+  color: var(--acc);
+}
+
+.headSide {
+  grid-column: 9 / 13;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.intro {
+  font-size: 18px;
+  line-height: 1.5;
+}
+
+/* sub-page back row */
+.back {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  height: 56px;
+  padding: 0 var(--side);
+  border-bottom: 2px solid var(--line);
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.backLink {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.backLink:hover {
+  box-shadow: inset 0 -4px 0 var(--acc);
+}
+
+.backMeta {
+  margin-left: auto;
+  color: var(--mut);
+  font-variant-numeric: tabular-nums;
+}
+
+/* numbered section head: red number + title */
+.sectionHead {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: 24px;
+  align-items: baseline;
+  padding-top: 14px;
+  border-top: 2px solid var(--line);
+}
+
+.num {
+  grid-column: 1 / 2;
+  font-weight: 800;
+  font-size: 40px;
+  line-height: 1;
+  color: var(--acc);
+}
+
+.h2 {
+  grid-column: 2 / 13;
+  font-weight: 800;
+  font-size: 40px;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+@media (max-width: 1100px) {
+  .title {
+    grid-column: 1 / 13;
+  }
+
+  .headSide {
+    grid-column: 1 / 13;
+    margin-top: 28px;
+  }
+
+  .num {
+    grid-column: 1 / 3;
+  }
+
+  .h2 {
+    grid-column: 3 / 13;
+  }
+}
+
+@media (max-width: 760px) {
+  .head {
+    display: block;
+    padding: 24px 18px 20px;
+  }
+
+  .title {
+    font-size: min(18.5vw, 72px);
+    line-height: 0.85;
+  }
+
+  .headSmall .title {
+    font-size: min(12.3vw, 48px);
+  }
+
+  .headSide {
+    gap: 18px;
+    margin-top: 16px;
+  }
+
+  .intro {
+    font-size: 16px;
+  }
+
+  .back {
+    height: 52px;
+    padding: 0 18px;
+  }
+
+  .backLink {
+    min-height: 44px;
+  }
+
+  .sectionHead {
+    display: flex;
+    gap: 12px;
+    padding-top: 12px;
+  }
+
+  .num,
+  .h2 {
+    font-size: 28px;
+  }
+}

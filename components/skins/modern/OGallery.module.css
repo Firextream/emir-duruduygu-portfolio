@@ -1,0 +1,201 @@
+/* Modernist Gallery — OGallery.dc.html */
+.mobOnly {
+  display: none;
+}
+
+.seg {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border: 2px solid var(--line);
+}
+
+.segOpt {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--ink);
+  font-weight: 600;
+  font-size: 15px;
+  text-align: left;
+}
+
+.segOpt:hover {
+  background: var(--hover);
+}
+
+.segOpt[aria-selected='true'] {
+  background: var(--ink);
+  color: var(--bg);
+}
+
+.panel {
+  padding: 40px var(--side) 0;
+}
+
+.masonry {
+  column-count: 3;
+  column-gap: 24px;
+}
+
+.mood {
+  column-count: 4;
+}
+
+.item {
+  break-inside: avoid;
+  margin-bottom: 40px;
+}
+
+.photo {
+  display: block;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.frame {
+  position: relative;
+  display: block;
+}
+
+.img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.ph {
+  padding: 10px;
+  font-size: 12px;
+}
+
+.open {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  display: none;
+  align-items: center;
+  height: 40px;
+  padding: 0 14px;
+  background: var(--acc);
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.photo:hover .open,
+.photo:focus-visible .open {
+  display: flex;
+}
+
+.cap {
+  display: flex;
+  gap: 12px;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 2px solid var(--line);
+  font-size: 14px;
+}
+
+.no {
+  flex: none;
+  font-weight: 600;
+  color: var(--acc);
+}
+
+.capTitle {
+  min-width: 0;
+  font-weight: 600;
+}
+
+.capMeta {
+  margin-left: auto;
+  color: var(--mut);
+  text-align: right;
+}
+
+.moodItem {
+  break-inside: avoid;
+  margin-bottom: 32px;
+}
+
+.moodCap {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 2px solid var(--line);
+  font-size: 13px;
+}
+
+.moodSource {
+  margin-left: auto;
+  color: var(--mut);
+}
+
+@media (max-width: 1100px) {
+  .masonry {
+    column-count: 2;
+  }
+
+  .mood {
+    column-count: 3;
+  }
+}
+
+@media (max-width: 760px) {
+  .deskOnly {
+    display: none;
+  }
+
+  .mobOnly {
+    display: inline;
+  }
+
+  .segOpt {
+    min-height: 48px;
+  }
+
+  .panel {
+    padding: 24px 18px 0;
+  }
+
+  .masonry {
+    column-count: 1;
+  }
+
+  .item {
+    margin-bottom: 28px;
+  }
+
+  .cap {
+    gap: 10px;
+    margin-top: 8px;
+    padding-top: 8px;
+    font-size: 13px;
+  }
+
+  .mood {
+    column-count: 2;
+    column-gap: 12px;
+  }
+
+  .moodItem {
+    margin-bottom: 12px;
+  }
+
+  .moodCap {
+    display: block;
+    margin-top: 6px;
+    padding-top: 6px;
+    font-size: 12px;
+  }
+
+  .moodSource {
+    margin-left: 4px;
+  }
+}
