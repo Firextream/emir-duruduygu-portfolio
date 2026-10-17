@@ -1,0 +1,282 @@
+/* JewelCase.dc.html on a 980×660 grid; 1u = 1/980 of the case width (container query units). */
+.case {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 980 / 660;
+  container-type: inline-size;
+  color: #162033;
+  font-family: var(--body);
+}
+
+.stage {
+  --u: calc(100cqw / 980);
+  position: absolute;
+  inset: 0;
+}
+
+/* ── disc ──────────────────────────────────────────────── */
+.disc {
+  position: absolute;
+  left: calc(370 * var(--u));
+  top: calc(30 * var(--u));
+  z-index: 1;
+  width: calc(600 * var(--u));
+  height: calc(600 * var(--u));
+  animation: slide-in 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.discClip {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: 50%;
+  box-shadow: 0 calc(30 * var(--u)) calc(50 * var(--u)) calc(-26 * var(--u)) rgba(20, 40, 80, 0.6);
+}
+
+.discFace {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle, #dbe2ea 0 7%, rgba(255, 255, 255, 0.95) 7% 8%, rgba(240, 244, 248, 0.7) 8% 15%, rgba(22, 32, 51, 0.14) 15% 15.4%, rgba(255, 255, 255, 0) 15.4%),
+    repeating-radial-gradient(circle, rgba(22, 32, 51, 0.035) 0 1px, rgba(255, 255, 255, 0) 1px 4px),
+    linear-gradient(135deg, #f4f6f9, #c9d1db 50%, #eef2f6);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.9), inset 0 0 0 calc(7 * var(--u)) rgba(22, 32, 51, 0.04);
+  animation: spin 14s linear infinite;
+}
+
+.ring {
+  position: absolute;
+  inset: 0;
+  background: var(--ring) center / 100% 100% no-repeat;
+}
+
+.sheen,
+.glint {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  pointer-events: none;
+  -webkit-mask-image: radial-gradient(circle, transparent 0 16%, #000000 17% 97%, transparent 98%);
+  mask-image: radial-gradient(circle, transparent 0 16%, #000000 17% 97%, transparent 98%);
+}
+
+.sheen {
+  background: conic-gradient(from 200deg, rgba(26, 157, 255, 0), rgba(26, 157, 255, 0.35), rgba(160, 120, 255, 0.3), rgba(255, 140, 190, 0.24), rgba(255, 220, 120, 0.26), rgba(110, 220, 190, 0.3), rgba(26, 157, 255, 0) 55%, rgba(26, 157, 255, 0.22) 75%, rgba(160, 120, 255, 0.2) 85%, rgba(26, 157, 255, 0));
+  mix-blend-mode: multiply;
+  opacity: 0.6;
+}
+
+.glint {
+  background: linear-gradient(120deg, rgba(255, 255, 255, 0) 35%, rgba(255, 255, 255, 0.75) 48%, rgba(255, 255, 255, 0) 60%);
+}
+
+/* ── case ──────────────────────────────────────────────── */
+.box {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 2;
+  width: calc(750 * var(--u));
+  height: calc(660 * var(--u));
+  border-radius: calc(6 * var(--u));
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.55), rgba(236, 241, 246, 0.35));
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.95), inset 0 0 0 2px rgba(22, 32, 51, 0.05),
+    0 calc(50 * var(--u)) calc(80 * var(--u)) calc(-44 * var(--u)) rgba(20, 40, 80, 0.65);
+}
+
+.hinge {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: calc(52 * var(--u));
+  border-radius: calc(6 * var(--u)) 0 0 calc(6 * var(--u));
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.95), rgba(214, 221, 230, 0.7) 40%, rgba(255, 255, 255, 0.85) 70%, rgba(196, 205, 216, 0.55));
+}
+
+.hingeRidges {
+  position: absolute;
+  left: calc(10 * var(--u));
+  top: calc(70 * var(--u));
+  bottom: calc(70 * var(--u));
+  width: calc(14 * var(--u));
+  background: repeating-linear-gradient(180deg, rgba(22, 32, 51, 0.09) 0 1px, rgba(255, 255, 255, 0) 1px calc(5 * var(--u)));
+}
+
+.tab {
+  position: absolute;
+  left: calc(36 * var(--u));
+  width: calc(20 * var(--u));
+  height: calc(56 * var(--u));
+  background: linear-gradient(90deg, #ffffff, #dfe5ec);
+  box-shadow: inset 0 0 0 1px rgba(22, 32, 51, 0.08);
+}
+
+.tabTop {
+  top: 0;
+  border-radius: 0 0 calc(4 * var(--u)) calc(4 * var(--u));
+}
+
+.tabBottom {
+  bottom: 0;
+  border-radius: calc(4 * var(--u)) calc(4 * var(--u)) 0 0;
+}
+
+.clip {
+  position: absolute;
+  right: calc(14 * var(--u));
+  width: calc(10 * var(--u));
+  height: calc(56 * var(--u));
+  border-radius: calc(3 * var(--u));
+  background: rgba(255, 255, 255, 0.75);
+  box-shadow: inset 0 0 0 1px rgba(22, 32, 51, 0.1);
+}
+
+.clipTop {
+  top: calc(120 * var(--u));
+}
+
+.clipBottom {
+  bottom: calc(120 * var(--u));
+}
+
+.cover {
+  position: absolute;
+  left: calc(60 * var(--u));
+  top: calc(13 * var(--u));
+  width: calc(634 * var(--u));
+  height: calc(634 * var(--u));
+  overflow: hidden;
+  background: #f8fafc;
+}
+
+/* README exception: the jewel-case cover is square and cover-cropped */
+.coverImg,
+.coverContain {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.coverContain {
+  object-fit: contain;
+}
+
+.coverPh {
+  width: 100%;
+  height: 100%;
+  background: var(--stripe);
+}
+
+.glare {
+  position: absolute;
+  inset: 0;
+  border-radius: calc(6 * var(--u));
+  pointer-events: none;
+  background: linear-gradient(115deg, rgba(255, 255, 255, 0) 16%, rgba(255, 255, 255, 0.3) 24%, rgba(255, 255, 255, 0) 33%, rgba(255, 255, 255, 0) 62%, rgba(255, 255, 255, 0.16) 66%, rgba(255, 255, 255, 0) 70%);
+  box-shadow: inset 0 1px 0 #ffffff, inset 1px 0 0 rgba(255, 255, 255, 0.8), inset -1px 0 0 rgba(22, 32, 51, 0.08), inset 0 -1px 0 rgba(22, 32, 51, 0.08);
+}
+
+.obi {
+  position: absolute;
+  left: calc(46 * var(--u));
+  top: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: calc(24 * var(--u));
+  width: calc(112 * var(--u));
+  padding: calc(28 * var(--u)) 0 calc(24 * var(--u));
+  background: var(--aqua);
+  box-shadow: inset calc(6 * var(--u)) 0 0 rgba(22, 32, 51, 0.12), calc(8 * var(--u)) 0 calc(16 * var(--u)) calc(-8 * var(--u)) rgba(20, 40, 80, 0.45);
+  pointer-events: none;
+}
+
+.obiName {
+  writing-mode: vertical-rl;
+  font-weight: 900;
+  font-size: calc(34 * var(--u));
+  letter-spacing: 0.06em;
+}
+
+.obiSub {
+  writing-mode: vertical-rl;
+  font-weight: 700;
+  font-size: calc(16 * var(--u));
+  letter-spacing: 0.16em;
+}
+
+.obiNo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: calc(6 * var(--u));
+  margin-top: auto;
+  font-family: var(--num);
+  font-weight: 700;
+  font-size: calc(14 * var(--u));
+}
+
+.sticker {
+  position: absolute;
+  right: calc(30 * var(--u));
+  top: calc(30 * var(--u));
+  display: grid;
+  place-items: center;
+  width: calc(112 * var(--u));
+  height: calc(112 * var(--u));
+  border-radius: 50%;
+  background: radial-gradient(60% 40% at 35% 25%, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0) 70%),
+    conic-gradient(from 210deg, #f4f6f9, #cfd6df, #ffffff, #dcd6f2, #f4f6f9, #cfe7f4, #ffffff, #e9dcef, #f4f6f9);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.9), 0 0 0 calc(2 * var(--u)) var(--aqua), 0 calc(8 * var(--u)) calc(18 * var(--u)) calc(-8 * var(--u)) rgba(20, 40, 80, 0.5);
+  text-align: center;
+  font-weight: 900;
+  font-size: calc(14 * var(--u));
+  line-height: 1.25;
+  transform: rotate(-8deg);
+  transition: transform 0.3s ease;
+}
+
+.sticker:hover {
+  transform: rotate(4deg) scale(1.06);
+}
+
+.stickerCount {
+  font-family: var(--num);
+  font-size: calc(22 * var(--u));
+}
+
+.stickerUnit {
+  font-weight: 500;
+  font-size: calc(11 * var(--u));
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes slide-in {
+  from {
+    transform: translateX(calc(-200 * var(--u)));
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .disc,
+  .discFace {
+    animation: none;
+  }
+
+  .sticker,
+  .sticker:hover {
+    transition: none;
+    transform: rotate(-8deg);
+  }
+}

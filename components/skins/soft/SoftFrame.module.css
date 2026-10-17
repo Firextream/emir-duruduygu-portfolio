@@ -329,6 +329,7 @@
   }
 
   .styleBtn {
+    flex: none;
     display: inline-flex;
     align-items: center;
     height: 44px;
@@ -453,13 +454,14 @@
 
   .copy {
     grid-row: 2;
-    align-self: center;
-    padding-top: 12px;
+    display: flex;
+    align-items: center;
     border-top: 1px solid var(--rule2);
   }
 
   .topBtn {
     grid-row: 2;
+    align-self: stretch;
     height: auto;
     min-height: 44px;
     margin-top: 0;
