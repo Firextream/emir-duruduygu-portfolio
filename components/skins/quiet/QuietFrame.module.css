@@ -267,11 +267,6 @@
   flex: 1;
 }
 
-.skinHint {
-  font-family: var(--mono);
-  font-size: 11px;
-  color: var(--mut);
-}
 
 .accRow {
   display: flex;

@@ -14,10 +14,10 @@ export const SWITCH_FLAG = 'duru-skin-switch'
 
 export const isSkin = (v: unknown): v is Skin => v === 'quiet' || v === 'soft' || v === 'modern'
 
-export const SKIN_INFO: Record<Skin, { label: string; hint: string }> = {
-  quiet: { label: 'Quiet', hint: 'windows · prints' },
-  soft: { label: 'Soft Club', hint: 'jewel case · obi' },
-  modern: { label: 'Modernist', hint: 'grid · red' },
+export const SKIN_INFO: Record<Skin, { label: string }> = {
+  quiet: { label: 'Quiet' },
+  soft: { label: 'Soft Club' },
+  modern: { label: 'Modernist' },
 }
 
 /** Quiet is the only skin with more than one accent. */

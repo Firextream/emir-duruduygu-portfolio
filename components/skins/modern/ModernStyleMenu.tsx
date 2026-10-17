@@ -47,7 +47,6 @@ export default function ModernStyleMenu() {
                 >
                   <span className={s.swatch} data-swatch={k} />
                   <span className={s.skinName}>{SKIN_INFO[k].label}</span>
-                  <span className={s.skinHint}>{SKIN_INFO[k].hint}</span>
                 </button>
               ))}
             </div>

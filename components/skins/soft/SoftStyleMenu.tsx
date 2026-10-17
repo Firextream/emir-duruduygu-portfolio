@@ -40,7 +40,6 @@ export default function SoftStyleMenu() {
               onClick={() => (k === skin ? close() : switchSkin(k))}
             >
               <span>{SKIN_INFO[k].label}</span>
-              <span className={s.menuHint}>{SKIN_INFO[k].hint}</span>
             </button>
           ))}
         </div>

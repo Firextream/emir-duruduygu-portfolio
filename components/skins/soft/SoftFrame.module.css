@@ -376,11 +376,6 @@
     box-shadow: inset 3px 0 0 var(--aqua);
   }
 
-  .menuHint {
-    font-size: 12px;
-    font-weight: 400;
-    color: var(--mut);
-  }
 
   .footer {
     display: block;

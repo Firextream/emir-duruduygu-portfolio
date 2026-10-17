@@ -223,10 +223,6 @@
   flex: 1;
 }
 
-.skinHint {
-  font-size: 11px;
-  color: var(--mut);
-}
 
 .popNote {
   font-size: 13px;
