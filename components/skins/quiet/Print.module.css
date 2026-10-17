@@ -1,0 +1,153 @@
+.print {
+  position: relative;
+  display: block;
+  min-width: 0;
+  color: inherit;
+  text-decoration: none;
+  transform: rotate(var(--tilt, 0deg));
+  transition: transform 0.18s ease;
+}
+
+.basis {
+  flex: 0 1 var(--basis);
+}
+
+/* dashed marquee 6px outside the print */
+.print::after {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  z-index: 3;
+  border: 1px dashed var(--ink);
+  pointer-events: none;
+  opacity: 0;
+}
+
+.print:hover,
+.print:focus-visible {
+  transform: rotate(0deg) translateY(-3px);
+}
+
+.print:hover::after,
+.print:focus-visible::after {
+  opacity: 1;
+}
+
+.print:focus-visible {
+  outline: none;
+}
+
+.tape {
+  position: absolute;
+  top: -11px;
+  left: var(--tape-left, 20px);
+  z-index: 2;
+  width: 84px;
+  height: 22px;
+  background: var(--tape);
+  transform: rotate(-3deg);
+}
+
+.card {
+  display: block;
+  padding: 8px 8px 12px;
+  background: var(--print);
+  border: 1px solid var(--line);
+  box-shadow: 2px 2px 0 var(--sh);
+}
+
+.img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.ph {
+  display: flex;
+  align-items: flex-end;
+  width: 100%;
+  padding: 8px;
+  background: repeating-linear-gradient(135deg, var(--ph1) 0 9px, var(--ph2) 9px 18px);
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--printm);
+}
+
+.caption {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.title {
+  min-width: 0;
+  font-family: var(--serif);
+  font-size: 21px;
+  line-height: 1.1;
+  color: var(--printi);
+}
+
+.file {
+  display: none;
+  min-width: 0;
+  padding: 1px 6px;
+  background: var(--acc);
+  color: var(--acci);
+  font-family: var(--pixel);
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+
+.meta {
+  font-family: var(--pixel);
+  font-size: 12px;
+  color: var(--printm);
+  white-space: nowrap;
+}
+
+.metaHover {
+  display: none;
+}
+
+.print:hover .title,
+.print:focus-visible .title,
+.print:hover .metaRest,
+.print:focus-visible .metaRest {
+  display: none;
+}
+
+.print:hover .file,
+.print:focus-visible .file,
+.print:hover .metaHover,
+.print:focus-visible .metaHover {
+  display: inline;
+}
+
+@media (max-width: 760px) {
+  .card {
+    padding: 7px 7px 10px;
+  }
+
+  .title {
+    font-size: 18px;
+  }
+
+  .meta {
+    font-size: 11px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .print,
+  .print:hover,
+  .print:focus-visible {
+    transition: none;
+  }
+
+  .print:hover,
+  .print:focus-visible {
+    transform: rotate(0deg);
+  }
+}

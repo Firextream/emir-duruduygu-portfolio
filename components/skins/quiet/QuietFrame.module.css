@@ -478,6 +478,7 @@
   }
 
   .styleBtn {
+    flex: none;
     justify-content: center;
     width: 44px;
     height: 44px;
