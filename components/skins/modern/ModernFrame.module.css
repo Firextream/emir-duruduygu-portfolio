@@ -385,7 +385,7 @@
   }
 
   .wordmark {
-    font-size: 30px;
+    font-size: min(30px, 7.6vw);
   }
 
   .nav,
@@ -405,6 +405,7 @@
   }
 
   .styleBtn {
+    flex: none;
     justify-content: center;
     width: 44px;
     height: 44px;

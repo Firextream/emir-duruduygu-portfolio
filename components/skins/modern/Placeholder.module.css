@@ -1,0 +1,23 @@
+.ph {
+  display: flex;
+  align-items: flex-end;
+  width: 100%;
+  padding: 8px;
+  background: var(--stripe);
+  color: var(--mut);
+  font-size: 11px;
+}
+
+.mob {
+  display: none;
+}
+
+@media (max-width: 760px) {
+  .desk {
+    display: none;
+  }
+
+  .mob {
+    display: inline;
+  }
+}
