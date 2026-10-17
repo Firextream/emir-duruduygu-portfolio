@@ -16,7 +16,7 @@ export default function Window({
   labelledBy,
 }: {
   icon: ReactNode
-  title: string
+  title: ReactNode
   meta?: ReactNode
   /** frames.dir uses the accent-tinted bar */
   accentBar?: boolean

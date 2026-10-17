@@ -1,10 +1,11 @@
 .print {
+  --tilt: var(--tilt-d, 0deg);
   position: relative;
   display: block;
   min-width: 0;
   color: inherit;
   text-decoration: none;
-  transform: rotate(var(--tilt, 0deg));
+  transform: rotate(var(--tilt));
   transition: transform 0.18s ease;
 }
 
@@ -31,6 +32,19 @@
 .print:hover::after,
 .print:focus-visible::after {
   opacity: 1;
+}
+
+/* moodboard prints are view-only */
+.still {
+  cursor: default;
+}
+
+.still:hover {
+  transform: rotate(var(--tilt));
+}
+
+.still:hover::after {
+  opacity: 0;
 }
 
 .print:focus-visible {
@@ -126,6 +140,10 @@
 }
 
 @media (max-width: 760px) {
+  .print {
+    --tilt: var(--tilt-m, var(--tilt-d, 0deg));
+  }
+
   .card {
     padding: 7px 7px 10px;
   }

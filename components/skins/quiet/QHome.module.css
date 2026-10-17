@@ -105,15 +105,15 @@
 }
 
 .print1 {
-  --tilt: -0.8deg;
+  --tilt-d: -0.8deg;
 }
 
 .print2 {
-  --tilt: 0.5deg;
+  --tilt-d: 0.5deg;
 }
 
 .print3 {
-  --tilt: -1.4deg;
+  --tilt-d: -1.4deg;
 }
 
 /* ── journal | lab | player + note ─────────────────────── */
@@ -568,15 +568,15 @@
   }
 
   .print1 {
-    --tilt: -0.6deg;
+    --tilt-m: -0.6deg;
   }
 
   .print2 {
-    --tilt: 0.8deg;
+    --tilt-m: 0.8deg;
   }
 
   .print3 {
-    --tilt: -0.5deg;
+    --tilt-m: -0.5deg;
   }
 
   .home .btnRow {
