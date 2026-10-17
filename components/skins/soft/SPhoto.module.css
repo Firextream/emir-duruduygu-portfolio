@@ -1,0 +1,252 @@
+/* Soft Club Photo — SPhoto.dc.html */
+.page {
+  padding: 0 var(--side);
+}
+
+.page .mobOnly {
+  display: none;
+}
+
+.no,
+.counter {
+  font-family: var(--num);
+  font-weight: 700;
+  color: var(--deep);
+}
+
+.top {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  height: 57px;
+  margin-top: 28px;
+  border-bottom: 1px solid var(--rule);
+  font-size: 14px;
+}
+
+.back {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.hint {
+  font-size: 12px;
+  color: var(--mut);
+}
+
+.counter {
+  margin-left: auto;
+}
+
+/* own ratio, at most 760px tall, never cropped */
+.stageBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 760px;
+  margin-top: 40px;
+}
+
+.stage {
+  aspect-ratio: var(--w) / var(--h);
+  width: min(100%, 760px * var(--w) / var(--h), var(--nw));
+}
+
+.img {
+  display: block;
+  width: 100%;
+  height: auto;
+  box-shadow: 0 40px 60px -36px rgba(20, 40, 80, 0.6);
+}
+
+.ph {
+  display: flex;
+  align-items: flex-end;
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  background: var(--stripe);
+  font-size: 11px;
+  color: var(--mut);
+}
+
+.info {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) repeat(4, minmax(0, 1fr));
+  gap: 24px;
+  margin-top: 40px;
+  padding: 20px 0;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+}
+
+.titleCell .no {
+  font-size: 13px;
+}
+
+.h1 {
+  margin-top: 6px;
+  font-family: var(--display);
+  font-weight: 300;
+  font-size: 30px;
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+}
+
+.k {
+  font-size: 12px;
+  color: var(--mut);
+}
+
+.v {
+  margin-top: 6px;
+  font-weight: 500;
+  font-size: 15px;
+  overflow-wrap: anywhere;
+}
+
+.pager {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin-top: 8px;
+}
+
+.prev,
+.next {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 20px 8px;
+  text-decoration: none;
+}
+
+.next {
+  align-items: flex-end;
+  text-align: right;
+}
+
+.prev:hover,
+.next:hover {
+  background: rgba(255, 255, 255, 0.55);
+}
+
+.dir {
+  font-size: 12px;
+  color: var(--mut);
+}
+
+.target {
+  display: flex;
+  gap: 10px;
+  font-weight: 500;
+  font-size: 16px;
+}
+
+@media (max-width: 1100px) {
+  .stageBox {
+    height: auto;
+    min-height: 0;
+  }
+
+  .stage {
+    width: min(100%, 620px * var(--w) / var(--h), var(--nw));
+  }
+
+  .info {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .titleCell {
+    grid-column: 1 / -1;
+  }
+}
+
+/* ── mobile (≤ 760 px) — SPhoto at 390 ─────────────────── */
+@media (max-width: 760px) {
+  .deskOnly,
+  .hint {
+    display: none !important;
+  }
+
+  .page .mobOnly {
+    display: inline;
+  }
+
+  .top {
+    height: 53px;
+    margin-top: 12px;
+  }
+
+  .counter {
+    font-size: 13px;
+  }
+
+  .stageBox {
+    display: block;
+    margin-top: 20px;
+  }
+
+  .stage {
+    width: 100%;
+  }
+
+  .img {
+    box-shadow: 0 24px 36px -26px rgba(20, 40, 80, 0.6);
+  }
+
+  .info {
+    gap: 14px 16px;
+    margin-top: 18px;
+    padding: 0 0 16px;
+    border-top: 0;
+  }
+
+  .titleCell {
+    margin: 0 0 2px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .titleCell .no {
+    font-size: 12px;
+  }
+
+  .h1 {
+    font-size: 26px;
+  }
+
+  .k {
+    font-size: 11px;
+  }
+
+  .v {
+    margin-top: 4px;
+    font-size: 14px;
+  }
+
+  .pager {
+    gap: 10px;
+    margin-top: 14px;
+  }
+
+  .prev,
+  .next {
+    justify-content: center;
+    min-height: 48px;
+    padding: 0 14px;
+    box-shadow: inset 0 0 0 1px var(--rule);
+  }
+
+  .dir {
+    font-weight: 500;
+    font-size: 14px;
+    color: var(--ink);
+  }
+
+  .target {
+    display: none;
+  }
+}
