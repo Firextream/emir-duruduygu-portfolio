@@ -10,7 +10,7 @@ import { StructuredData } from "@/lib/structured-data"
 import { SkipToContent } from "@/components/skip-to-content"
 import { ServiceWorkerCleanup } from "@/components/service-worker-registration"
 import { SpotifyCornerIndicator } from "@/components/spotify-corner-indicator"
-import { UnderConstruction } from "@/components/under-construction"
+import { UnderConstructionSplash } from "@/components/under-construction-splash"
 import "./globals.css"
 
 const inter = Inter({
@@ -135,7 +135,7 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <meta name="theme-color" content="#fafafa" />
       </head>
-      <body className="font-sans antialiased min-h-screen flex flex-col" suppressHydrationWarning>
+      <body className="font-sans antialiased min-h-screen flex flex-col overflow-hidden" suppressHydrationWarning>
         <ThemeProvider
           attribute="class"
           defaultTheme="light"
@@ -149,7 +149,7 @@ export default function RootLayout({
           <main id="main-content" tabIndex={-1}>
             {children}
           </main>
-          <UnderConstruction />
+          <UnderConstructionSplash />
           <SpotifyCornerIndicator />
           <SocialButtons />
           <BackToTop />
