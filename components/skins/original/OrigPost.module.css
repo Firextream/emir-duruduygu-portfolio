@@ -1,0 +1,534 @@
+/* Original Post — OrigPost.dc.html */
+.page {
+  padding: 136px var(--side) 0;
+}
+
+.mobOnly {
+  display: none;
+}
+
+.deskOnlyFlex {
+  display: flex;
+}
+
+.back {
+  display: inline-flex;
+  align-items: center;
+  height: 48px;
+  font-family: var(--mono);
+  font-size: 14px;
+  letter-spacing: 0.1em;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.back:hover {
+  color: var(--acc);
+}
+
+.header {
+  max-width: 1040px;
+  margin-top: 40px;
+}
+
+.kind {
+  font-family: var(--mono);
+  font-size: 14px;
+  letter-spacing: 0.2em;
+  color: var(--mut);
+}
+
+.h1 {
+  margin-top: 16px;
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: min(5vw, 72px);
+  line-height: 1.06;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 28px;
+  margin-top: 32px;
+  font-family: var(--mono);
+  font-size: 15px;
+  color: var(--mut);
+}
+
+.tags {
+  gap: 8px;
+}
+
+.tag {
+  padding: 5px 12px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: #ffffff;
+  color: var(--ink);
+  font-size: 13px;
+}
+
+/* ── video ─────────────────────────────────────────────── */
+.video {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 380px;
+  gap: 40px;
+  align-items: start;
+  margin-top: 56px;
+}
+
+.screen {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: #171614;
+}
+
+.poster {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.play {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  display: grid;
+  place-items: center;
+  width: 96px;
+  height: 96px;
+  padding: 33px;
+  border: 0;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #171614;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+  transform: translate(-50%, -50%);
+  transition: transform 0.2s;
+}
+
+.play:hover {
+  transform: translate(-50%, -50%) scale(1.05);
+}
+
+.screenLeft,
+.screenRight {
+  position: absolute;
+  bottom: 18px;
+  font-family: var(--mono);
+  font-size: 13px;
+  color: #d9d6d1;
+}
+
+.screenLeft {
+  left: 20px;
+}
+
+.screenRight {
+  right: 20px;
+}
+
+.track {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.trackFill {
+  height: 100%;
+  background: var(--acc);
+  transition: width 0.3s ease;
+}
+
+.chapHead {
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.2em;
+  color: var(--mut);
+}
+
+.chapList {
+  margin-top: 14px;
+  border-top: 1px solid var(--line);
+}
+
+.chapter {
+  display: grid;
+  grid-template-columns: 72px minmax(0, 1fr);
+  gap: 12px;
+  align-items: baseline;
+  width: 100%;
+  padding: 16px 8px;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  background: transparent;
+  color: var(--ink);
+  text-align: left;
+}
+
+.chapter:hover {
+  background: var(--hover);
+}
+
+.chapter[aria-current='true'] {
+  background: var(--hover);
+  color: var(--acc);
+}
+
+.chapTime {
+  font-family: var(--mono);
+  font-size: 14px;
+  color: var(--mut);
+}
+
+.chapTitle {
+  font-family: var(--serif);
+  font-size: 20px;
+  line-height: 1.25;
+}
+
+/* ── figures ───────────────────────────────────────────── */
+.cover {
+  max-width: 1040px;
+  margin-top: 56px;
+}
+
+.img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.ph {
+  display: flex;
+  align-items: flex-end;
+  width: 100%;
+  padding: 12px;
+  background: var(--stripe);
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--mut);
+}
+
+.cap {
+  margin-top: 12px;
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--mut);
+}
+
+/* in the text, figures break out to the left edge of the header (240px) */
+.figs {
+  width: calc(100% + 240px);
+  margin: 56px 0 0 -240px;
+}
+
+.figPair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  align-items: start;
+}
+
+/* ── the reading column ────────────────────────────────── */
+.body {
+  max-width: 720px;
+  margin: 72px 0 0 240px;
+  font-size: 19px;
+  line-height: 1.8;
+}
+
+.lede {
+  font-family: var(--serif);
+  font-size: 28px;
+  line-height: 1.45;
+}
+
+.p {
+  margin-top: 24px;
+  color: #2b2926;
+}
+
+.lede + .p {
+  margin-top: 24px;
+}
+
+.p a {
+  color: var(--acc);
+}
+
+.h2 {
+  margin-top: 56px;
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: 34px;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+.h2Time {
+  margin-right: 14px;
+  font-family: var(--mono);
+  font-size: 14px;
+  letter-spacing: 0;
+  color: var(--mut);
+}
+
+.quote {
+  position: relative;
+  margin-top: 64px;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 40px;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+
+.quoteMark {
+  position: absolute;
+  left: -64px;
+  top: -14px;
+  font-size: 96px;
+  font-style: normal;
+  line-height: 1;
+  color: var(--acc);
+}
+
+.quote + .p {
+  margin-top: 48px;
+}
+
+/* ── next entry ────────────────────────────────────────── */
+.next {
+  display: grid;
+  grid-template-columns: 240px minmax(0, 1fr) auto;
+  align-items: center;
+  margin-top: 120px;
+  padding: 48px 0;
+  border-top: 1px solid var(--line);
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.next:hover {
+  color: var(--acc);
+}
+
+.nextLabel {
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.2em;
+  color: var(--mut);
+}
+
+.nextTitle {
+  font-family: var(--serif);
+  font-size: 40px;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.nextArrow {
+  padding-left: 24px;
+  font-size: 28px;
+}
+
+@media (max-width: 1240px) {
+  .body {
+    margin-left: min(16vw, 240px);
+  }
+
+  .figs {
+    width: calc(100% + min(16vw, 240px));
+    margin-left: calc(-1 * min(16vw, 240px));
+  }
+}
+
+@media (max-width: 1100px) {
+  .video {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ── mobile — OrigPost at 390 ──────────────────────────── */
+@media (max-width: 760px) {
+  .deskOnly,
+  .deskOnlyFlex {
+    display: none !important;
+  }
+
+  .mobOnly {
+    display: inline;
+  }
+
+  .page {
+    padding: 84px 20px 0;
+  }
+
+  .back {
+    height: auto;
+    min-height: 44px;
+    font-size: 12px;
+  }
+
+  .header {
+    margin-top: 16px;
+  }
+
+  .kind {
+    font-size: 11px;
+  }
+
+  .h1 {
+    margin-top: 10px;
+    font-size: min(9.7vw, 38px);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    text-wrap: wrap;
+  }
+
+  .meta {
+    gap: 6px 16px;
+    margin-top: 16px;
+    font-size: 12px;
+  }
+
+  .video {
+    display: block;
+    margin-top: 24px;
+  }
+
+  .screen {
+    margin: 0 -20px;
+  }
+
+  .play {
+    width: 64px;
+    height: 64px;
+    padding: 21px;
+    box-shadow: none;
+  }
+
+  .chapList {
+    margin-top: 16px;
+  }
+
+  .chapter {
+    grid-template-columns: 64px minmax(0, 1fr);
+    gap: 10px;
+    min-height: 52px;
+    padding: 12px 0;
+  }
+
+  .chapter[aria-current='true'] {
+    background: transparent;
+  }
+
+  .chapTime {
+    font-size: 12px;
+  }
+
+  .chapTitle {
+    font-size: 17px;
+  }
+
+  .cover {
+    margin: 24px -20px 0;
+  }
+
+  .cap {
+    margin: 8px 20px 0;
+    font-size: 11px;
+  }
+
+  .figs {
+    width: auto;
+    margin: 32px -20px 0;
+  }
+
+  .figPair {
+    display: block;
+  }
+
+  .figPair .fig + .fig {
+    margin-top: 20px;
+  }
+
+  .body {
+    margin: 32px 0 0;
+    font-size: 17px;
+    line-height: 1.75;
+  }
+
+  .lede {
+    font-size: 22px;
+  }
+
+  .p,
+  .lede + .p {
+    margin-top: 18px;
+  }
+
+  .h2 {
+    margin-top: 40px;
+    font-size: 26px;
+    letter-spacing: 0;
+  }
+
+  .quote {
+    margin-top: 40px;
+    font-size: 28px;
+    letter-spacing: 0;
+  }
+
+  .quoteMark {
+    position: static;
+    font-size: inherit;
+    font-style: italic;
+    line-height: inherit;
+  }
+
+  .quote + .p {
+    margin-top: 18px;
+  }
+
+  .next {
+    display: block;
+    margin-top: 56px;
+    padding: 24px 0;
+  }
+
+  .nextLabel {
+    display: block;
+    font-size: 11px;
+  }
+
+  .nextTitle {
+    display: block;
+    margin-top: 8px;
+    font-size: 24px;
+    line-height: 1.2;
+    letter-spacing: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .play,
+  .trackFill {
+    transition: none;
+  }
+
+  .play:hover {
+    transform: translate(-50%, -50%);
+  }
+}
