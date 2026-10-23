@@ -1,5 +1,14 @@
 /* Original — the live site's design, repaired: Playfair Display, pills, hairlines, cream ground.
    Light only (README "Original tokens"). */
+
+/* Google's JetBrains Mono subsets carry no ← →. The references let them fall to the system
+   monospace; without this they would land in next/font's metric fallback (Arial), long and thin. */
+@font-face {
+  font-family: 'Original Arrows';
+  src: local('Consolas'), local('Menlo-Regular'), local('Menlo'), local('DejaVu Sans Mono'), local('Courier New');
+  unicode-range: U+2190, U+2192, U+2194-21FF;
+}
+
 [data-skin='original'] {
   --bg: #faf9f7;
   --ink: #171614;
@@ -19,7 +28,7 @@
 
   --serif: var(--font-playfair), 'Playfair Display', Georgia, serif;
   --sans: var(--font-inter), 'Inter', system-ui, sans-serif;
-  --mono: var(--font-jbmono), 'JetBrains Mono', ui-monospace, monospace;
+  --mono: 'Original Arrows', var(--font-jbmono), 'JetBrains Mono', ui-monospace, monospace;
 
   background: var(--bg);
 }

@@ -1,0 +1,335 @@
+/* Original Photo — OrigPhoto.dc.html */
+.page {
+  padding: 136px var(--side) 0;
+}
+
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 48px;
+  font-family: var(--mono);
+  font-size: 14px;
+  letter-spacing: 0.1em;
+}
+
+.back {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.back:hover {
+  color: var(--acc);
+}
+
+.counter {
+  color: var(--mut);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 340px;
+  gap: 64px;
+  align-items: start;
+  margin-top: 24px;
+}
+
+/* the photo, uncropped, on a white card */
+.stage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* the reference is content-box: 560px inside the 32px padding */
+  box-sizing: content-box;
+  min-height: 560px;
+  padding: 32px;
+  border: 1px solid var(--line);
+  background: var(--card);
+}
+
+.img {
+  display: block;
+  max-width: 100%;
+  max-height: 720px;
+  width: auto;
+  height: auto;
+}
+
+.ph {
+  display: flex;
+  align-items: flex-end;
+  padding: 12px;
+  background: var(--stripe);
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--mut);
+}
+
+.aside {
+  position: sticky;
+  top: 120px;
+  min-width: 0;
+}
+
+.frameNo {
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.2em;
+  color: var(--mut);
+}
+
+.h1 {
+  margin-top: 12px;
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: 44px;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+.facts {
+  margin-top: 28px;
+  border-top: 1px solid var(--line);
+}
+
+.fact {
+  display: grid;
+  grid-template-columns: 96px minmax(0, 1fr);
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.fact dt {
+  padding-top: 3px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  color: var(--mut);
+}
+
+.fact dd {
+  font-size: 16px;
+  overflow-wrap: anywhere;
+}
+
+.note {
+  margin-top: 20px;
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--mut);
+}
+
+.pager {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-top: 32px;
+  font-size: 17px;
+}
+
+.prev,
+.next {
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.prev {
+  color: var(--mut);
+}
+
+.prev:hover {
+  color: var(--ink);
+}
+
+.rule {
+  flex: none;
+  width: 40px;
+  height: 1px;
+  background: var(--ink);
+}
+
+.next {
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.next:hover {
+  color: var(--acc);
+}
+
+.hint {
+  margin-top: 16px;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--mut);
+}
+
+/* ── thumbnails ────────────────────────────────────────── */
+.thumbs {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  margin-top: 40px;
+  padding: 24px 4px 4px;
+  border-top: 1px solid var(--line);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.thumbs::-webkit-scrollbar {
+  display: none;
+}
+
+.thumb {
+  flex: none;
+  display: block;
+  opacity: 0.75;
+}
+
+.thumb:hover {
+  opacity: 1;
+}
+
+.thumb[aria-current='page'] {
+  outline: 2px solid var(--acc);
+  outline-offset: 3px;
+  opacity: 1;
+}
+
+.thumbImg {
+  display: block;
+  width: auto;
+  height: 72px;
+  max-width: none;
+}
+
+.thumbPh {
+  display: block;
+  height: 72px;
+  background: var(--stripe);
+}
+
+@media (max-width: 1100px) {
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 40px;
+  }
+
+  .aside {
+    position: static;
+  }
+}
+
+/* ── mobile — OrigPhoto at 390 ─────────────────────────── */
+@media (max-width: 760px) {
+  .deskOnly,
+  .thumbs {
+    display: none;
+  }
+
+  .page {
+    padding: 84px 0 0;
+  }
+
+  .top {
+    height: auto;
+    padding: 0 20px;
+    font-size: 12px;
+  }
+
+  .back {
+    min-height: 44px;
+  }
+
+  .grid {
+    display: block;
+    margin-top: 8px;
+  }
+
+  .stage {
+    display: block;
+    min-height: 0;
+    padding: 0;
+    border-width: 1px 0;
+  }
+
+  .img {
+    width: 100%;
+    max-height: none;
+  }
+
+  .ph {
+    width: 100% !important;
+    padding: 10px;
+    font-size: 11px;
+  }
+
+  .aside {
+    padding: 24px 20px 0;
+  }
+
+  .h1 {
+    margin-top: 0;
+    font-size: 34px;
+    text-wrap: wrap;
+  }
+
+  .facts {
+    margin-top: 20px;
+  }
+
+  .fact {
+    grid-template-columns: 84px minmax(0, 1fr);
+    padding: 10px 0;
+  }
+
+  .fact dt {
+    font-size: 11px;
+  }
+
+  .fact dd {
+    font-size: 15px;
+  }
+
+  .pager {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 20px;
+    font-size: 15px;
+  }
+
+  .rule {
+    display: none;
+  }
+
+  .prev,
+  .next {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+    border-radius: 999px;
+    font-weight: 400;
+  }
+
+  .prev {
+    border: 1px solid var(--line);
+    background: #ffffff;
+    color: var(--ink);
+  }
+
+  .next {
+    background: var(--ink);
+    color: var(--bg);
+  }
+
+  .next:hover {
+    color: var(--bg);
+  }
+}
