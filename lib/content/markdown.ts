@@ -11,7 +11,8 @@ import type { Block, Figure, Inline } from './types'
 
 export type FigureResolver = (ref: string, caption: string) => Promise<Figure>
 
-const IMAGE = /^!\[([^\]]*)\]\(\s*([^)\s]+)(?:\s+"([^"]*)")?\s*\)$/
+// lazy alt text so captions may contain brackets: ![[Caption]](photo:p02)
+const IMAGE = /^!\[(.*?)\]\(\s*([^)\s]+)(?:\s+"([^"]*)")?\s*\)$/
 
 export function slugify(text: string): string {
   return (

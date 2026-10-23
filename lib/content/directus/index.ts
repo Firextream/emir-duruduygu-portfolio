@@ -2,9 +2,10 @@
 // Reuses the existing setup: DIRECTUS_URL, DIRECTUS_STATIC_TOKEN and the DIRECTUS_*_COLLECTION overrides.
 // Images are returned as Directus asset URLs; components/site/ContentImage adds the
 // transform query (format=webp, width, quality) so next/image gets a real srcset.
+import { SKINS } from '../../skins'
 import { SITE_EMAIL, SITE_LINKS } from '../links'
 import { parseMarkdown, readMinutes, type FigureResolver } from '../markdown'
-import type { ContentAdapter, Figure, Img, Mood, Photo, Post, PostKind, Project, ProjectImage, Settings } from '../types'
+import type { About, ContentAdapter, Figure, Img, Mood, Photo, Post, PostKind, Project, ProjectImage, Settings, Stage, StageState } from '../types'
 import { displayDate, isoDate, logDate, ratio, toSeconds } from '../util'
 
 const REVALIDATE = 300
@@ -22,6 +23,7 @@ const C = {
   projects: () => env('DIRECTUS_PROJECTS_COLLECTION', 'projects'),
   log: () => env('DIRECTUS_PROJECT_LOG_COLLECTION', 'project_log'),
   settings: () => env('DIRECTUS_SETTINGS_COLLECTION', 'settings'),
+  about: () => env('DIRECTUS_ABOUT_COLLECTION', 'about'),
 }
 
 type Row = Record<string, unknown>
@@ -112,8 +114,9 @@ async function mood(): Promise<Mood[]> {
 function figureResolver(gallery: Photo[]): FigureResolver {
   return async (ref, caption) => {
     if (ref.startsWith('photo:')) {
-      const p = gallery.find((g) => g.id === ref.slice(6))
-      if (p) return { image: p.image, w: p.w, h: p.h, ratio: p.ratio, caption }
+      const at = gallery.findIndex((g) => g.id === ref.slice(6))
+      const p = gallery[at]
+      if (p) return { image: p.image, w: p.w, h: p.h, ratio: p.ratio, caption, no: at + 1 }
     }
     const id = ref.startsWith('asset:') ? ref.slice(6) : /\/assets\/([0-9a-f-]{36})/i.exec(ref)?.[1]
     if (id) {
@@ -200,53 +203,108 @@ function projectImage(file: unknown, cap: string, name: string): ProjectImage | 
   return image ? { ...image, cap } : null
 }
 
+const STAGE_STATES: readonly StageState[] = ['done', 'now', 'next']
+
+function stagesOf(v: unknown): Stage[] {
+  const list = Array.isArray(v) ? v : typeof v === 'string' ? (JSON.parse(v || '[]') as unknown[]) : []
+  return list
+    .map((s) => s as { label?: string; state?: string })
+    .filter((s) => s && s.label)
+    .map((s) => ({ label: str(s.label), state: STAGE_STATES.find((k) => k === s.state) ?? 'next' }))
+}
+
 async function projects(): Promise<Project[]> {
-  const rows = await items(C.projects(), {
-    filter: published,
-    sort: 'sort',
-    fields: [
-      'slug,name,kind,one_liner,stage,year,tools,image_caption,drawing_caption,placeholder_ratio',
-      `image.${FILE.split(',').join(',image.')}`,
-      `drawing.${FILE.split(',').join(',drawing.')}`,
-      'log.date,log.title,log.text',
-    ].join(','),
-  })
-  return rows.map((r) => {
-    const name = str(r.name, '[Project]')
-    const [pw, ph] = str(r.placeholder_ratio, '4:5').split(':').map(Number)
-    const log = (Array.isArray(r.log) ? (r.log as Row[]) : [])
-      .map((l) => ({ date: logDate(str(l.date)) || '[YYYY.MM.DD]', title: str(l.title), text: str(l.text) }))
-      .sort((a, b) => b.date.localeCompare(a.date))
-    const image = projectImage(r.image, str(r.image_caption, name), name)
-    return {
-      slug: str(r.slug),
-      name,
-      kind: str(r.kind, '[kind]'),
-      one: str(r.one_liner),
-      status: str(r.stage, '[status]'),
-      year: str(r.year, '[year]'),
-      tools: str(r.tools, '[tools]'),
-      img: image,
-      drawing: projectImage(r.drawing, str(r.drawing_caption, 'Drawing'), name),
-      ph: image ? null : { w: pw || 4, h: ph || 5 },
-      log,
-    }
-  })
+  const [rows, gallery] = await Promise.all([
+    items(C.projects(), {
+      filter: published,
+      sort: 'sort',
+      fields: [
+        'slug,name,kind,one_liner,stage,year,tools,image_caption,drawing_caption,placeholder_ratio,stages,about',
+        `image.${FILE.split(',').join(',image.')}`,
+        `drawing.${FILE.split(',').join(',drawing.')}`,
+        // photos: a Files (M2M) field; the caption is the file's title
+        `photos.directus_files_id.${FILE.split(',').join(',photos.directus_files_id.')}`,
+        'log.date,log.title,log.text',
+      ].join(','),
+    }),
+    photos().catch(() => [] as Photo[]),
+  ])
+  const resolve = figureResolver(gallery)
+  return Promise.all(
+    rows.map(async (r) => {
+      const name = str(r.name, '[Project]')
+      const [pw, ph] = str(r.placeholder_ratio, '4:5').split(':').map(Number)
+      const log = (Array.isArray(r.log) ? (r.log as Row[]) : [])
+        .map((l) => ({ date: logDate(str(l.date)) || '[YYYY.MM.DD]', title: str(l.title), text: str(l.text) }))
+        .sort((a, b) => b.date.localeCompare(a.date))
+      const image = projectImage(r.image, str(r.image_caption, name), name)
+      const extra = (Array.isArray(r.photos) ? (r.photos as Row[]) : [])
+        .map((j) => j.directus_files_id as DFile | null)
+        .map((f) => asFigure(f, str(f?.title) || str(f?.description) || name))
+        .filter((f): f is Figure => !!f)
+      return {
+        slug: str(r.slug),
+        name,
+        kind: str(r.kind, '[kind]'),
+        one: str(r.one_liner),
+        status: str(r.stage, '[status]'),
+        year: str(r.year, '[year]'),
+        tools: str(r.tools, '[tools]'),
+        img: image,
+        drawing: projectImage(r.drawing, str(r.drawing_caption, 'Drawing'), name),
+        ph: image ? null : { w: pw || 4, h: ph || 5 },
+        stages: stagesOf(r.stages),
+        about: await parseMarkdown(str(r.about), resolve),
+        photos: extra,
+        log,
+      } satisfies Project
+    }),
+  ).then((list) => list.filter((p) => p.slug))
+}
+
+function milestonesOf(v: unknown) {
+  const list = Array.isArray(v) ? v : typeof v === 'string' ? (JSON.parse(v || '[]') as unknown[]) : []
+  return list
+    .map((m) => m as { year?: string; text?: string })
+    .filter((m) => m && (m.year || m.text))
+    .map((m) => ({ year: str(m.year, '[year]'), text: str(m.text) }))
+}
+
+async function about(): Promise<About> {
+  // a singleton: /items/about returns the one row
+  const [r, gallery] = await Promise.all([
+    request<Row | null>(`/items/${C.about()}`, {
+      fields: ['summary,body,currently,location,study,milestones,shooting,listening', `portrait.${FILE.split(',').join(',portrait.')}`].join(','),
+    }),
+    photos().catch(() => [] as Photo[]),
+  ])
+  return {
+    portrait: img(r?.portrait, 'Emir Duruduygu'),
+    summary: str(r?.summary),
+    body: await parseMarkdown(str(r?.body), figureResolver(gallery)),
+    currently: str(r?.currently),
+    location: str(r?.location, 'Istanbul, TR'),
+    study: str(r?.study),
+    milestones: milestonesOf(r?.milestones),
+    shooting: str(r?.shooting),
+    listening: str(r?.listening),
+  }
 }
 
 async function settings(): Promise<Settings> {
   const s = await request<Row | null>(`/items/${C.settings()}`, {
-    fields: 'email,home_photo_quiet.id,home_photo_quiet.slug,home_photo_modern.id,home_photo_modern.slug,home_photo_soft.id,home_photo_soft.slug',
+    // one M2O field per skin: home_photo_<skin>
+    fields: ['email', ...SKINS.flatMap((k) => [`home_photo_${k}.id`, `home_photo_${k}.slug`])].join(','),
   })
   const pick = (v: unknown) => {
     const r = v as Row | null
     return r ? str(r.slug) || String(r.id) : null
   }
   return {
-    homePhoto: { quiet: pick(s?.home_photo_quiet), modern: pick(s?.home_photo_modern), soft: pick(s?.home_photo_soft) },
+    homePhoto: Object.fromEntries(SKINS.map((k) => [k, pick(s?.[`home_photo_${k}`])])),
     email: str(s?.email, SITE_EMAIL),
     links: SITE_LINKS,
   }
 }
 
-export const directusAdapter: ContentAdapter = { photos, mood, posts, projects, settings }
+export const directusAdapter: ContentAdapter = { photos, mood, posts, projects, about, settings }

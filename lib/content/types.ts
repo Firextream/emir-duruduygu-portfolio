@@ -1,7 +1,9 @@
 // The content model shared by every skin. Mirrors design_handoff_duruduygu/duru-content.js.
 // Adapters (mock, directus) return these shapes; pages never see where data came from.
 
-export type Skin = 'quiet' | 'soft' | 'modern'
+import type { Skin } from '../skins'
+
+export type { Skin }
 
 /** A real image file. `null` wherever the design shows a striped placeholder. */
 export interface Img {
@@ -69,6 +71,8 @@ export interface Figure {
   h: number
   ratio: string
   caption: string
+  /** 1-based position in the gallery when the figure is a gallery photo (catalogue numbers) */
+  no?: number
 }
 
 export type Block =
@@ -108,6 +112,14 @@ export interface ProjectImage extends Img {
   cap: string
 }
 
+export type StageState = 'done' | 'now' | 'next'
+
+/** One step of a build — Modernist "01 Status", Quiet status.log */
+export interface Stage {
+  label: string
+  state: StageState
+}
+
 export interface Project {
   slug: string
   name: string
@@ -120,6 +132,12 @@ export interface Project {
   drawing: ProjectImage | null
   /** placeholder proportions when there is no image yet */
   ph: { w: number; h: number } | null
+  stages: Stage[]
+  /** what it is, why it exists, what is left — Markdown */
+  about: Block[]
+  /** more prints (prototype, details); `image: null` marks a placeholder */
+  photos: Figure[]
+  /** newest first */
   log: LogEntry[]
 }
 
@@ -128,14 +146,38 @@ export interface LabNote extends LogEntry {
   slug: string
 }
 
+export interface Milestone {
+  year: string
+  text: string
+}
+
+/** The About page (a singleton). The per-skin ledes are design copy and live in the components. */
+export interface About {
+  /** shown at its own ratio (Modernist, Quiet); the Soft Club jewel-case cover crops it square */
+  portrait: Img | null
+  /** a short paragraph about studies and what's next (Soft Club) */
+  summary: string
+  /** the long text (Modernist, Quiet) — Markdown */
+  body: Block[]
+  /** what's being worked on now (CURRENTLY / Now) */
+  currently: string
+  location: string
+  study: string
+  /** Modernist "01 Along the way", newest first */
+  milestones: Milestone[]
+  /** Soft Club "now" rows */
+  shooting: string
+  listening: string
+}
+
 export interface SiteLink {
   label: 'Instagram' | 'LinkedIn' | 'GitHub' | 'RSS'
   href: string
 }
 
 export interface Settings {
-  /** photo id per skin (admin-picked in Directus: settings.home_photo_*) */
-  homePhoto: Record<Skin, string | null>
+  /** photo id per skin (admin-picked in Directus: settings.home_photo_<skin>); missing = first photo */
+  homePhoto: Partial<Record<Skin, string | null>>
   email: string
   links: SiteLink[]
 }
@@ -146,5 +188,6 @@ export interface ContentAdapter {
   /** newest first */
   posts(): Promise<Post[]>
   projects(): Promise<Project[]>
+  about(): Promise<About>
   settings(): Promise<Settings>
 }

@@ -47,23 +47,29 @@ const chapters: [string, string][] = [
 
 const BODY = '[Body text placeholder. This is where the entry is written. Lines run at around sixty-five characters so long reading stays comfortable, with generous leading and clear space between paragraphs.]'
 
-/** Essay/note body: mirrors the reference post (subheading, figure pair, pull quote). */
+/** Essay body: a panorama, a figure pair, a subheading and a pull quote — every block type the skins lay out. */
 const essayBody = [
   BODY,
   BODY,
+  '![[Panorama caption]](photo:p04)',
+  BODY,
   '## [Subheading — placeholder]',
   BODY,
-  '![[Caption]](photo:p03) ![[Caption]](photo:p01)',
+  '![[Caption]](photo:p07) ![[Caption]](photo:p01)',
+  BODY,
   '> [A line worth pulling out of the entry — placeholder.]',
   BODY,
   BODY,
 ].join('\n\n')
 
+/** Note body: short. */
+const noteBody = [BODY, BODY].join('\n\n')
+
 /** Video body: the transcript, one heading per chapter. */
 const videoBody = (n: number) =>
   [
     '[Intro — what this video essay sets out to do, for people who would rather read it — placeholder]',
-    ...chapters.slice(0, n).flatMap(([, title]) => [`## ${title}`, BODY]),
+    ...chapters.slice(0, n).flatMap(([, title]) => [`## ${title}`, BODY, BODY]),
   ].join('\n\n')
 
 export interface MockPost {
@@ -107,7 +113,6 @@ const video = (o: Partial<MockPost> & Pick<MockPost, 'slug' | 'title' | 'year'>,
   post({
     kind: 'video',
     read: '▶ [mm:ss]',
-    standfirst: '[Intro — what this video essay sets out to do, for people who would rather read it — placeholder]',
     marginNote: null,
     cover: null,
     body: videoBody(n),
@@ -137,7 +142,7 @@ export const posts: MockPost[] = [
     },
     2,
   ),
-  post({ slug: 'entry-3', year: '[2026]', kind: 'note', title: '[Short title]' }),
+  post({ slug: 'entry-3', year: '[2026]', kind: 'note', title: '[Short title]', body: noteBody, cover: null, marginNote: null }),
   post({ slug: 'entry-4', year: '[2026]', title: '[Entry title — placeholder]' }),
   post({ slug: 'entry-5', year: '[2025]', title: '[Entry title — placeholder]' }),
   post({ slug: 'entry-6', year: '[2025]', title: '[Entry title — placeholder]' }),
@@ -150,6 +155,18 @@ const log = [
   { date: '[YYYY.MM.DD]', title: '[Note title — placeholder]', text: '[What changed and why — placeholder]' },
 ]
 
+const stages = [
+  { label: '[Stage 1]', state: 'done' },
+  { label: '[Stage 2]', state: 'now' },
+  { label: '[Stage 3]', state: 'next' },
+  { label: '[Stage 4]', state: 'next' },
+] as const
+
+const projectAbout = '[Body text placeholder. This is where the project is described — what it does, why it exists and what is left to figure out.]'
+
+/** Extra prints: [figure ref, caption] — `placeholder:WxH` until a photo exists */
+export type MockPrint = [string, string]
+
 export const projects = [
   {
     slug: 'slab-100',
@@ -160,8 +177,11 @@ export const projects = [
     year: '[year]',
     tools: '[tools — placeholder]',
     img: { src: '/content/slab-100-beyin.png', w: 784, h: 1432, cap: 'Main board layout' },
-    drawing: { src: '/content/slab-100-iso.svg', w: 700, h: 159, cap: 'Isometric drawing' },
+    drawing: { src: '/content/slab-100-iso.svg', w: 700, h: 1065, cap: 'Isometric drawing' },
     ph: null,
+    stages,
+    about: projectAbout,
+    photos: [['placeholder:3x2', '[Prototype photo — placeholder]']] as MockPrint[],
     log,
   },
   {
@@ -175,6 +195,9 @@ export const projects = [
     img: null,
     drawing: null,
     ph: { w: 1, h: 1 },
+    stages,
+    about: projectAbout,
+    photos: [['placeholder:4x5', '[Detail — placeholder]']] as MockPrint[],
     log,
   },
   {
@@ -188,9 +211,25 @@ export const projects = [
     img: null,
     drawing: null,
     ph: { w: 4, h: 5 },
+    stages,
+    about: projectAbout,
+    photos: [['placeholder:4x5', '[Detail — placeholder]']] as MockPrint[],
     log,
   },
 ]
+
+// The portrait is the old site's About photo (public/emir-profile.jpg, also in the handoff assets).
+export const about = {
+  portrait: { src: '/content/emir-profile.jpg', w: 2400, h: 1800, alt: 'Emir Duruduygu' },
+  summary: '[A short paragraph about you, your studies and what you are working towards — placeholder]',
+  body: [BODY, BODY, BODY].join('\n\n'),
+  currently: '[What I’m working on now — placeholder]',
+  location: 'Istanbul, TR',
+  study: 'Electrical & Electronics Eng., İTÜ',
+  milestones: Array.from({ length: 4 }, () => ({ year: '[year]', text: '[Milestone — placeholder]' })),
+  shooting: '[Series — placeholder]',
+  listening: '[Album — placeholder]',
+}
 
 export const settings = {
   homePhoto: { quiet: 'p01', modern: 'p01', soft: 'p01' },

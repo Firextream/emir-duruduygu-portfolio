@@ -1,7 +1,7 @@
 // Mock adapter: serves lib/content/mock/data.ts with files from /public/content.
 import { SITE_LINKS } from '../links'
 import { parseMarkdown, type FigureResolver } from '../markdown'
-import type { ContentAdapter, Figure, Img, Mood, Photo, Post, Project, Settings } from '../types'
+import type { About, ContentAdapter, Figure, Img, Mood, Photo, Post, Project, Settings } from '../types'
 import { isoDate, ratio, toSeconds } from '../util'
 import * as data from './data'
 
@@ -25,8 +25,9 @@ const photoList: Photo[] = data.photos.map((p) => {
 })
 
 const figure: FigureResolver = async (ref, caption) => {
-  const photo = ref.startsWith('photo:') ? photoList.find((p) => p.id === ref.slice(6)) : undefined
-  if (photo) return { image: photo.image, w: photo.w, h: photo.h, ratio: photo.ratio, caption }
+  const at = ref.startsWith('photo:') ? photoList.findIndex((p) => p.id === ref.slice(6)) : -1
+  const photo = photoList[at]
+  if (photo) return { image: photo.image, w: photo.w, h: photo.h, ratio: photo.ratio, caption, no: at + 1 }
   const ph = /^placeholder:(\d+)x(\d+)$/.exec(ref)
   const w = ph ? Number(ph[1]) : 4
   const h = ph ? Number(ph[2]) : 5
@@ -78,16 +79,33 @@ export const mockAdapter: ContentAdapter = {
     }))
   },
   async posts() {
+    // MOCK_EMPTY=posts renders the journal's empty state (for review only)
+    if ((process.env.MOCK_EMPTY ?? '').split(',').includes('posts')) return []
     return Promise.all(data.posts.map(toPost))
   },
   async projects(): Promise<Project[]> {
-    return data.projects.map((p) => ({
-      ...p,
-      img: p.img ? { ...local(p.img.src, p.img.w, p.img.h, `${p.name} — ${p.img.cap}`), cap: p.img.cap } : null,
-      drawing: p.drawing
-        ? { ...local(p.drawing.src, p.drawing.w, p.drawing.h, `${p.name} — ${p.drawing.cap}`), cap: p.drawing.cap }
-        : null,
-    }))
+    return Promise.all(
+      data.projects.map(async (p) => ({
+        ...p,
+        img: p.img ? { ...local(p.img.src, p.img.w, p.img.h, `${p.name} — ${p.img.cap}`), cap: p.img.cap } : null,
+        drawing: p.drawing
+          ? { ...local(p.drawing.src, p.drawing.w, p.drawing.h, `${p.name} — ${p.drawing.cap}`), cap: p.drawing.cap }
+          : null,
+        stages: p.stages.map((s) => ({ ...s })),
+        about: await parseMarkdown(p.about, figure),
+        photos: await Promise.all(p.photos.map(([ref, caption]) => figure(ref, caption))),
+        log: p.log.map((l) => ({ ...l })),
+      })),
+    )
+  },
+  async about(): Promise<About> {
+    const a = data.about
+    return {
+      ...a,
+      portrait: local(a.portrait.src, a.portrait.w, a.portrait.h, a.portrait.alt),
+      body: await parseMarkdown(a.body, figure),
+      milestones: a.milestones.map((m) => ({ ...m })),
+    }
   },
   async settings(): Promise<Settings> {
     return { homePhoto: { ...data.settings.homePhoto }, email: data.settings.email, links: SITE_LINKS }

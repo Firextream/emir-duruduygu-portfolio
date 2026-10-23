@@ -94,6 +94,9 @@ The Lab and the project pages.
 | `drawing` | file (image or SVG), optional | Shown on white in a box |
 | `drawing_caption` | string | |
 | `placeholder_ratio` | string, optional | e.g. `4:5`. The proportions of the placeholder shown while there's no image |
+| `stages` | JSON (Repeater: `label` string, `state` dropdown `done` / `now` / `next`) | The build steps under "01 Status" (Modernist) and in status.log (Quiet). One should be `now` |
+| `about` | text (Markdown) | "02 About" / about.txt: what it is, why it exists, what is left. Same Markdown as posts |
+| `photos` | Files (M2M), optional | More prints (prototype, details). The caption is each file's title. Quiet shows them in drawings.dir; the other skins add them as further figures |
 | `log` | **O2M alias** → `project_log.project` | The design log |
 
 ### `project_log` (override: `DIRECTUS_PROJECT_LOG_COLLECTION`)
@@ -116,9 +119,24 @@ Mark it as a singleton when you create the collection.
 
 If a home photo is empty, the first published photo with an image is used.
 
+### `about` (singleton; override: `DIRECTUS_ABOUT_COLLECTION`)
+The About page. Mark it as a singleton. Each skin's opening line (lede) is design copy and stays in the code.
+
+| Field | Type | Notes |
+|---|---|---|
+| `portrait` | file (image) | Shown at its own ratio in Modernist and Quiet; the Soft Club jewel-case cover crops it square (the one allowed crop) |
+| `summary` | text | A short paragraph about your studies and what you're working towards (Soft Club) |
+| `body` | text (Markdown) | The long text (Modernist, Quiet). Same Markdown as posts |
+| `currently` | string | "CURRENTLY" / "Now" |
+| `location` | string | Defaults to "Istanbul, TR" |
+| `study` | string | e.g. "Electrical & Electronics Eng., İTÜ" |
+| `milestones` | JSON (Repeater: `year` string, `text` string) | Modernist "01 Along the way", newest first |
+| `shooting` | string | Soft Club "now" → Shooting |
+| `listening` | string | Soft Club "now" → Listening |
+
 ## Permissions
 The site reads with `DIRECTUS_STATIC_TOKEN`, or anonymously if the Public role can read. Either way:
-- That role needs **read** on `photos`, `mood`, `posts`, `projects`, `project_log`, `settings`, plus a "status = published" item filter on the first four.
+- That role needs **read** on `photos`, `mood`, `posts`, `projects`, `project_log`, `projects_files` (the junction Directus creates for `projects.photos`), `settings`, `about`, plus a "status = published" item filter on the first four.
 - The **Public** role needs **read on `directus_files`**. Browsers load images straight from `<DIRECTUS_ASSETS_URL>/assets/<id>?format=webp&width=…`, and they can't send the token. There's no image proxy any more; that's what made the old site slow.
 - Under Settings → Files & Storage, set "Allowed transformations" to **All**, or add presets that cover `format=webp` with widths from 256 to 3840.
 

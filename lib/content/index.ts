@@ -5,7 +5,7 @@ import { cache } from 'react'
 import { directusAdapter } from './directus'
 import { SITE_EMAIL, SITE_LINKS } from './links'
 import { mockAdapter } from './mock'
-import type { ContentAdapter, LabNote, Mood, Photo, Post, Project, Settings, Skin } from './types'
+import type { About, ContentAdapter, LabNote, Mood, Photo, Post, Project, Settings, Skin } from './types'
 
 export type * from './types'
 
@@ -31,10 +31,26 @@ export const getPhotos = cache((): Promise<Photo[]> => safely('photos', () => ad
 export const getMood = cache((): Promise<Mood[]> => safely('mood', () => adapter().mood(), []))
 export const getPosts = cache((): Promise<Post[]> => safely('posts', () => adapter().posts(), []))
 export const getProjects = cache((): Promise<Project[]> => safely('projects', () => adapter().projects(), []))
+
+/** What About shows when the CMS has nothing yet (or can't be reached). */
+const ABOUT_FALLBACK: About = {
+  portrait: null,
+  summary: '',
+  body: [],
+  currently: '',
+  location: 'Istanbul, TR',
+  study: '',
+  milestones: [],
+  shooting: '',
+  listening: '',
+}
+
+export const getAbout = cache((): Promise<About> => safely('about', () => adapter().about(), ABOUT_FALLBACK))
+
 export const getSettings = cache(
   (): Promise<Settings> =>
     safely('settings', () => adapter().settings(), {
-      homePhoto: { quiet: null, modern: null, soft: null },
+      homePhoto: {},
       email: SITE_EMAIL,
       links: SITE_LINKS,
     }),
@@ -69,24 +85,21 @@ export async function getProject(slug: string) {
   return sequence(projects, projects.findIndex((p) => p.slug === slug))
 }
 
-/** Latest design-log entries across every project (Lab → "01 Lab notes"). */
-export async function getLabNotes(limit = 6): Promise<LabNote[]> {
+/**
+ * Latest design-log entries across projects (Modernist Lab → "01 Lab notes"): each project's newest
+ * `perProject` entries, so one busy project can't fill the table; newest first when the dates are real.
+ */
+export async function getLabNotes(limit = 5, perProject = 2): Promise<LabNote[]> {
   const projects = await getProjects()
-  const notes = projects.flatMap((p) => p.log.map((l) => ({ ...l, project: p.name, slug: p.slug })))
-  const dated = notes.every((n) => /^\d{4}[.-]\d{2}[.-]\d{2}$/.test(n.date))
-  if (dated) notes.sort((a, b) => b.date.localeCompare(a.date))
-  else {
-    // placeholder dates can't be sorted — interleave so every project shows up
-    const byProject = projects.map((p) => notes.filter((n) => n.slug === p.slug))
-    notes.length = 0
-    for (let i = 0; byProject.some((l) => l[i]); i++) byProject.forEach((l) => l[i] && notes.push(l[i]))
-  }
+  const notes = projects.flatMap((p) => p.log.slice(0, perProject).map((l) => ({ ...l, project: p.name, slug: p.slug })))
+  // placeholder dates can't be sorted: keep project order
+  if (notes.every((n) => /^\d{4}[.-]\d{2}[.-]\d{2}$/.test(n.date))) notes.sort((a, b) => b.date.localeCompare(a.date))
   return notes.slice(0, limit)
 }
 
 /** The admin-picked home photo for a skin; falls back to the first photo that has a file. */
 export async function getHomePhoto(skin: Skin): Promise<Photo | null> {
   const [settings, photos] = await Promise.all([getSettings(), getPhotos()])
-  const id = settings.homePhoto[skin]
+  const id = settings.homePhoto[skin] ?? null
   return photos.find((p) => p.id === id) ?? photos.find((p) => p.image) ?? photos[0] ?? null
 }
