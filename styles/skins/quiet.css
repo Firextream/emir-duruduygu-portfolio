@@ -1,4 +1,13 @@
 /* Quiet — soft desktop-OS windows, printed photos, serif display. Light only (README tokens). */
+
+/* Pixelify Sans has no → / ←. The references let those fall to the system monospace; without this
+   they would land in next/font's metric fallback (Arial) and draw a long, thin arrow. */
+@font-face {
+  font-family: 'Quiet Arrows';
+  src: local('Consolas'), local('Menlo-Regular'), local('Menlo'), local('DejaVu Sans Mono'), local('Courier New');
+  unicode-range: U+2190, U+2192, U+2194-21FF;
+}
+
 [data-skin='quiet'] {
   --bg: #e4ebee;
   --bg2: #dce4df;
@@ -27,7 +36,7 @@
   --focus: var(--acc);
 
   --serif: var(--font-serif), 'Cormorant Garamond', Georgia, serif;
-  --pixel: var(--font-pixel), 'Pixelify Sans', ui-monospace, monospace;
+  --pixel: 'Quiet Arrows', var(--font-pixel), 'Pixelify Sans', ui-monospace, monospace;
   --sans: var(--font-sans), 'IBM Plex Sans', system-ui, sans-serif;
   --mono: var(--font-mono), 'IBM Plex Mono', ui-monospace, monospace;
   --lcd-font: var(--font-lcd), 'Doto', ui-monospace, monospace;

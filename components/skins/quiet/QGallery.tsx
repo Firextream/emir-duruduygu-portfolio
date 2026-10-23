@@ -19,7 +19,7 @@ export default function QGallery({ photos, mood }: GalleryData) {
     <div className={s.page}>
       <section className={s.intro}>
         <div>
-          <p className={s.kicker}>■ ~/pictures</p>
+          <span className={s.kicker}>■ ~/pictures</span>
           <h1 className={s.h1}>Gallery</h1>
         </div>
         <p className={s.lede}>

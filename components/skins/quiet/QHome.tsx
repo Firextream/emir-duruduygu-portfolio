@@ -18,7 +18,7 @@ export default function QHome({ hero, photos, others, posts, projects }: HomeDat
     <div className={s.home}>
       <section className={s.intro}>
         <div>
-          <p className={s.kicker}>■ ISTANBUL, TR / A PERSONAL DESKTOP</p>
+          <span className={s.kicker}>■ ISTANBUL, TR / A PERSONAL DESKTOP</span>
           <h1 className={s.h1}>Collecting small signals.</h1>
           <p className={s.lede}>
             I&apos;m Emir Duruduygu, an electrical and electronics engineering student at İTÜ in Istanbul. I photograph the city,
