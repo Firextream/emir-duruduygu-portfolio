@@ -1,0 +1,629 @@
+/* Modernist Post — OPost.dc.html */
+.page .mobOnly {
+  display: none;
+}
+
+.red {
+  color: var(--acc);
+}
+
+/* ── head + meta strip ─────────────────────────────────── */
+.head {
+  padding: 48px var(--side) 0;
+}
+
+.h1 {
+  max-width: calc(100% * 11 / 12);
+  font-weight: 800;
+  font-size: min(5.85vw, 84px);
+  line-height: 0.95;
+  letter-spacing: -0.045em;
+  text-wrap: balance;
+}
+
+.strip {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: 24px;
+  margin-top: 40px;
+  border-top: 2px solid var(--line);
+  border-bottom: 2px solid var(--line);
+  font-size: 15px;
+}
+
+.strip > div {
+  padding: 14px 0;
+}
+
+.strip dt {
+  display: block;
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  color: var(--mut);
+}
+
+.date {
+  grid-column: 1 / 3;
+}
+
+.place {
+  grid-column: 3 / 6;
+}
+
+.read {
+  grid-column: 6 / 8;
+}
+
+.tags {
+  grid-column: 8 / 13;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.tag {
+  padding: 3px 8px;
+  border: 2px solid var(--line);
+  font-weight: 600;
+  font-size: 12px;
+}
+
+/* ── video ─────────────────────────────────────────────── */
+.video {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: 24px;
+  padding: 40px var(--side) 0;
+}
+
+.screen {
+  position: relative;
+  grid-column: 1 / 9;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: #201e1d;
+}
+
+.poster {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.track {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.trackFill {
+  height: 100%;
+  background: var(--acc);
+  transition: width 0.3s ease;
+}
+
+.posterLabel {
+  position: absolute;
+  left: 28px;
+  top: 28px;
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  color: #ffffff;
+}
+
+.play {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-width: 240px;
+  height: 72px;
+  padding: 0 28px;
+  border: 0;
+  background: var(--acc);
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 22px;
+  text-align: left;
+}
+
+.play:hover {
+  background: var(--acc-600);
+}
+
+.play:active {
+  background: var(--acc-700);
+}
+
+.clock {
+  position: absolute;
+  right: 28px;
+  bottom: 26px;
+  font-weight: 600;
+  font-size: 15px;
+  color: #ffffff;
+  font-variant-numeric: tabular-nums;
+}
+
+.chapters {
+  grid-column: 9 / 13;
+  border-top: 2px solid var(--line);
+}
+
+.chapHead {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 2px solid var(--line);
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  color: var(--mut);
+}
+
+.chapter {
+  display: grid;
+  grid-template-columns: 72px minmax(0, 1fr);
+  gap: 12px;
+  align-items: baseline;
+  width: 100%;
+  min-height: 48px;
+  padding: 12px 0;
+  border: 0;
+  border-bottom: 2px solid var(--line);
+  background: transparent;
+  color: var(--ink);
+  font-size: 15px;
+  text-align: left;
+}
+
+.chapter:hover {
+  background: var(--hover);
+}
+
+.chapter[aria-current='true'] {
+  padding-left: 14px;
+  box-shadow: inset 4px 0 0 var(--acc);
+  font-weight: 600;
+}
+
+.chapTime {
+  font-weight: 600;
+  color: var(--acc);
+}
+
+/* ── figures ───────────────────────────────────────────── */
+.cover {
+  margin: 40px var(--side) 0;
+  max-width: 1120px;
+}
+
+.img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.ph {
+  display: flex;
+  align-items: flex-end;
+  width: 100%;
+  padding: 10px;
+  background: var(--stripe);
+  font-size: 12px;
+  color: var(--mut);
+}
+
+.cap {
+  display: flex;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 2px solid var(--line);
+  font-size: 14px;
+}
+
+.figNo {
+  flex: none;
+  font-weight: 600;
+  color: var(--acc);
+}
+
+.capRatio {
+  margin-left: auto;
+  color: var(--mut);
+}
+
+/* ── article ───────────────────────────────────────────── */
+.article {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: 24px;
+  padding: 56px var(--side) 0;
+}
+
+.standfirst {
+  grid-column: 2 / 10;
+  font-weight: 600;
+  font-size: 28px;
+  line-height: 1.3;
+  letter-spacing: -0.015em;
+}
+
+.textRow,
+.figRow {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: 24px;
+}
+
+.textRow {
+  margin-top: 40px;
+}
+
+.body {
+  grid-column: 4 / 10;
+  font-size: 18px;
+  line-height: 1.7;
+}
+
+.body p {
+  margin: 0 0 24px;
+}
+
+.body p:last-child {
+  margin-bottom: 0;
+}
+
+.body h2,
+.body h3 {
+  margin: 48px 0 16px;
+  padding-top: 12px;
+  border-top: 2px solid var(--line);
+  font-weight: 800;
+  font-size: 30px;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.body h3 {
+  font-size: 22px;
+}
+
+.body > :first-child {
+  margin-top: 0;
+}
+
+.body a {
+  color: var(--ink);
+  text-decoration-color: var(--acc);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+
+.note {
+  grid-column: 10 / 13;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--mut);
+}
+
+.noteLabel {
+  display: block;
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  color: var(--acc);
+}
+
+.figRow {
+  align-items: end;
+  margin-top: 48px;
+}
+
+.fig {
+  grid-column: 1 / -1;
+  min-width: 0;
+}
+
+.figWide {
+  max-width: 1120px;
+}
+
+.figPair .fig:first-child {
+  grid-column: 1 / 5;
+}
+
+.figPair .fig:nth-child(2) {
+  grid-column: 5 / 13;
+}
+
+.figPair .fig:nth-child(n + 3) {
+  grid-column: span 4;
+}
+
+.quote {
+  grid-column: 2 / 12;
+  margin-top: 56px;
+  padding: 28px 0;
+  border-top: 2px solid var(--line);
+  border-bottom: 2px solid var(--line);
+  font-weight: 800;
+  font-size: min(3.9vw, 56px);
+  line-height: 1;
+  letter-spacing: -0.035em;
+}
+
+/* ── next entry ────────────────────────────────────────── */
+.next {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: 24px;
+  align-items: end;
+  margin: 80px var(--side) 0;
+  padding: 28px 0;
+  border-top: 2px solid var(--line);
+  border-bottom: 2px solid var(--line);
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.next:hover {
+  background: var(--hover);
+}
+
+.nextLabel {
+  grid-column: 1 / 3;
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  color: var(--mut);
+}
+
+.nextTitle {
+  grid-column: 3 / 12;
+  font-weight: 800;
+  font-size: min(2.8vw, 40px);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+
+.nextArrow {
+  grid-column: 12 / 13;
+  justify-self: end;
+  font-size: 32px;
+  line-height: 1;
+  color: var(--acc);
+}
+
+@media (max-width: 1100px) {
+  .screen,
+  .chapters {
+    grid-column: 1 / -1;
+  }
+
+  .chapters {
+    margin-top: 24px;
+  }
+
+  .standfirst {
+    grid-column: 1 / 11;
+  }
+
+  .body {
+    grid-column: 1 / 9;
+  }
+
+  .note {
+    grid-column: 9 / 13;
+  }
+
+  .quote {
+    grid-column: 1 / -1;
+  }
+
+  .nextLabel {
+    grid-column: 1 / -1;
+  }
+
+  .nextTitle {
+    grid-column: 1 / 12;
+    margin-top: 10px;
+    font-size: 30px;
+  }
+}
+
+/* ── mobile — OPost at 390 ─────────────────────────────── */
+@media (max-width: 760px) {
+  .page .mobOnly {
+    display: inline;
+  }
+
+  .head {
+    padding: 24px 18px 0;
+  }
+
+  .h1 {
+    max-width: none;
+    font-size: min(9.2vw, 36px);
+    line-height: 1;
+    letter-spacing: -0.035em;
+  }
+
+  .strip {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    column-gap: 12px;
+    margin-top: 20px;
+    font-size: 13px;
+  }
+
+  .strip > div {
+    padding: 10px 0;
+  }
+
+  .strip dt {
+    font-size: 11px;
+  }
+
+  .date,
+  .place,
+  .read {
+    grid-column: auto;
+  }
+
+  .tags {
+    display: none;
+  }
+
+  .video {
+    display: block;
+    margin-top: 20px;
+    padding: 0;
+  }
+
+  .track {
+    height: 3px;
+  }
+
+  .posterLabel {
+    display: none;
+  }
+
+  .play {
+    gap: 10px;
+    min-width: 150px;
+    height: 52px;
+    padding: 0 18px;
+    font-size: 16px;
+  }
+
+  .clock {
+    right: 14px;
+    bottom: 17px;
+    font-size: 12px;
+  }
+
+  .chapters {
+    margin: 0 18px;
+    border-top: 0;
+  }
+
+  .chapHead {
+    display: none;
+  }
+
+  .cover {
+    margin: 20px 0 0;
+    background: var(--ph1);
+  }
+
+  .cover .cap {
+    display: none;
+  }
+
+  .article {
+    display: block;
+    padding: 24px 18px 0;
+  }
+
+  .standfirst {
+    margin-bottom: 20px;
+    font-size: 20px;
+    line-height: 1.35;
+    letter-spacing: 0;
+  }
+
+  .textRow {
+    display: block;
+    margin-top: 0;
+  }
+
+  .body {
+    font-size: 16px;
+  }
+
+  .body p {
+    margin-bottom: 20px;
+  }
+
+  .body h2,
+  .body h3 {
+    margin: 32px 0 12px;
+    padding-top: 10px;
+    font-size: 22px;
+    line-height: 1.15;
+    letter-spacing: 0;
+  }
+
+  .note {
+    display: none;
+  }
+
+  .figRow {
+    display: block;
+    margin: 28px -18px;
+  }
+
+  .figRow .cap {
+    margin: 0 18px;
+    font-size: 13px;
+  }
+
+  .figPair .fig + .fig {
+    margin-top: 20px;
+  }
+
+  .quote {
+    margin: 4px 0 24px;
+    padding: 18px 0;
+    font-size: 28px;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+  }
+
+  .next {
+    display: block;
+    margin: 40px 18px 0;
+    padding: 18px 0;
+  }
+
+  .next:active {
+    background: var(--hover);
+  }
+
+  .nextLabel {
+    display: block;
+    font-size: 11px;
+  }
+
+  .nextTitle {
+    display: block;
+    margin-top: 8px;
+    font-size: 22px;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+
+  .nextArrow {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .trackFill {
+    transition: none;
+  }
+}
