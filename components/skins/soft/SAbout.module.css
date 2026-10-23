@@ -1,0 +1,237 @@
+/* Soft Club About — SAbout.dc.html */
+.page {
+  padding: 0 var(--side);
+}
+
+.kicker,
+.arrow {
+  font-family: var(--num);
+  font-weight: 700;
+  color: var(--deep);
+}
+
+/* ── DD-00: the maker ──────────────────────────────────── */
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 690fr) minmax(0, 574fr);
+  gap: 64px;
+  align-items: center;
+  margin-top: 56px;
+}
+
+.caseCol {
+  min-width: 0;
+}
+
+.kicker {
+  font-size: 14px;
+}
+
+.h1,
+.h2 {
+  font-family: var(--display);
+  font-weight: 300;
+}
+
+.h1 {
+  margin-top: 14px;
+  font-size: clamp(44px, 4.45vw, 64px);
+  line-height: 1;
+  letter-spacing: -0.05em;
+}
+
+.lede {
+  margin-top: 20px;
+  font-size: 18px;
+  line-height: 1.7;
+  text-wrap: pretty;
+}
+
+.summary {
+  margin-top: 12px;
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--mut);
+}
+
+.mail {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 52px;
+  margin-top: 28px;
+  padding: 0 22px;
+  background: var(--aqua);
+  color: var(--ink);
+  font-weight: 700;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.mail:hover {
+  background: var(--aqua-hover);
+  color: var(--ink);
+}
+
+/* ── credits | now ─────────────────────────────────────── */
+.cols {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 56px;
+  margin-top: 120px;
+}
+
+.secHead {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+}
+
+.h2 {
+  font-size: 44px;
+  line-height: 1.2;
+  letter-spacing: -0.04em;
+}
+
+.jp {
+  font-size: 13px;
+  color: var(--mut);
+}
+
+.list {
+  margin-top: 24px;
+  border-top: 1px solid var(--rule);
+  font-size: 15px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 180px minmax(0, 1fr);
+  gap: 16px;
+  padding: 16px 4px;
+  border-bottom: 1px solid var(--rule);
+  text-decoration: none;
+}
+
+.row dt,
+.k {
+  color: var(--mut);
+}
+
+.row dd,
+.v {
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+
+.nowRow {
+  grid-template-columns: 180px minmax(0, 1fr) 24px;
+}
+
+a.nowRow:hover {
+  background: rgba(255, 255, 255, 0.55);
+}
+
+.socials {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  margin-top: 28px;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.socials a {
+  text-decoration: none;
+}
+
+@media (max-width: 1100px) {
+  .hero {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 40px;
+  }
+
+  .caseCol {
+    max-width: 690px;
+  }
+
+  .cols {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 72px;
+  }
+}
+
+/* ── mobile — SAbout at 390 ────────────────────────────── */
+@media (max-width: 760px) {
+  .page .deskOnly {
+    display: none !important;
+  }
+
+  /* the reference's 24px sits on the zoomed (×0.365) case */
+  .hero {
+    display: block;
+    margin-top: 9px;
+  }
+
+  .kicker {
+    margin-top: 20px;
+    font-size: 12px;
+  }
+
+  .h1 {
+    margin-top: 10px;
+    font-size: min(9.2vw, 36px);
+  }
+
+  .lede {
+    margin-top: 14px;
+    font-size: 16px;
+  }
+
+  .summary {
+    margin-top: 10px;
+    font-size: 14px;
+  }
+
+  .mail {
+    margin-top: 20px;
+    padding: 0 18px;
+  }
+
+  .cols {
+    display: block;
+    margin-top: 48px;
+  }
+
+  .cols > section + section {
+    margin-top: 40px;
+  }
+
+  .secHead {
+    gap: 10px;
+  }
+
+  .h2 {
+    font-size: 30px;
+  }
+
+  .jp {
+    font-size: 12px;
+  }
+
+  .list {
+    margin-top: 14px;
+    font-size: 14px;
+  }
+
+  .row {
+    grid-template-columns: 130px minmax(0, 1fr);
+    gap: 10px;
+    padding: 14px 2px;
+  }
+
+  .nowRow {
+    grid-template-columns: 110px minmax(0, 1fr);
+    min-height: 48px;
+  }
+}
