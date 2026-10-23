@@ -3,13 +3,16 @@
 import { existsSync, readdirSync } from 'node:fs'
 import { join, resolve } from 'node:path'
 import sharp from 'sharp'
+import { SKIN_RE } from './skins.mjs'
+
+const SITE_SHOT = new RegExp(`^(${SKIN_RE})-\\d+\\.png$`)
 
 const outArg = process.argv.indexOf('--out')
 const out = resolve(outArg > -1 ? process.argv[outArg + 1] : 'review-shots')
 let n = 0
 for (const route of readdirSync(out, { withFileTypes: true }).filter((d) => d.isDirectory()).map((d) => d.name)) {
   const dir = join(out, route)
-  for (const file of readdirSync(dir).filter((f) => /^(quiet|soft|modern)-\d+\.png$/.test(f))) {
+  for (const file of readdirSync(dir).filter((f) => SITE_SHOT.test(f))) {
     const ref = join(dir, `ref-${file}`)
     if (!existsSync(ref)) continue
     const [a, b] = await Promise.all([sharp(ref).metadata(), sharp(join(dir, file)).metadata()])

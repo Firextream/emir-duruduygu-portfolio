@@ -1,12 +1,13 @@
 // State sheets from the running site: each row is one element (nav item, button, list row, dock item,
 // photo tile …) in rest / hover / active-or-current, to put next to the QStates / OStates boards and the
 // Soft Club README rules. States are forced through the DevTools protocol (CSS.forcePseudoState).
-//   node scripts/review/states.mjs [--base http://localhost:3100] [--skins quiet,soft,modern] [--out review-shots/states]
+//   node scripts/review/states.mjs [--base http://localhost:3100] [--skins quiet,soft] [--out review-shots/states]
 // Output: <out>/states-<skin>.png
 import { mkdirSync } from 'node:fs'
 import { join, resolve } from 'node:path'
 import sharp from 'sharp'
 import { evaluate, launch, openWithSkin, sleep } from './cdp.mjs'
+import { SKINS } from './skins.mjs'
 
 const args = Object.fromEntries(
   process.argv.slice(2).reduce((acc, a, i, all) => {
@@ -16,7 +17,7 @@ const args = Object.fromEntries(
 )
 const base = args.base || 'http://localhost:3100'
 const out = resolve(args.out || 'review-shots/states')
-const skins = (args.skins || 'quiet,soft,modern').split(',')
+const skins = (args.skins ? args.skins.split(',') : SKINS).filter((k) => ROWS[k])
 mkdirSync(out, { recursive: true })
 
 // finders run in the page and return the element

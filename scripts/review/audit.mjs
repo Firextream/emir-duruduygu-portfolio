@@ -7,6 +7,7 @@
 import { writeFileSync } from 'node:fs'
 import { evaluate, launch, openWithSkin, sleep } from './cdp.mjs'
 import { ROUTES } from './routes.mjs'
+import { SKINS } from './skins.mjs'
 
 const args = Object.fromEntries(
   process.argv.slice(2).reduce((acc, a, i, all) => {
@@ -16,7 +17,7 @@ const args = Object.fromEntries(
 )
 const base = args.base || 'http://localhost:3100'
 const routes = (args.routes || Object.keys(ROUTES).filter((r) => r !== 'journal-empty').join(',')).split(',')
-const skins = (args.skins || 'quiet,soft,modern').split(',')
+const skins = args.skins ? args.skins.split(',') : SKINS
 const widths = (args.widths || '320,390,768,1024,1280,1440').split(',').map(Number)
 
 // Runs inside the page. Elements inside [aria-hidden=true] are decorative art (LCD ghost digits,

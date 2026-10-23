@@ -11,6 +11,7 @@ import { join, resolve } from 'node:path'
 import { pathToFileURL } from 'node:url'
 import { evaluate, fullPageShot, launch, openWithSkin, settle, sleep } from './cdp.mjs'
 import { ROUTES } from './routes.mjs'
+import { SKINS } from './skins.mjs'
 
 const args = Object.fromEntries(
   process.argv.slice(2).reduce((acc, a, i, all) => {
@@ -22,7 +23,7 @@ const args = Object.fromEntries(
 const base = args.base || 'http://localhost:3100'
 const out = resolve(args.out || 'review-shots')
 const routes = (args.routes || Object.keys(ROUTES).join(',')).split(',')
-const skins = (args.skins || 'quiet,soft,modern').split(',')
+const skins = args.skins ? args.skins.split(',') : SKINS
 const widths = (args.widths || '390,1440').split(',').map(Number)
 const doRef = args.ref || !args.site
 const doSite = args.site || !args.ref

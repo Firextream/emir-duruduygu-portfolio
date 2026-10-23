@@ -3,6 +3,10 @@
 //   node scripts/review/collect.mjs review/2026-10-23 [--from review-shots]
 import { copyFileSync, existsSync, mkdirSync, readdirSync } from 'node:fs'
 import { join, resolve } from 'node:path'
+import { SKIN_RE } from './skins.mjs'
+
+const SHOT = new RegExp(`^(ref-|compare-)?(${SKIN_RE})-(\\d+)\\.png$`)
+const SHEET = new RegExp(`^states-(${SKIN_RE})\\.png$`)
 
 const [dest] = process.argv.slice(2).filter((a) => !a.startsWith('--'))
 if (!dest) throw new Error('usage: collect.mjs <dest>')
@@ -16,14 +20,14 @@ let n = 0
 for (const route of readdirSync(from, { withFileTypes: true }).filter((d) => d.isDirectory() && !d.name.startsWith('_')).map((d) => d.name)) {
   const page = PAGE[route] ?? route
   for (const f of readdirSync(join(from, route))) {
-    let m = /^(ref-|compare-)?(quiet|soft|modern)-(\d+)\.png$/.exec(f)
+    let m = SHOT.exec(f)
     if (m) {
       const suffix = m[1] === 'ref-' ? '_ref' : m[1] === 'compare-' ? '_compare' : ''
       copyFileSync(join(from, route, f), join(out, `${page}_${m[2]}_${m[3]}${suffix}.png`))
       n++
       continue
     }
-    m = /^states-(quiet|soft|modern)\.png$/.exec(f)
+    m = SHEET.exec(f)
     if (m) {
       copyFileSync(join(from, route, f), join(out, `states_${m[1]}_1440.png`))
       n++

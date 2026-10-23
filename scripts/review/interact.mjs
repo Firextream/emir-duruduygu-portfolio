@@ -3,6 +3,7 @@
 // Quiet player, Soft Club release picker, Modernist contact form, Istanbul clock, Home LCP, console errors.
 //   node scripts/review/interact.mjs [--base http://localhost:3100]
 import { evaluate, launch, sleep } from './cdp.mjs'
+import { SKINS } from './skins.mjs'
 
 const base = process.argv.includes('--base') ? process.argv[process.argv.indexOf('--base') + 1] : 'http://localhost:3100'
 const cdp = await launch()
@@ -37,7 +38,7 @@ try {
   await go('/')
   let s = await state()
   const stored = JSON.parse(s.stored || 'null')
-  check('first visit picks a skin', ['quiet', 'soft', 'modern'].includes(s.skin), s.skin)
+  check('first visit picks a skin', SKINS.includes(s.skin), s.skin)
   check('first visit persists {skin, acc}', stored && stored.skin === s.skin && stored.acc === 0, s.stored)
   check('cookie mirrors the skin', s.cookie.includes(`duru-skin=${s.skin}`), s.cookie)
 
@@ -116,7 +117,7 @@ try {
   const lcpWatch = await cdp.send('Page.addScriptToEvaluateOnNewDocument', {
     source: `window.__lcp=null;new PerformanceObserver((l)=>{for(const e of l.getEntries())window.__lcp=e}).observe({type:'largest-contentful-paint',buffered:true})`,
   })
-  for (const skin of ['quiet', 'soft', 'modern'])
+  for (const skin of SKINS)
     for (const width of [1440, 390]) {
       await cdp.send('Emulation.setDeviceMetricsOverride', { width, height: 900, deviceScaleFactor: 1, mobile: width <= 760 })
       await cdp.send('Network.setCookie', { name: 'duru-skin', value: skin, url: base })
