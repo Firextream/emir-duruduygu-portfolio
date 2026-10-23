@@ -69,8 +69,10 @@
   text-decoration: none;
 }
 
+/* OStates: hover = ink underline, current page = red */
 .navLink:hover {
   color: var(--ink);
+  box-shadow: inset 0 -4px 0 var(--line);
 }
 
 .navLink[aria-current='page'] {
@@ -207,17 +209,9 @@
   width: 26px;
   height: 26px;
   border: 1px solid var(--line);
+  background: var(--swatch);
 }
 
-.swatch[data-swatch='quiet'] {
-  background: linear-gradient(135deg, #e4ebee 50%, #8a5a3c 50%);
-}
-.swatch[data-swatch='soft'] {
-  background: radial-gradient(circle at 35% 30%, #ffffff 0 20%, #1a9dff 75%, #0b3a6b);
-}
-.swatch[data-swatch='modern'] {
-  background: linear-gradient(135deg, #f3f2f2 50%, #ec3013 50%);
-}
 
 .skinName {
   flex: 1;

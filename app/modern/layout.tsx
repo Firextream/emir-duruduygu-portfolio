@@ -7,9 +7,10 @@ import SkinDocument from '@/components/site/SkinDocument'
 import ModernFrame from '@/components/skins/modern/ModernFrame'
 import { modernFonts } from '@/lib/fonts/modern'
 import { siteMetadata } from '@/lib/routes/meta'
+import { skinDef } from '@/lib/skins'
 
 export const metadata: Metadata = siteMetadata
-export const viewport: Viewport = { themeColor: '#f3f2f2', colorScheme: 'light' }
+export const viewport: Viewport = { themeColor: skinDef('modern').themeColor, colorScheme: 'light' }
 
 export default function ModernLayout({ children }: { children: ReactNode }) {
   return (

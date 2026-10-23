@@ -7,9 +7,10 @@ import SkinDocument from '@/components/site/SkinDocument'
 import QuietFrame from '@/components/skins/quiet/QuietFrame'
 import { quietFonts } from '@/lib/fonts/quiet'
 import { siteMetadata } from '@/lib/routes/meta'
+import { skinDef } from '@/lib/skins'
 
 export const metadata: Metadata = siteMetadata
-export const viewport: Viewport = { themeColor: '#e4ebee', colorScheme: 'light' }
+export const viewport: Viewport = { themeColor: skinDef('quiet').themeColor, colorScheme: 'light' }
 
 export default function QuietLayout({ children }: { children: ReactNode }) {
   return (

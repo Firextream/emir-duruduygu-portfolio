@@ -1,6 +1,7 @@
 'use client'
 
 // "Style ▾" button and the Style panel. Modernist has a single accent, so there is no accent row.
+import type { CSSProperties } from 'react'
 import { useStyle } from '@/components/site/StyleProvider'
 import { useMenu } from '@/components/site/useMenu'
 import { SKIN_INFO, SKINS } from '@/lib/skins'
@@ -45,7 +46,7 @@ export default function ModernStyleMenu() {
                   aria-pressed={k === skin}
                   onClick={() => (k === skin ? close() : switchSkin(k))}
                 >
-                  <span className={s.swatch} data-swatch={k} />
+                  <span className={s.swatch} style={{ '--swatch': SKIN_INFO[k].swatch } as CSSProperties} />
                   <span className={s.skinName}>{SKIN_INFO[k].label}</span>
                 </button>
               ))}

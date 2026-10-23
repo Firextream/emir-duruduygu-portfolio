@@ -251,17 +251,9 @@
   width: 26px;
   height: 26px;
   border: 1px solid var(--line);
+  background: var(--swatch);
 }
 
-.swatch[data-swatch='quiet'] {
-  background: linear-gradient(135deg, #e4ebee 50%, #8a5a3c 50%);
-}
-.swatch[data-swatch='soft'] {
-  background: radial-gradient(circle at 35% 30%, #ffffff 0 20%, #1a9dff 75%, #0b3a6b);
-}
-.swatch[data-swatch='modern'] {
-  background: linear-gradient(135deg, #f3f2f2 50%, #ec3013 50%);
-}
 
 .skinName {
   flex: 1;
@@ -286,20 +278,9 @@
   height: 30px;
   padding: 0;
   border: 1px solid var(--line);
+  background: var(--swatch);
 }
 
-.accSwatch[data-i='0'] {
-  background: #8a5a3c;
-}
-.accSwatch[data-i='1'] {
-  background: #55704e;
-}
-.accSwatch[data-i='2'] {
-  background: #46617f;
-}
-.accSwatch[data-i='3'] {
-  background: #7a4b64;
-}
 
 .accSwatch[aria-pressed='true'] {
   border: 2px solid var(--ink);

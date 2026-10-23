@@ -7,9 +7,10 @@ import SkinDocument from '@/components/site/SkinDocument'
 import SoftFrame from '@/components/skins/soft/SoftFrame'
 import { softFonts } from '@/lib/fonts/soft'
 import { siteMetadata } from '@/lib/routes/meta'
+import { skinDef } from '@/lib/skins'
 
 export const metadata: Metadata = siteMetadata
-export const viewport: Viewport = { themeColor: '#eef2f6', colorScheme: 'light' }
+export const viewport: Viewport = { themeColor: skinDef('soft').themeColor, colorScheme: 'light' }
 
 export default function SoftLayout({ children }: { children: ReactNode }) {
   return (

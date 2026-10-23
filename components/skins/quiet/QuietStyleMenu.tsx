@@ -1,6 +1,7 @@
 'use client'
 
 // "★ Quiet ▾" button and the style.cfg window: skin list + Quiet's four accents.
+import type { CSSProperties } from 'react'
 import { useStyle } from '@/components/site/StyleProvider'
 import { useMenu } from '@/components/site/useMenu'
 import { QUIET_ACCENTS, SKIN_INFO, SKINS } from '@/lib/skins'
@@ -43,7 +44,7 @@ export default function QuietStyleMenu() {
                   aria-pressed={k === skin}
                   onClick={() => (k === skin ? close() : switchSkin(k))}
                 >
-                  <span className={s.swatch} data-swatch={k} />
+                  <span className={s.swatch} style={{ '--swatch': SKIN_INFO[k].swatch } as CSSProperties} />
                   <span className={s.skinName}>{SKIN_INFO[k].label}</span>
                 </button>
               ))}
@@ -55,7 +56,7 @@ export default function QuietStyleMenu() {
                   key={a.name}
                   type="button"
                   className={s.accSwatch}
-                  data-i={i}
+                  style={{ '--swatch': a.value } as CSSProperties}
                   title={a.name}
                   aria-label={`Accent ${a.name}`}
                   aria-pressed={i === acc}

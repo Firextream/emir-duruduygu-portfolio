@@ -44,49 +44,14 @@
   transform-origin: left;
 }
 
-/* ── per skin ─────────────────────────────────────────── */
-.quiet {
-  --c-bg: #e4ebee;
-  --c-ink: #2a2b2c;
-  --c-fill: #8a5a3c;
-  --c-ui: var(--font-pixel, var(--curtain-quiet-ui)), 'Pixelify Sans', monospace;
-  --c-display: var(--font-serif, var(--curtain-quiet)), 'Cormorant Garamond', serif;
-  --c-weight: 400;
-  --c-style: italic;
-  --c-track: -0.02em;
-  --c-ease: steps(12);
-}
-
-.soft {
-  --c-bg: radial-gradient(50% 40% at 80% 10%, rgba(26, 157, 255, 0.35), transparent 70%),
-    linear-gradient(180deg, #f5f8fb, #dbe4ee);
-  --c-ink: #162033;
-  --c-fill: #1a9dff;
-  --c-ui: var(--font-body, sans-serif), 'Zen Kaku Gothic New', 'Hiragino Sans', 'Yu Gothic', sans-serif;
-  --c-display: var(--font-display, var(--curtain-soft)), 'Unbounded', sans-serif;
-  --c-weight: 300;
-  --c-track: -0.02em;
-  --c-round: 999px;
-  --c-ease: cubic-bezier(0.6, 0, 0.2, 1);
-}
-
-.modern {
-  --c-bg: #ec3013;
-  --c-ink: #ffffff;
-  --c-fill: #ffffff;
-  --c-ui: var(--font-archivo, var(--curtain-modern)), 'Archivo', sans-serif;
-  --c-display: var(--font-archivo, var(--curtain-modern)), 'Archivo', sans-serif;
-  --c-weight: 800;
-  --c-track: -0.05em;
-  --c-ease: linear;
-}
+/* per-skin values (--c-*) are set inline from the skin registry (lib/skins.ts) */
 
 /* ── leave: animated in on the old page ───────────────── */
-.leave {
+.leave.rise {
   animation: rise 0.35s ease both;
 }
 
-.leave.modern {
+.leave.wipe {
   animation: wipe 0.45s cubic-bezier(0.7, 0, 0.2, 1) both;
 }
 
@@ -152,7 +117,8 @@
 /* Reduced motion: no wipe, blink or bar animation — the curtain simply appears and cross-fades. */
 @media (prefers-reduced-motion: reduce) {
   .leave,
-  .leave.modern,
+  .leave.rise,
+  .leave.wipe,
   .leave .fill,
   .line {
     animation: none;
