@@ -92,6 +92,17 @@
   display: flex;
 }
 
+/* OStates: pressed = red outline round the photo, darker tag */
+.photo:active .frame {
+  outline: 2px solid var(--acc);
+  outline-offset: 2px;
+}
+
+.photo:active .open {
+  display: flex;
+  background: var(--acc-700);
+}
+
 .cap {
   display: flex;
   gap: 12px;

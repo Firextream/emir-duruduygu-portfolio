@@ -32,6 +32,12 @@
   line-height: 1.55;
 }
 
+/* DS figcaption: 4px above, text at 55% ink (zero specificity, so a class still wins) */
+:where([data-skin='modern']) :where(figcaption) {
+  margin-top: 4px;
+  color: color-mix(in srgb, var(--ink) 55%, transparent);
+}
+
 /* zero specificity: components always win */
 :where([data-skin='modern']) :where(h1, h2, h3, h4, h5, h6) {
   line-height: 1.12;

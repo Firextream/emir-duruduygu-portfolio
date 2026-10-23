@@ -325,6 +325,12 @@
   box-shadow: inset 0 -3px 0 var(--acc);
 }
 
+/* OStates: pressed = accent-700 text and rule */
+.headLink:active {
+  color: var(--acc-700);
+  box-shadow: inset 0 -3px 0 var(--acc-700);
+}
+
 /* frames: 3 at native ratio in cols 1–5 / 6–9 / 10–12, staggered 0 / 72 / 24px */
 .frames {
   align-items: start;
@@ -406,6 +412,16 @@
 .make:hover,
 .door:hover {
   background: var(--hover);
+}
+
+/* OStates: a pressed row deepens the tint, takes a red rule and an accent-700 title */
+.entry:active {
+  border-bottom-color: var(--acc);
+  background: rgba(236, 48, 19, 0.12);
+}
+
+.entry:active .entryTitle {
+  color: var(--acc-700);
 }
 
 .entryMeta {
@@ -648,6 +664,11 @@
   font-weight: 400;
   font-size: 16px;
   letter-spacing: 0;
+}
+
+/* OStates: the field takes the hover tint */
+.input:hover {
+  background: var(--hover);
 }
 
 .input::placeholder {
