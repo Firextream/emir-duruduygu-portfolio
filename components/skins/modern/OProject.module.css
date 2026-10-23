@@ -1,0 +1,637 @@
+/* Modernist Project — OProject.dc.html */
+.mobOnly {
+  display: none;
+}
+
+/* ── name + one-liner ──────────────────────────────────── */
+.head {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: 24px;
+  align-items: end;
+  padding: 40px var(--side) 32px;
+  border-bottom: 2px solid var(--line);
+}
+
+.name {
+  grid-column: 1 / 9;
+  min-width: 0;
+  padding-bottom: 0.04em;
+  font-weight: 800;
+  font-size: min(12.2vw, 176px);
+  line-height: 0.86;
+  letter-spacing: -0.055em;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+}
+
+.nameLong {
+  font-size: min(6.7vw, 96px);
+}
+
+.one {
+  grid-column: 9 / 13;
+  font-size: 20px;
+  line-height: 1.45;
+}
+
+/* ── KIND / STATUS / YEAR / TOOLS ──────────────────────── */
+.spec {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin: 0 var(--side);
+  border-bottom: 2px solid var(--line);
+}
+
+.specCell {
+  min-width: 0;
+  padding: 16px 0 16px 20px;
+  border-left: 2px solid var(--line);
+}
+
+.specCell:first-child {
+  padding-left: 0;
+  border-left: 0;
+}
+
+.specCell dt {
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--mut);
+}
+
+.specCell dd {
+  margin-top: 6px;
+  font-size: 17px;
+  overflow-wrap: anywhere;
+}
+
+/* ── image (cols 1–7) + 01 Status / 02 About (cols 8–12) ─ */
+.main {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: 24px;
+  padding: 40px var(--side) 0;
+}
+
+.fig1 {
+  grid-column: 1 / 8;
+  min-width: 0;
+}
+
+/* dark stage, the image contained inside it — never cropped */
+.stage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 640px;
+  overflow: hidden;
+  background: #201e1d;
+}
+
+.stageImg {
+  display: block;
+  max-width: calc(100% - 40px);
+  max-height: 600px;
+  width: auto;
+  height: auto;
+}
+
+.ph {
+  display: flex;
+  align-items: flex-end;
+  width: 100%;
+  height: 100%;
+  padding: 12px;
+  background: var(--stripe);
+  font-size: 12px;
+  color: var(--mut);
+}
+
+.cap {
+  display: flex;
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 2px solid var(--line);
+  font-size: 14px;
+}
+
+.figNo {
+  flex: none;
+  font-weight: 600;
+  color: var(--acc);
+}
+
+.aside {
+  grid-column: 8 / 13;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.secHead {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  padding-top: 12px;
+  border-top: 2px solid var(--line);
+}
+
+.secNo,
+.secTitle {
+  font-weight: 800;
+  font-size: 32px;
+  line-height: 1.12;
+}
+
+/* the reference's number spans inherit the DS body line-height */
+.secNo {
+  line-height: 1.55;
+  color: var(--acc);
+}
+
+.secTitle {
+  letter-spacing: -0.03em;
+}
+
+.stages {
+  margin-top: 16px;
+}
+
+.stageRow {
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr) auto;
+  gap: 14px;
+  align-items: center;
+  min-height: 52px;
+  border-bottom: 2px solid var(--rule);
+}
+
+.dot {
+  width: 14px;
+  height: 14px;
+  box-shadow: inset 0 0 0 2px var(--line);
+}
+
+.dotOn {
+  background: var(--acc);
+  box-shadow: none;
+}
+
+.stageLabel {
+  font-weight: 600;
+  font-size: 17px;
+}
+
+.tag {
+  padding: 3px 8px;
+  border: 2px solid var(--rule);
+  font-weight: 600;
+  font-size: 12px;
+  color: var(--mut);
+}
+
+.tagNow {
+  border-color: var(--acc);
+  background: var(--acc);
+  color: #ffffff;
+}
+
+.about {
+  margin-top: 40px;
+}
+
+.about .secHead {
+  margin-bottom: 16px;
+}
+
+/* inside About the number inherits the text's 1.65 */
+.about .secNo {
+  line-height: 1.65;
+}
+
+.prose {
+  font-size: 17px;
+  line-height: 1.65;
+}
+
+.prose > * + * {
+  margin-top: 1em;
+}
+
+.prose h3 {
+  font-weight: 800;
+  font-size: 20px;
+}
+
+.prose a {
+  color: var(--ink);
+  text-decoration-color: var(--acc);
+  text-underline-offset: 3px;
+}
+
+.prose img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.prose [data-ph] {
+  background: var(--stripe);
+}
+
+.prose figcaption {
+  margin-top: 8px;
+  font-size: 14px;
+  color: var(--mut);
+}
+
+/* ── Fig. 02 — the drawing on white ────────────────────── */
+.drawing,
+.extra {
+  margin: 56px var(--side) 0;
+}
+
+.drawBox {
+  padding: 48px;
+  border: 2px solid var(--line);
+  background: #ffffff;
+}
+
+.drawImg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* ── 03 Design log ─────────────────────────────────────── */
+.log {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: 24px;
+  align-items: baseline;
+  margin: 80px var(--side) 0;
+  padding-top: 14px;
+  border-top: 2px solid var(--line);
+}
+
+.logNo {
+  grid-column: 1 / 2;
+  font-weight: 800;
+  font-size: 40px;
+  line-height: 1;
+  color: var(--acc);
+}
+
+.logTitle {
+  grid-column: 2 / 6;
+  font-weight: 800;
+  font-size: 40px;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.logList {
+  grid-column: 6 / 13;
+  align-self: start;
+  border-top: 2px solid var(--line);
+}
+
+.logRow {
+  display: grid;
+  grid-template-columns: 56px 130px minmax(0, 1fr);
+  gap: 16px;
+  padding: 18px 0;
+  border-bottom: 2px solid var(--rule);
+  font-size: 15px;
+}
+
+.logN {
+  font-weight: 600;
+  color: var(--acc);
+}
+
+.logDate {
+  color: var(--mut);
+}
+
+.logEntry {
+  display: block;
+  font-weight: 800;
+  font-size: 19px;
+}
+
+.logWhy {
+  display: block;
+  margin-top: 4px;
+  color: var(--mut);
+}
+
+/* ── next project ──────────────────────────────────────── */
+.next {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: 24px;
+  align-items: end;
+  margin: 80px var(--side) 0;
+  padding: 28px 0;
+  border-top: 2px solid var(--line);
+  border-bottom: 2px solid var(--line);
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.next:hover {
+  background: var(--hover);
+}
+
+.nextLabel {
+  grid-column: 1 / 3;
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--mut);
+}
+
+.nextName {
+  grid-column: 3 / 12;
+  font-weight: 800;
+  font-size: 56px;
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+.nextArrow {
+  grid-column: 12 / 13;
+  justify-self: end;
+  font-size: 32px;
+  line-height: 1.55;
+  color: var(--acc);
+}
+
+@media (max-width: 1100px) {
+  .name {
+    grid-column: 1 / 13;
+  }
+
+  .one {
+    grid-column: 1 / 9;
+    margin-top: 24px;
+  }
+
+  .spec {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .specCell:nth-child(3) {
+    padding-left: 0;
+    border-left: 0;
+  }
+
+  .specCell:nth-child(-n + 2) {
+    border-bottom: 2px solid var(--rule);
+  }
+
+  .fig1,
+  .aside {
+    grid-column: 1 / 13;
+  }
+
+  .aside {
+    margin-top: 40px;
+  }
+
+  .logNo {
+    grid-column: 1 / 3;
+  }
+
+  .logTitle {
+    grid-column: 3 / 13;
+  }
+
+  .logList {
+    grid-column: 1 / 13;
+    margin-top: 28px;
+  }
+
+  .nextLabel {
+    grid-column: 1 / 13;
+  }
+
+  .nextName {
+    grid-column: 1 / 12;
+    margin-top: 12px;
+  }
+}
+
+/* ── mobile — OProject at 390 ──────────────────────────── */
+@media (max-width: 760px) {
+  .deskOnly,
+  .deskOnlyFlex {
+    display: none !important;
+  }
+
+  .mobOnly {
+    display: inline;
+  }
+
+  .head {
+    display: block;
+    padding: 24px 18px 20px;
+  }
+
+  .name {
+    font-size: min(16.4vw, 64px);
+  }
+
+  .nameLong {
+    font-size: min(10.3vw, 40px);
+  }
+
+  .one {
+    margin-top: 12px;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  /* the photo comes first on mobile, right under the head */
+  .body {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .main {
+    display: contents;
+  }
+
+  .fig1 {
+    order: -1;
+  }
+
+  .stage {
+    height: 420px;
+  }
+
+  .stageImg {
+    max-width: calc(100% - 36px);
+    max-height: 390px;
+  }
+
+  .spec {
+    margin: 0 18px;
+  }
+
+  .specCell,
+  .specCell:nth-child(3) {
+    padding: 12px 0;
+    border-left: 0;
+    border-bottom: 2px solid var(--rule);
+  }
+
+  .specCell dt {
+    font-size: 11px;
+  }
+
+  .specCell dd {
+    margin-top: 0;
+    font-size: 14px;
+  }
+
+  .aside {
+    margin: 0 18px;
+  }
+
+  .secHead {
+    gap: 10px;
+    margin-top: 32px;
+    padding-top: 10px;
+  }
+
+  .secNo,
+  .secTitle {
+    font-size: 24px;
+  }
+
+  .secNo {
+    line-height: 1.55;
+  }
+
+  .stages {
+    margin-top: 0;
+  }
+
+  .stageRow {
+    grid-template-columns: 20px minmax(0, 1fr) auto;
+    gap: 12px;
+    min-height: 48px;
+  }
+
+  .stageLabel {
+    font-size: 15px;
+  }
+
+  .about {
+    margin-top: 0;
+  }
+
+  .about .secHead {
+    margin-bottom: 12px;
+  }
+
+  .prose {
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  .drawing,
+  .extra {
+    margin: 28px 18px 0;
+  }
+
+  .drawBox {
+    padding: 16px;
+  }
+
+  .cap {
+    margin-top: 0;
+    padding: 8px 0;
+    font-size: 13px;
+    color: var(--ink);
+  }
+
+  .log {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 10px;
+    margin: 32px 18px 0;
+    padding-top: 10px;
+  }
+
+  .logNo,
+  .logTitle {
+    font-size: 24px;
+    line-height: 1.12;
+  }
+
+  .logNo {
+    line-height: 1.55;
+  }
+
+  .logList {
+    flex-basis: 100%;
+    margin-top: 0;
+    border-top: 0;
+  }
+
+  .logRow {
+    display: block;
+    padding: 14px 0;
+    font-size: 14px;
+  }
+
+  .logN {
+    margin-right: 12px;
+  }
+
+  .logText {
+    display: block;
+  }
+
+  .logEntry {
+    margin-top: 6px;
+    font-size: 17px;
+  }
+
+  .logWhy {
+    margin-top: 2px;
+  }
+
+  .next {
+    display: block;
+    margin: 40px 18px 0;
+    padding: 18px 0;
+  }
+
+  .next:hover {
+    background: transparent;
+  }
+
+  .next:active {
+    background: var(--hover);
+  }
+
+  .nextLabel {
+    display: block;
+    font-size: 11px;
+  }
+
+  .nextName {
+    display: block;
+    margin-top: 8px;
+    font-size: 28px;
+    letter-spacing: -0.03em;
+  }
+}
