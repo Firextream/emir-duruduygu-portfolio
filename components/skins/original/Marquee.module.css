@@ -1,0 +1,54 @@
+/* Original's tag marquee — 40s loop on the hero (30s on mobile), ink dots between tags. */
+.marquee {
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.track {
+  display: flex;
+  flex: none;
+  gap: var(--mq-gap, 44px);
+  padding-left: 20px;
+  color: var(--mut);
+  font-family: var(--mono);
+  font-size: var(--mq-size, 15px);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  animation: marquee var(--mq-time, 40s) linear infinite;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: var(--mq-dot-gap, 18px);
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--mq-dot, var(--ink));
+}
+
+@media (max-width: 760px) {
+  .track {
+    --mq-gap: 28px;
+    --mq-size: 12px;
+    --mq-dot-gap: 12px;
+    --mq-time: 30s;
+  }
+}
+
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .track {
+    animation: none;
+  }
+}
