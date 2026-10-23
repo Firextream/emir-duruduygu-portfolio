@@ -17,7 +17,6 @@ const args = Object.fromEntries(
 )
 const base = args.base || 'http://localhost:3100'
 const out = resolve(args.out || 'review-shots/states')
-const skins = (args.skins ? args.skins.split(',') : SKINS).filter((k) => ROWS[k])
 mkdirSync(out, { recursive: true })
 
 // finders run in the page and return the element
@@ -66,9 +65,20 @@ const ROWS = {
     { label: 'Photo tile', cells: rh('/gallery', q('a[href^="/gallery/"]')) },
     { label: 'Mobile dock', cells: navCells(DOCK, 390) },
   ],
+  original: [
+    { label: 'Pill nav item', cells: navCells(NAV) },
+    { label: 'Pill icon button', cells: rha('/about', q('header a[aria-label="Email"]')) },
+    { label: 'Text link pair', cells: rha('/', withText('a', 'Visit the Lab')) },
+    { label: 'Underline button', cells: rh('/', withText('button[type=submit]', 'Subscribe')) },
+    { label: 'Journal row', cells: rh('/blog', q('li:not([class*="featRow"]) > a[href^="/blog/"][class*="row"]')) },
+    { label: 'Mobile dock', cells: navCells(DOCK, 390) },
+    { label: 'Photo tile', cells: rha('/gallery', q('a[href^="/gallery/"]'), 1440, ['focus', 'focus-visible']) },
+  ],
 }
 // Soft Club's aqua button: the footer mail button is on every page
 ROWS.soft[2] = { label: 'Aqua button', cells: rha('/about', withText('a[href^="mailto:"]', '@')) }
+// skins without a row set are skipped
+const skins = (args.skins ? args.skins.split(',') : SKINS).filter((k) => ROWS[k])
 
 const PAD = 18
 const cdp = await launch()
