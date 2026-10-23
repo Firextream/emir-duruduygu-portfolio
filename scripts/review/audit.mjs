@@ -86,7 +86,8 @@ const PAGE_CHECK = `(() => {
     if (img.srcset && !img.sizes) issues.push({ type: 'no-sizes', detail: '', where: src.slice(-60) });
     if (!img.srcset && !/\\.svg/.test(src)) issues.push({ type: 'no-srcset', detail: '', where: src.slice(-60) });
     if (!img.complete || !img.naturalWidth) continue;
-    const r = img.getBoundingClientRect(), fit = getComputedStyle(img).objectFit;
+    // layout size, not the bounding box: tilted prints (rotate) would read as a crop
+    const r = { width: img.offsetWidth, height: img.offsetHeight }, fit = getComputedStyle(img).objectFit;
     const drift = Math.abs(r.width / r.height - img.naturalWidth / img.naturalHeight) / (img.naturalWidth / img.naturalHeight);
     const allowedCrop = !!img.closest('[data-allow-crop],[aria-hidden="true"]');
     if (drift > 0.015 && fit !== 'contain' && !allowedCrop) issues.push({ type: 'crop', detail: (drift * 100).toFixed(1) + '% (' + fit + ')', where: src.slice(-60) });

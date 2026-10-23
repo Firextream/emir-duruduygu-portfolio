@@ -1,6 +1,6 @@
 // End-to-end behaviour checks against a running site (default http://localhost:3100):
 // first visit picks + persists a skin, skin switch (curtain → reload → new skin), Quiet accent persists,
-// Quiet player, Soft Club release picker, Modernist contact form, Istanbul clock, console errors.
+// Quiet player, Soft Club release picker, Modernist contact form, Istanbul clock, Home LCP, console errors.
 //   node scripts/review/interact.mjs [--base http://localhost:3100]
 import { evaluate, launch, sleep } from './cdp.mjs'
 
@@ -86,8 +86,12 @@ try {
 
   // 6. Modernist contact form → "Sent ✓"
   await evaluate(cdp, `(() => { const f = document.querySelector('#contact form'); f.querySelector('[name=name]').value = 'Test'; f.querySelector('[name=email]').value = 'test@example.com'; f.querySelector('[name=message]').value = 'Hello from the review script'; f.requestSubmit(); return true })()`)
-  await sleep(1500)
-  const sent = await evaluate(cdp, `document.querySelector('#contact form button[type=submit]').textContent + ' | ' + document.querySelector('#contact [role=status]').textContent`)
+  // the first POST after a dev-server start compiles the route, so wait for the reply, not a fixed time
+  let sent = ''
+  for (let t = 0; t < 30 && (!sent || sent.startsWith('Sending')); t++) {
+    await sleep(500)
+    sent = await evaluate(cdp, `document.querySelector('#contact form button[type=submit]').textContent + ' | ' + document.querySelector('#contact [role=status]').textContent`)
+  }
   check('contact form shows the success state', sent.includes('Sent') && sent.includes('✓') && sent.includes("it's in"), sent)
 
   // 7. Soft Club: pick DD-03 (SLAB-100) → hero swaps
@@ -106,11 +110,28 @@ try {
   await sleep(1500)
   s = await state()
   check('localStorage wins over a stale cookie', s.skin === 'quiet' && s.acc === '2', `${s.skin} acc ${s.acc}`)
+
+  // 9. Home LCP is never a lazy image. Measured directly: Next's dev warning keys images by URL, so it
+  // misfires when the hero photo also appears lower on the page (Soft Club's frames shelf).
+  const lcpWatch = await cdp.send('Page.addScriptToEvaluateOnNewDocument', {
+    source: `window.__lcp=null;new PerformanceObserver((l)=>{for(const e of l.getEntries())window.__lcp=e}).observe({type:'largest-contentful-paint',buffered:true})`,
+  })
+  for (const skin of ['quiet', 'soft', 'modern'])
+    for (const width of [1440, 390]) {
+      await cdp.send('Emulation.setDeviceMetricsOverride', { width, height: 900, deviceScaleFactor: 1, mobile: width <= 760 })
+      await cdp.send('Network.setCookie', { name: 'duru-skin', value: skin, url: base })
+      await evaluate(cdp, `localStorage.setItem('duru-style-v2', JSON.stringify({ skin: ${JSON.stringify(skin)}, acc: 0 })), sessionStorage.clear(), true`)
+      await go('/')
+      await sleep(700)
+      const lcp = await evaluate(cdp, `(() => { const el = window.__lcp && window.__lcp.element; return el ? { tag: el.tagName, lazy: el.getAttribute('loading') === 'lazy', cls: String(el.className).split('_')[0] } : null })()`)
+      check(`${skin} ${width} Home LCP is not lazy`, lcp && !lcp.lazy, lcp ? `${lcp.tag} ${lcp.cls}` : 'no LCP entry')
+    }
+  await cdp.send('Page.removeScriptToEvaluateOnNewDocument', { identifier: lcpWatch.identifier })
 } finally {
   await cdp.close()
 }
 
-const relevant = errors.filter((e) => e && !/favicon|Download the React DevTools/i.test(e))
+const relevant = errors.filter((e) => e && !/favicon|Download the React DevTools|detected as the Largest Contentful Paint/i.test(e))
 check('no console errors or hydration warnings', relevant.length === 0, relevant.slice(0, 5).join(' || '))
 for (const r of results) console.log(`${r.ok ? 'PASS' : 'FAIL'}  ${r.name}${r.detail ? `  — ${r.detail}` : ''}`)
 process.exitCode = results.every((r) => r.ok) ? 0 : 1

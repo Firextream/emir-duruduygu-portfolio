@@ -11,5 +11,7 @@ export const ROUTES = {
   about: { path: '/about', ref: { page: 'about' } },
   lab: { path: '/lab', ref: { page: 'lab' } },
   project: { path: '/lab/slab-100', ref: { page: 'project', arg: 0 } },
+  // long name, placeholder photo, no drawing
+  'project-long': { path: '/lab/denim', ref: { page: 'project', arg: 2 } },
   nf: { path: '/this-page-does-not-exist', ref: { page: 'nf' } },
 }
