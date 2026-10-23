@@ -1,4 +1,13 @@
 /* Soft Club — jewel case and obi on pale steel. One aqua for the obi, buttons and the selected marker. */
+
+/* Doto has no arrows: like the references, draw them from the system monospace rather than
+   next/font's metric fallback (Arial), which makes them long and thin. */
+@font-face {
+  font-family: 'Soft Arrows';
+  src: local('Consolas'), local('Menlo-Regular'), local('Menlo'), local('DejaVu Sans Mono'), local('Courier New');
+  unicode-range: U+2190, U+2192, U+2194-21FF;
+}
+
 [data-skin='soft'] {
   --ink: #162033;
   --mut: #5f6b7c;
@@ -16,7 +25,7 @@
 
   --display: var(--font-display), 'Unbounded', system-ui, sans-serif;
   --body: var(--font-body), 'Zen Kaku Gothic New', 'Hiragino Sans', 'Yu Gothic', system-ui, sans-serif;
-  --num: var(--font-num), 'Doto', ui-monospace, monospace;
+  --num: 'Soft Arrows', var(--font-num), 'Doto', ui-monospace, monospace;
 
   background: var(--ground);
 }
@@ -29,11 +38,13 @@
   font-family: var(--body);
 }
 
-[data-skin='soft'] a {
+/* :where keeps these at element specificity, so a component's own :hover colour wins (aqua buttons
+   keep ink text instead of turning deep aqua on aqua) */
+:where([data-skin='soft']) a {
   color: var(--ink);
 }
 
-[data-skin='soft'] a:hover {
+:where([data-skin='soft']) a:hover {
   color: var(--deep);
 }
 
