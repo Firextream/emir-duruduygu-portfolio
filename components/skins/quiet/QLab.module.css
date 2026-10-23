@@ -1,0 +1,386 @@
+/* Quiet Lab — QLab.dc.html */
+.page {
+  padding: 0 var(--side);
+}
+
+.page .mobOnly {
+  display: none;
+}
+
+.page .deskOnlyFlex {
+  display: flex;
+}
+
+.page .deskOnlyGrid {
+  display: grid;
+}
+
+.intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 440px;
+  gap: 80px;
+  align-items: end;
+  padding: 56px 0 44px;
+}
+
+.kicker {
+  font-family: var(--pixel);
+  font-size: 14px;
+  color: var(--mut);
+}
+
+.h1 {
+  margin-top: 18px;
+  font-family: var(--serif);
+  font-weight: 400;
+  font-variant-numeric: lining-nums;
+  font-size: clamp(72px, 7.8vw, 112px);
+  line-height: 0.92;
+  letter-spacing: -0.01em;
+}
+
+.lede {
+  font-size: 18px;
+  line-height: 1.6;
+  color: var(--mut);
+  text-wrap: pretty;
+}
+
+.aside {
+  margin-top: 14px;
+  font-family: var(--pixel);
+  font-size: 14px;
+  color: var(--mut);
+}
+
+/* ── lab.exe: a table of projects ─────────────────────── */
+.cols,
+.row {
+  grid-template-columns: 80px 200px minmax(0, 1fr) 150px 170px 90px;
+  gap: 28px;
+}
+
+.cols {
+  padding: 12px 28px;
+  border-bottom: 1px solid var(--line);
+  background: var(--bar);
+  font-family: var(--pixel);
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--mut);
+}
+
+.item .itemBar {
+  display: none;
+}
+
+.row {
+  display: grid;
+  align-items: center;
+  padding: 28px;
+  border-bottom: 1px solid var(--rule);
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.row:hover {
+  background: var(--hover);
+}
+
+.num {
+  font-family: var(--serif);
+  font-variant-numeric: lining-nums;
+  font-size: 64px;
+  line-height: 1.02;
+  letter-spacing: -0.01em;
+  color: var(--acc);
+}
+
+/* the preview is a small print: contained at its own ratio */
+.prev {
+  display: block;
+  width: 120px;
+}
+
+.prevPh {
+  width: 180px;
+}
+
+.card {
+  display: block;
+  padding: 7px;
+  border: 1px solid var(--line);
+  background: var(--print);
+  box-shadow: 2px 2px 0 var(--sh);
+}
+
+.img {
+  display: block;
+  width: 100%;
+  max-width: 120px;
+  height: auto;
+  margin: 0 auto;
+}
+
+.ph {
+  display: flex;
+  align-items: flex-end;
+  padding: 8px;
+  background: repeating-linear-gradient(135deg, var(--ph1) 0 9px, var(--ph2) 9px 18px);
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--printm);
+}
+
+.main {
+  min-width: 0;
+}
+
+.name {
+  display: block;
+  font-family: var(--serif);
+  font-variant-numeric: lining-nums;
+  font-size: 48px;
+  line-height: 1.02;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+.one {
+  display: block;
+  margin-top: 8px;
+  font-size: 17px;
+  line-height: 1.5;
+}
+
+.open {
+  display: inline-block;
+  margin-top: 14px;
+  font-family: var(--pixel);
+  font-size: 15px;
+  color: var(--acc);
+}
+
+.kind,
+.year {
+  font-family: var(--pixel);
+  font-size: 15px;
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-sizing: content-box;
+  height: 28px;
+  padding: 0 10px;
+  border: 1px solid var(--line);
+  background: var(--win);
+  font-family: var(--pixel);
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.square {
+  width: 8px;
+  height: 8px;
+  background: var(--acc);
+}
+
+/* narrower desktops: kind / status / year stack in one column */
+@media (max-width: 1180px) {
+  .page .deskOnlyGrid {
+    display: none;
+  }
+
+  .row {
+    grid-template-columns: 56px 150px minmax(0, 1fr) 150px;
+    grid-template-areas:
+      'num prev main kind'
+      'num prev main status'
+      'num prev main year';
+    row-gap: 8px;
+  }
+
+  .num {
+    grid-area: num;
+    font-size: 52px;
+  }
+
+  .prev {
+    grid-area: prev;
+  }
+
+  .prevPh {
+    width: 150px;
+  }
+
+  .main {
+    grid-area: main;
+  }
+
+  .name {
+    font-size: 40px;
+  }
+
+  .kind {
+    grid-area: kind;
+  }
+
+  .statusCell {
+    grid-area: status;
+  }
+
+  .year {
+    grid-area: year;
+  }
+
+  .intro {
+    grid-template-columns: minmax(0, 1fr) 360px;
+    gap: 48px;
+  }
+}
+
+/* ── mobile — QLab at 390: one window per project ──────── */
+@media (max-width: 760px) {
+  .page .deskOnly,
+  .page .deskOnlyFlex {
+    display: none !important;
+  }
+
+  .page .mobOnly {
+    display: inline;
+  }
+
+  .intro {
+    display: block;
+    padding: 28px 0 24px;
+  }
+
+  .kicker {
+    font-size: 12px;
+  }
+
+  .h1 {
+    margin-top: 12px;
+    font-size: min(15.9vw, 62px);
+    line-height: 0.95;
+  }
+
+  .lede {
+    margin-top: 14px;
+    font-size: 16px;
+  }
+
+  /* the lab.exe chrome goes; its rows become windows */
+  .page .labWin,
+  .page .labWin:hover {
+    border: 0;
+    background: none;
+    box-shadow: none;
+    transform: none;
+  }
+
+  .labWin > :first-child {
+    display: none;
+  }
+
+  .list {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+
+  .item {
+    border: 1px solid var(--line);
+    background: var(--win);
+    box-shadow: 4px 4px 0 var(--sh);
+  }
+
+  .item .itemBar {
+    display: flex;
+  }
+
+  .row {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      'prev prev'
+      'name name'
+      'one one'
+      'status year'
+      'open open';
+    gap: 0;
+    align-items: center;
+    padding: 18px 16px 16px;
+    border-bottom: 0;
+  }
+
+  .row:hover {
+    background: transparent;
+  }
+
+  .num,
+  .kind {
+    display: none;
+  }
+
+  .prev {
+    width: 150px;
+  }
+
+  .prevPh {
+    width: 72%;
+  }
+
+  .img {
+    max-width: 150px;
+  }
+
+  .main {
+    display: contents;
+  }
+
+  .name {
+    grid-area: name;
+    margin-top: 18px;
+    font-size: 40px;
+  }
+
+  .one {
+    grid-area: one;
+    margin: 8px 0 14px;
+    font-size: 15px;
+  }
+
+  .statusCell,
+  .year {
+    margin-bottom: 16px;
+  }
+
+  .year {
+    justify-self: end;
+    font-size: 13px;
+    color: var(--mut);
+  }
+
+  .open {
+    grid-area: open;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: content-box;
+    min-height: 48px;
+    margin-top: 0;
+    border: 1px solid var(--line);
+    background: var(--acc);
+    box-shadow: 3px 3px 0 var(--sh);
+    color: var(--acci);
+    font-size: 16px;
+  }
+
+  .row:active .open {
+    transform: translate(2px, 2px);
+    box-shadow: 1px 1px 0 var(--sh);
+  }
+}

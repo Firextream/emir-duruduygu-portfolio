@@ -1,0 +1,604 @@
+/* Quiet Project — QProject.dc.html */
+.page {
+  padding: 0 var(--side);
+}
+
+.page .mobOnly {
+  display: none;
+}
+
+/* ── ← lab.exe ─────── kind ─────────────────────────────── */
+.top {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding-top: 36px;
+}
+
+.back {
+  font-family: var(--pixel);
+  font-size: 16px;
+  color: var(--acc);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.back:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.topRule {
+  flex: 1;
+  height: 1px;
+  background: var(--rule);
+}
+
+.topKind {
+  font-family: var(--pixel);
+  font-size: 14px;
+  color: var(--mut);
+}
+
+/* ── number, name, facts ───────────────────────────────── */
+.head {
+  display: grid;
+  grid-template-columns: 140px minmax(0, 1fr) 400px;
+  gap: 48px;
+  align-items: end;
+  padding: 40px 0 44px;
+}
+
+.num,
+.h1,
+.nextName {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-variant-numeric: lining-nums;
+  letter-spacing: -0.01em;
+}
+
+.num {
+  font-size: 120px;
+  line-height: 0.85;
+  color: var(--acc);
+}
+
+.h1 {
+  font-size: clamp(72px, 7.8vw, 112px);
+  line-height: 0.92;
+  text-wrap: balance;
+}
+
+.one {
+  margin-top: 20px;
+  font-size: 21px;
+  line-height: 1.5;
+}
+
+.facts {
+  border-top: 1px solid var(--line);
+}
+
+.fact {
+  display: grid;
+  grid-template-columns: 80px minmax(0, 1fr);
+  gap: 10px;
+  padding: 13px 0;
+  border-bottom: 1px solid var(--rule);
+  font-size: 15px;
+}
+
+.fact dt {
+  font-family: var(--pixel);
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--mut);
+}
+
+.fact dd {
+  overflow-wrap: anywhere;
+}
+
+/* ── status.log ────────────────────────────────────────── */
+.stages {
+  display: grid;
+  grid-auto-columns: minmax(0, 1fr);
+  grid-auto-flow: column;
+}
+
+.stage {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 20px 22px;
+}
+
+.stage + .stage {
+  border-left: 1px solid var(--rule);
+}
+
+.now {
+  background: var(--hi);
+}
+
+.dot {
+  flex: none;
+  box-sizing: content-box;
+  width: 12px;
+  height: 12px;
+  border: 1px solid var(--ink);
+}
+
+.dotOn {
+  background: var(--acc);
+}
+
+.stageLabel {
+  font-family: var(--pixel);
+  font-size: 16px;
+}
+
+.stageNote {
+  font-family: var(--pixel);
+  font-size: 12px;
+  color: var(--mut);
+}
+
+/* ── drawings.dir | notes.log + about.txt ──────────────── */
+.cols {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+  gap: 48px;
+  align-items: start;
+  margin-top: 48px;
+}
+
+.side {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  min-width: 0;
+}
+
+.prints {
+  display: grid;
+  gap: 36px;
+  align-items: center;
+  padding: 36px;
+}
+
+.printsImg {
+  grid-template-columns: 260px minmax(0, 1fr);
+}
+
+.printsPh {
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  gap: 32px;
+  align-items: end;
+}
+
+.printCol {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  min-width: 0;
+}
+
+.print {
+  position: relative;
+  min-width: 0;
+  transform: rotate(var(--tilt, 0deg));
+}
+
+.tape {
+  position: absolute;
+  top: -11px;
+  left: var(--tape-left, 20px);
+  z-index: 2;
+  width: 84px;
+  height: 22px;
+  background: var(--tape);
+  transform: rotate(-3deg);
+}
+
+.card {
+  padding: 8px 8px 12px;
+  border: 1px solid var(--line);
+  background: var(--print);
+  box-shadow: 3px 3px 0 var(--sh);
+}
+
+.drawing .card {
+  padding: 18px 18px 12px;
+}
+
+.img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.ph {
+  display: flex;
+  align-items: flex-end;
+  padding: 8px;
+  background: repeating-linear-gradient(135deg, var(--ph1) 0 9px, var(--ph2) 9px 18px);
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--printm);
+}
+
+.cap {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.drawing .cap {
+  margin-top: 10px;
+}
+
+.capTitle {
+  font-family: var(--serif);
+  font-size: 19px;
+  color: var(--printi);
+}
+
+.capRatio {
+  font-family: var(--pixel);
+  font-size: 12px;
+  color: var(--printm);
+  white-space: nowrap;
+}
+
+/* notes.log */
+.logBody {
+  padding: 4px 0 8px;
+}
+
+.logRow {
+  display: grid;
+  grid-template-columns: 36px 110px minmax(0, 1fr);
+  gap: 12px;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--rule);
+}
+
+.logN {
+  padding-top: 3px;
+  font-family: var(--mono);
+  font-size: 12px;
+  text-align: right;
+  color: var(--mut);
+}
+
+.logDate {
+  padding-top: 2px;
+  font-family: var(--pixel);
+  font-size: 13px;
+  color: var(--mut);
+}
+
+.logTitle {
+  display: block;
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.logWhy {
+  display: block;
+  margin-top: 3px;
+  font-size: 14px;
+  color: var(--mut);
+}
+
+/* about.txt */
+.aboutBody {
+  padding: 22px 24px 4px;
+}
+
+.prose p,
+.prose blockquote,
+.prose figure,
+.prose h3 {
+  margin: 0 0 21px;
+}
+
+.prose p {
+  font-size: 17px;
+  line-height: 1.75;
+  text-wrap: pretty;
+}
+
+.prose h3 {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: 26px;
+}
+
+.prose a {
+  color: var(--acc);
+}
+
+.prose img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.prose [data-ph] {
+  background: repeating-linear-gradient(135deg, var(--ph1) 0 9px, var(--ph2) 9px 18px);
+}
+
+.prose figcaption {
+  margin-top: 6px;
+  font-family: var(--serif);
+  font-size: 17px;
+}
+
+/* ── next project ──────────────────────────────────────── */
+.next {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-top: 56px;
+  padding: 24px 28px;
+  border: 1px solid var(--line);
+  background: var(--hi);
+  box-shadow: 6px 6px 0 var(--sh);
+  color: var(--ink);
+  text-decoration: none;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.next:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 9px 9px 0 var(--sh);
+}
+
+.nextLabel {
+  flex: none;
+  font-family: var(--pixel);
+  font-size: 15px;
+  color: var(--mut);
+}
+
+.nextName {
+  min-width: 0;
+  font-size: 52px;
+  line-height: 1.02;
+  text-wrap: balance;
+}
+
+.nextArrow {
+  margin-left: auto;
+  font-family: var(--pixel);
+  font-size: 28px;
+}
+
+@media (max-width: 1180px) {
+  .head {
+    grid-template-columns: 100px minmax(0, 1fr);
+    row-gap: 32px;
+  }
+
+  .num {
+    font-size: 88px;
+  }
+
+  .facts {
+    grid-column: 1 / -1;
+  }
+
+  .cols {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* stages become a list once four columns get tight */
+@media (max-width: 1100px) {
+  .stages {
+    display: block;
+  }
+
+  .stage {
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+    min-height: 48px;
+    padding: 0 16px;
+  }
+
+  .stage + .stage {
+    border-left: 0;
+    border-top: 1px solid var(--rule);
+  }
+
+  .stageLabel {
+    flex: 1;
+    font-size: 15px;
+  }
+}
+
+/* ── mobile — QProject at 390 ──────────────────────────── */
+@media (max-width: 760px) {
+  .page .deskOnly {
+    display: none !important;
+  }
+
+  .page .mobOnly {
+    display: inline;
+  }
+
+  .top {
+    justify-content: space-between;
+    padding-top: 6px;
+  }
+
+  .back {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    font-size: 15px;
+  }
+
+  .topRule {
+    display: none;
+  }
+
+  .topKind {
+    font-size: 13px;
+  }
+
+  .head {
+    display: block;
+    padding: 22px 0 24px;
+  }
+
+  .num {
+    display: block;
+    font-size: 56px;
+    line-height: 1.02;
+  }
+
+  .h1 {
+    margin-top: 4px;
+    font-size: min(14.4vw, 56px);
+    line-height: 0.95;
+  }
+
+  .one {
+    margin: 12px 0 18px;
+    font-size: 17px;
+  }
+
+  .fact {
+    grid-template-columns: 64px minmax(0, 1fr);
+    padding: 12px 0;
+    font-size: 14px;
+  }
+
+  .cols {
+    gap: 20px;
+    margin-top: 20px;
+  }
+
+  .side {
+    gap: 20px;
+  }
+
+  .prints,
+  .printsImg,
+  .printsPh {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    padding: 20px 14px;
+  }
+
+  .print {
+    transform: none;
+  }
+
+  .main {
+    width: 70%;
+    margin: 0 auto;
+    --tape-left: 30% !important;
+  }
+
+  .main .card {
+    padding: 7px 7px 10px;
+  }
+
+  .mainPh {
+    transform: rotate(-0.5deg);
+    --tape-left: 24px !important;
+  }
+
+  .printCol {
+    gap: 22px;
+  }
+
+  .drawing .card {
+    padding: 12px 12px 10px;
+  }
+
+  .main .cap {
+    margin-top: 6px;
+  }
+
+  .drawing .cap {
+    margin-top: 8px;
+  }
+
+  .main .capTitle,
+  .drawing .capTitle {
+    font-size: 17px;
+  }
+
+  .logBody {
+    padding: 0;
+  }
+
+  .logRow {
+    display: block;
+    padding: 14px 16px;
+  }
+
+  .logN {
+    display: none;
+  }
+
+  /* inline in the row's 16px line, as in the reference */
+  .logDate {
+    display: inline;
+    padding: 0;
+    font-size: 12px;
+  }
+
+  .logTitle {
+    margin-top: 4px;
+    font-size: 15px;
+  }
+
+  .aboutBody {
+    padding: 16px 16px 2px;
+  }
+
+  .prose p {
+    margin-bottom: 14px;
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  .next {
+    display: block;
+    margin-top: 24px;
+    padding: 18px 16px;
+    box-shadow: 4px 4px 0 var(--sh);
+  }
+
+  .nextLabel {
+    font-size: 13px;
+  }
+
+  .nextName {
+    display: block;
+    margin-top: 6px;
+    font-size: 34px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .next {
+    transition: none;
+  }
+
+  .next:hover {
+    transform: none;
+  }
+}
