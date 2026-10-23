@@ -1,0 +1,467 @@
+/* Soft Club Project — SProject.dc.html */
+.page {
+  padding: 0 var(--side);
+}
+
+.counter,
+.kicker,
+.figNo,
+.logN,
+.nextNo {
+  font-family: var(--num);
+  font-weight: 700;
+  color: var(--deep);
+}
+
+.top {
+  display: flex;
+  align-items: center;
+  height: 57px;
+  margin-top: 28px;
+  border-bottom: 1px solid var(--rule);
+  font-size: 14px;
+}
+
+.back {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.counter {
+  margin-left: auto;
+}
+
+/* ── the release: jewel case + details ─────────────────── */
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 690fr) minmax(0, 574fr);
+  gap: 64px;
+  align-items: center;
+  margin-top: 40px;
+}
+
+.caseCol {
+  min-width: 0;
+}
+
+.kicker {
+  font-size: 14px;
+}
+
+.h1 {
+  margin-top: 14px;
+  font-family: var(--display);
+  font-weight: 300;
+  font-size: clamp(44px, 4.45vw, 64px);
+  line-height: 1;
+  letter-spacing: -0.05em;
+  text-wrap: balance;
+}
+
+.one {
+  margin-top: 16px;
+  font-size: 17px;
+  line-height: 1.7;
+}
+
+.spec {
+  margin-top: 24px;
+  border-top: 1px solid var(--rule);
+}
+
+.specRow {
+  display: grid;
+  grid-template-columns: 120px minmax(0, 1fr);
+  gap: 16px;
+  padding: 14px 4px;
+  border-bottom: 1px solid var(--rule);
+  font-size: 15px;
+}
+
+.specRow dt {
+  color: var(--mut);
+}
+
+.specRow dd {
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+
+.follow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 52px;
+  margin-top: 24px;
+  padding: 0 22px;
+  background: var(--aqua);
+  color: var(--ink);
+  font-weight: 700;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.follow:hover {
+  background: var(--aqua-hover);
+  color: var(--ink);
+}
+
+/* ── drawings · build log ──────────────────────────────── */
+.section {
+  margin-top: 120px;
+  scroll-margin-top: 24px;
+}
+
+.secHead {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+}
+
+.h2 {
+  font-family: var(--display);
+  font-weight: 300;
+  font-size: 44px;
+  line-height: 1.2;
+  letter-spacing: -0.04em;
+}
+
+.secJp {
+  font-size: 13px;
+  color: var(--mut);
+}
+
+.figs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 32px;
+  align-items: end;
+  margin-top: 28px;
+}
+
+.fig {
+  min-width: 0;
+}
+
+/* the photo at its own ratio, up to 640px tall */
+.photoBox {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  height: 640px;
+}
+
+.photo {
+  display: block;
+  max-width: 100%;
+  max-height: 640px;
+  width: auto;
+  height: auto;
+  box-shadow: 0 30px 44px -32px rgba(20, 40, 80, 0.6);
+}
+
+.ph {
+  display: flex;
+  align-items: flex-end;
+  height: 640px;
+  max-width: 100%;
+  padding: 10px;
+  background: var(--stripe);
+  font-size: 11px;
+  color: var(--mut);
+}
+
+.paper {
+  padding: 40px;
+  border-radius: 4px;
+  background: var(--paper);
+  box-shadow: var(--lift);
+}
+
+.drawing {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.drawPh {
+  display: flex;
+  align-items: flex-end;
+  aspect-ratio: 16 / 9;
+  padding: 10px;
+  background: var(--stripe);
+  font-size: 11px;
+  color: var(--mut);
+}
+
+.cap {
+  display: flex;
+  gap: 12px;
+  margin-top: 14px;
+  font-size: 13px;
+  color: var(--mut);
+}
+
+.log {
+  margin-top: 28px;
+  border-top: 1px solid var(--rule);
+}
+
+.logRow {
+  display: grid;
+  grid-template-columns: 48px 160px minmax(0, 1fr) minmax(0, 1.2fr);
+  gap: 24px;
+  align-items: baseline;
+  padding: 22px 8px;
+  border-bottom: 1px solid var(--rule);
+}
+
+.logLine {
+  display: contents;
+}
+
+.logN {
+  font-size: 14px;
+}
+
+.logDate {
+  font-size: 13px;
+  color: var(--mut);
+}
+
+.logTitle {
+  font-family: var(--display);
+  font-weight: 300;
+  font-size: 22px;
+  letter-spacing: -0.03em;
+}
+
+.logText {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--mut);
+}
+
+/* ── next release ──────────────────────────────────────── */
+.next {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 24px;
+  margin-top: 72px;
+  padding: 28px 8px;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  text-decoration: none;
+}
+
+.next:hover {
+  background: rgba(255, 255, 255, 0.55);
+}
+
+.nextLabel {
+  flex: none;
+  font-size: 13px;
+  color: var(--mut);
+}
+
+.nextName {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  min-width: 0;
+  font-family: var(--display);
+  font-weight: 300;
+  font-size: 40px;
+  letter-spacing: -0.04em;
+  text-align: right;
+}
+
+.nextNo {
+  font-size: 16px;
+  letter-spacing: 0;
+}
+
+@media (max-width: 1100px) {
+  .hero {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 40px;
+  }
+
+  .caseCol {
+    max-width: 690px;
+  }
+
+  .photoBox,
+  .ph {
+    height: 480px;
+  }
+
+  .photo {
+    max-height: 480px;
+  }
+
+  .logRow {
+    grid-template-columns: 40px 130px minmax(0, 1fr);
+  }
+
+  .logText {
+    grid-column: 3;
+  }
+}
+
+/* ── mobile — SProject at 390 ──────────────────────────── */
+@media (max-width: 760px) {
+  .page .deskOnly {
+    display: none !important;
+  }
+
+  .top {
+    height: 53px;
+    margin-top: 12px;
+  }
+
+  .counter {
+    font-size: 13px;
+  }
+
+  /* the reference's 24px sits on the zoomed (×0.365) case */
+  .hero {
+    display: block;
+    margin-top: 9px;
+  }
+
+  .kicker {
+    margin-top: 20px;
+    font-size: 12px;
+  }
+
+  .h1 {
+    margin-top: 10px;
+    font-size: min(8.7vw, 34px);
+    line-height: 1.05;
+  }
+
+  .one {
+    margin-top: 12px;
+    font-size: 15px;
+  }
+
+  .spec {
+    margin-top: 16px;
+  }
+
+  .specRow {
+    grid-template-columns: 96px minmax(0, 1fr);
+    gap: 10px;
+    padding: 12px 2px;
+    font-size: 14px;
+  }
+
+  .follow {
+    margin-top: 18px;
+    padding: 0 18px;
+  }
+
+  .section {
+    margin-top: 48px;
+  }
+
+  .secHead {
+    gap: 10px;
+  }
+
+  .h2 {
+    font-size: 30px;
+  }
+
+  .secJp {
+    font-size: 12px;
+  }
+
+  .figs {
+    display: block;
+    margin-top: 16px;
+  }
+
+  .fig + .fig {
+    margin-top: 20px;
+  }
+
+  .photoBox {
+    height: auto;
+    align-items: center;
+  }
+
+  .photo {
+    max-height: 480px;
+    box-shadow: none;
+  }
+
+  .ph {
+    width: 100%;
+    height: auto;
+  }
+
+  .paper {
+    padding: 18px;
+    box-shadow: none;
+  }
+
+  .cap {
+    margin-top: 10px;
+    font-size: 12px;
+  }
+
+  .log {
+    margin-top: 14px;
+  }
+
+  .logRow {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 16px 2px;
+  }
+
+  .logLine {
+    display: flex;
+    gap: 10px;
+    font-size: 12px;
+  }
+
+  .logN,
+  .logDate {
+    font-size: 12px;
+  }
+
+  .logTitle {
+    font-size: 19px;
+  }
+
+  .logText {
+    font-size: 14px;
+  }
+
+  .next {
+    align-items: center;
+    min-height: 56px;
+    margin-top: 28px;
+    padding: 0 4px;
+    border-top: 0;
+  }
+
+  .nextLabel {
+    font-size: 12px;
+  }
+
+  .nextName {
+    font-family: var(--body);
+    font-weight: 500;
+    font-size: 15px;
+    letter-spacing: 0;
+  }
+}

@@ -28,25 +28,33 @@ function ringImage(text: string): string {
   return `url("data:image/svg+xml,${encodeURIComponent(svg)}")`
 }
 
+export type ReleaseInfo = (typeof RELEASES)[Release]
+
 export default function JewelCase({
   release,
+  info,
   cover,
   fit = 'cover',
   count,
   sizes,
   priority,
+  eager,
   className,
 }: {
   release: Release
+  /** overrides the release's printed copy (catalogue number, obi, ring) */
+  info?: Partial<ReleaseInfo>
   cover: Img | null
   fit?: 'cover' | 'contain'
   /** sticker count override (e.g. the real number of frames) */
   count?: string
   sizes: string
   priority?: boolean
+  /** above the fold on an inner page: load eagerly without a preload */
+  eager?: boolean
   className?: string
 }) {
-  const p = RELEASES[release]
+  const p = { ...RELEASES[release], ...info }
   const ring = `DURUDUYGU · ${p.no} · ${p.ring} · ISTANBUL 2026 · `
   return (
     <div className={`${s.case} ${className ?? ''}`} aria-hidden="true">
@@ -76,6 +84,7 @@ export default function JewelCase({
                 alt=""
                 sizes={sizes}
                 priority={priority}
+                eager={eager}
                 className={fit === 'contain' ? s.coverContain : s.coverImg}
               />
             ) : (
