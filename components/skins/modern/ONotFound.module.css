@@ -1,0 +1,133 @@
+/* Modernist 404 — ONotFound.dc.html */
+.page {
+  padding: 40px var(--side) 0;
+}
+
+.red {
+  color: var(--acc);
+}
+
+.big {
+  margin-left: -0.033em;
+  font-weight: 800;
+  font-size: min(29.2vw, 420px);
+  line-height: 0.78;
+  letter-spacing: -0.07em;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: 24px;
+  align-items: end;
+  margin-top: 40px;
+  padding-top: 16px;
+  border-top: 2px solid var(--line);
+}
+
+.title {
+  grid-column: 1 / 7;
+  font-weight: 800;
+  font-size: 48px;
+  line-height: 1;
+  letter-spacing: -0.035em;
+}
+
+.text {
+  grid-column: 7 / 10;
+  font-size: 17px;
+  line-height: 1.5;
+  color: var(--mut);
+}
+
+.links {
+  grid-column: 10 / 13;
+  display: flex;
+  flex-direction: column;
+  border-top: 2px solid var(--line);
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.link {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 52px;
+  border-bottom: 2px solid var(--rule);
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.link:hover {
+  background: var(--hover);
+}
+
+.home {
+  padding: 0 16px;
+  border-bottom: 0;
+  background: var(--acc);
+  color: #ffffff;
+}
+
+.home:hover {
+  background: var(--acc-600);
+}
+
+.home:active {
+  background: var(--acc-700);
+}
+
+@media (max-width: 1100px) {
+  .title {
+    grid-column: 1 / 13;
+  }
+
+  .text {
+    grid-column: 1 / 7;
+    margin-top: 20px;
+  }
+
+  .links {
+    grid-column: 7 / 13;
+    margin-top: 20px;
+  }
+}
+
+/* ── mobile — ONotFound at 390 ─────────────────────────── */
+@media (max-width: 760px) {
+  .deskOnly {
+    display: none;
+  }
+
+  .page {
+    padding: 32px 18px 0;
+  }
+
+  .big {
+    font-size: min(38.5vw, 150px);
+    line-height: 0.8;
+  }
+
+  .row {
+    display: block;
+    margin-top: 28px;
+    padding-top: 12px;
+  }
+
+  .title {
+    font-size: 30px;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+  }
+
+  .text {
+    margin-top: 12px;
+    font-size: 16px;
+  }
+
+  .links {
+    margin-top: 20px;
+    border-top: 0;
+  }
+}

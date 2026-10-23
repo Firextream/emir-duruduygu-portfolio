@@ -1,3 +1,7 @@
+import ONotFound from '@/components/skins/modern/ONotFound'
+
+export const metadata = { title: 'Not found' }
+
 export default function NotFound() {
-  return <p style={{ padding: 48 }}>[Not found]</p>
+  return <ONotFound />
 }

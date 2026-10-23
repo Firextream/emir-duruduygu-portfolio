@@ -1,0 +1,130 @@
+/* Soft Club 404 — SNotFound.dc.html */
+.page {
+  padding: 0 var(--side);
+}
+
+.head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 44px;
+  gap: 40px;
+  padding: 72px 0 48px;
+  border-bottom: 1px solid var(--rule);
+}
+
+.kicker {
+  font-family: var(--num);
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--deep);
+}
+
+.big {
+  margin-top: 12px;
+  font-family: var(--display);
+  font-weight: 300;
+  font-size: min(22.2vw, 320px);
+  line-height: 0.82;
+  letter-spacing: -0.07em;
+}
+
+.text {
+  margin-top: 28px;
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 1.5;
+}
+
+.obi {
+  display: flex;
+  justify-content: center;
+  align-self: stretch;
+  padding: 16px 0;
+  background: var(--aqua);
+  writing-mode: vertical-rl;
+  font-weight: 900;
+  font-size: 18px;
+  letter-spacing: 0.24em;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  margin-top: 32px;
+  font-weight: 500;
+  font-size: 15px;
+}
+
+.home {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 48px;
+  height: 52px;
+  padding: 0 22px;
+  background: var(--aqua);
+  color: var(--ink);
+  font-weight: 700;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.home:hover {
+  background: var(--aqua-hover);
+  color: var(--ink);
+}
+
+.more {
+  display: flex;
+  gap: 28px;
+}
+
+.link {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  text-decoration: none;
+}
+
+/* ── mobile — SNotFound at 390 ─────────────────────────── */
+@media (max-width: 760px) {
+  .head {
+    display: block;
+    padding: 40px 0 0;
+    border-bottom: 0;
+  }
+
+  .obi {
+    display: none;
+  }
+
+  .kicker {
+    font-size: 12px;
+  }
+
+  .big {
+    margin-top: 8px;
+    font-size: min(32.8vw, 128px);
+    line-height: 0.85;
+  }
+
+  .text {
+    margin-top: 18px;
+    font-size: 17px;
+  }
+
+  .actions {
+    display: block;
+    margin-top: 24px;
+    font-size: 14px;
+  }
+
+  .home {
+    padding: 0 18px;
+  }
+
+  .more {
+    gap: 24px;
+    margin-top: 8px;
+  }
+}

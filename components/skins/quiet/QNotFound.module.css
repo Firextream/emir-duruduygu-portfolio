@@ -1,0 +1,253 @@
+/* Quiet 404 — QNotFound.dc.html */
+.page {
+  padding: 0 var(--side);
+}
+
+/* the window, centred; the LOST? note is stuck under its bottom-right corner (the reference lets it
+   cover the Home button — here it only overlaps the window's edge) */
+.stage {
+  position: relative;
+  width: 680px;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 96px 0 196px;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+}
+
+.main {
+  display: grid;
+  grid-template-columns: 120px minmax(0, 1fr);
+  gap: 28px;
+  padding: 32px 32px 26px;
+}
+
+.lcd {
+  display: grid;
+  place-items: center;
+  box-sizing: content-box;
+  width: 120px;
+  height: 120px;
+  border: 1px solid var(--line);
+  background: var(--lcd);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.22);
+}
+
+.digits {
+  position: relative;
+  font-family: var(--lcd-font);
+  font-weight: 900;
+  font-size: 46px;
+  line-height: 1;
+  color: var(--lcdg);
+}
+
+.on {
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--lcdi);
+}
+
+.h1,
+.noteText {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-variant-numeric: lining-nums;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+.h1 {
+  font-size: 52px;
+  line-height: 1.02;
+}
+
+.text {
+  margin-top: 12px;
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--mut);
+}
+
+.path {
+  font-family: var(--mono);
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 16px 20px;
+  border-top: 1px solid var(--line);
+  background: var(--bar);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  /* the reference sets border-box here: 44px including the border */
+  min-height: 44px;
+  padding: 0 16px;
+  border: 1px solid var(--line);
+  background: var(--win);
+  box-shadow: 3px 3px 0 var(--sh);
+  color: var(--ink);
+  font-family: var(--pixel);
+  font-size: 16px;
+  text-decoration: none;
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+
+.btn:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0 var(--sh);
+}
+
+.btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 var(--sh);
+}
+
+.btnAcc {
+  background: var(--acc);
+  color: var(--acci);
+}
+
+.noteWrap {
+  position: absolute;
+  top: calc(100% - 210px);
+  right: -120px;
+  width: 260px;
+}
+
+.note {
+  position: relative;
+  padding: 28px 26px 20px;
+  background: var(--paper);
+  box-shadow: 4px 5px 0 var(--sh);
+  color: var(--paperi);
+  transform: rotate(4deg);
+}
+
+.tape {
+  position: absolute;
+  top: -11px;
+  left: 38%;
+  z-index: 2;
+  width: 84px;
+  height: 22px;
+  background: var(--tape);
+  transform: rotate(2deg);
+}
+
+.noteLabel {
+  font-family: var(--pixel);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  opacity: 0.75;
+}
+
+.noteText {
+  margin-top: 10px;
+  font-style: italic;
+  font-size: 30px;
+  line-height: 1.15;
+}
+
+.noteMail {
+  margin-top: 12px;
+  font-family: var(--mono);
+  font-size: 12px;
+  opacity: 0.75;
+}
+
+/* not enough room beside the window: the note follows it */
+@media (max-width: 1100px) {
+  .stage {
+    padding-bottom: 40px;
+  }
+
+  .noteWrap {
+    position: static;
+    margin: -14px 20px 0 auto;
+  }
+}
+
+/* ── mobile — QNotFound at 390 ─────────────────────────── */
+@media (max-width: 760px) {
+  .deskOnly {
+    display: none;
+  }
+
+  .stage {
+    width: auto;
+    padding: 40px 0 10px;
+  }
+
+  .main {
+    display: block;
+    padding: 22px 18px;
+  }
+
+  .lcd {
+    display: inline-grid;
+    width: auto;
+    height: auto;
+    padding: 14px 16px;
+  }
+
+  .digits {
+    font-size: 52px;
+  }
+
+  .h1 {
+    margin-top: 20px;
+    font-size: 38px;
+  }
+
+  .text {
+    margin-top: 10px;
+    font-size: 15px;
+  }
+
+  .actions {
+    flex-direction: column-reverse;
+    padding: 14px 16px 16px;
+  }
+
+  .btn {
+    width: auto;
+  }
+
+  .noteWrap {
+    width: auto;
+    margin: 34px 36px 0 30px;
+  }
+
+  .note {
+    padding: 24px 20px 16px;
+    transform: rotate(3deg);
+  }
+
+  .noteText {
+    font-size: 26px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn {
+    transition: none;
+  }
+
+  .btn:hover,
+  .btn:active {
+    transform: none;
+  }
+}
