@@ -87,7 +87,7 @@ export default function OAbout({ about: a, email, links }: AboutData) {
             {a.milestones.map((m, i) => (
               <li key={i} className={s.step}>
                 <span className={s.year}>{m.year}</span>
-                <span>{m.text}</span>
+                <span>{m.title ?? m.text}</span>
               </li>
             ))}
           </ol>

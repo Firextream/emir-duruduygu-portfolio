@@ -131,7 +131,7 @@ The About page. Mark it as a singleton. Each skin's opening line (lede) is desig
 | `currently` | string | "CURRENTLY" / "Now" |
 | `location` | string | Defaults to "Istanbul, TR" |
 | `study` | string | e.g. "Electrical & Electronics Eng., İTÜ" |
-| `milestones` | JSON (Repeater: `year` string, `text` string) | Modernist "01 Along the way", newest first |
+| `milestones` | JSON (Repeater: `year` string, `title` string, `text` string) | Modernist "01 Along the way" (shows the title), Original "Recent Milestones" (title over text), newest first |
 | `shooting` | string | Soft Club "now" → Shooting |
 | `listening` | string | Soft Club "now" → Listening |
 

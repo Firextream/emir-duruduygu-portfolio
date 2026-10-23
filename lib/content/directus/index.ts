@@ -265,9 +265,9 @@ async function projects(): Promise<Project[]> {
 function milestonesOf(v: unknown) {
   const list = Array.isArray(v) ? v : typeof v === 'string' ? (JSON.parse(v || '[]') as unknown[]) : []
   return list
-    .map((m) => m as { year?: string; text?: string })
-    .filter((m) => m && (m.year || m.text))
-    .map((m) => ({ year: str(m.year, '[year]'), text: str(m.text) }))
+    .map((m) => m as { year?: string; title?: string; text?: string })
+    .filter((m) => m && (m.year || m.title || m.text))
+    .map((m) => ({ year: str(m.year, '[year]'), title: str(m.title) || undefined, text: str(m.text) }))
 }
 
 async function about(): Promise<About> {

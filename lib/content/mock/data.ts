@@ -222,11 +222,20 @@ export const projects = [
 export const about = {
   portrait: { src: '/content/emir-profile.jpg', w: 2400, h: 1800, alt: 'Emir Duruduygu' },
   summary: '[A short paragraph about you, your studies and what you are working towards — placeholder]',
-  body: [BODY, BODY, BODY].join('\n\n'),
+  // the live site's About text (OrigAbout.dc.html)
+  body: [
+    "I'm an Electrical & Electronics Engineering student at Istanbul Technical University, passionate about both technology and visual storytelling.",
+    "When I'm not working on circuits or coding, you'll find me wandering the streets of Istanbul with my camera, capturing the beauty in everyday moments — architecture, light, and the quiet poetry of urban life.",
+    'This space is where I share my journey: projects I’m working on, photographs that inspire me, and thoughts along the way.',
+  ].join('\n\n'),
   currently: '[What I’m working on now — placeholder]',
   location: 'Istanbul, TR',
   study: 'Electrical & Electronics Eng., İTÜ',
-  milestones: Array.from({ length: 4 }, () => ({ year: '[year]', text: '[Milestone — placeholder]' })),
+  milestones: [
+    { year: '2025', title: 'Photography Journey', text: 'Started exploring photography, focusing on urban and architectural subjects.' },
+    { year: '2024', title: 'Joined ITU ROV Team', text: 'Contributing to underwater robotics as an electronics team member.' },
+    { year: '2023', title: 'Started at ITU', text: 'Began studying Electrical & Electronics Engineering.' },
+  ],
   shooting: '[Series — placeholder]',
   listening: '[Album — placeholder]',
 }

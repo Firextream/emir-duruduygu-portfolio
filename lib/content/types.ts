@@ -148,6 +148,8 @@ export interface LabNote extends LogEntry {
 
 export interface Milestone {
   year: string
+  /** short name of the step (Original shows it over the text; Modernist shows it alone) */
+  title?: string
   text: string
 }
 
