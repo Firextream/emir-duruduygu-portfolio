@@ -1,0 +1,476 @@
+/* Original Project — OrigProject.dc.html */
+.page {
+  padding: 136px var(--side) 0;
+}
+
+.mobOnly {
+  display: none;
+}
+
+.back {
+  display: inline-flex;
+  align-items: center;
+  height: 48px;
+  font-family: var(--mono);
+  font-size: 14px;
+  letter-spacing: 0.1em;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.back:hover {
+  color: var(--acc);
+}
+
+.metaRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 14px;
+  margin-top: 40px;
+}
+
+.no {
+  font-family: var(--mono);
+  font-size: 14px;
+  letter-spacing: 0.2em;
+  color: var(--mut);
+}
+
+.status {
+  padding: 4px 12px;
+  border: 1px solid var(--acc);
+  border-radius: 999px;
+  color: var(--acc);
+  font-family: var(--mono);
+  font-size: 12px;
+}
+
+.h1 {
+  margin-top: 16px;
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: min(9.4vw, 136px);
+  line-height: 1;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+
+.h1Long {
+  font-size: min(6.1vw, 88px);
+}
+
+.one {
+  max-width: 760px;
+  margin-top: 20px;
+  font-size: 22px;
+  line-height: 1.55;
+  color: var(--mut);
+}
+
+/* STATUS / YEAR / KIND / TOOLS */
+.spec {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-top: 56px;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.specCell {
+  min-width: 0;
+  padding: 20px 24px;
+  border-left: 1px solid var(--line);
+}
+
+.specCell:first-child {
+  padding-left: 0;
+  border-left: 0;
+}
+
+.specCell dt {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  color: var(--mut);
+}
+
+.specCell dd {
+  margin-top: 8px;
+  font-size: 18px;
+  overflow-wrap: anywhere;
+}
+
+/* photo | about */
+.main {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: min(5.5vw, 80px);
+  align-items: start;
+  margin-top: 72px;
+}
+
+.frame {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 640px;
+  padding: 48px;
+  border: 1px solid var(--line);
+  background: color-mix(in oklch, var(--sec) 60%, transparent);
+}
+
+.frameDark {
+  background: #191c20;
+}
+
+.img {
+  display: block;
+  max-width: 100%;
+  max-height: 640px;
+  width: auto;
+  height: auto;
+}
+
+.ph {
+  display: flex;
+  align-items: flex-end;
+  padding: 12px;
+  background: var(--stripe);
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--mut);
+}
+
+.about {
+  min-width: 0;
+}
+
+.aboutKicker {
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.2em;
+  color: var(--mut);
+}
+
+.lede {
+  margin-top: 14px;
+  font-family: var(--serif);
+  font-size: 26px;
+  line-height: 1.45;
+}
+
+.aboutP {
+  margin-top: 20px;
+  font-size: 17px;
+  line-height: 1.75;
+  color: var(--mut);
+}
+
+.aboutH {
+  margin-top: 28px;
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: 24px;
+}
+
+.figCap {
+  margin-top: 20px;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--mut);
+}
+
+/* the drawing on a white card */
+.drawing {
+  margin-top: 96px;
+  padding: 48px;
+  border: 1px solid var(--line);
+  background: var(--card);
+}
+
+.drawImg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.drawCap {
+  margin-top: 20px;
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--mut);
+}
+
+/* ── DESIGN LOG ────────────────────────────────────────── */
+.log {
+  margin-top: 120px;
+}
+
+.logKicker {
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.2em;
+  color: var(--acc);
+}
+
+.h2 {
+  margin-top: 12px;
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: min(3.6vw, 52px);
+  letter-spacing: -0.02em;
+}
+
+.logList {
+  margin-top: 40px;
+  border-top: 1px solid var(--line);
+}
+
+.logRow {
+  display: grid;
+  grid-template-columns: 200px 320px minmax(0, 1fr);
+  gap: 32px;
+  align-items: baseline;
+  padding: 26px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.logDate {
+  font-family: var(--mono);
+  font-size: 14px;
+  color: var(--acc);
+}
+
+.logTitle {
+  font-family: var(--serif);
+  font-size: 22px;
+}
+
+.logText {
+  font-size: 17px;
+  line-height: 1.65;
+  color: var(--mut);
+}
+
+/* ── NEXT PROJECT ──────────────────────────────────────── */
+.next {
+  display: grid;
+  grid-template-columns: 200px minmax(0, 1fr) auto;
+  align-items: center;
+  margin-top: 96px;
+  padding: 48px 0;
+  border-top: 1px solid var(--line);
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.next:hover {
+  color: var(--acc);
+}
+
+.nextLabel {
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.2em;
+  color: var(--mut);
+}
+
+.nextName {
+  font-family: var(--serif);
+  font-size: min(3vw, 44px);
+  letter-spacing: -0.02em;
+}
+
+.nextArrow {
+  font-size: 28px;
+}
+
+@media (max-width: 1100px) {
+  .spec {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .specCell:nth-child(3) {
+    padding-left: 0;
+    border-left: 0;
+  }
+
+  .specCell:nth-child(-n + 2) {
+    border-bottom: 1px solid var(--line);
+  }
+
+  .main {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 40px;
+  }
+
+  .logRow {
+    grid-template-columns: 140px minmax(0, 1fr);
+  }
+
+  .logText {
+    grid-column: 2;
+  }
+}
+
+/* ── mobile — OrigProject at 390 ───────────────────────── */
+@media (max-width: 760px) {
+  .deskOnly {
+    display: none !important;
+  }
+
+  .mobOnly {
+    display: inline;
+  }
+
+  .page {
+    padding: 84px 20px 0;
+  }
+
+  .back {
+    height: auto;
+    min-width: 44px;
+    min-height: 44px;
+    font-size: 12px;
+  }
+
+  .metaRow {
+    gap: 10px;
+    margin-top: 16px;
+  }
+
+  .no {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+  }
+
+  .status {
+    padding: 3px 10px;
+    font-size: 11px;
+  }
+
+  .h1,
+  .h1Long {
+    margin-top: 10px;
+    font-size: min(11.3vw, 44px);
+    line-height: 1.02;
+    letter-spacing: -0.03em;
+    text-wrap: wrap;
+  }
+
+  .one {
+    margin-top: 12px;
+    font-size: 17px;
+  }
+
+  .spec {
+    grid-template-columns: 1fr 1fr;
+    margin-top: 24px;
+    border-bottom: 0;
+  }
+
+  .specCell,
+  .specCell:nth-child(3) {
+    padding: 12px 0;
+    border-left: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .specCell dt {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+  }
+
+  .specCell dd {
+    margin-top: 4px;
+    font-size: 15px;
+  }
+
+  .main {
+    display: block;
+    margin-top: 24px;
+  }
+
+  .frame {
+    min-height: 280px;
+    padding: 20px;
+  }
+
+  .img {
+    max-height: 420px;
+  }
+
+  .ph {
+    padding: 10px;
+    font-size: 11px;
+  }
+
+  .lede {
+    margin-top: 24px;
+    font-size: 21px;
+  }
+
+  .drawing {
+    margin-top: 32px;
+    padding: 16px;
+  }
+
+  .drawCap {
+    margin-top: 10px;
+    font-size: 11px;
+  }
+
+  .log {
+    margin-top: 48px;
+  }
+
+  .logKicker {
+    font-size: 11px;
+  }
+
+  .logList {
+    margin-top: 0;
+    border-top: 0;
+  }
+
+  .logRow {
+    display: block;
+    padding: 18px 0;
+  }
+
+  .logDate {
+    font-size: 12px;
+  }
+
+  .logTitle {
+    display: block;
+    margin-top: 6px;
+    font-size: 20px;
+  }
+
+  .logText {
+    display: block;
+    margin-top: 4px;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  .next {
+    display: block;
+    margin-top: 40px;
+    padding: 24px 0;
+  }
+
+  .nextLabel {
+    display: block;
+    font-size: 11px;
+  }
+
+  .nextName {
+    display: block;
+    margin-top: 8px;
+    font-size: 26px;
+    letter-spacing: 0;
+  }
+}

@@ -1,43 +1,69 @@
-/* Original's tag marquee — 40s loop on the hero (30s on mobile), ink dots between tags. */
+/* Original's tag marquees: Home (40s, ink dots) and Lab (36s, accent dots); faster on mobile. */
 .marquee {
   display: flex;
   align-items: center;
   overflow: hidden;
 }
 
+.hero {
+  --mq-gap: 44px;
+  --mq-size: 15px;
+  --mq-track: 0.18em;
+  --mq-dot-gap: 18px;
+  --mq-time: 40s;
+  --mq-dot: var(--ink);
+}
+
+.lab {
+  --mq-gap: 48px;
+  --mq-size: 14px;
+  --mq-track: 0.12em;
+  --mq-dot-gap: 12px;
+  --mq-time: 36s;
+  --mq-dot: var(--acc);
+}
+
 .track {
   display: flex;
   flex: none;
-  gap: var(--mq-gap, 44px);
+  gap: var(--mq-gap);
   padding-left: 20px;
   color: var(--mut);
   font-family: var(--mono);
-  font-size: var(--mq-size, 15px);
-  letter-spacing: 0.18em;
+  font-size: var(--mq-size);
+  letter-spacing: var(--mq-track);
   text-transform: uppercase;
   white-space: nowrap;
-  animation: marquee var(--mq-time, 40s) linear infinite;
+  animation: marquee var(--mq-time) linear infinite;
 }
 
 .item {
   display: flex;
   align-items: center;
-  gap: var(--mq-dot-gap, 18px);
+  gap: var(--mq-dot-gap);
 }
 
 .dot {
   width: 6px;
   height: 6px;
   border-radius: 999px;
-  background: var(--mq-dot, var(--ink));
+  background: var(--mq-dot);
 }
 
 @media (max-width: 760px) {
-  .track {
+  .hero,
+  .lab {
     --mq-gap: 28px;
     --mq-size: 12px;
     --mq-dot-gap: 12px;
+  }
+
+  .hero {
     --mq-time: 30s;
+  }
+
+  .lab {
+    --mq-time: 26s;
   }
 }
 

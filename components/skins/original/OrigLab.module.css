@@ -1,0 +1,420 @@
+/* Original Lab — OrigLab.dc.html */
+.mobOnly {
+  display: none;
+}
+
+.head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 520px);
+  gap: min(6.67vw, 96px);
+  align-items: end;
+  padding: 176px var(--side) 72px;
+}
+
+.kicker {
+  font-family: var(--mono);
+  font-size: 14px;
+  letter-spacing: 0.2em;
+  color: var(--mut);
+}
+
+.h1 {
+  margin-top: 14px;
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: min(6.67vw, 96px);
+  line-height: 1;
+  letter-spacing: -0.035em;
+}
+
+.intro {
+  font-size: 19px;
+  line-height: 1.65;
+  color: var(--mut);
+}
+
+.marquee {
+  height: 60px;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  background: color-mix(in oklch, var(--sec) 45%, transparent);
+}
+
+/* ── one row per project ───────────────────────────────── */
+.items {
+  padding: 0 var(--side);
+}
+
+.item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: min(5.5vw, 80px);
+  align-items: center;
+  padding: 96px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+/* the photo, contained (never cropped), on a dark panel; placeholders on a tint */
+.frame {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 560px;
+  padding: 40px;
+  text-decoration: none;
+  border: 1px solid var(--line);
+  background: color-mix(in oklch, var(--sec) 60%, transparent);
+}
+
+.frameDark {
+  background: #191c20;
+}
+
+.img {
+  display: block;
+  max-width: 100%;
+  max-height: 520px;
+  width: auto;
+  height: auto;
+}
+
+/* 460px tall at most on desktop, 300px on mobile (--ph-d / --ph-m: that height at the ratio) */
+.ph {
+  width: min(100%, var(--ph-d));
+  display: flex;
+  align-items: flex-end;
+  padding: 12px;
+  background: var(--stripe);
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--mut);
+}
+
+.text {
+  min-width: 0;
+}
+
+.metaRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 14px;
+}
+
+.no {
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.2em;
+  color: var(--mut);
+}
+
+.status {
+  padding: 4px 12px;
+  border: 1px solid var(--acc);
+  border-radius: 999px;
+  color: var(--acc);
+  font-family: var(--mono);
+  font-size: 12px;
+}
+
+.name {
+  margin-top: 16px;
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: min(3.6vw, 52px);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+.one {
+  margin-top: 16px;
+  font-size: 19px;
+  line-height: 1.65;
+  color: var(--mut);
+}
+
+.specs {
+  margin-top: 28px;
+  border-top: 1px solid var(--line);
+}
+
+.spec {
+  display: grid;
+  grid-template-columns: 128px minmax(0, 1fr);
+  gap: 24px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.spec dt {
+  padding-top: 2px;
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--mut);
+}
+
+.spec dd {
+  font-size: 16px;
+  overflow-wrap: anywhere;
+}
+
+.view {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 28px;
+  font-weight: 500;
+  font-size: 18px;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.view:hover {
+  color: var(--acc);
+}
+
+.viewText {
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--acc);
+}
+
+/* ── ON THE BENCH ──────────────────────────────────────── */
+.bench {
+  padding: 120px var(--side) 0;
+}
+
+.benchKicker {
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.2em;
+  color: var(--acc);
+}
+
+.h2 {
+  margin-top: 12px;
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: min(3.6vw, 52px);
+  letter-spacing: -0.02em;
+}
+
+.notes {
+  margin-top: 40px;
+  border-top: 1px solid var(--line);
+}
+
+.note {
+  display: grid;
+  grid-template-columns: 200px 260px minmax(0, 1fr) 160px;
+  gap: 32px;
+  align-items: baseline;
+  padding: 22px 0;
+  border-bottom: 1px solid var(--line);
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.note:hover {
+  background: var(--hover);
+}
+
+.noteProject,
+.noteDate {
+  font-family: var(--mono);
+  font-size: 13px;
+}
+
+.noteProject {
+  color: var(--mut);
+}
+
+.noteTitle {
+  font-family: var(--serif);
+  font-size: 20px;
+}
+
+.noteText {
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--mut);
+}
+
+.noteDate {
+  color: var(--acc);
+  text-align: right;
+}
+
+@media (max-width: 1100px) {
+  .head {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
+  }
+
+  .item {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 40px;
+  }
+
+  .note {
+    grid-template-columns: 140px minmax(0, 1fr) 120px;
+  }
+
+  .noteText {
+    display: none;
+  }
+}
+
+/* ── mobile — OrigLab at 390 ───────────────────────────── */
+@media (max-width: 760px) {
+  .deskOnly {
+    display: none;
+  }
+
+  .mobOnly {
+    display: inline;
+  }
+
+  .head {
+    display: block;
+    padding: 104px 20px 32px;
+  }
+
+  .kicker {
+    font-size: 11px;
+  }
+
+  .h1 {
+    margin-top: 10px;
+    font-size: min(12.8vw, 50px);
+  }
+
+  .intro {
+    margin-top: 14px;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  .marquee {
+    height: 48px;
+    background: none;
+  }
+
+  .items {
+    padding: 0 20px;
+  }
+
+  .item {
+    display: block;
+    padding: 40px 0;
+  }
+
+  .frame {
+    min-height: 260px;
+    padding: 20px;
+  }
+
+  .img {
+    max-height: 360px;
+  }
+
+  .ph {
+    width: min(100%, var(--ph-m));
+    padding: 10px;
+    font-size: 11px;
+  }
+
+  .metaRow {
+    gap: 10px;
+    margin-top: 20px;
+  }
+
+  .no {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+  }
+
+  .status {
+    padding: 3px 10px;
+    font-size: 11px;
+  }
+
+  .name {
+    margin-top: 10px;
+    font-size: 32px;
+    line-height: 1.1;
+    letter-spacing: 0;
+  }
+
+  .one {
+    margin-top: 8px;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  .view {
+    display: flex;
+    gap: 0.3em;
+    min-height: 48px;
+    margin-top: 4px;
+    font-size: 16px;
+  }
+
+  .viewText {
+    padding: 0;
+    border: 0;
+  }
+
+  .bench {
+    padding: 56px 20px 0;
+  }
+
+  .benchKicker {
+    font-size: 11px;
+  }
+
+  .h2 {
+    margin-top: 8px;
+    font-size: 34px;
+    letter-spacing: 0;
+  }
+
+  .notes {
+    margin-top: 0;
+    border-top: 0;
+  }
+
+  .note {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 0 12px;
+    padding: 18px 0;
+  }
+
+  .note:hover {
+    background: transparent;
+  }
+
+  .noteProject {
+    grid-row: 1;
+    font-size: 11px;
+  }
+
+  .noteDate {
+    grid-row: 1;
+    font-size: 11px;
+  }
+
+  .noteTitle {
+    grid-column: 1 / -1;
+    margin-top: 6px;
+    font-size: 19px;
+  }
+
+  .noteText {
+    display: block;
+    grid-column: 1 / -1;
+    margin-top: 4px;
+    font-size: 14px;
+    line-height: 1.55;
+  }
+}
