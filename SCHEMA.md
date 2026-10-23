@@ -115,6 +115,7 @@ Mark it as a singleton when you create the collection.
 | `home_photo_quiet` | M2O → `photos` | `homePhoto.quiet`, the first print in Quiet's frames.dir |
 | `home_photo_modern` | M2O → `photos` | `homePhoto.modern`, the Modernist hero (cols 1–9) |
 | `home_photo_soft` | M2O → `photos` | `homePhoto.soft`, the Soft Club jewel-case cover (the one place a photo is square-cropped) |
+| `home_photo_original` | M2O → `photos` | `homePhoto.original`, the Original hero (right half, cover-cropped like the other heroes) |
 | `email` | string, optional | Defaults to emir@duruduygu.com |
 
 If a home photo is empty, the first published photo with an image is used.

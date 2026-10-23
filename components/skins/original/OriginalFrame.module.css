@@ -1,0 +1,743 @@
+/* Original frame — OriginalFrame.dc.html */
+.root {
+  --side: clamp(32px, 6.67vw, 96px);
+  position: relative;
+  min-height: 100vh;
+}
+
+.root .mobOnly {
+  display: none;
+}
+
+/* ── header: wordmark + the floating pill ─────────────── */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  height: 96px;
+  margin-bottom: -96px;
+  padding: 0 min(3.33vw, 48px) 0 var(--side);
+  transition: background 0.25s, box-shadow 0.25s;
+}
+
+.header:focus {
+  outline: none;
+}
+
+:global(html[data-scrolled]) .header {
+  background: rgba(250, 249, 247, 0.92);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 1px 0 var(--line);
+}
+
+.brand {
+  font-family: var(--serif);
+  font-size: 30px;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.brand:hover {
+  color: var(--acc);
+}
+
+.pill {
+  display: flex;
+  align-items: center;
+  padding: 6px 6px 6px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.86);
+  backdrop-filter: blur(14px);
+  box-shadow: var(--pill-shadow);
+  transition: background 0.25s, box-shadow 0.25s;
+}
+
+/* scrolled: the header bar is solid, so the pill flattens into it */
+:global(html[data-scrolled]) .pill {
+  background: transparent;
+  backdrop-filter: none;
+  box-shadow: none;
+}
+
+.nav {
+  display: flex;
+  align-items: stretch;
+}
+
+.navLink {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 6px 13px 7px;
+  font-size: 15px;
+  line-height: 1.1;
+  color: var(--ink);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.navLink:hover {
+  color: var(--acc);
+}
+
+.navLink[aria-current='page'] {
+  font-weight: 500;
+  box-shadow: inset 0 -2px 0 var(--ink);
+}
+
+.navNo {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 1;
+  color: var(--mut);
+}
+
+.divider {
+  width: 1px;
+  height: 28px;
+  margin: 0 10px 0 6px;
+  background: var(--line);
+}
+
+.clock {
+  margin-right: 6px;
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  color: var(--mut);
+  white-space: nowrap;
+}
+
+.time {
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.iconBtn {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--mut);
+}
+
+.iconBtn:hover,
+.styleBtn[aria-expanded='true'] {
+  background: var(--sec);
+  color: var(--ink);
+}
+
+.menuBtn {
+  display: none;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--bg);
+}
+
+/* ── popovers: Style and the pages sheet ──────────────── */
+.pop {
+  position: absolute;
+  top: 92px;
+  right: min(3.33vw, 48px);
+  z-index: 40;
+  width: 320px;
+  padding: 8px;
+  border-radius: 20px;
+  background: #ffffff;
+  box-shadow: 0 24px 60px rgba(23, 22, 20, 0.18), 0 0 0 1px var(--line);
+  font-family: var(--sans);
+}
+
+.popHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 4px 8px 12px;
+  border-bottom: 1px solid var(--line);
+}
+
+.popTitle {
+  font-weight: 500;
+  font-size: 15px;
+}
+
+.popClose {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: var(--sec);
+  color: var(--ink);
+  font-size: 18px;
+}
+
+.popLabel {
+  padding: 12px 12px 4px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: var(--mut);
+}
+
+.skinList + .popLabel {
+  padding: 16px 12px 8px;
+}
+
+.skinList {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 0 4px;
+}
+
+.skinOpt {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 48px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: 14px;
+  background: transparent;
+  color: var(--ink);
+  font-size: 15px;
+  text-align: left;
+}
+
+.skinOpt:hover {
+  background: var(--sec);
+}
+
+.skinOpt[aria-pressed='true'] {
+  background: color-mix(in oklch, var(--acc) 10%, #ffffff);
+  box-shadow: inset 0 0 0 1px var(--acc);
+}
+
+.swatch {
+  flex: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  background: var(--swatch);
+  box-shadow: 0 0 0 1px var(--line);
+}
+
+.accRow {
+  display: flex;
+  gap: 8px;
+  padding: 0 12px 12px;
+}
+
+.accSwatch {
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: var(--swatch);
+  box-shadow: 0 0 0 1px var(--line);
+}
+
+.accSwatch[aria-pressed='true'] {
+  box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px var(--swatch);
+}
+
+.popNote {
+  padding: 10px 12px 6px;
+  border-top: 1px solid var(--line);
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--mut);
+}
+
+.pagesHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 4px 4px 14px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: var(--mut);
+}
+
+.pagesLink {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 52px;
+  padding: 0 14px;
+  border-radius: 14px;
+  color: var(--ink);
+  font-size: 17px;
+  text-decoration: none;
+}
+
+.pagesLink:hover,
+.pagesLink[aria-current='page'] {
+  background: var(--sec);
+}
+
+.pagesNo {
+  width: 28px;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--mut);
+}
+
+.pagesLabel {
+  flex: 1;
+}
+
+.pagesArrow {
+  color: var(--mut);
+}
+
+/* ── right rail (desktop): its own column at right 24px, outside the 96px gutter ── */
+.railCol {
+  position: absolute;
+  top: 0;
+  right: 24px;
+  bottom: 0;
+  z-index: 15;
+  width: 56px;
+  pointer-events: none;
+}
+
+/* sticks 24px above the bottom of the viewport (56 + 3 × 44 + 3 × 12 = 224px tall) */
+.rail {
+  position: sticky;
+  top: calc(100vh - 248px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  pointer-events: auto;
+  transition: opacity 0.3s;
+}
+
+.railHome {
+  opacity: 0;
+  pointer-events: none;
+}
+
+:global(html[data-past]) .railHome {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.railTop {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--bg);
+  box-shadow: 0 10px 30px rgba(23, 22, 20, 0.25);
+}
+
+.railTop:hover {
+  background: var(--acc);
+}
+
+.railLink {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 0 0 1px var(--line);
+  color: var(--ink);
+}
+
+.railLink:hover {
+  color: var(--acc);
+  box-shadow: 0 0 0 1px var(--acc);
+}
+
+.main {
+  display: block;
+}
+
+/* ── "Let's create something together" (not on the 404) ── */
+.cta {
+  padding: 120px var(--side);
+  border-top: 1px solid var(--line);
+}
+
+.main:has([data-no-cta]) + .cta {
+  display: none;
+}
+
+.ctaKicker {
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.2em;
+  color: var(--mut);
+}
+
+.ctaLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 28px;
+  margin-top: 24px;
+  font-family: var(--serif);
+  font-size: min(5vw, 72px);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.ctaLink:hover {
+  color: var(--acc);
+}
+
+.ctaText {
+  white-space: nowrap;
+}
+
+.ctaArrow {
+  flex: none;
+  color: var(--acc);
+}
+
+.ctaArrowM {
+  display: none;
+  color: var(--acc);
+}
+
+/* ── footer ────────────────────────────────────────────── */
+.footer {
+  padding: 32px var(--side) 36px;
+  border-top: 1px solid var(--line);
+}
+
+.footTop,
+.footBottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+}
+
+.footBrand {
+  display: flex;
+  align-items: baseline;
+  gap: 24px;
+}
+
+.footWord {
+  font-family: var(--serif);
+  font-size: 26px;
+}
+
+.footCopy {
+  font-size: 15px;
+  color: var(--mut);
+}
+
+.footNav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 28px;
+  font-size: 15px;
+}
+
+.footLink,
+.footSmall {
+  color: var(--mut);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.footLink:hover,
+.footSmall:hover {
+  color: var(--ink);
+}
+
+.footBottom {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+  font-size: 15px;
+}
+
+.playing {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--mut);
+}
+
+.footSocial {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.footTop2 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  margin-left: 12px;
+  padding: 0 16px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: #ffffff;
+  color: var(--ink);
+  font-size: 15px;
+}
+
+.footTop2:hover {
+  border-color: var(--ink);
+}
+
+.footTopM {
+  display: none;
+}
+
+.dock {
+  display: none;
+}
+
+/* ── below 1180: the pill collapses to clock · style · menu ── */
+@media (max-width: 1180px) {
+  .nav,
+  .divider,
+  .wideOnly,
+  .railCol {
+    display: none;
+  }
+
+  .menuBtn {
+    display: grid;
+  }
+
+  .ctaText {
+    white-space: normal;
+  }
+}
+
+/* ── mobile — the 390 layout ───────────────────────────── */
+@media (max-width: 760px) {
+  .root {
+    --side: 20px;
+  }
+
+  .deskOnly {
+    display: none;
+  }
+
+  .root .mobOnly {
+    display: flex;
+  }
+
+  .header {
+    height: 68px;
+    margin-bottom: -68px;
+    padding: 0 12px 0 20px;
+  }
+
+  :global(html[data-scrolled]) .header {
+    background: rgba(250, 249, 247, 0.94);
+    backdrop-filter: none;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    font-size: 24px;
+    letter-spacing: 0;
+  }
+
+  .pill,
+  :global(html[data-scrolled]) .pill {
+    gap: 2px;
+    padding: 3px 3px 3px 14px;
+    background: rgba(255, 255, 255, 0.88);
+    backdrop-filter: none;
+    box-shadow: 0 6px 24px rgba(23, 22, 20, 0.08), 0 0 0 1px rgba(23, 22, 20, 0.05);
+  }
+
+  .clock {
+    margin-right: 4px;
+    font-size: 12px;
+    letter-spacing: 0;
+  }
+
+  .iconBtn {
+    width: 44px;
+    height: 44px;
+    color: var(--ink);
+  }
+
+  .pop {
+    top: 68px;
+    left: 16px;
+    right: 16px;
+    width: auto;
+  }
+
+  .accSwatch {
+    width: 44px;
+    height: 44px;
+  }
+
+  .cta {
+    padding: 64px 20px 48px;
+  }
+
+  .ctaKicker {
+    font-size: 11px;
+  }
+
+  .ctaLink {
+    display: block;
+    margin-top: 16px;
+    font-size: min(10.3vw, 40px);
+    line-height: 1.08;
+  }
+
+  .ctaArrow {
+    display: none;
+  }
+
+  .ctaArrowM {
+    display: inline;
+  }
+
+  .footer {
+    padding: 28px 20px 24px;
+  }
+
+  .footTop {
+    display: block;
+  }
+
+  .footBrand {
+    justify-content: space-between;
+  }
+
+  .footWord {
+    font-size: 24px;
+  }
+
+  .footCopy {
+    font-size: 13px;
+  }
+
+  .footNav {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    margin-top: 16px;
+    border-top: 1px solid var(--line);
+  }
+
+  .footLink {
+    display: flex;
+    align-items: center;
+    min-height: 48px;
+    border-bottom: 1px solid var(--line);
+    color: var(--ink);
+  }
+
+  .footBottom {
+    margin-top: 16px;
+    padding-top: 0;
+    border-top: 0;
+    font-size: 13px;
+  }
+
+  .playing {
+    gap: 8px;
+  }
+
+  .footSocial {
+    display: none;
+  }
+
+  .footTopM {
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    padding: 0;
+    border: 0;
+    border-radius: 999px;
+    background: var(--ink);
+    color: var(--bg);
+  }
+
+  .dock {
+    position: sticky;
+    bottom: 12px;
+    z-index: 18;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    margin: 8px 12px 12px;
+    padding: 4px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.94);
+    box-shadow: 0 12px 36px rgba(23, 22, 20, 0.16), 0 0 0 1px rgba(23, 22, 20, 0.05);
+  }
+
+  .dockLink {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    min-height: 56px;
+    border-radius: 999px;
+    color: var(--ink);
+    font-size: 12px;
+    text-decoration: none;
+  }
+
+  .dockLink[aria-current='page'] {
+    background: var(--ink);
+    color: var(--bg);
+  }
+
+  .dockNo {
+    font-family: var(--mono);
+    font-size: 11px;
+    line-height: 1;
+    opacity: 0.75;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .header,
+  .pill,
+  .rail {
+    transition: none;
+  }
+}

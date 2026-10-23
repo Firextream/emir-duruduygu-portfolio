@@ -232,6 +232,6 @@ export const about = {
 }
 
 export const settings = {
-  homePhoto: { quiet: 'p01', modern: 'p01', soft: 'p01' },
+  homePhoto: { quiet: 'p01', modern: 'p01', soft: 'p01', original: 'p01' },
   email: 'emir@duruduygu.com',
 }

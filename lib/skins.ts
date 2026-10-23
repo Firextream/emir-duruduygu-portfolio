@@ -13,6 +13,40 @@ export interface SkinAccent {
   value: string
 }
 
+interface CurtainBase {
+  bg: string
+  ink: string
+  /** font-family stacks; prefer the skin's next/font var, then a preload:false curtain font */
+  ui: string
+  display: string
+  /** how the curtain enters: fade-up, or a clip-path wipe from the left */
+  enter: 'rise' | 'wipe'
+}
+
+/** Status line, big skin name and a filling bar (Quiet, Soft Club, Modernist). */
+export interface BarCurtain extends CurtainBase {
+  layout: 'bar'
+  line: string
+  name: string
+  fill: string
+  weight: number
+  style?: 'italic'
+  track: string
+  ease: string
+  round?: string
+}
+
+/** The pill, a blinking kicker, the wordmark typing in over a tag marquee (Original). */
+export interface TypeCurtain extends CurtainBase {
+  layout: 'type'
+  pill: string
+  kicker: string
+  name: string
+  tags: readonly string[]
+  mut: string
+  rule: string
+}
+
 export interface SkinDef {
   label: string
   /** CSS background for the swatch in the style menus */
@@ -22,24 +56,11 @@ export interface SkinDef {
   /** extra accents the visitor can pick (index 0 = default); one entry = no accent row */
   accents: readonly SkinAccent[]
   /** the full-screen curtain shown while switching to this skin */
-  curtain: {
-    line: string
-    name: string
-    bg: string
-    ink: string
-    fill: string
-    /** font-family stacks; prefer the skin's next/font var, then a preload:false curtain font */
-    ui: string
-    display: string
-    weight: number
-    style?: 'italic'
-    track: string
-    ease: string
-    round?: string
-    /** how the curtain enters: fade-up, or a clip-path wipe from the left */
-    enter: 'rise' | 'wipe'
-  }
+  curtain: BarCurtain | TypeCurtain
 }
+
+/** Original's tag line — the hero marquee and its curtain share it. */
+export const ORIGINAL_TAGS = ['Architecture', 'Urban', 'Minimalist', 'Light & Shadow', 'Abstract', 'Documentary', 'Street', 'Landscape', 'Electronics', 'Drawing'] as const
 
 export const SKIN_REGISTRY = {
   quiet: {
@@ -53,6 +74,7 @@ export const SKIN_REGISTRY = {
       { name: 'Plum', value: '#7a4b64' },
     ],
     curtain: {
+      layout: 'bar',
       line: '~/style.cfg — mounting windows',
       name: 'Quiet',
       bg: '#e4ebee',
@@ -73,6 +95,7 @@ export const SKIN_REGISTRY = {
     themeColor: '#eef2f6',
     accents: [{ name: 'Aqua', value: '#1a9dff' }],
     curtain: {
+      layout: 'bar',
       line: '読み込み中 · LOADING MODEL DD-01',
       name: 'soft club',
       bg: 'radial-gradient(50% 40% at 80% 10%, rgba(26, 157, 255, 0.35), transparent 70%), linear-gradient(180deg, #f5f8fb, #dbe4ee)',
@@ -93,6 +116,7 @@ export const SKIN_REGISTRY = {
     themeColor: '#f3f2f2',
     accents: [{ name: 'Signal red', value: '#ec3013' }],
     curtain: {
+      layout: 'bar',
       line: 'SETTING THE GRID',
       name: 'Modernist',
       bg: '#ec3013',
@@ -104,6 +128,31 @@ export const SKIN_REGISTRY = {
       track: '-0.05em',
       ease: 'linear',
       enter: 'wipe',
+    },
+  },
+  original: {
+    label: 'Original',
+    swatch: 'linear-gradient(135deg, #faf9f7 50%, #3d5a4c 50%)',
+    themeColor: '#faf9f7',
+    accents: [
+      { name: 'Forest', value: '#3d5a4c' },
+      { name: 'Ocean', value: '#2563eb' },
+      { name: 'Lavender', value: '#7c3aed' },
+      { name: 'Rose', value: '#e11d48' },
+    ],
+    curtain: {
+      layout: 'type',
+      pill: '01 · 02 · 03 · 04 · 05',
+      kicker: 'VISUAL STORYTELLER & PHOTOGRAPHER',
+      name: 'Duruduygu',
+      tags: ORIGINAL_TAGS,
+      bg: '#faf9f7',
+      ink: '#171614',
+      mut: '#5f5a55',
+      rule: '#e8e6e1',
+      ui: "var(--font-jbmono, var(--curtain-original-ui)), 'JetBrains Mono', monospace",
+      display: "var(--font-playfair, var(--curtain-original)), 'Playfair Display', serif",
+      enter: 'rise',
     },
   },
 } as const satisfies Record<string, SkinDef>
@@ -129,6 +178,8 @@ export const SWITCH_FLAG = 'duru-skin-switch'
 export const SKIN_INFO = SKIN_REGISTRY
 
 export const QUIET_ACCENTS = SKIN_REGISTRY.quiet.accents
+
+export const ORIGINAL_ACCENTS = SKIN_REGISTRY.original.accents
 
 export const ACCENT_COUNT = Object.fromEntries(SKINS.map((k) => [k, SKIN_REGISTRY[k].accents.length])) as Record<Skin, number>
 

@@ -1,0 +1,47 @@
+/* Original — the live site's design, repaired: Playfair Display, pills, hairlines, cream ground.
+   Light only (README "Original tokens"). */
+[data-skin='original'] {
+  --bg: #faf9f7;
+  --ink: #171614;
+  --mut: #5f5a55;
+  /* big row numbers */
+  --mut2: #8f8a85;
+  --line: #e8e6e1;
+  --card: #ffffff;
+  --sec: #f0eeea;
+  --ph1: #ece9e4;
+  --ph2: #e3e0da;
+  --stripe: repeating-linear-gradient(135deg, var(--ph1) 0 10px, var(--ph2) 10px 20px);
+  --acc: #3d5a4c;
+  --hover: color-mix(in oklch, var(--acc) 6%, transparent);
+  --focus: var(--acc);
+  --pill-shadow: 0 10px 34px rgba(23, 22, 20, 0.1), 0 0 0 1px rgba(23, 22, 20, 0.05);
+
+  --serif: var(--font-playfair), 'Playfair Display', Georgia, serif;
+  --sans: var(--font-inter), 'Inter', system-ui, sans-serif;
+  --mono: var(--font-jbmono), 'JetBrains Mono', ui-monospace, monospace;
+
+  background: var(--bg);
+}
+
+/* Accents from the live colour picker (Forest is the default). */
+[data-skin='original'][data-acc='1'] {
+  --acc: #2563eb;
+}
+[data-skin='original'][data-acc='2'] {
+  --acc: #7c3aed;
+}
+[data-skin='original'][data-acc='3'] {
+  --acc: #e11d48;
+}
+
+[data-skin='original'] body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+[data-skin='original'] ::selection {
+  background: color-mix(in oklch, var(--acc) 22%, transparent);
+}
