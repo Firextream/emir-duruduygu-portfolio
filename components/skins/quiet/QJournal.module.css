@@ -1,0 +1,449 @@
+/* Quiet Journal — QJournal.dc.html */
+.page {
+  padding: 0 var(--side);
+}
+
+.page .mobOnly,
+.page .mobOnlyFlex {
+  display: none;
+}
+
+.intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 440px;
+  gap: 80px;
+  align-items: end;
+  padding: 56px 0 44px;
+}
+
+.kicker {
+  font-family: var(--pixel);
+  font-size: 14px;
+  color: var(--mut);
+}
+
+.h1 {
+  margin-top: 18px;
+  font-family: var(--serif);
+  font-weight: 400;
+  font-variant-numeric: lining-nums;
+  font-size: clamp(72px, 7.8vw, 112px);
+  line-height: 0.92;
+  letter-spacing: -0.01em;
+}
+
+.lede {
+  font-size: 18px;
+  line-height: 1.6;
+  color: var(--mut);
+  text-wrap: pretty;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.page .deskOnlyFlex {
+  display: flex;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 16px;
+  border: 1px solid var(--line);
+  background: var(--win);
+  color: var(--ink);
+  font-family: var(--pixel);
+  font-size: 16px;
+  text-decoration: none;
+  box-shadow: 3px 3px 0 var(--sh);
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+
+.btn:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0 var(--sh);
+}
+
+.btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 var(--sh);
+}
+
+.btnAcc {
+  background: var(--acc);
+  color: var(--acci);
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 340px;
+  gap: 56px;
+  align-items: start;
+  scroll-margin-top: 24px;
+}
+
+.listBody {
+  padding: 8px 32px 28px;
+}
+
+.year {
+  display: grid;
+  grid-template-columns: 150px minmax(0, 1fr);
+  gap: 24px;
+  padding-top: 26px;
+}
+
+.yearHead {
+  padding-top: 18px;
+}
+
+.yearNo {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-variant-numeric: lining-nums;
+  font-size: 48px;
+  line-height: 1.02;
+  letter-spacing: -0.01em;
+  color: var(--acc);
+}
+
+.yearCount {
+  font-family: var(--pixel);
+  font-size: 13px;
+  color: var(--mut);
+}
+
+.entry {
+  display: block;
+  margin: 0 -12px;
+  padding: 18px 12px;
+  border-bottom: 1px solid var(--rule);
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.entry:hover {
+  background: var(--hover);
+}
+
+.entryMeta {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-family: var(--pixel);
+  font-size: 13px;
+  color: var(--mut);
+}
+
+.entryRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-top: 4px;
+}
+
+.entryTitle {
+  min-width: 0;
+  font-family: var(--serif);
+  font-variant-numeric: lining-nums;
+  font-size: 30px;
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+.arrow {
+  padding-top: 4px;
+  font-family: var(--pixel);
+  font-size: 18px;
+  color: var(--mut);
+}
+
+.excerpt {
+  display: block;
+  margin-top: 6px;
+  font-size: 15px;
+  color: var(--mut);
+}
+
+.footLink {
+  color: var(--acc);
+  text-decoration: none;
+}
+
+.footLink:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* empty state */
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 64px 56px;
+}
+
+.emptyIcon {
+  display: grid;
+  place-items: center;
+  width: 84px;
+  height: 84px;
+  border: 1px dashed var(--line);
+  background: var(--bar);
+  font-family: var(--pixel);
+  font-size: 34px;
+  color: var(--mut);
+}
+
+.emptyCount {
+  font-family: var(--pixel);
+  font-size: 13px;
+  color: var(--mut);
+}
+
+.emptyTitle {
+  font-family: var(--serif);
+  font-variant-numeric: lining-nums;
+  font-size: 52px;
+  line-height: 1.02;
+  letter-spacing: -0.01em;
+}
+
+.emptyText {
+  max-width: 520px;
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--mut);
+}
+
+.emptyActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+/* side: tags + P.S. */
+.side {
+  flex-direction: column;
+  gap: 32px;
+}
+
+.tagsBody {
+  padding: 18px;
+}
+
+.tagList,
+.mobTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  /* the reference is content-box: 30px plus the border */
+  box-sizing: content-box;
+  height: 30px;
+  padding: 0 10px;
+  border: 1px solid var(--line);
+  background: var(--win);
+  font-family: var(--pixel);
+  font-size: 13px;
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+.psWrap {
+  padding: 0 12px;
+}
+
+.ps {
+  position: relative;
+  padding: 28px 26px 20px;
+  background: var(--paper);
+  color: var(--paperi);
+  transform: rotate(2deg);
+  box-shadow: 4px 5px 0 var(--sh);
+}
+
+.psTape {
+  position: absolute;
+  top: -11px;
+  left: 38%;
+  z-index: 2;
+  width: 84px;
+  height: 22px;
+  background: var(--tape);
+  transform: rotate(2deg);
+}
+
+.psLabel {
+  font-family: var(--pixel);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  opacity: 0.75;
+}
+
+.psText {
+  margin-top: 10px;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 30px;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+@media (max-width: 1180px) {
+  .intro {
+    grid-template-columns: minmax(0, 1fr) 340px;
+    gap: 48px;
+  }
+
+  .layout {
+    grid-template-columns: minmax(0, 1fr) 280px;
+    gap: 40px;
+  }
+
+  .year {
+    grid-template-columns: 110px minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 960px) {
+  .intro,
+  .layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
+  }
+
+  .side {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  .side > * {
+    flex: 1;
+  }
+}
+
+/* ── mobile — QJournal at 390 ──────────────────────────── */
+@media (max-width: 760px) {
+  .page .deskOnly,
+  .page .deskOnlyFlex {
+    display: none !important;
+  }
+
+  .page .mobOnly {
+    display: inline;
+  }
+
+  .page .mobOnlyFlex {
+    display: flex;
+  }
+
+  .intro {
+    display: block;
+    padding: 28px 0 24px;
+  }
+
+  .kicker {
+    font-size: 12px;
+  }
+
+  .h1 {
+    margin-top: 12px;
+    font-size: min(15.9vw, 62px);
+    line-height: 0.95;
+  }
+
+  .lede {
+    margin-top: 14px;
+    font-size: 16px;
+  }
+
+  .mobTags {
+    flex-wrap: nowrap;
+    margin: 0 -16px 16px;
+    padding: 0 16px 4px;
+    overflow-x: auto;
+  }
+
+  .listBody {
+    padding: 0 16px 14px;
+  }
+
+  .year {
+    display: block;
+    padding-top: 0;
+  }
+
+  .yearHead {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    padding: 22px 0 4px;
+  }
+
+  .yearNo {
+    font-size: 34px;
+  }
+
+  .yearCount {
+    font-size: 12px;
+  }
+
+  .entry {
+    padding: 16px 12px;
+  }
+
+  .entryMeta {
+    font-size: 12px;
+  }
+
+  .entryTitle {
+    font-size: 25px;
+  }
+
+  .empty {
+    padding: 34px 20px 30px;
+  }
+
+  .emptyIcon {
+    width: 64px;
+    height: 64px;
+    font-size: 26px;
+  }
+
+  .emptyTitle {
+    font-size: 36px;
+  }
+
+  .emptyText {
+    font-size: 15px;
+  }
+
+  .mobRss {
+    width: 100%;
+    margin-top: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn:hover,
+  .btn:active {
+    transform: none;
+  }
+}

@@ -1,0 +1,659 @@
+/* Quiet Post — QPost.dc.html */
+.page {
+  padding: 0 var(--side);
+}
+
+.tags.mobTags {
+  display: none;
+}
+
+.back {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 36px 0 22px;
+}
+
+.backLink {
+  font-family: var(--pixel);
+  font-size: 16px;
+  color: var(--acc);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.backLink:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.backRule {
+  flex: 1;
+  height: 1px;
+  background: var(--rule);
+}
+
+.pos {
+  font-family: var(--pixel);
+  font-size: 14px;
+  color: var(--mut);
+}
+
+/* ── header ────────────────────────────────────────────── */
+.header {
+  padding: 56px 80px 40px;
+  border-bottom: 1px solid var(--rule);
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 18px;
+  font-family: var(--pixel);
+  font-size: 14px;
+  color: var(--mut);
+}
+
+.h1 {
+  max-width: 1040px;
+  margin-top: 18px;
+  font-family: var(--serif);
+  font-weight: 400;
+  font-variant-numeric: lining-nums;
+  font-size: clamp(56px, 5.6vw, 80px);
+  line-height: 0.98;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+.standfirst {
+  max-width: 720px;
+  margin-top: 24px;
+  font-size: 21px;
+  line-height: 1.55;
+  color: var(--mut);
+}
+
+/* ── player window ─────────────────────────────────────── */
+.videoWrap {
+  padding: 40px 80px 0;
+}
+
+.player {
+  border: 1px solid var(--line);
+  box-shadow: 4px 4px 0 var(--sh);
+}
+
+.playerBar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 35px;
+  padding: 0 12px;
+  background: var(--bar);
+  border-bottom: 1px solid var(--line);
+  font-family: var(--pixel);
+  font-size: 14px;
+}
+
+.playerMeta {
+  margin-left: auto;
+  color: var(--mut);
+}
+
+.playerGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+}
+
+.screen {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: #2a2b2c;
+}
+
+.poster {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.play {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  display: grid;
+  place-items: center;
+  width: 86px;
+  height: 86px;
+  margin: -43px 0 0 -43px;
+  padding: 0;
+  border: 1px solid var(--line);
+  background: var(--acc);
+  color: var(--acci);
+  font-size: 26px;
+  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.35);
+}
+
+.clock {
+  position: absolute;
+  left: 16px;
+  bottom: 14px;
+  font-family: var(--pixel);
+  font-size: 14px;
+  color: #f8f8f3;
+}
+
+.posterLabel {
+  position: absolute;
+  right: 16px;
+  bottom: 14px;
+  font-family: var(--pixel);
+  font-size: 12px;
+  color: #cfd7da;
+}
+
+.track {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 4px;
+  background: rgba(248, 248, 243, 0.16);
+}
+
+.trackFill {
+  height: 100%;
+  background: var(--acc);
+  transition: width 0.3s ease;
+}
+
+.chapters {
+  border-left: 1px solid var(--line);
+  background: var(--win);
+}
+
+.chapHead {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--line);
+  font-family: var(--pixel);
+  font-size: 13px;
+  color: var(--mut);
+}
+
+.chapter {
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr);
+  gap: 10px;
+  align-items: baseline;
+  width: 100%;
+  min-height: 44px;
+  padding: 10px 14px;
+  border: 0;
+  border-bottom: 1px solid var(--rule);
+  background: transparent;
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 14px;
+  text-align: left;
+}
+
+.chapter:hover {
+  background: var(--hover);
+}
+
+.chapter[aria-current='true'] {
+  background: var(--hi);
+}
+
+.chapTime {
+  font-family: var(--pixel);
+  font-size: 13px;
+  color: var(--acc);
+}
+
+/* ── body ──────────────────────────────────────────────── */
+.body {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 680px) minmax(0, 1fr);
+  gap: 64px;
+  padding: 52px 80px 56px;
+}
+
+.aside {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.facts {
+  border-top: 1px solid var(--line);
+}
+
+.facts > div {
+  display: grid;
+  grid-template-columns: 60px minmax(0, 1fr);
+  gap: 10px;
+  padding: 13px 0;
+  border-bottom: 1px solid var(--rule);
+  font-size: 15px;
+}
+
+.facts dt {
+  font-family: var(--pixel);
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--mut);
+}
+
+.facts dd {
+  overflow-wrap: anywhere;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  height: 30px;
+  padding: 0 10px;
+  border: 1px solid var(--line);
+  background: var(--win);
+  font-family: var(--pixel);
+  font-size: 13px;
+  color: var(--ink);
+}
+
+.text {
+  min-width: 0;
+}
+
+.p {
+  margin: 0 0 24px;
+  font-family: var(--sans);
+  font-size: 19px;
+  line-height: 1.75;
+  text-wrap: pretty;
+}
+
+.p a {
+  color: var(--acc);
+  text-underline-offset: 3px;
+}
+
+.h2 {
+  margin: 44px 0 18px;
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: 40px;
+  line-height: 1.05;
+}
+
+/* taped prints */
+.figure {
+  position: relative;
+  transform: rotate(var(--tilt, 0deg));
+}
+
+.tape {
+  position: absolute;
+  top: -11px;
+  left: var(--tape-left, 30%);
+  z-index: 2;
+  width: 84px;
+  height: 22px;
+  background: var(--tape);
+  transform: rotate(-3deg);
+}
+
+.card {
+  padding: 8px 8px 12px;
+  background: var(--print);
+  border: 1px solid var(--line);
+  box-shadow: 3px 3px 0 var(--sh);
+}
+
+.img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.ph {
+  display: flex;
+  align-items: flex-end;
+  width: 100%;
+  padding: 8px;
+  background: repeating-linear-gradient(135deg, var(--ph1) 0 9px, var(--ph2) 9px 18px);
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--printm);
+}
+
+.cap {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.capText {
+  font-family: var(--serif);
+  font-size: 19px;
+  color: var(--printi);
+}
+
+.capRatio {
+  font-family: var(--pixel);
+  font-size: 12px;
+  color: var(--printm);
+  white-space: nowrap;
+}
+
+/* a single wide figure breaks out into the right margin */
+.wide {
+  margin: 44px -140px 48px 0;
+}
+
+.pair {
+  display: grid;
+  grid-template-columns: 0.62fr 1fr;
+  gap: 28px;
+  align-items: end;
+  margin: 44px 0 48px;
+}
+
+.pair > :nth-child(n + 3) {
+  grid-column: span 1;
+}
+
+.quote {
+  margin: 44px 0;
+  padding: 22px 26px;
+  background: var(--paper);
+  color: var(--paperi);
+  transform: rotate(-0.6deg);
+  box-shadow: 3px 3px 0 var(--sh);
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 34px;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+.sign {
+  margin-top: 36px;
+  font-family: var(--pixel);
+  font-size: 15px;
+  color: var(--mut);
+}
+
+/* ── previous / next ───────────────────────────────────── */
+.pager {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-top: 1px solid var(--line);
+}
+
+.prev,
+.next {
+  display: block;
+  padding: 26px 32px;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.prev:hover {
+  background: var(--hover);
+}
+
+.next {
+  border-left: 1px solid var(--line);
+  background: var(--hi);
+  text-align: right;
+}
+
+.next:hover {
+  filter: brightness(0.97);
+}
+
+.pagerLabel {
+  display: block;
+  font-family: var(--pixel);
+  font-size: 14px;
+  color: var(--mut);
+}
+
+.pagerTitle {
+  display: block;
+  margin-top: 8px;
+  font-family: var(--serif);
+  font-variant-numeric: lining-nums;
+  font-size: 28px;
+  line-height: 1.02;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+@media (max-width: 1180px) {
+  .header,
+  .videoWrap {
+    padding-left: 48px;
+    padding-right: 48px;
+  }
+
+  .body {
+    grid-template-columns: 180px minmax(0, 1fr);
+    gap: 40px;
+    padding: 44px 48px 48px;
+  }
+
+  .wide {
+    margin-right: 0;
+  }
+}
+
+@media (max-width: 1000px) {
+  .playerGrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .chapters {
+    border-left: 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .body {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .aside {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
+
+  .facts {
+    flex: 1 1 260px;
+  }
+}
+
+/* ── mobile — QPost at 390 ─────────────────────────────── */
+@media (max-width: 760px) {
+  .deskOnly,
+  .backRule,
+  .aside,
+  .chapHead,
+  .posterLabel,
+  .playerBar {
+    display: none !important;
+  }
+
+  .back {
+    justify-content: space-between;
+    padding: 6px 0 2px;
+  }
+
+  .backLink {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    font-size: 15px;
+  }
+
+  .pos {
+    font-size: 13px;
+  }
+
+  .header {
+    padding: 24px 18px 0;
+    border-bottom: 0;
+  }
+
+  .meta {
+    gap: 8px;
+    font-size: 12px;
+  }
+
+  .h1 {
+    margin-top: 12px;
+    font-size: min(10.3vw, 40px);
+    line-height: 1.02;
+  }
+
+  .standfirst {
+    margin: 16px 0 26px;
+    font-size: 17px;
+  }
+
+  .videoWrap {
+    padding: 0 0 26px;
+  }
+
+  .player {
+    border-width: 1px 0;
+    box-shadow: none;
+  }
+
+  .play {
+    width: 64px;
+    height: 64px;
+    margin: -32px 0 0 -32px;
+    font-size: 20px;
+  }
+
+  .clock {
+    left: 12px;
+    bottom: 10px;
+    font-size: 12px;
+  }
+
+  .track {
+    height: 3px;
+  }
+
+  .chapters {
+    border-top: 0;
+  }
+
+  .body {
+    display: block;
+    padding: 0 18px 10px;
+  }
+
+  .p {
+    margin-bottom: 21px;
+    font-size: 17px;
+  }
+
+  .h2 {
+    margin: 32px 0 14px;
+    font-size: 30px;
+  }
+
+  .wide {
+    margin: 30px -8px 32px;
+  }
+
+  .wide .figure {
+    --tilt: 0deg !important;
+  }
+
+  .pair {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 26px;
+    margin: 30px 0;
+  }
+
+  .pairFirst {
+    width: 78%;
+  }
+
+  .quote {
+    margin: 30px 0;
+    padding: 18px;
+    transform: none;
+    box-shadow: none;
+    font-size: 26px;
+    line-height: 1.02;
+  }
+
+  .tags.mobTags {
+    display: flex;
+    padding: 6px 0 16px;
+  }
+
+  .sign {
+    display: none;
+  }
+
+  .pager {
+    display: flex;
+    flex-direction: column;
+    border-top: 0;
+  }
+
+  .next {
+    order: -1;
+    padding: 18px;
+    border-left: 0;
+    border-top: 1px solid var(--line);
+    text-align: left;
+  }
+
+  .prev {
+    padding: 16px 18px;
+    border-top: 1px solid var(--line);
+  }
+
+  .pagerLabel {
+    font-size: 13px;
+  }
+
+  .next .pagerTitle {
+    margin-top: 6px;
+    font-size: 26px;
+  }
+
+  .prev .pagerTitle {
+    margin-top: 4px;
+    font-size: 22px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .trackFill {
+    transition: none;
+  }
+}

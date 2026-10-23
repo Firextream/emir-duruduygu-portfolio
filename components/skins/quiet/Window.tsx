@@ -12,6 +12,7 @@ export default function Window({
   bodyClassName,
   children,
   footer,
+  footerClassName,
   as: Tag = 'section',
   labelledBy,
 }: {
@@ -26,6 +27,7 @@ export default function Window({
   bodyClassName?: string
   children: ReactNode
   footer?: ReactNode
+  footerClassName?: string
   as?: 'section' | 'div' | 'article' | 'aside'
   labelledBy?: string
 }) {
@@ -43,7 +45,7 @@ export default function Window({
         </span>
       </div>
       <div className={`${s.body} ${bodyClassName ?? ''}`}>{children}</div>
-      {footer && <div className={s.footer}>{footer}</div>}
+      {footer && <div className={`${s.footer} ${footerClassName ?? ''}`}>{footer}</div>}
     </Tag>
   )
 }
