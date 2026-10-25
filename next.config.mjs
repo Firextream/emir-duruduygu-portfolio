@@ -39,6 +39,15 @@ const nextConfig = {
     dangerouslyAllowSVG: false,
     remotePatterns: directusHosts,
   },
+  async headers() {
+    // the content editor and its API are never indexed (the middleware adds the same to its own replies)
+    const noindex = [{ key: 'X-Robots-Tag', value: 'noindex, nofollow' }]
+    return [
+      { source: '/keystatic', headers: noindex },
+      { source: '/keystatic/:path*', headers: noindex },
+      { source: '/api/keystatic/:path*', headers: noindex },
+    ]
+  },
   async redirects() {
     return [
       // Routes from the old site that the redesign folds into other pages.

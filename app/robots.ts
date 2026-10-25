@@ -1,16 +1,16 @@
-import { MetadataRoute } from 'next'
+import type { MetadataRoute } from 'next'
+import { SITE_URL } from '@/lib/routes/meta'
 
 export default function robots(): MetadataRoute.Robots {
-  const baseUrl = 'https://www.duruduygu.com'
-  
   return {
     rules: [
       {
         userAgent: '*',
         allow: '/',
-        disallow: ['/api/', '/admin/'],
+        // the content editor (Keystatic) also sends noindex and needs a GitHub login in production
+        disallow: ['/api/', '/keystatic'],
       },
     ],
-    sitemap: `${baseUrl}/sitemap.xml`,
+    sitemap: `${SITE_URL}/sitemap.xml`,
   }
 }

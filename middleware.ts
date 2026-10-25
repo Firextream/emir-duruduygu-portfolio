@@ -3,12 +3,16 @@
 // A first visit (no cookie) gets a random skin, remembered for a year. localStorage stays the
 // source of truth — the pre-paint script re-syncs this cookie if the two ever disagree.
 // Runs on Vercel and in the standalone Docker server alike.
+// /keystatic (the content editor) is not a skin page: it goes through lib/keystatic-gate instead.
 import { NextResponse, type NextRequest } from 'next/server'
+import { keystaticGate } from '@/lib/keystatic-gate'
 import { isSkin, SKIN_COOKIE, SKINS } from '@/lib/skins'
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
   const first = pathname.split('/')[1]
+
+  if (first === 'keystatic') return keystaticGate(request)
 
   // The skin trees are internal: /modern/blog → /blog
   if (isSkin(first)) {
