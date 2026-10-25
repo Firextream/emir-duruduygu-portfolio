@@ -85,15 +85,38 @@ try {
   const arrived = await evaluate(cdp, `document.documentElement.hasAttribute('data-switching')`)
   check('arrival curtain has faded out', !arrived)
 
-  // 6. Modernist contact form → "Sent ✓"
-  await evaluate(cdp, `(() => { const f = document.querySelector('#contact form'); f.querySelector('[name=name]').value = 'Test'; f.querySelector('[name=email]').value = 'test@example.com'; f.querySelector('[name=message]').value = 'Hello from the review script'; f.requestSubmit(); return true })()`)
+  // 6. Modernist contact form. The review never sends real mail (/api/contact talks to Resend): the
+  //    success state is checked with the reply given inside the browser, and the real endpoint only
+  //    with an address it rejects, so its error has to reach the visitor.
+  const submitContact = (email) =>
+    evaluate(cdp, `(() => { const f = document.querySelector('#contact form'); f.querySelector('[name=name]').value = 'Test'; f.querySelector('[name=email]').value = ${JSON.stringify(email)}; f.querySelector('[name=message]').value = 'Hello from the review script'; f.requestSubmit(); return true })()`)
   // the first POST after a dev-server start compiles the route, so wait for the reply, not a fixed time
-  let sent = ''
-  for (let t = 0; t < 30 && (!sent || sent.startsWith('Sending')); t++) {
-    await sleep(500)
-    sent = await evaluate(cdp, `document.querySelector('#contact form button[type=submit]').textContent + ' | ' + document.querySelector('#contact [role=status]').textContent`)
+  const formReply = async (before) => {
+    let s = before
+    for (let t = 0; t < 30 && (s === before || s.startsWith('Sending')); t++) {
+      await sleep(500)
+      s = await evaluate(cdp, `document.querySelector('#contact form button[type=submit]').textContent + ' | ' + document.querySelector('#contact [role=status]').textContent`)
+    }
+    return s
   }
+  await cdp.send('Fetch.enable', { patterns: [{ urlPattern: '*/api/contact', requestStage: 'Request' }] })
+  const unstub = cdp.on('Fetch.requestPaused', (p) =>
+    cdp.send('Fetch.fulfillRequest', {
+      requestId: p.requestId,
+      responseCode: 200,
+      responseHeaders: [{ name: 'Content-Type', value: 'application/json' }],
+      body: Buffer.from('{"ok":true}').toString('base64'),
+    }),
+  )
+  await submitContact('test@example.com')
+  const sent = await formReply('')
+  unstub()
+  await cdp.send('Fetch.disable')
   check('contact form shows the success state', sent.includes('Sent') && sent.includes('✓') && sent.includes("it's in"), sent)
+  // "a@b" passes the browser's own email check but not the server's
+  await submitContact('a@b')
+  const refused = await formReply(sent)
+  check('contact form shows the server’s error', refused.includes('valid email'), refused)
 
   // 7. Soft Club: pick DD-03 (SLAB-100) → hero swaps
   await cdp.send('Network.setCookie', { name: 'duru-skin', value: 'soft', url: base })
