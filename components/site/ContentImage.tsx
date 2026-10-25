@@ -31,6 +31,8 @@ export default function ContentImage({ image, sizes, className, alt, priority, e
       sizes={sizes}
       className={className}
       priority={priority}
+      // next/image's priority preloads but leaves the request at Low; the hero is the LCP, so ask for High
+      fetchPriority={priority ? 'high' : undefined}
       loading={priority ? undefined : eager ? 'eager' : 'lazy'}
       quality={quality}
       loader={image.source === 'directus' ? directusLoader : undefined}
