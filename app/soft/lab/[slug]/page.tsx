@@ -1,7 +1,6 @@
 import SProject from '@/components/skins/soft/SProject'
 import { getProjectData, projectMetadata, projectStaticParams } from '@/lib/routes/lab'
 
-export const revalidate = 300
 export const generateStaticParams = projectStaticParams
 
 type Props = { params: Promise<{ slug: string }> }

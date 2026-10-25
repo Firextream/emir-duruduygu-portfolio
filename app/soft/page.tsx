@@ -1,7 +1,6 @@
 import SHome from '@/components/skins/soft/SHome'
 import { getHomeData } from '@/lib/routes/home'
 
-export const revalidate = 300
 
 export default async function Home() {
   const { hero, photos, posts, projects } = await getHomeData('soft')

@@ -2,7 +2,9 @@ import { getPosts } from '@/lib/content'
 import { SITE_EMAIL } from '@/lib/content/links'
 import { SITE_URL } from '@/lib/routes/meta'
 
-export const revalidate = 3600
+// Built with the site: content changes arrive as commits and a redeploy (Directus mode refreshes
+// through its own fetch revalidation).
+export const dynamic = 'force-static'
 
 const cdata = (value: string) => `<![CDATA[${value.replace(/]]>/g, ']]]]><![CDATA[>')}]]>`
 

@@ -1,7 +1,6 @@
 import SPost from '@/components/skins/soft/SPost'
 import { getPostData, postMetadata, postStaticParams } from '@/lib/routes/journal'
 
-export const revalidate = 300
 export const generateStaticParams = postStaticParams
 
 type Props = { params: Promise<{ slug: string }> }

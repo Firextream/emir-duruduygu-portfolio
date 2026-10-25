@@ -1,7 +1,6 @@
 import OrigPhoto from '@/components/skins/original/OrigPhoto'
 import { getPhotoData, photoMetadata, photoStaticParams } from '@/lib/routes/gallery'
 
-export const revalidate = 300
 export const generateStaticParams = photoStaticParams
 
 type Props = { params: Promise<{ id: string }> }

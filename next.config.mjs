@@ -22,6 +22,12 @@ const nextConfig = {
   output: 'standalone',
   // Pin the tracing root to this repo (a stray lockfile higher up would otherwise be picked as the root).
   outputFileTracingRoot: dirname(fileURLToPath(import.meta.url)),
+  // Pages are static, but anything rendered on demand (an unknown address → 404) still reads content/
+  // through the files adapter — ship it with the server (Vercel and standalone). public/ is served as
+  // static files and must never be copied into server bundles (the adapter's image-size lookups
+  // would otherwise pull every photo into every function).
+  outputFileTracingIncludes: { '/**': ['./content/**/*'] },
+  outputFileTracingExcludes: { '/**': ['./public/**/*'] },
   compress: true,
   poweredByHeader: false,
   images: {
