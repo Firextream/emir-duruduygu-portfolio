@@ -28,6 +28,9 @@ export interface Photo {
   date: string
   camera: string
   note: string | null
+  /** set in the files adapter (Keystatic); no skin shows them yet */
+  medium?: 'film' | 'digital'
+  tags?: string[]
 }
 
 export interface Mood {

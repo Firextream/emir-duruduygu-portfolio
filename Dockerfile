@@ -14,7 +14,7 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 # Content source is read at build time for static pages and again at runtime for ISR.
-ARG CONTENT_SOURCE=mock
+ARG CONTENT_SOURCE=files
 ARG DIRECTUS_URL=
 ARG DIRECTUS_ASSETS_URL=
 ARG NEXT_PUBLIC_SITE_URL=https://www.duruduygu.com

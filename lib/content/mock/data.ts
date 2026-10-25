@@ -1,6 +1,6 @@
 // Mock content — a TypeScript port of design_handoff_duruduygu/duru-content.js.
 // Bracketed text is placeholder copy and stays visible on the site until real content exists.
-// Files live in /public/content.
+// Files live in /public/content/<collection>/<id>/ (the layout Keystatic uses).
 
 export interface MockPhoto {
   id: string
@@ -16,8 +16,8 @@ export interface MockPhoto {
 }
 
 export const photos: MockPhoto[] = [
-  { id: 'p01', src: '/content/IMG_3849.webp', file: 'IMG_3849.webp', w: 960, h: 640 },
-  { id: 'p02', src: '/content/harbor.png', file: 'harbor.png', w: 1440, h: 960 },
+  { id: 'p01', src: '/content/photos/p01/IMG_3849.webp', file: 'IMG_3849.webp', w: 960, h: 640 },
+  { id: 'p02', src: '/content/photos/p02/harbor.png', file: 'harbor.png', w: 1440, h: 960 },
   { id: 'p03', src: null, file: 'frame_03.jpg', w: 4, h: 5 },
   { id: 'p04', src: null, file: 'frame_04_pano.jpg', w: 3, h: 1, title: '[Panorama title]' },
   { id: 'p05', src: null, file: 'frame_05.jpg', w: 1, h: 1 },
@@ -176,8 +176,8 @@ export const projects = [
     status: '[status]',
     year: '[year]',
     tools: '[tools — placeholder]',
-    img: { src: '/content/slab-100-beyin.png', w: 784, h: 1432, cap: 'Main board layout' },
-    drawing: { src: '/content/slab-100-iso.svg', w: 700, h: 1065, cap: 'Isometric drawing' },
+    img: { src: '/content/projects/slab-100/slab-100-beyin.png', w: 784, h: 1432, cap: 'Main board layout' },
+    drawing: { src: '/content/projects/slab-100/slab-100-iso.svg', w: 700, h: 1065, cap: 'Isometric drawing' },
     ph: null,
     stages,
     about: projectAbout,
@@ -218,9 +218,9 @@ export const projects = [
   },
 ]
 
-// The portrait is the old site's About photo (public/emir-profile.jpg, also in the handoff assets).
+// The portrait is the old site's About photo (public/content/about/emir-profile.jpg, also in the handoff assets).
 export const about = {
-  portrait: { src: '/content/emir-profile.jpg', w: 2400, h: 1800, alt: 'Emir Duruduygu' },
+  portrait: { src: '/content/about/emir-profile.jpg', w: 2400, h: 1800, alt: 'Emir Duruduygu' },
   summary: '[A short paragraph about you, your studies and what you are working towards — placeholder]',
   // the live site's About text (OrigAbout.dc.html)
   body: [

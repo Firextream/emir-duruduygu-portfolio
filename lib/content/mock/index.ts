@@ -79,8 +79,6 @@ export const mockAdapter: ContentAdapter = {
     }))
   },
   async posts() {
-    // MOCK_EMPTY=posts renders the journal's empty state (for review only)
-    if ((process.env.MOCK_EMPTY ?? '').split(',').includes('posts')) return []
     return Promise.all(data.posts.map(toPost))
   },
   async projects(): Promise<Project[]> {

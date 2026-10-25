@@ -1,21 +1,31 @@
-// The one data interface for the site. Pick the source with CONTENT_SOURCE=mock|directus.
+// The one data interface for the site. Pick the source with CONTENT_SOURCE=files|mock|directus:
+//   files    content/ in this repo, edited with Keystatic at /keystatic (the default)
+//   mock     lib/content/mock — the original placeholder set, kept for tests
+//   directus a Directus instance (SCHEMA.md), optional for later
 // Pages and components import from here only — never from an adapter, and never from lib/notion*.
 import 'server-only'
 import { cache } from 'react'
 import { directusAdapter } from './directus'
+import { filesAdapter } from './files'
 import { SITE_EMAIL, SITE_LINKS } from './links'
 import { mockAdapter } from './mock'
 import type { About, ContentAdapter, LabNote, Mood, Photo, Post, Project, Settings, Skin } from './types'
 
 export type * from './types'
 
-export type ContentSource = 'mock' | 'directus'
+export type ContentSource = 'files' | 'mock' | 'directus'
+
+const ADAPTERS: Record<ContentSource, ContentAdapter> = { files: filesAdapter, mock: mockAdapter, directus: directusAdapter }
 
 export function contentSource(): ContentSource {
-  return process.env.CONTENT_SOURCE === 'directus' ? 'directus' : 'mock'
+  const source = process.env.CONTENT_SOURCE
+  return source === 'mock' || source === 'directus' ? source : 'files'
 }
 
-const adapter = (): ContentAdapter => (contentSource() === 'directus' ? directusAdapter : mockAdapter)
+const adapter = (): ContentAdapter => ADAPTERS[contentSource()]
+
+/** CONTENT_EMPTY=posts renders the journal's empty state (review only; MOCK_EMPTY is the old name). */
+const emptied = (what: string) => (process.env.CONTENT_EMPTY ?? process.env.MOCK_EMPTY ?? '').split(',').includes(what)
 
 /** A failing CMS must not take the site down: log it and render empty states instead. */
 async function safely<T>(label: string, run: () => Promise<T>, fallback: T): Promise<T> {
@@ -29,7 +39,7 @@ async function safely<T>(label: string, run: () => Promise<T>, fallback: T): Pro
 
 export const getPhotos = cache((): Promise<Photo[]> => safely('photos', () => adapter().photos(), []))
 export const getMood = cache((): Promise<Mood[]> => safely('mood', () => adapter().mood(), []))
-export const getPosts = cache((): Promise<Post[]> => safely('posts', () => adapter().posts(), []))
+export const getPosts = cache((): Promise<Post[]> => (emptied('posts') ? Promise.resolve([]) : safely('posts', () => adapter().posts(), [])))
 export const getProjects = cache((): Promise<Project[]> => safely('projects', () => adapter().projects(), []))
 
 /** What About shows when the CMS has nothing yet (or can't be reached). */

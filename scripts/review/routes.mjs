@@ -5,7 +5,7 @@ export const ROUTES = {
   'gallery-mood': { path: '/gallery#moodboard', ref: null },
   photo: { path: '/gallery/p01', ref: { page: 'photo', arg: 0 } },
   journal: { path: '/blog', ref: { page: 'journal' } },
-  'journal-empty': { path: '/blog', ref: { page: 'journal', empty: true }, siteNote: 'needs MOCK_EMPTY=posts' },
+  'journal-empty': { path: '/blog', ref: { page: 'journal', empty: true }, siteNote: 'needs CONTENT_EMPTY=posts' },
   post: { path: '/blog/long-title', ref: { page: 'post', arg: 1 } },
   'post-video': { path: '/blog/video-essay-1', ref: { page: 'post', arg: 0 } },
   about: { path: '/about', ref: { page: 'about' } },

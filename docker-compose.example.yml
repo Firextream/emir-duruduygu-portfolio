@@ -15,7 +15,7 @@ services:
     build:
       context: .
       args:
-        CONTENT_SOURCE: ${CONTENT_SOURCE:-mock}
+        CONTENT_SOURCE: ${CONTENT_SOURCE:-files}
         DIRECTUS_URL: ${DIRECTUS_URL:-}
         DIRECTUS_ASSETS_URL: ${DIRECTUS_ASSETS_URL:-}
         NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-https://www.duruduygu.com}
