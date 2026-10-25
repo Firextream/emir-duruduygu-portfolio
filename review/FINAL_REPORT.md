@@ -1,7 +1,33 @@
 # duruduygu.com redesign — final report
 
-Branch `redesign-2026`, 45 commits on top of `main` (426 files changed). **Nothing is pushed or merged.**
+Branch `redesign-2026`. **Nothing is pushed or merged.**
 Date: 2026-10-25. Every check below ran on a production build (`next build`), never the dev server.
+
+## Update, 2026-10-25: content in the repo, Keystatic, Resend
+
+You decided against running a CMS server for now. This replaces sections 4 and 5 (going live, Directus) and closes open items 1 and 2. **GO_LIVE.md** is now the going-live guide and **KEYSTATIC.md** the editing guide.
+
+- **Content source `files` is the default.** `content/` holds YAML for photos, mood, about, milestones and settings, and Markdown with frontmatter for posts and projects. Images are in `public/content/<collection>/<address>/`.
+  - All of today's mock content moved there. `npm run check:content -- --parity` shows every getter identical to the old mock adapter.
+  - Placeholders keep their `[brackets]`; `npm run placeholders` lists them (302 in 33 files).
+  - `mock` and `directus` are still selectable.
+- **Keystatic at `/keystatic`.** It saves to local files in dev and commits to GitHub in production.
+  - In production nobody gets in without GitHub sign-in, and there's an optional account allow-list.
+  - It's never indexed (meta, header, robots.txt).
+  - Until the GitHub App exists it answers 503, and the build still passes.
+  - **Tested in the real editor** (headless Chrome, local mode):
+    - Saving a post, the About page and a photo changes only the edited field on the site.
+    - Keystatic escapes the Markdown it writes (`\[…]`, `!\[\[Caption]]\(photo:p04)`) and the parser reads it as before.
+    - Keystatic renames images to `image.<ext>` on save. Image URLs now carry a content hash (`?v=`), so a replaced photo can't be served from cache, and Quiet's caption file name comes from the photo's **File name** field.
+- **Pages are fully static**; content changes arrive as commits and a redeploy. The tracer no longer copies `public/` (35 MB) into server bundles.
+- **Forms go through Resend.**
+  - Contact sends a plain-text email; the newsletter creates a contact in a segment.
+  - Both have a honeypot and a per-IP rate limit (5 per 10 minutes).
+  - Without `RESEND_API_KEY` they return a clear 503.
+  - Resend's DNS records are in GO_LIVE.md §5.
+- **Clean-up for you:** while testing, one newsletter request reached your real Resend account through the old `RESEND_API_KEY` in `.env.local`, and created the contact `t@example.com`. Delete it in Resend → Contacts. No email was sent: Resend refused every contact message because the domain isn't verified yet.
+- **`npm run images`** sizes photos to ≤ 2560 px at quality 82, upright and without EXIF/GPS, and never recompresses twice. GO_LIVE.md §8 says when to move images to Cloudflare R2: about 300 MB of images, a 1 GB repo, or the Vercel image quota.
+- **Checks on the final build:** build ✓, `npm test` 6/6, content check ✓, interaction suite 24/24 (the contact success state is now checked without sending mail), six-width audit **0 issues** (12 routes × 4 skins × 6 widths, fresh and cached).
 
 ## 1. Status per page and skin
 

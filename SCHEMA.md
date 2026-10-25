@@ -1,5 +1,7 @@
 # Directus schema for duruduygu.com
 
+> **Optional.** The site's default source is now `files`: `content/` in the repo, edited with Keystatic (schema in `keystatic.config.ts`, guide in KEYSTATIC.md). Everything below applies only with `CONTENT_SOURCE=directus`.
+
 These are the collections the `directus` content adapter (`lib/content/directus`) reads when `CONTENT_SOURCE=directus`. They mirror `design_handoff_duruduygu/duru-content.js` and are what the mock adapter serves today.
 
 This builds on the existing setup: the same `docker-compose.directus.yml`, `.env.directus.example`, env names and `status = published` rule as `DIRECTUS_SETUP.md`. `DIRECTUS_SETUP.md` still describes the old `gallery_images` and `portfolio_items` collections; the new site doesn't read those.
