@@ -2,6 +2,9 @@
   "name": "duruduygu",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "22.x"
+  },
   "scripts": {
     "build": "next build",
     "dev": "next dev",
@@ -10,6 +13,7 @@
     "test": "node --experimental-strip-types --no-warnings --import ./scripts/lib/ts.mjs --test tests/*.test.mjs",
     "check:content": "node --experimental-strip-types --no-warnings --import ./scripts/lib/ts.mjs scripts/check-content.mjs",
     "placeholders": "node scripts/placeholders.mjs",
+    "images": "node scripts/optimize-images.mjs",
     "update-read-times": "node scripts/update-read-times.js",
     "update-single-read-time": "node scripts/update-read-times.js --single"
   },
