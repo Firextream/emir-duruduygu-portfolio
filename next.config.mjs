@@ -38,6 +38,9 @@ const nextConfig = {
     minimumCacheTTL: 60 * 60 * 24 * 60,
     dangerouslyAllowSVG: false,
     remotePatterns: directusHosts,
+    // content images carry ?v=<content hash> (lib/content/files) so a replaced photo is never served
+    // from cache; every other local image is used without a query string
+    localPatterns: [{ pathname: '/content/**' }, { pathname: '/**', search: '' }],
   },
   async headers() {
     // the content editor and its API are never indexed (the middleware adds the same to its own replies)

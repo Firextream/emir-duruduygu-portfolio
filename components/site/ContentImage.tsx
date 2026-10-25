@@ -36,7 +36,7 @@ export default function ContentImage({ image, sizes, className, alt, priority, e
       loading={priority ? undefined : eager ? 'eager' : 'lazy'}
       quality={quality}
       loader={image.source === 'directus' ? directusLoader : undefined}
-      unoptimized={image.src.endsWith('.svg')}
+      unoptimized={image.src.split('?')[0].endsWith('.svg')}
     />
   )
 }

@@ -57,13 +57,16 @@ console.log(
 
 if (process.argv.includes('--parity')) {
   const { mockAdapter } = await import('../lib/content/mock/index.ts')
-  // key order doesn't matter; undefined keys are the same as missing ones
-  const canon = (v) =>
+  // key order doesn't matter, undefined keys are the same as missing ones, and the files adapter's
+  // image versions (src?v=<hash>) aren't part of the mock
+  const canon = (v, key) =>
     Array.isArray(v)
-      ? v.map(canon)
+      ? v.map((x) => canon(x))
       : v && typeof v === 'object'
-        ? Object.fromEntries(Object.keys(v).filter((k) => v[k] !== undefined).sort().map((k) => [k, canon(v[k])]))
-        : v
+        ? Object.fromEntries(Object.keys(v).filter((k) => v[k] !== undefined).sort().map((k) => [k, canon(v[k], k)]))
+        : key === 'src' && typeof v === 'string'
+          ? v.replace(/\?v=[0-9a-f]+$/, '')
+          : v
   const diff = (a, b, at, out) => {
     if (JSON.stringify(a) === JSON.stringify(b)) return
     if (a && b && typeof a === 'object' && typeof b === 'object') {

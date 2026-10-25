@@ -12,5 +12,9 @@ declare module 'probe-image-size' {
   }
 
   function probe(source: Readable | string): Promise<ProbeResult>
+  namespace probe {
+    /** null when the bytes aren't a known image format */
+    function sync(data: Uint8Array): ProbeResult | null
+  }
   export default probe
 }

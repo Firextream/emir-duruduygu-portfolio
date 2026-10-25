@@ -91,8 +91,8 @@ export default config({
         order,
         placeholder_ratio: placeholderRatio(),
         file: fields.text({
-          label: 'File name (placeholder only)',
-          description: 'Quiet shows file names in its captions. Without an image this one is shown; with an image, the image’s own name.',
+          label: 'File name',
+          description: 'Quiet shows a file name in its captions, e.g. IMG_3849.jpg. Keystatic saves every upload as image.<ext>, so put the original name here; empty shows <address>.<ext>.',
         }),
       },
     }),

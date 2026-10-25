@@ -4,8 +4,8 @@
 // from the files at build time (pages are static — content changes arrive as commits + a redeploy).
 //
 // One broken entry is logged and skipped; it never empties a whole collection.
-import { createReadStream } from 'node:fs'
-import { stat } from 'node:fs/promises'
+import { createHash } from 'node:crypto'
+import { readFile, stat } from 'node:fs/promises'
 import path from 'node:path'
 import { createReader } from '@keystatic/core/reader'
 import probe from 'probe-image-size'
@@ -35,15 +35,22 @@ async function entries<T>(label: string, list: () => Promise<string[]>, read: (s
 
 // ── images ────────────────────────────────────────────────────────────────────
 
-const sizes = new Map<string, Promise<{ w: number; h: number } | null>>()
+interface FileInfo {
+  w: number
+  h: number
+  /** short content hash: the image URL's ?v=, so a replaced photo (same file name) is never served from cache */
+  v: string
+}
+
+const infos = new Map<string, Promise<FileInfo | null>>()
 
 // globalThis.process on purpose: the build's file tracer (@vercel/nft) resolves a literal
 // process.cwd() + 'public' and would copy every photo into every server bundle. next.config's
 // exclude covers Linux builds; on Windows it never matches, so the tracer must not see the path.
 const projectDir = () => globalThis.process.cwd()
 
-/** Pixel size of a file in public/ (cached per path and modification time). */
-async function sizeOf(src: string) {
+/** Pixel size and content hash of a file in public/ (cached per path and modification time). */
+async function fileInfo(src: string) {
   const file = path.join(projectDir(), 'public', decodeURI(src.split('?')[0]))
   let key: string
   try {
@@ -55,25 +62,30 @@ async function sizeOf(src: string) {
     }
     return null
   }
-  if (!sizes.has(key)) {
-    sizes.set(
+  if (!infos.has(key)) {
+    infos.set(
       key,
-      probe(createReadStream(file))
-        // SVGs can report fractional sizes from their viewBox
-        .then((r) => (r.width && r.height ? { w: Math.round(r.width), h: Math.round(r.height) } : null))
+      readFile(file)
+        .then((data) => {
+          const r = probe.sync(data)
+          if (!r?.width || !r.height) throw new Error('not an image')
+          const v = createHash('sha1').update(data).digest('hex').slice(0, 10)
+          // SVGs can report fractional sizes from their viewBox
+          return { w: Math.round(r.width), h: Math.round(r.height), v }
+        })
         .catch((error: unknown) => {
           console.error(`[content] files: can't read the size of ${src}:`, error instanceof Error ? error.message : error)
           return null
         }),
     )
   }
-  return sizes.get(key)!
+  return infos.get(key)!
 }
 
 async function localImage(src: string | null | undefined, alt: string): Promise<Img | null> {
   if (!src) return null
-  const size = await sizeOf(src)
-  return size ? { src, w: size.w, h: size.h, alt, source: 'local' } : null
+  const info = await fileInfo(src)
+  return info ? { src: `${src}?v=${info.v}`, w: info.w, h: info.h, alt, source: 'local' } : null
 }
 
 /** "4:5", "4x5", "4/5" → [4, 5] */
@@ -135,7 +147,8 @@ async function readPhotos(r: Reader): Promise<Photo[]> {
       const photo: Photo = {
         id: slug,
         image,
-        file: image ? path.posix.basename(image.src) : p.file || `${slug}.jpg`,
+        // Keystatic stores every upload as image.<ext>: the caption name is the file field, else <address>.<ext>
+        file: p.file || `${slug}${(p.image && path.posix.extname(p.image)) || '.jpg'}`,
         w,
         h,
         ratio: ratio(w, h),
