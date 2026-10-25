@@ -6,13 +6,21 @@
 //   ![Caption](photo:p02)          → figure; two images in one block → a figure pair
 //   *em*  **strong**  `code`  [text](https://…)
 //
-// Image refs: `photo:<id>` (a gallery photo), `asset:<directus-file-id>`, `placeholder:4x5`, or a URL.
+// Image refs: `photo:<id>` (a gallery photo), `asset:<directus-file-id>`, `placeholder:4x5`, a
+// /content/… path (uploaded through Keystatic) or a URL.
+//
+// Backslash escapes (\[ \* \_ …) are honoured: Keystatic's editor writes them when it saves, and keeps
+// `![…](photo:…)` refs it can't preview as escaped text.
 import type { Block, Figure, Inline } from './types'
 
 export type FigureResolver = (ref: string, caption: string) => Promise<Figure>
 
 // lazy alt text so captions may contain brackets: ![[Caption]](photo:p02)
 const IMAGE = /^!\[(.*?)\]\(\s*([^)\s]+)(?:\s+"([^"]*)")?\s*\)$/
+
+/** CommonMark backslash escapes: "\[" → "[" for any ASCII punctuation. */
+const ESCAPE = /\\([!-/:-@[-`{-~])/g
+export const unescapeMarkdown = (s: string) => s.replace(ESCAPE, '$1')
 
 export function slugify(text: string): string {
   return (
@@ -27,17 +35,24 @@ export function slugify(text: string): string {
 
 export function parseInline(src: string): Inline[] {
   const out: Inline[] = []
-  const re = /\*\*([^*]+)\*\*|\*([^*]+)\*|_([^_]+)_|`([^`]+)`|\[([^\]]+)\]\(([^)\s]+)\)/g
+  // an escaped character is plain text, so "\[" can't open a link and "\*" can't open emphasis
+  const re = /\\([!-/:-@[-`{-~])|\*\*([^*]+)\*\*|\*([^*]+)\*|_([^_]+)_|`([^`]+)`|\[([^\]]+)\]\(([^)\s]+)\)/g
+  const text = (v: string) => {
+    const prev = out[out.length - 1]
+    if (prev?.t === 'text') prev.v += v
+    else out.push({ t: 'text', v })
+  }
   let last = 0
   for (let m = re.exec(src); m; m = re.exec(src)) {
-    if (m.index > last) out.push({ t: 'text', v: src.slice(last, m.index) })
-    if (m[1]) out.push({ t: 'strong', v: m[1] })
-    else if (m[2] || m[3]) out.push({ t: 'em', v: (m[2] || m[3]) as string })
-    else if (m[4]) out.push({ t: 'code', v: m[4] })
-    else if (m[5] && m[6]) out.push({ t: 'link', v: m[5], href: m[6] })
+    if (m.index > last) text(src.slice(last, m.index))
+    if (m[1]) text(m[1])
+    else if (m[2]) out.push({ t: 'strong', v: unescapeMarkdown(m[2]) })
+    else if (m[3] || m[4]) out.push({ t: 'em', v: unescapeMarkdown((m[3] || m[4]) as string) })
+    else if (m[5]) out.push({ t: 'code', v: m[5] })
+    else if (m[6] && m[7]) out.push({ t: 'link', v: unescapeMarkdown(m[6]), href: m[7] })
     last = m.index + m[0].length
   }
-  if (last < src.length) out.push({ t: 'text', v: src.slice(last) })
+  if (last < src.length) text(src.slice(last))
   return out
 }
 
@@ -52,10 +67,11 @@ export async function parseMarkdown(md: string, resolve: FigureResolver): Promis
 
     const h = /^(#{2,3})\s+(.+)$/.exec(chunk)
     if (h && lines.length === 1) {
-      let id = slugify(h[2])
-      for (let n = 2; used.has(id); n++) id = `${slugify(h[2])}-${n}`
+      const heading = unescapeMarkdown(h[2]).trim()
+      let id = slugify(heading)
+      for (let n = 2; used.has(id); n++) id = `${slugify(heading)}-${n}`
       used.add(id)
-      blocks.push({ type: h[1].length === 2 ? 'h2' : 'h3', text: h[2].trim(), id })
+      blocks.push({ type: h[1].length === 2 ? 'h2' : 'h3', text: heading, id })
       continue
     }
 
@@ -64,7 +80,10 @@ export async function parseMarkdown(md: string, resolve: FigureResolver): Promis
       continue
     }
 
-    const imgs = lines.flatMap((l) => l.split(/(?<=\))\s+(?=!\[)/)).map((l) => IMAGE.exec(l))
+    const imgs = lines
+      .map(unescapeMarkdown)
+      .flatMap((l) => l.split(/(?<=\))\s+(?=!\[)/))
+      .map((l) => IMAGE.exec(l))
     if (imgs.every(Boolean)) {
       const items = await Promise.all(imgs.map((m) => resolve(m![2], (m![3] ?? m![1]).trim())))
       blocks.push({ type: 'figures', items })
