@@ -39,6 +39,7 @@ export default function SelectedWork({ photos }: { photos: Photo[] }) {
             {p.image ? (
               <ContentImage
                 image={p.image}
+                alt=""
                 className={s.tileImg}
                 sizes={`(max-width: 760px) ${Math.round((240 * p.w) / p.h)}px, ${Math.round((420 * p.w) / p.h)}px`}
               />

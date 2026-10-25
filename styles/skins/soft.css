@@ -16,7 +16,8 @@
   --paper: #f8fafc;
   --aqua: #1a9dff;
   --aqua-hover: #45b1ff;
-  --deep: #0f7fd6;
+  /* README deep aqua is #0f7fd6; darkened to #0d70bc so the 13px Doto numbers pass AA (4.9:1 on paper, 4.6:1 on ground) */
+  --deep: #0d70bc;
   --ground: #eef2f6;
   --ground2: #dbe2ea;
   --stripe: repeating-linear-gradient(135deg, #e3e9f0 0 9px, #d8e0e9 9px 18px);
