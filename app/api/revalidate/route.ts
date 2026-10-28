@@ -39,7 +39,7 @@ export async function POST(request: NextRequest) {
       })
     }
 
-    // Default: the new content layer (lib/content) plus the legacy Notion tags
+    // Default: the new content layer (lib/content) plus the tags the old site used
     const tags = ['content', 'gallery', 'posts', 'portfolio', 'moodboard']
     tags.forEach(t => revalidateTag(t))
     

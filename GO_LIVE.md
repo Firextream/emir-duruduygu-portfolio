@@ -48,7 +48,7 @@ Project → Settings → **Environment Variables**. Mark secrets **Sensitive**.
 **Don't set on Vercel:** `NEXT_PUBLIC_KEYSTATIC_STORAGE` (local editing only), `CONTENT_EMPTY` / `MOCK_EMPTY` (review only), `DIRECTUS_*` and `REVALIDATE_SECRET` (Directus only).
 
 **Old variables:**
-- `NOTION_*`, `CLOUDINARY_*` and `SPOTIFY_*` only feed the old API routes. Delete them when those routes go (section 9).
+- `NOTION_*` and `CLOUDINARY_*` belonged to the old site; delete them after the merge (section 9). Keep `SPOTIFY_*`.
 - `RESEND_AUDIENCE_ID` still works as the segment id if you'd rather keep it.
 
 Without `RESEND_API_KEY` both forms answer **503** with a clear message. Without the Keystatic variables, `/keystatic` answers 503. The site builds and runs either way.
@@ -150,13 +150,8 @@ What the move involves:
 
 The site's types and skins don't change.
 
-## 9. Before launch, from the earlier report
+## 9. Old site cleanup (done 28 Oct 2026)
 
-- **Delete the old API routes**, all from the old site and unused by the new UI:
-  - `/api/image-proxy` and `/api/download` fetch any URL;
-  - `/api/test-notion` returns part of the Notion token;
-  - `/api/gallery` and `/api/test-gallery`.
-
-  Then remove the `NOTION_*` / `CLOUDINARY_*` / `SPOTIFY_*` variables. This is one commit, and it's up to you.
-- **Rotate the Notion token** in `.env.local.example`. That file is untracked and has never been committed.
-- `public/` still has about 33 MB of images from the old site. Apart from `icon-192.jpg` and `icon-512.jpg` (the web-app manifest), only the old `lib/notion.js` refers to them. They can go together with the old routes.
+- The old API routes (`/api/image-proxy`, `/api/download`, `/api/test-notion`, `/api/gallery`, `/api/test-gallery`), `lib/notion.js`, the Notion/Cloudinary scripts and their packages, and the old site's stock images in `public/` are gone.
+- **Spotify stays:** `/api/spotify/now-playing` feeds the Modernist home, so keep the `SPOTIFY_*` variables.
+- After the merge is live, delete `NOTION_*` and `CLOUDINARY_*` on Vercel, and revoke the Notion integration token in Notion (Settings → Connections).

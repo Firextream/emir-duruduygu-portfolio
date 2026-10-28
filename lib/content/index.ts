@@ -2,7 +2,7 @@
 //   files    content/ in this repo, edited with Keystatic at /keystatic (the default)
 //   mock     lib/content/mock — the original placeholder set, kept for tests
 //   directus a Directus instance (SCHEMA.md), optional for later
-// Pages and components import from here only — never from an adapter, and never from lib/notion*.
+// Pages and components import from here only — never from an adapter.
 import 'server-only'
 import { cache } from 'react'
 import { directusAdapter } from './directus'

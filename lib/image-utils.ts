@@ -2,7 +2,7 @@
 export function getAssetPath(imagePath: string): string {
   if (!imagePath) return ''
 
-  // Leave absolute URLs untouched (e.g. Notion, Cloudinary)
+  // Leave absolute URLs untouched (e.g. Directus)
   if (/^https?:\/\//i.test(imagePath)) return imagePath
 
   // Remove leading slash if present
